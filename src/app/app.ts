@@ -4,7 +4,7 @@ import { Supabase } from './shared/services/supabase';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [RouterOutlet,JsonPipe],
+  imports: [RouterOutlet, JsonPipe],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -17,8 +17,9 @@ export class App {
 
   ngOnInit() {
     //Daten laden vom Supabase Server beim Seitenladen
-    this.dbService.getContacts(); 
-    this.dbService.getUser();
+    // this.dbService.getContacts();
+    // this.dbService.getUser();
+    this.dbService.loadData();
 
     // Methoden Aufruf vom supabase Service für das Hinzufügen von Kontakten/Usern
     // Wichtig für spätere Komponenten, dort nur Daten mit Input, nicht im Code, hier nur als test
