@@ -19,3 +19,16 @@
     overflow-y: auto; // nur Main scrollt, wenn der Platz benötigt wird, Sidbar + Header bleiben stehen
     background-color: lightgreen; // Platzhalter - vor Abgabe löschen
 }
+
+// Mobile: eine Spalte, Header oben, Main in der Mitte, Sidebar als Navigation unten
+//TODO: 1024px durch Breakpoint-Variablen ersetzen
+@media (max-width: 1024px) {
+    :host {
+        grid-template-columns: 1fr; // nur eine Spalte
+        grid-template-rows: 80px 1fr 80px; // Header | Main | Navigation
+    }
+
+    .dashboard-aside {
+        grid-row: 3; // Sidebar als Bottom-Navbar in unterste Zeile
+    }
+}
