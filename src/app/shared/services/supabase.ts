@@ -58,4 +58,18 @@ export class Supabase {
     .eq('id',id)
     .select()
   }
+
+  async deleteContact(id:number){
+    const {data:error} = await this.supabase
+    .from('contacts')
+    .delete()
+    .eq('id',id)
+  }
+
+  async deleteUser(id:number){
+    const {data:error} = await this.supabase
+    .from('user')
+    .delete()
+    .eq('id',id)
+  }
 }
