@@ -8,10 +8,10 @@ export class Supabase {
   supabase = createClient(this.supabseUrl, this.supabaseKey);
 
   contacts = signal<
-    { id: number; created_at: string; name: string; email: string; phone: number; role: string }[]
+    { id: number, created_at: string, name: string, email: string, phone: number, role: string }[]
   >([]);
   user = signal<
-    { id: number; created_at: string; email: string; password: string; role: string }[]
+    { id: number, created_at: string, email: string, password: string, role: string }[]
   >([]);
 
   async getContacts() {
@@ -20,5 +20,13 @@ export class Supabase {
     .select('*');
     if (!contacts) return;
     this.contacts.set(contacts);
+  }
+
+  async getUser() {
+    let { data: user, error } = await this.supabase
+    .from('user')
+    .select('*');
+    if (!user) return;
+    this.user.set(user);
   }
 }

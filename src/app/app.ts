@@ -16,5 +16,6 @@ export class App {
 
   ngOnInit() {
     this.dbService.getContacts();
+    this.dbService.getUser();
   }
 }
