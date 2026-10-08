@@ -3,4 +3,9 @@
 body,
 html {
   font-family: 'Inter';
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
 }
