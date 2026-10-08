@@ -1,0 +1,34 @@
+// Dashboard-Layout: Sidebar links (volle Höhe), Header oben rechts, Main-Content darunter
+:host {
+    display: grid;
+    grid-template-columns: 232px 1fr; // Sidebar-Breite + Rest
+    grid-template-rows: 96px 1fr; // Header-Höhe + Rest
+    height: 100dvh;
+}
+
+.dashboard-aside {
+    grid-row: 1 / 3; // Grid-Start bei Zeile 1, Grid-Ende bei Zeile 3
+    background-color: lightcoral; // Platzhalter - vor Abgabe löschen
+}
+
+.dashboard-header {
+    background-color: lightblue; // Platzhalter - vor Abgabe löschen
+}
+
+.dashboard-main {
+    overflow-y: auto; // nur Main scrollt, wenn der Platz benötigt wird, Sidbar + Header bleiben stehen
+    background-color: lightgreen; // Platzhalter - vor Abgabe löschen
+}
+
+// Mobile: eine Spalte, Header oben, Main in der Mitte, Sidebar als Navigation unten
+//TODO: 1024px durch Breakpoint-Variablen ersetzen
+@media (max-width: 1024px) {
+    :host {
+        grid-template-columns: 1fr; // nur eine Spalte
+        grid-template-rows: 80px 1fr 80px; // Header | Main | Navigation
+    }
+
+    .dashboard-aside {
+        grid-row: 3; // Sidebar als Bottom-Navbar in unterste Zeile
+    }
+}
