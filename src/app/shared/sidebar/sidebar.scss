@@ -25,7 +25,7 @@
     @include all-styles.flex-center;
     justify-content: flex-start;
     gap: 10px;
-    padding: 15px 32px;
+    padding: 15px 40px;
     box-sizing: border-box; // padding stays inside the 232px, never overflows
     transition: all 0.15s ease;
     width: 100%;
@@ -35,6 +35,17 @@
   }
   &-menus-align--active {
     background: all-styles.$sidebar-menu-hover;
+  }
+
+  &-info{
+    width: 100%;
+    .privacy , .legal{
+         padding: 15px 40px;
+    }
+    .privacy:hover , .legal:hover{
+        background: all-styles.$sidebar-menu-hover;
+    }
+
   }
 }
 
