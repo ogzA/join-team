@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Sidebar } from './shared/sidebar/sidebar';
 import { Supabase } from './shared/services/supabase';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [RouterOutlet, JsonPipe],
+  imports: [RouterOutlet,Sidebar, JsonPipe],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
