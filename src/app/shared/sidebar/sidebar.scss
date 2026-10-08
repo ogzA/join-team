@@ -2,7 +2,6 @@
 
 .sidebar {
   @include all-styles.flex-col-center;
-  justify-content: space-between;
   width: 232px;
   height: 100dvh;
   background: all-styles.$sidebar-background;
@@ -19,6 +18,8 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    margin-top: 120px;
+    margin-bottom: auto;
   }
 
   &-menus-align {
