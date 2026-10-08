@@ -27,7 +27,7 @@
     gap: 10px;
     padding: 15px 40px;
     box-sizing: border-box; // padding stays inside the 232px, never overflows
-    transition: all 0.15s ease;
+    //transition: all 0.15s ease;
     width: 100%;
   }
   &-menus-align:hover {
@@ -37,15 +37,16 @@
     background: all-styles.$sidebar-menu-hover;
   }
 
-  &-info{
+  &-info {
     width: 100%;
-    .privacy , .legal{
-         padding: 15px 40px;
+    .privacy,
+    .legal {
+      padding: 15px 40px;
     }
-    .privacy:hover , .legal:hover{
-        background: all-styles.$sidebar-menu-hover;
+    .privacy:hover,
+    .legal:hover {
+      background: all-styles.$sidebar-menu-hover;
     }
-
   }
 }
 
@@ -56,9 +57,9 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: auto;
     cursor: pointer;
-    padding: 16px 0px;
+    padding: 0;
     font-size: 1rem;
 
     &-logo,
@@ -71,25 +72,19 @@
       flex-direction: row;
       justify-content: space-around;
       width: 100%;
+      padding-inline: 16px;
     }
 
     &-menus-align {
       @include all-styles.flex-col-center;
       justify-content: space-between;
-      gap: 0;
-      padding: 5px 0;
+      gap: 4px;
+      padding: 14px 0;
+      border-radius: 16px;
       img {
         width: 24px;
         height: 24px;
       }
-    }
-    &-menus-align:hover {
-      border-radius: 16px;
-      padding: 5px 0;
-    }
-    &-menus-align--active {
-      border-radius: 16px;
-      padding: 5px 0;
     }
   }
 }
@@ -101,7 +96,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: auto;
     cursor: pointer;
     padding: 16px 0;
 
@@ -120,16 +115,9 @@
     &-menus-align {
       @include all-styles.flex-col-center;
       justify-content: space-between;
-      gap: 0;
-      padding: 5px 0;
-    }
-    &-menus-align:hover {
+      gap: 4px;
+      padding: 14px 0;
       border-radius: 16px;
-      padding: 5px 0;
-    }
-    &-menus-align--active {
-      border-radius: 16px;
-      padding: 5px 0;
     }
   }
 }
