@@ -1,0 +1,84 @@
+@use '../../../../public/assets/scss/all-styles';
+
+.dashboard-header {
+  @include all-styles.flex-center;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px 20px 96px;
+  box-shadow: 0px 4px 4px 0px #0000001A;
+  height: 92px;
+  &-mobile-menu{
+    display: none;
+  }
+
+  .mobile-view-logo {
+    display: none;
+  }
+  p {
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  button:hover{
+    // chnage the background color of contact name logo here after hover 
+  }
+  &-icons {
+    @include all-styles.flex-center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    &-help-logo {
+      transition: transform 0.5s;
+    }
+    &-help-logo:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard-header {
+    height: 74px;
+    padding: 20px 16px;
+    .mobile-view-logo {
+      display: block;
+    }
+
+    &-mobile-menu{
+      padding: 10px;
+      display: block;
+      position: absolute;
+      top: 57px;
+      right: 10px;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+      background-color: all-styles.$sidebar-background;
+      font-size: 1rem;
+      font-weight: 400;
+      color: all-styles.$sidebar-text;
+      li{
+        list-style: none;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+    }
+
+    &-icons-help-logo{
+      display: none;
+    }
+    p {
+      display: none;
+    }
+    &-icons {
+      .profile {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

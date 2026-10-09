@@ -1,0 +1,20 @@
+<header class="dashboard-header">
+    <img class="mobile-view-logo" src="assets/icons/join-mobile-header-logo.svg" alt="join_mobile_header_logo">
+    <p>Kanban Project Management Tool</p>
+    <div class="dashboard-header-icons">
+        <a class="dashboard-header-icons-help-logo" href=""><img src="assets/icons/help_dashboard.svg" alt="help_logo"></a>
+        <button (click)="openMobileMenu()"><img class="profile" src="assets/icons/User profile initials.svg" alt="user_profile_initials"></button>
+    </div>
+
+    @if(mobile_menu())
+    {
+    <div class="dashboard-header-mobile-menu">
+            <ul>
+                <li (click)="closeMenu()">Help</li>
+                <li (click)="closeMenu()">Legal Notice</li>
+                <li (click)="closeMenu()">Privacy Policy</li>
+                <li (click)="closeMenu()">Log out</li>
+            </ul>
+        </div>
+    }    
+</header>
