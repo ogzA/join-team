@@ -1,0 +1,93 @@
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.contacts-list {
+  flex-shrink: 0;
+  width: 456px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #ffffff;
+  outline: 2px solid red; // Sollte gelöscht werden sobald die Components geladen werden!
+}
+
+.contacts-details {
+  flex: 1;
+  min-width: 0;
+  padding: 80px 48px 0;
+  background-color: #f6f7f8;
+  outline: 2px solid blue; // Sollte gelöscht werden sobald die Components geladen werden!
+}
+
+.contacts-details__header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.contacts-details__title {
+  font-size: 61px;
+  font-weight: 700;
+}
+
+.contacts-details__subtitle {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 27px;
+
+  &::before {
+    content: '';
+    width: 3px;
+    height: 60px;
+    background-color: #29abe2;
+  }
+}
+
+@media (max-width: 1024px) {
+  :host {
+    display: block;
+  }
+
+  .contacts-list {
+    width: 100%;
+  }
+
+  .contacts-details {
+    display: none;
+    padding: 32px 16px 0;
+  }
+
+  :host(.show-details) {
+    .contacts-list {
+      display: none;
+    }
+
+    .contacts-details {
+      display: block;
+    }
+  }
+
+  .contacts-details__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .contacts-details__title {
+    font-size: 47px;
+  }
+
+  .contacts-details__subtitle {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 20px;
+
+    &::before {
+      width: 90px;
+      height: 3px;
+    }
+  }
+}
