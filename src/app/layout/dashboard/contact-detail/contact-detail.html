@@ -1,0 +1,40 @@
+<section class="contact-details">
+  @if (dbService.id().id >= 0) {
+    <section class="contact">
+      <img src="assets/icons/name_logo_dummy.png" alt="Name Logo" />
+
+      <div class="contact-name">
+        @if (dbService.contacts()[dbService.id().id].name) {
+          <h2>{{ dbService.contacts()[dbService.id().id].name }}</h2>
+        }
+
+        <!-- {{ dbService.id().id }} -->
+        <div class="contact-btn">
+          <button (click)="editContact()" class="edit-btn">
+            <img src="assets/icons/edit-btn.png" alt="Edit Button" />
+            <p>Edit</p>
+          </button>
+
+          <button (click)="deleteContact()" class="delete-btn">
+            <img src="assets/icons/delete-btn.png" alt="Delete Button" />
+            <p>Delete</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-info">
+      <h3>Contact Information</h3>
+
+      <h4>Email</h4>
+      @if (dbService.contacts()[dbService.id().id].email) {
+        <p class="email">{{ dbService.contacts()[dbService.id().id].email }}</p>
+      }
+
+      <h4>Phone</h4>
+      @if (dbService.contacts()[dbService.id().id].phone) {
+        <p>{{ dbService.contacts()[dbService.id().id].phone }}</p>
+      }
+    </section>
+  }
+</section>
