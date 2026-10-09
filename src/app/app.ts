@@ -5,7 +5,7 @@ import { Supabase } from './shared/services/supabase';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [RouterOutlet,Sidebar, JsonPipe],
+  imports: [RouterOutlet, Sidebar, JsonPipe],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

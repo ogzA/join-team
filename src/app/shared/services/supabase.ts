@@ -1,4 +1,4 @@
-import { Service, signal } from '@angular/core';
+import { Service, signal, WritableSignal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 
 interface Contact {
@@ -27,6 +27,9 @@ export class Supabase {
   user = signal<
     { id: number; created_at: string; email: string; password: string; role: string }[]
   >([]);
+
+  // Number Typ später
+  id = signal({ id: -1 });
 
   channels: RealtimeChannel | undefined;
 

@@ -34,13 +34,21 @@
         // background-color: red;
 
         button {
-          // width: 32px;
-          // height: 32px;
+          // width: 90px;
+          height: 34px;
           border: none;
           display: flex;
           align-items: center;
           gap: 8px;
           background-color: #f6f7f8;
+
+          &:hover {
+            cursor: pointer;
+
+            p {
+              font-style: bold;
+            }
+          }
 
           img {
             width: 24px;
