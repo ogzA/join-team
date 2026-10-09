@@ -10,37 +10,98 @@
   opacity: 0;
   visibility: hidden;
   transform: scale(1.1);
-  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
-}
+  transition:
+    visibility 0s linear 0.25s,
+    opacity 0.25s 0s,
+    transform 0.25s;
 
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 1rem 1.5rem;
-  width: 24rem;
-  border-radius: 0.5rem;
-}
+  .error {
+    color: all-styles.$error-color;
+  }
 
-.close-button {
-  float: right;
-  width: 1.5rem;
-  line-height: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  background-color: lightgray;
-}
+  &-content {
+    @include all-styles.flex-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: all-styles.$button-text;
+    width: auto;
+    border-radius: 30px;
 
-.close-button:hover {
-  background-color: darkgray;
+    .modal_part1 {
+      background: all-styles.$sidebar-background;
+      width: 467px;
+      height: 500px;
+      padding: 66px 48px;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      color: all-styles.$button-text;
+      .font_add_contact{
+        font-size: clamp(47px, calc(41px + 1.667vw), 61px);;
+      }
+      .font-subheading{
+        font-size: clamp(20px, calc(17px + 0.833vw), 27px);
+      }
+    }
+    &-close-button {
+      float: right;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    form {
+      .form-button {
+        @include all-styles.flex-center;
+        justify-content: flex-start;
+        gap: 24px;
+      }
+      input {
+        padding: 13px 21px;
+        border-radius: 10px;
+        width: 422px;
+        height: 50px;
+        border: 1px solid #6b6b6bb6;
+      }
+      .input_logo {
+        position: absolute;
+        top: 53px;
+        right: 40px;
+      }
+      .input_logo2 {
+        position: absolute;
+        bottom: 110px;
+        right: 40px;
+      }
+      .input_logo3 {
+        position: absolute;
+        bottom: 60px;
+        right: 40px;
+      }
+      .cancel_btn,
+      .submit_btn {
+        @include all-styles.flex-center;
+        justify-content: center;
+        padding: 1rem;
+        font-size: 1.25rem;
+        border-radius: 10px;
+        border: 1px solid all-styles.$sidebar-background;
+      }
+      .submit_btn {
+        background: all-styles.$sidebar-background;
+        color: all-styles.$button-text;
+      }
+    }
+  }
 }
 
 .show-modal {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
-  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+  transition:
+    visibility 0s linear 0s,
+    opacity 0.25s 0s,
+    transform 0.25s;
 }
