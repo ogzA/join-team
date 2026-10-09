@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from '../../shared/sidebar/sidebar';
-import { Header } from '../../shared/header/header';
+import { DashboardHeader } from '../../shared/dashboard-header/dashboard-header';
 
 
 @Component({
-  imports: [RouterOutlet,Sidebar,Header],
+  imports: [RouterOutlet,Sidebar,DashboardHeader],
   selector: 'app-dashboard',
   styleUrl: './dashboard.scss',
   templateUrl: './dashboard.html',
