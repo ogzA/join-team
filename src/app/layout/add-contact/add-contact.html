@@ -1,0 +1,46 @@
+<button class="trigger" (click)="showModal = true">Click here to trigger the modal!</button>
+<div class="modal" [class]="{'show-modal': showModal}">
+    <div class="modal-content">
+        <button (click)="showModal = false"><img src="assets/icons/close-dialog.svg" alt="close_dialog_logo"></button>
+        <form [formGroup]="contactForm" (ngSubmit)="formSubmit()">
+            <div>
+                <input placeholder="Name" type="text" formControlName="name">
+                <img src="assets/icons/person.svg" alt="person_logo">
+                @if (contactForm.controls['name'].touched || contactForm.controls['name'].dirty) {
+                    @if (contactForm.controls['name'].errors?.['required']) {
+                    <p>This field is required</p>
+                    }
+                }
+
+            </div>
+            <div>
+                <input placeholder="Email" type="email" formControlName="email">
+                <img src="assets/icons/mail (1).svg" alt="email_logo">
+                @if (contactForm.controls['email'].touched || contactForm.controls['email'].dirty) {
+                @if (contactForm.controls['email'].errors?.['required']) {
+                <p>This field is required</p>
+                }
+                @else if (contactForm.controls['email'].errors?.['pattern']) {
+                <p>Check your email and try again</p>
+                }
+                }
+            </div>
+            <div>
+                <input placeholder="Phone" type="tel" formControlName="phone">
+                <img src="assets/icons/call.svg" alt="phone_logo">
+                @if (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty){
+                @if (contactForm.controls['phone'].errors?.['required']) {
+                <p>This field is required</p>
+                }
+                @else if (contactForm.controls['phone'].errors?.['pattern']) {
+                <p>Check your Phone number and try again</p>
+                }
+                }
+
+            </div>
+            <button type="reset">Cancel <img src="assets/icons/iconoir_cancel.svg" alt="cancel_logo"></button>
+            <button type="submit" [disabled]="contactForm.invalid">Create contact <img src="assets/icons/check.svg"
+                    alt="cancel_logo"></button>
+        </form>
+    </div>
+</div>
