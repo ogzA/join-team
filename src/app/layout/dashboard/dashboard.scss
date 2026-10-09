@@ -1,3 +1,5 @@
+@use '../../../../public/assets/scss/all-styles';
+
 // Dashboard-Layout: Sidebar links (volle Höhe), Header oben rechts, Main-Content darunter
 :host {
     display: grid;
@@ -8,16 +10,11 @@
 
 .dashboard-aside {
     grid-row: 1 / 3; // Grid-Start bei Zeile 1, Grid-Ende bei Zeile 3
-    background-color: lightcoral; // Platzhalter - vor Abgabe löschen
-}
-
-.dashboard-header {
-    background-color: lightblue; // Platzhalter - vor Abgabe löschen
 }
 
 .dashboard-main {
     overflow-y: auto; // nur Main scrollt, wenn der Platz benötigt wird, Sidbar + Header bleiben stehen
-    background-color: lightgreen; // Platzhalter - vor Abgabe löschen
+    background-color: all-styles.$dashboard-background; // Platzhalter - vor Abgabe löschen
 }
 
 // Mobile: eine Spalte, Header oben, Main in der Mitte, Sidebar als Navigation unten

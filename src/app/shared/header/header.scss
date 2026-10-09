@@ -1,0 +1,42 @@
+@use '../../../../public/assets/scss/all-styles';
+
+.dashboard-header {
+    @include all-styles.flex-center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px 20px 96px;
+    cursor: pointer;
+    .mobile-view-logo {
+        display: none;
+    }
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+    &-icons {
+        @include all-styles.flex-center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .dashboard-header {
+        padding: 20px 16px;
+        .mobile-view-logo {
+        display: block;
+        }
+        h3 {
+        display: none;
+        }
+        &-icons {
+        .help-logo {
+            display: none;
+        }
+        .profile {
+            width: 40px;
+            height: 40px;
+        }
+        }
+    }
+}
