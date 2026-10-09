@@ -28,8 +28,8 @@ export class Supabase {
     { id: number; created_at: string; email: string; password: string; role: string }[]
   >([]);
 
-  // Number Typ später
-  id = signal({ id: -1 });
+  // Number Typ später -1 für leere Seite
+  id = signal({ id: 0 });
 
   channels: RealtimeChannel | undefined;
 
