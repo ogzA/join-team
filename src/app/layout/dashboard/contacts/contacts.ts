@@ -1,7 +1,9 @@
 import { Component, signal } from '@angular/core';
+import { ContactList } from './contact-list/contact-list';
+import { ContactDetail } from './contact-detail/contact-detail';
 
 @Component({
-  imports: [],
+  imports: [ContactList, ContactDetail],
   selector: 'app-contacts',
   styleUrl: './contacts.scss',
   templateUrl: './contacts.html',
