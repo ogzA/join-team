@@ -17,7 +17,7 @@ export class App {
 
   ngOnInit() {
     //Daten laden vom Supabase Server beim Seitenladen
-    // this.dbService.getContacts();
+    this.dbService.getContacts();
     // this.dbService.getUser();
     this.dbService.loadData();
 
