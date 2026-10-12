@@ -137,4 +137,14 @@
   transition: opacity 0.25s ease, visibility 0s linear 0s;
 }
 
+//------------ dont remove -------------------------------
+// responsive code: for transition the dialog will open from bottom to top
+// @media (max-width: 768px) {
+//   .modal-content {
+//     transform: translate(-50%, 150%);
+//   }
 
+//   .show-modal .modal-content {
+//     transform: translate(-50%, -50%);
+//   }
+// }
