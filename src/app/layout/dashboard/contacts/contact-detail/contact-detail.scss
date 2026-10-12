@@ -11,9 +11,22 @@
     margin-bottom: 21px;
     gap: 54px;
 
-    img {
+    .logo {
       width: 120px;
       height: 120px;
+      border: 3px solid white;
+      border-radius: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+
+      p {
+        font-size: 47px;
+        font-weight: 500;
+        line-height: 120%;
+        color: white;
+      }
     }
 
     h2 {

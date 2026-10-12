@@ -1,10 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Supabase } from './shared/services/supabase';
-import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [RouterOutlet, JsonPipe],
+  imports: [RouterOutlet],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -20,6 +19,8 @@ export class App {
     // this.dbService.getContacts();
     // this.dbService.getUser();
     this.dbService.loadData();
+
+    // console.log(this.dbService.contacts());
 
     // Methoden Aufruf vom supabase Service für das Hinzufügen von Kontakten/Usern
     // Wichtig für spätere Komponenten, dort nur Daten mit Input, nicht im Code, hier nur als test

@@ -4,7 +4,7 @@ import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 interface Contact {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   role: string;
 }
 
@@ -22,7 +22,7 @@ export class Supabase {
 
   // Für Datentypen am besten später Interfaces einbauen
   contacts = signal<
-    { id: number; created_at: string; name: string; email: string; phone: number; role: string }[]
+    { id: number; created_at: string; name: string; email: string; phone: string; role: string }[]
   >([]);
   user = signal<
     { id: number; created_at: string; email: string; password: string; role: string }[]
@@ -37,37 +37,37 @@ export class Supabase {
     this.getContacts();
     this.getUser();
 
-    this.channels = this.supabase
-      .channel('changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'contacts',
-        },
-        (payload) => {
-          console.log(payload);
-          let tmpContact = payload.new as Contact;
-          console.log(tmpContact);
-          // this.setContact(tmpContact); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
-        },
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'user',
-        },
-        (payload) => {
-          console.log(payload);
-          let tmpUser = payload.new as User;
-          console.log(tmpUser);
-          // this.setUser(tmpUser); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
-        },
-      )
-      .subscribe();
+    // this.channels = this.supabase
+    //   .channel('changes')
+    //   .on(
+    //     'postgres_changes',
+    //     {
+    //       event: '*',
+    //       schema: 'public',
+    //       table: 'contacts',
+    //     },
+    //     (payload) => {
+    //       console.log(payload);
+    //       let tmpContact = payload.new as Contact;
+    //       console.log(tmpContact);
+    //       // this.setContact(tmpContact); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
+    //     },
+    //   )
+    //   .on(
+    //     'postgres_changes',
+    //     {
+    //       event: '*',
+    //       schema: 'public',
+    //       table: 'user',
+    //     },
+    //     (payload) => {
+    //       console.log(payload);
+    //       let tmpUser = payload.new as User;
+    //       console.log(tmpUser);
+    //       // this.setUser(tmpUser); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
+    //     },
+    //   )
+    //   .subscribe();
   }
 
   ngOnDestroy() {
@@ -78,6 +78,7 @@ export class Supabase {
     let response = await this.supabase.from('contacts').select('*');
     if (!response) return;
     this.contacts.set(response.data ?? ([] as Contact[]));
+    // console.log(this.contacts());
   }
 
   async getUser() {
@@ -86,7 +87,7 @@ export class Supabase {
     this.user.set(response.data ?? ([] as User[]));
   }
 
-  async setContact(contact: { name: string; email: string; phone: number; role: string }) {
+  async setContact(contact: { name: string; email: string; phone: string; role: string }) {
     const { data, error } = await this.supabase.from('contacts').insert([contact]).select();
   }
 

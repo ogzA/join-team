@@ -1,12 +1,13 @@
 <section class="contact-details">
   @if (dbService.id().id >= 0) {
     <section class="contact">
-      <img src="assets/icons/name_logo_dummy.png" alt="Name Logo" />
+      <div class="logo" style="background-color: {{ logoColor }}">
+        <p>{{ shortname }}</p>
+      </div>
 
       <div class="contact-name">
-        @if (dbService.contacts()[dbService.id().id].name) {
-          <h2>{{ dbService.contacts()[dbService.id().id].name }}</h2>
-        }
+        <h2>{{ contact.name }}</h2>
+        <!-- <h2>{{ dbService.contacts()[dbService.id().id].name }}</h2> -->
 
         <!-- {{ dbService.id().id }} -->
         <div class="contact-btn">
@@ -27,14 +28,10 @@
       <h3>Contact Information</h3>
 
       <h4>Email</h4>
-      @if (dbService.contacts()[dbService.id().id].email) {
-        <p class="email">{{ dbService.contacts()[dbService.id().id].email }}</p>
-      }
+      <p class="email">{{ contact.email }}</p>
 
       <h4>Phone</h4>
-      @if (dbService.contacts()[dbService.id().id].phone) {
-        <p>{{ dbService.contacts()[dbService.id().id].phone }}</p>
-      }
+      <p>{{ contact.phone }}</p>
     </section>
   }
 </section>
