@@ -83,7 +83,10 @@ export class Supabase {
     this.user.set(response.data ?? ([] as User[]));
   }
 
-  async setContact(contact: { name: string; email: string; phone: number; role: string }) {
+  async setContact(contactObj: { name: string; email: string; phone: number; role: string; } | undefined, 
+  p0: { name: string | null | undefined; email: string | null | undefined; phone: string | null | undefined; role: string; }, 
+  contact: { name: string; email: string; phone: number; role: string; }) {
+    
     const { data, error } = await this.supabase.from('contacts').insert([contact]).select();
   }
 

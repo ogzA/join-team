@@ -6,20 +6,17 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.1);
+  transform: translateX(100dvw);
   transition:
-    visibility 0s linear 0.25s,
-    opacity 0.25s 0s,
-    transform 0.25s;
-
+    transform 0.25s ease-in-out;
   .error {
     color: all-styles.$error-color;
   }
 
   &-content {
+ 
     @include all-styles.flex-center;
     position: absolute;
     top: 50%;
@@ -27,35 +24,61 @@
     transform: translate(-50%, -50%);
     background-color: all-styles.$button-text;
     width: auto;
+    height: 594px;
     border-radius: 30px;
+    gap: 48px;
+    
 
     .modal_part1 {
+      @include all-styles.flex-col-center;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 12px;
       background: all-styles.$sidebar-background;
       width: 467px;
-      height: 500px;
+      height: 594px;
       padding: 66px 48px;
       border-top-left-radius: 30px;
       border-bottom-left-radius: 30px;
       color: all-styles.$button-text;
-      .font_add_contact{
-        font-size: clamp(47px, calc(41px + 1.667vw), 61px);;
+
+      .blue_border{
+        border: 3px solid all-styles.$join-blue;
+        width: 95px;
+        border-radius: 3px;
       }
-      .font-subheading{
+      .logo_size {
+        width: 55px;
+        height: 66px;
+      }
+      .font_add_contact {
+        font-size: clamp(47px, calc(41px + 1.667vw), 61px);
+      }
+      .font-subheading {
         font-size: clamp(20px, calc(17px + 0.833vw), 27px);
       }
     }
+    .modal_part2 {
+      @include all-styles.flex-center;
+      justify-content: center;
+      gap: 72px;
+    }
     &-close-button {
-      float: right;
-      text-align: center;
       cursor: pointer;
       border: none;
       background: none;
+      width: 100%;
+      text-align: right;
     }
     form {
+      @include all-styles.flex-col-center;
+      gap: 32px;
+      padding-right: 48px;
       .form-button {
         @include all-styles.flex-center;
         justify-content: flex-start;
         gap: 24px;
+        padding-top: 1rem;
       }
       input {
         padding: 13px 21px;
@@ -66,18 +89,18 @@
       }
       .input_logo {
         position: absolute;
-        top: 53px;
-        right: 40px;
+        top: 175px;
+        right: 57px;
       }
       .input_logo2 {
         position: absolute;
-        bottom: 110px;
-        right: 40px;
+        bottom: 309px;
+        right: 57px;
       }
       .input_logo3 {
         position: absolute;
-        bottom: 60px;
-        right: 40px;
+        bottom: 228px;
+        right: 57px;
       }
       .cancel_btn,
       .submit_btn {
@@ -88,6 +111,16 @@
         border-radius: 10px;
         border: 1px solid all-styles.$sidebar-background;
       }
+      .cancel_btn:hover{
+        border: 2px solid all-styles.$hover-button-Form;
+        box-shadow: 0px 4px 4px 0px #00000040;
+
+      }
+      .submit_btn:hover{
+        background-color: all-styles.$hover-button-Form;
+        box-shadow: 0px 4px 4px 0px #00000040;
+
+      }
       .submit_btn {
         background: all-styles.$sidebar-background;
         color: all-styles.$button-text;
@@ -97,11 +130,12 @@
 }
 
 .show-modal {
+   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
-  transition:
-    visibility 0s linear 0s,
-    opacity 0.25s 0s,
-    transform 0.25s;
+  transform: translateX(0);
+  transition:  
+    transform 0.25s ease-in-out;
 }
+
+
