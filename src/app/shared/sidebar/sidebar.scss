@@ -29,6 +29,8 @@
     cursor: pointer;
     transition: background-color 100ms ease;
     width: 100%;
+    color: inherit;
+    text-decoration: none;
   }
   &-menus-align:hover {
     background: all-styles.$sidebar-menu-hover;
@@ -80,6 +82,7 @@
       padding: 8px 4px;
       border-radius: 16px;
       white-space: nowrap;
+
       img {
         width: 24px;
         height: 24px;
