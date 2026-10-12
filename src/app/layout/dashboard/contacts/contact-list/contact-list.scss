@@ -2,7 +2,6 @@
 
 .contact-list {
   width: 100%;
-  max-width: 400px;
   height: 100%;
   box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
   position: relative;
@@ -15,7 +14,7 @@
   }
 
   .add-contact-wrapper {
-    @media screen and (min-width: 769px) {
+    @media screen and (min-width: $breakpoint-mobile + 1px) {
       padding: 32px 24px 0 24px;
     }
 
@@ -39,12 +38,12 @@
       .add-contact-text {
         display: none;
 
-        @media screen and (min-width: 769px) {
+        @media screen and (min-width: $breakpoint-mobile + 1px) {
           display: flex;
         }
       }
 
-      @media screen and (min-width: 769px) {
+      @media screen and (min-width: $breakpoint-mobile + 1px) {
         position: static;
         width: 100%;
         border-radius: 10px;
