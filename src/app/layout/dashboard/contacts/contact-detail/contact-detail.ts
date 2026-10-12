@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Supabase } from '../../../shared/services/supabase';
+import { Supabase } from '../../../../shared/services/supabase';
 import { JsonPipe } from '@angular/common';
 
 @Component({
