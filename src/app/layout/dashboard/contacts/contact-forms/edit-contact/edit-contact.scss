@@ -1,0 +1,239 @@
+@use '../../../../../../../public/assets/scss/all-styles';
+
+.edit-contact {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: all-styles.$color-overlay;
+
+  &__content {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 1212px;
+    min-height: 592px;
+    border-radius: 30px;
+    background-color: all-styles.$color-white;
+  }
+
+  &__close {
+    position: absolute;
+    top: 48px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    transition: background-color 100ms ease;
+
+    &:hover {
+      background-color: all-styles.$color-hover-light;
+    }
+  }
+
+  &__aside {
+    display: flex;
+    flex: 0 0 453px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 66px 46px;
+    border-radius: 30px 0 0 30px;
+    background-color: all-styles.$color-primary;
+  }
+
+  &__logo {
+    width: 54px;
+    height: auto;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: all-styles.$color-white;
+
+    &::after {
+      content: '';
+      width: 90px;
+      height: 3px;
+      background-color: all-styles.$color-secondary;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 72px;
+    padding: 48px 48px 48px 97px;
+  }
+
+  &__avatar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border: 3px solid all-styles.$color-white;
+    border-radius: 50%;
+    background-color: all-styles.$color-avatar-default;
+    box-shadow: all-styles.$shadow-avatar;
+    font-size: 47px;
+    font-weight: 500;
+    color: all-styles.$color-white;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+    max-width: 422px;
+  }
+
+  &__field {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 13px 53px 13px 21px;
+    border: 1px solid all-styles.$color-input-border;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 20px;
+    outline: none;
+    transition: border-color 100ms ease;
+
+    &:focus {
+      border-color: all-styles.$color-input-focus;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 14px;
+    right: 21px;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+
+  &__error {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    font-size: 12px;
+    color: all-styles.$color-error;
+  }
+
+  &__error-global {
+    font-size: 14px;
+    color: all-styles.$color-error;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 25px;
+    margin-top: 16px;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+    font-size: 21px;
+    cursor: pointer;
+    transition:
+      background-color 100ms ease,
+      border-color 100ms ease,
+      color 100ms ease;
+
+    &--secondary {
+      padding: 15px 24px;
+      border: 1px solid all-styles.$color-primary;
+      border-radius: 8px;
+      background-color: all-styles.$color-white;
+      color: all-styles.$color-primary;
+
+      &:hover:not(:disabled) {
+        border-color: all-styles.$color-secondary;
+        color: all-styles.$color-secondary;
+      }
+    }
+
+    &--primary {
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: all-styles.$color-primary;
+      font-weight: 700;
+      color: all-styles.$color-white;
+
+      &:hover:not(:disabled) {
+        background-color: all-styles.$color-secondary;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: all-styles.$breakpoint-mobile) {
+  .edit-contact {
+    &__content {
+      flex-direction: column;
+      max-width: 396px;
+      min-height: auto;
+    }
+
+    &__close {
+      top: 24px;
+      right: 24px;
+    }
+
+    &__aside {
+      flex-basis: auto;
+      padding: 32px 24px 80px;
+      border-radius: 30px 30px 0 0;
+    }
+
+    &__title {
+      font-size: 47px;
+    }
+
+    &__main {
+      flex-direction: column;
+      gap: 24px;
+      padding: 0 24px 32px;
+    }
+
+    &__avatar {
+      margin-top: -60px;
+    }
+
+    &__actions {
+      justify-content: center;
+    }
+  }
+}

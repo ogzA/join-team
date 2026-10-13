@@ -1,14 +1,6 @@
-<!-- TEMP: remove before merge -->
-<button class="edit-trigger" (click)="showModal = true">Open edit</button>
-
-<div class="edit-contact" [class.edit-contact--open]="showModal">
+<div class="edit-contact">
   <div class="edit-contact__content">
-    <button
-      class="edit-contact__close"
-      type="button"
-      aria-label="Close"
-      (click)="showModal = false"
-    >
+    <button class="edit-contact__close" type="button" aria-label="Close" (click)="closed.emit()">
       <img src="assets/icons/close.svg" alt="" />
     </button>
 
@@ -18,7 +10,7 @@
     </div>
 
     <div class="edit-contact__main">
-      <div class="edit-contact__avatar">AM</div>
+      <div class="edit-contact__avatar">{{ initials() }}</div>
 
       <form class="edit-contact__form" [formGroup]="contactForm" (ngSubmit)="onSave()">
         <div class="edit-contact__field">
@@ -78,10 +70,15 @@
           }
         </div>
 
+        @if (errorMessage()) {
+          <p class="edit-contact__error-global">{{ errorMessage() }}</p>
+        }
+
         <div class="edit-contact__actions">
           <button
             class="edit-contact__btn edit-contact__btn--secondary"
             type="button"
+            [disabled]="isSaving()"
             (click)="onDelete()"
           >
             Delete
@@ -89,7 +86,7 @@
           <button
             class="edit-contact__btn edit-contact__btn--primary"
             type="submit"
-            [disabled]="contactForm.invalid"
+            [disabled]="contactForm.invalid || isSaving()"
           >
             Save <img src="assets/icons/check.svg" alt="" />
           </button>
@@ -98,3 +95,5 @@
     </div>
   </div>
 </div>
+
+
