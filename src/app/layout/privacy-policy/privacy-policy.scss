@@ -55,7 +55,37 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 120%;
-    padding-bottom: 35px;
+  }
+
+  .our-contacts {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 120%;
+    margin-bottom: 35px;
+    width: 430px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.02);
+    padding: 8px;
+
+    tr {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    th {
+      width: 40%;
+      text-align: left;
+      font-size: 18px;
+      display: flex;
+    }
+
+    td {
+      width: 60%;
+      text-align: left;
+      display: flex;
+    }
   }
 }
 
@@ -70,7 +100,7 @@
   }
 
   .privacy-policy {
-    padding: 48px 16px 0 16px;
+    padding: 48px 16px 32px 16px;
 
     .headline {
       h2 {
@@ -81,6 +111,23 @@
         width: 27px;
         height: 27px;
         display: flex !important;
+      }
+    }
+
+    .our-contacts {
+      width: 300px;
+
+      th {
+        width: 45%;
+        text-align: left;
+        font-size: 13.5px;
+      }
+
+      td {
+        width: 55%;
+        text-align: left;
+        font-size: 10px;
+        word-break: break-all;
       }
     }
   }
