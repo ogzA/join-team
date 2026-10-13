@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { ContactList } from './contact-list/contact-list';
 import { ContactDetail } from './contact-detail/contact-detail';
-import { EditContact } from './contact-forms/edit-contact/edit-contact'; // Temporär
-import { Supabase } from '../../../shared/services/supabase'; // Temporär
+import { EditContact } from './contact-forms/edit-contact/edit-contact'; // TEMP: Temporär
+import { Supabase } from '../../../shared/services/supabase'; // TEMP: Temporär
 
 @Component({
-  imports: [ContactList, ContactDetail, EditContact],
+  imports: [ContactList, ContactDetail, EditContact], // EditContact ist TEMP
   selector: 'app-contacts',
   styleUrl: './contacts.scss',
   templateUrl: './contacts.html',
