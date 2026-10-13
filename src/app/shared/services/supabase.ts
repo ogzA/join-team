@@ -94,14 +94,25 @@ export class Supabase {
     const { data, error } = await this.supabase.from('user').insert([user]).select();
   }
 
-  async updateContact(id: number) {
-    const { data: error } = await this.supabase
-      .from('contacts')
-      //Bei Update später mit Input Eingaben jenachdem was angepasst werden soll mit Parameter Übergabe
-      .update({ name: 'Neuer Wert' })
-      .eq('id', id)
-      .select();
+  // GEÄNDERT (Sven, Edit & Delete Contact)
+  // - übernimmt Name, E-Mail, Telefon aus dem Formular statt 'Neuer Wert'
+  // - role wird nicht mitgeschickt und bleibt in der Datenbank unverändert
+  // - "{ data: error }" zu "{ error }": vorher wurde der Fehler nie gelesen
+  // - Liste wird nach dem Speichern neu geladen
+  async updateContact(id: number, contact: { name: string; email: string; phone: string }) {
+    const { error } = await this.supabase.from('contacts').update(contact).eq('id', id);
+    if (error) throw error;
+    await this.getContacts();
   }
+  
+  // async updateContact(id: number) {
+  //   const { data: error } = await this.supabase
+  //     .from('contacts')
+  //     //Bei Update später mit Input Eingaben jenachdem was angepasst werden soll mit Parameter Übergabe
+  //     .update({ name: 'Neuer Wert' })
+  //     .eq('id', id)
+  //     .select();
+  // }
 
   async updateUser(id: number) {
     const { data: error } = await this.supabase
@@ -112,8 +123,14 @@ export class Supabase {
       .select();
   }
 
+  // GEÄNDERT (Sven, Edit & Delete Contact)
+  // - "{ data: error }" zu "{ error }": vorher wurde der Fehler nie gelesen
+  // - Fehler wird geworfen, damit die Komponente ihn anzeigen kann
+  // - Liste wird nach dem Löschen neu geladen
   async deleteContact(id: number) {
-    const { data: error } = await this.supabase.from('contacts').delete().eq('id', id);
+    const { error } = await this.supabase.from('contacts').delete().eq('id', id);
+    if (error) throw error;
+    await this.getContacts();
   }
 
   async deleteUser(id: number) {
