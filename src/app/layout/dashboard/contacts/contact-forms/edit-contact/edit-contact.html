@@ -1,1 +1,100 @@
-<p>edit-contact works!</p>
+<!-- TEMP: remove before merge -->
+<button class="edit-trigger" (click)="showModal = true">Open edit</button>
+
+<div class="edit-contact" [class.edit-contact--open]="showModal">
+  <div class="edit-contact__content">
+    <button
+      class="edit-contact__close"
+      type="button"
+      aria-label="Close"
+      (click)="showModal = false"
+    >
+      <img src="assets/icons/close.svg" alt="" />
+    </button>
+
+    <div class="edit-contact__aside">
+      <img class="edit-contact__logo" src="assets/images/logo.svg" alt="Join logo" />
+      <h2 class="edit-contact__title">Edit contact</h2>
+    </div>
+
+    <div class="edit-contact__main">
+      <div class="edit-contact__avatar">AM</div>
+
+      <form class="edit-contact__form" [formGroup]="contactForm" (ngSubmit)="onSave()">
+        <div class="edit-contact__field">
+          <input
+            class="edit-contact__input"
+            type="text"
+            placeholder="Name"
+            aria-label="Name"
+            autocomplete="name"
+            formControlName="name"
+          />
+          <img class="edit-contact__icon" src="assets/icons/person.svg" alt="" />
+          @if (contactForm.controls.name.touched) {
+            @if (contactForm.controls.name.errors?.['required']) {
+              <p class="edit-contact__error">This field is required</p>
+            } @else if (contactForm.controls.name.errors?.['pattern']) {
+              <p class="edit-contact__error">Please enter first and last name without numbers</p>
+            }
+          }
+        </div>
+
+        <div class="edit-contact__field">
+          <input
+            class="edit-contact__input"
+            type="email"
+            placeholder="Email"
+            aria-label="Email"
+            autocomplete="email"
+            formControlName="email"
+          />
+          <img class="edit-contact__icon" src="assets/icons/mail.svg" alt="" />
+          @if (contactForm.controls.email.touched) {
+            @if (contactForm.controls.email.errors?.['required']) {
+              <p class="edit-contact__error">This field is required</p>
+            } @else if (contactForm.controls.email.errors?.['pattern']) {
+              <p class="edit-contact__error">Check your email and try again</p>
+            }
+          }
+        </div>
+
+        <div class="edit-contact__field">
+          <input
+            class="edit-contact__input"
+            type="tel"
+            placeholder="Phone"
+            aria-label="Phone"
+            autocomplete="tel"
+            formControlName="phone"
+          />
+          <img class="edit-contact__icon" src="assets/icons/call.svg" alt="" />
+          @if (contactForm.controls.phone.touched) {
+            @if (contactForm.controls.phone.errors?.['required']) {
+              <p class="edit-contact__error">This field is required</p>
+            } @else if (contactForm.controls.phone.errors?.['pattern']) {
+              <p class="edit-contact__error">Check your phone number and try again</p>
+            }
+          }
+        </div>
+
+        <div class="edit-contact__actions">
+          <button
+            class="edit-contact__btn edit-contact__btn--secondary"
+            type="button"
+            (click)="onDelete()"
+          >
+            Delete
+          </button>
+          <button
+            class="edit-contact__btn edit-contact__btn--primary"
+            type="submit"
+            [disabled]="contactForm.invalid"
+          >
+            Save <img src="assets/icons/check.svg" alt="" />
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
