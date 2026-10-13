@@ -9,6 +9,9 @@
   padding: 20px 40px 20px 96px;
   box-shadow: 0px 4px 4px 0px #0000001a;
   height: 100%;
+  width: 100%;
+  max-width: 1440px;
+
   &-mobile-menu {
     display: none;
   }
@@ -60,6 +63,11 @@
       font-size: 1rem;
       font-weight: 400;
       color: all-styles.$sidebar-text;
+
+      a {
+        color: all-styles.$sidebar-text;
+        text-decoration: none;
+      }
       li {
         list-style: none;
         padding: 8px 16px;
@@ -80,4 +88,8 @@
       }
     }
   }
+}
+
+.d_none {
+  display: none;
 }
