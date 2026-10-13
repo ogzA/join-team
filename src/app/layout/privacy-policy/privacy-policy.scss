@@ -1,0 +1,87 @@
+@use '../../../../public/assets/scss/all-styles';
+
+// Dashboard-Layout: Sidebar links (volle Höhe), Header oben rechts, Main-Content darunter
+:host {
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  grid-template-rows: 96px 1fr;
+  height: 100dvh;
+}
+
+.dashboard-aside {
+  grid-row: 1 / 3; // Grid-Start bei Zeile 1, Grid-Ende bei Zeile 3
+}
+
+.dashboard-main {
+  overflow-y: auto; // nur Main scrollt, wenn der Platz benötigt wird, Sidbar + Header bleiben stehen
+  background-color: all-styles.$dashboard-background; // Platzhalter - vor Abgabe löschen
+  scrollbar-width: none;
+}
+
+.privacy-policy {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  padding: 116px 96px 0 96px;
+
+  .headline {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      font-size: clamp(2rem, calc(1.482rem + 2.589vw), 3.81rem);
+      font-weight: 700;
+      line-height: 120%;
+      padding-bottom: 26px;
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      display: none;
+    }
+  }
+
+  h3 {
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 120%;
+    padding-bottom: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 120%;
+    padding-bottom: 35px;
+  }
+}
+
+@media (max-width: all-styles.$breakpoint-mobile) {
+  :host {
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px 1fr 80px;
+  }
+
+  .dashboard-aside {
+    grid-row: 3;
+  }
+
+  .privacy-policy {
+    padding: 48px 16px 0 16px;
+
+    .headline {
+      h2 {
+        padding-bottom: 32px;
+      }
+
+      img {
+        width: 27px;
+        height: 27px;
+        display: flex !important;
+      }
+    }
+  }
+}
