@@ -1,7 +1,7 @@
 <section class="contact-details">
   @if (dbService.id().id >= 0) {
     <section class="contact">
-      <div class="logo" style="background-color: {{ logoColor }}">
+      <div class="logo" [style]="changeStyles()">
         <p>{{ shortname }}</p>
       </div>
 

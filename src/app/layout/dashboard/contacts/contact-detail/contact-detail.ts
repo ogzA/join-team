@@ -31,7 +31,7 @@ export class ContactDetail {
       this.contact.name = this.dbService.contacts()[this.dbService.id().id].name;
       this.contact.email = this.dbService.contacts()[this.dbService.id().id].email;
       this.contact.phone = this.dbService.contacts()[this.dbService.id().id].phone;
-    }, 2000);
+    }, 1000);
 
     // console.log('Test: ', this.username, this.shortname, this.logoColor);
 
@@ -39,6 +39,10 @@ export class ContactDetail {
     // console.log(this.dbService.id().id);
     // console.log(this.dbService.contacts());
     // this.changeNameLogo('detailLogo', username);
+  }
+
+  changeStyles() {
+    return `background:${this.logoColor}`;
   }
 
   editContact() {
