@@ -4,7 +4,7 @@ import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 interface Contact {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   role: string;
 }
 
@@ -22,7 +22,7 @@ export class Supabase {
 
   // Für Datentypen am besten später Interfaces einbauen
   contacts = signal<
-    { id: number; created_at: string; name: string; email: string; phone: number; role: string }[]
+    { id: number; created_at: string; name: string; email: string; phone: string; role: string }[]
   >([]);
   user = signal<
     { id: number; created_at: string; email: string; password: string; role: string }[]
@@ -86,7 +86,7 @@ export class Supabase {
     this.user.set(response.data ?? ([] as User[]));
   }
 
-  async setContact(contact: { name: string; email: string; phone: number; role: string }) {
+  async setContact(contact: { name: string; email: string; phone: string; role: string }) {
     const { data, error } = await this.supabase.from('contacts').insert([contact]).select();
   }
 
