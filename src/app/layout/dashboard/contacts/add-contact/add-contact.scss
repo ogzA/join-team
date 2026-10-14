@@ -14,6 +14,7 @@
     visibility 0s linear 0.25s;
   .error {
     color: all-styles.$error-color;
+    margin: 4px 0 0;
   }
 
   &-content {
@@ -56,9 +57,11 @@
       }
       .font_add_contact {
         font-size: clamp(47px, calc(41px + 1.667vw), 61px);
+        font-weight: 700;
       }
       .font-subheading {
         font-size: clamp(20px, calc(17px + 0.833vw), 27px);
+        font-weight: 400;
       }
     }
     .modal_part2 {
@@ -77,34 +80,31 @@
       @include all-styles.flex-col-center;
       gap: 32px;
       padding-right: 48px;
+
       .form-button {
         @include all-styles.flex-center;
         justify-content: flex-start;
         gap: 24px;
         padding-top: 1rem;
       }
-      input {
-        padding: 13px 21px;
-        border-radius: 10px;
-        width: 422px;
-        height: 50px;
-        border: 1px solid #6b6b6bb6;
+      .field {
         position: relative;
+        input {
+          display: block;
+          padding: 13px 21px;
+          border-radius: 10px;
+          width: 422px;
+          height: 50px;
+          border: 1px solid #6b6b6bb6;
+          position: relative;
+        }
       }
-      .input_logo {
+      .field_icon {
         position: absolute;
-        top: 175px;
-        right: 57px;
-      }
-      .input_logo2 {
-        position: absolute;
-        bottom: 309px;
-        right: 57px;
-      }
-      .input_logo3 {
-        position: absolute;
-        bottom: 228px;
-        right: 57px;
+        top: 25px;
+        right: 16px;
+        transform: translateY(-50%);
+        pointer-events: none;
       }
       .cancel_btn,
       .submit_btn {
@@ -114,6 +114,7 @@
         font-size: 1.25rem;
         border-radius: 10px;
         border: 1px solid all-styles.$sidebar-background;
+        font-weight: 700;
       }
       .cancel_btn:hover {
         border: 2px solid all-styles.$hover-button-Form;
@@ -184,18 +185,8 @@
       .form-button {
         padding-top: 17px;
       }
-      .input_logo {
-        top: unset;
-        bottom: 283px;
-        right: 27px;
-      }
-      .input_logo2 {
-        bottom: 218px;
-        right: 27px;
-      }
-      .input_logo3 {
-        bottom: 154px;
-        right: 27px;
+      .submit_btn {
+        gap: 10px;
       }
     }
   }
@@ -240,6 +231,9 @@
       }
     }
     form {
+      input {
+        width: clamp(255px, calc(-79px + 104.375vw), 422px);
+      }
       padding: 50px 16px;
       gap: 15px;
       .cancel_btn {
@@ -248,18 +242,8 @@
       .form-button {
         padding-top: 17px;
       }
-      .input_logo {
-        top: unset;
-        bottom: 283px;
-        right: 27px;
-      }
-      .input_logo2 {
-        bottom: 218px;
-        right: 27px;
-      }
-      .input_logo3 {
-        bottom: 154px;
-        right: 27px;
+      .submit_btn {
+        gap: 5px;
       }
     }
   }

@@ -3,8 +3,9 @@
 
         <!-- this is first part of modal -->
         <div class="modal_part1">
-            <span class="close-logo-mobile" (click)="close()"> <img src="assets/icons/close-reponsive.svg" alt="close_logo_mobile_view">
-            </span>
+            <button type="button" class="close-logo-mobile" (click)="close()"> <img
+                    src="assets/icons/close-reponsive.svg" alt="close_logo_mobile_view">
+            </button>
             <img class="logo_size" src="assets/images/logo.svg" alt="join_logo">
             <span>
                 <p class="font_add_contact">Add contact</p>
@@ -17,12 +18,14 @@
         <div class="modal_part2">
             <img class="profile_logo" src="assets/icons/profile_Logo.svg" alt="profile_logo">
             <form [formGroup]="contactForm" (ngSubmit)="formSubmit()">
-                <button class="modal-content-close-button" (click)="close()"><img src="assets/icons/close-dialog.svg"
-                        alt="close_dialog_logo"></button>
+                <button type="button" class="modal-content-close-button" (click)="close()"><img
+                        src="assets/icons/close-dialog.svg" alt="close_dialog_logo"></button>
 
-                <div>
-                    <input placeholder="Name" type="text" formControlName="name">
-                    <img class="input_logo" src="assets/icons/person.svg" alt="person_logo">
+                <div class="field">
+                    <div class="field_input">
+                        <input placeholder="Name" type="text" formControlName="name">
+                        <img class="field_icon" src="assets/icons/person.svg" alt="person_logo">
+                    </div>
                     @if (contactForm.controls['name'].touched || contactForm.controls['name'].dirty) {
                     @if (contactForm.controls['name'].errors?.['required']) {
                     <p class="error">This field is required</p>
@@ -32,9 +35,12 @@
                     }
 
                 </div>
-                <div>
-                    <input placeholder="Email" type="email" formControlName="email">
-                    <img class="input_logo2" src="assets/icons/mail (1).svg" alt="email_logo">
+                <div class="field">
+                    <div class="field_input">
+                        <input placeholder="Email" type="email" formControlName="email">
+                        <img class="field_icon" src="assets/icons/mail (1).svg" alt="email_logo">
+                    </div>
+
                     @if (contactForm.controls['email'].touched || contactForm.controls['email'].dirty) {
                     @if (contactForm.controls['email'].errors?.['required']) {
                     <p class="error">This field is required</p>
@@ -44,9 +50,12 @@
                     }
                     }
                 </div>
-                <div>
-                    <input placeholder="Phone" type="text" formControlName="phone">
-                    <img class="input_logo3" src="assets/icons/call.svg" alt="phone_logo">
+                <div class="field">
+                    <div class="field_input">
+                        <input placeholder="Phone" type="text" formControlName="phone">
+                        <img class="field_icon" src="assets/icons/call.svg" alt="phone_logo">
+                    </div>
+
                     @if (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty){
                     @if (contactForm.controls['phone'].errors?.['required']) {
                     <p class="error">This field is required</p>
