@@ -11,7 +11,7 @@ const NAME_PATTERN = /^\p{L}+(?:[-']\p{L}+)*(?:\s+\p{L}+(?:[-']\p{L}+)*)+$/u;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
 // Ziffern und Leerzeichen, optional ein "+" am Anfang, muss mit einer Ziffer beginnen (z. B. "+49 176 1234567")
-const PHONE_PATTERN = /^\+?[0-9 ]+$/;
+const PHONE_PATTERN = /^[\\+]?[0-9 ]{10,16}$/;
 
 // Gemeinsame Validatoren für Add- und Edit-Contact-Formular.
 // Jedes Feld ist Pflicht und muss dem jeweiligen Muster entsprechen.
