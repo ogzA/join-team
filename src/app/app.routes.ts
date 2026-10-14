@@ -6,8 +6,6 @@ export const routes: Routes = [
   {
     path: '',
     component: Dashboard,
-    children: [
-      { path: 'contacts', component: Contacts },
-    ],
+    children: [{ path: 'contacts', component: Contacts }],
   },
 ];
