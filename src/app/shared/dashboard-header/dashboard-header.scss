@@ -10,8 +10,24 @@
   box-shadow: 0px 4px 4px 0px #0000001a;
   height: 100%;
   &-mobile-menu {
-    display: none;
-  }
+      padding: 10px;
+      display: block;
+      position: absolute;
+      top: 77px;
+      right: 10px;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+      background-color: all-styles.$sidebar-background;
+      font-size: 1rem;
+      font-weight: 400;
+      color: all-styles.$sidebar-text;
+      li {
+        list-style: none;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+    }
 
   .mobile-view-logo {
     display: none;
@@ -45,26 +61,6 @@
     padding: 20px 16px;
     .mobile-view-logo {
       display: block;
-    }
-
-    &-mobile-menu {
-      padding: 10px;
-      display: block;
-      position: absolute;
-      top: 57px;
-      right: 10px;
-      border-top-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      border-bottom-left-radius: 20px;
-      background-color: all-styles.$sidebar-background;
-      font-size: 1rem;
-      font-weight: 400;
-      color: all-styles.$sidebar-text;
-      li {
-        list-style: none;
-        padding: 8px 16px;
-        cursor: pointer;
-      }
     }
 
     &-icons-help-logo {
