@@ -21,11 +21,9 @@
   @if (mobile_menu()) {
     <div class="dashboard-header-mobile-menu">
       <ul>
-        <li (click)="closeMenu()">
-          <a routerLink="help-page">Help</a>
-        </li>
+        <li (click)="closeMenu()" routerLink="help-page">Help</li>
         <li (click)="closeMenu()">Legal Notice</li>
-        <li (click)="closeMenu()">Privacy Policy</li>
+        <li (click)="closeMenu()" routerLink="privacy-policy">Privacy Policy</li>
         <li (click)="closeMenu()">Log out</li>
       </ul>
     </div>
