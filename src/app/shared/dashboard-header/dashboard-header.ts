@@ -12,7 +12,6 @@ export class DashboardHeader {
   openMobileMenu()
   {
     this.mobile_menu.set(true);
-    console.log("open menu mobile")
   }
 
   closeMenu()
