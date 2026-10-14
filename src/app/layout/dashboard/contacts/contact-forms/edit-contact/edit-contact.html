@@ -10,7 +10,9 @@
     </div>
 
     <div class="edit-contact__main">
-      <div class="edit-contact__avatar">{{ initials() }}</div>
+      <div class="edit-contact__avatar" [style.background-color]="avatar().color">
+        {{ avatar().name }}
+      </div>
 
       <form class="edit-contact__form" [formGroup]="contactForm" (ngSubmit)="onSave()">
         <div class="edit-contact__field">
@@ -41,7 +43,7 @@
             autocomplete="email"
             formControlName="email"
           />
-          <img class="edit-contact__icon" src="assets/icons/mail.svg" alt="Email logo" />
+          <img class="edit-contact__icon" src="assets/icons/mail.svg" alt="" />
           @if (contactForm.controls.email.touched) {
             @if (contactForm.controls.email.errors?.['required']) {
               <p class="edit-contact__error">This field is required</p>
@@ -60,7 +62,7 @@
             autocomplete="tel"
             formControlName="phone"
           />
-          <img class="edit-contact__icon" src="assets/icons/call.svg" alt="Phone logo" />
+          <img class="edit-contact__icon" src="assets/icons/call.svg" alt="" />
           @if (contactForm.controls.phone.touched) {
             @if (contactForm.controls.phone.errors?.['required']) {
               <p class="edit-contact__error">This field is required</p>
@@ -95,5 +97,3 @@
     </div>
   </div>
 </div>
-
-

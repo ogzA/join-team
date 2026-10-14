@@ -2,6 +2,7 @@ import { Component, OnInit, computed, inject, input, output, signal } from '@ang
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Supabase } from '../../../../../shared/services/supabase';
 import { contactValidators } from '../contact-validators';
+import { NameLogo } from '../../../../../shared/services/name-logo';
 
 type EditableContact = { id: number; name: string; email: string; phone: string };
 
@@ -13,6 +14,7 @@ type EditableContact = { id: number; name: string; email: string; phone: string 
 })
 export class EditContact implements OnInit {
   private fb = inject(FormBuilder);
+  private nlService = inject(NameLogo);
   private db = inject(Supabase);
 
   contact = input.required<EditableContact>(); // Kontakt, der bearbeitet wird (kommt aus contact-detail)
@@ -21,15 +23,8 @@ export class EditContact implements OnInit {
   isSaving = signal(false);
   errorMessage = signal('');
 
-  // Initialen für den Avatar, z. B. "Anna Müller" -> "AM"
-  initials = computed(() =>
-    this.contact()
-      .name.split(' ')
-      .map((part) => part[0])
-      .join('')
-      .slice(0, 2)
-      .toUpperCase(),
-  );
+  // Kürzel und Farbe für den Avatar, wie in der Detailansicht
+  avatar = computed(() => this.nlService.setNameLogo(this.contact().name));
 
   contactForm = this.fb.nonNullable.group({
     name: ['', contactValidators.name],
