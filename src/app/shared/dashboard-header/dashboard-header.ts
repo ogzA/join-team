@@ -1,7 +1,8 @@
 import { Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-dashboard-header',
   styleUrl: './dashboard-header.scss',
   templateUrl: './dashboard-header.html',
@@ -9,14 +10,12 @@ import { Component, signal } from '@angular/core';
 export class DashboardHeader {
   mobile_menu = signal<boolean>(false);
 
-  openMobileMenu()
-  {
+  openMobileMenu() {
     this.mobile_menu.set(true);
-    console.log("open menu mobile")
+    console.log('open menu mobile');
   }
 
-  closeMenu()
-  {
+  closeMenu() {
     this.mobile_menu.set(false);
   }
 }
