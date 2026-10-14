@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { Router } from '@angular/router';
 import { AddContact } from '../add-contact/add-contact';
-
+import { Supabase } from '../../../../shared/services/supabase';
 
 @Component({
   imports: [AddContact],
@@ -11,7 +11,13 @@ import { AddContact } from '../add-contact/add-contact';
 })
 export class ContactList {
   private router = inject(Router);
+  dbService = inject(Supabase);
+  contacts = this.dbService.contacts;
   isDialogOpen = false;
+
+  async ngOnInit() {
+    await this.dbService.getContacts();
+  }
 
   openDialog() {
     this.isDialogOpen = true;

@@ -77,9 +77,13 @@
         border-radius: 10px;
 
         &:hover {
-          background-color: $color-primary;
+          background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
+        }
 
-          .contact-name {
+        &.is-selected {
+          background: $color-primary;
+
+          span {
             color: white;
           }
         }
