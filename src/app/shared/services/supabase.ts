@@ -37,37 +37,37 @@ export class Supabase {
     this.getContacts();
     this.getUser();
 
-    this.channels = this.supabase
-      .channel('changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'contacts',
-        },
-        (payload) => {
-          console.log(payload);
-          let tmpContact = payload.new as Contact;
-          console.log(tmpContact);
-          // this.setContact(tmpContact); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
-        },
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'user',
-        },
-        (payload) => {
-          console.log(payload);
-          let tmpUser = payload.new as User;
-          console.log(tmpUser);
-          // this.setUser(tmpUser); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
-        },
-      )
-      .subscribe();
+    // this.channels = this.supabase
+    //   .channel('changes')
+    //   .on(
+    //     'postgres_changes',
+    //     {
+    //       event: '*',
+    //       schema: 'public',
+    //       table: 'contacts',
+    //     },
+    //     (payload) => {
+    //       console.log(payload);
+    //       let tmpContact = payload.new as Contact;
+    //       console.log(tmpContact);
+    //       // this.setContact(tmpContact); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
+    //     },
+    //   )
+    //   .on(
+    //     'postgres_changes',
+    //     {
+    //       event: '*',
+    //       schema: 'public',
+    //       table: 'user',
+    //     },
+    //     (payload) => {
+    //       console.log(payload);
+    //       let tmpUser = payload.new as User;
+    //       console.log(tmpUser);
+    //       // this.setUser(tmpUser); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
+    //     },
+    //   )
+    //   .subscribe();
   }
 
   ngOnDestroy() {
@@ -81,6 +81,7 @@ export class Supabase {
       .order('name', { ascending: true });
     if (!response) return;
     this.contacts.set(response.data ?? ([] as Contact[]));
+    // console.log(this.contacts());
   }
 
   async getUser() {

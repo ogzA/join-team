@@ -1,7 +1,9 @@
 <section class="contact-details">
   @if (dbService.selectedContact(); as contact) {
     <section class="contact">
-      <img src="assets/icons/name_logo_dummy.png" alt="Name Logo" />
+      <div class="logo" [style]="changeStyles()">
+        <p>{{ shortname }}</p>
+      </div>
 
       <div class="contact-name">
         @if (contact.name) {
