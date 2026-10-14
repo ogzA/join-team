@@ -1,4 +1,4 @@
-@use '../../../../../../public/assets/scss/all-styles';
+@use '../../../../../../../public/assets/scss/all-styles';
 
 .modal {
   position: fixed;
@@ -37,7 +37,7 @@
       justify-content: center;
       gap: 12px;
       background: all-styles.$sidebar-background;
-      width: auto;
+      width: 467px;
       height: 594px;
       padding: 66px 48px;
       border-top-left-radius: 30px;
@@ -98,6 +98,13 @@
           border: 1px solid #6b6b6bb6;
           position: relative;
         }
+        .error {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          margin-top: 4px;
+          white-space: nowrap;
+        }
       }
       .field_icon {
         position: absolute;
@@ -144,7 +151,8 @@
 
 @media (max-width: all-styles.$breakpoint-mobile) {
   .modal-content {
-    height: 760px;
+    width: auto;
+    height: auto;
     border-radius: 30px;
     flex-direction: column;
     transform: translate(-50%, 150%);
@@ -162,7 +170,7 @@
 
       .profile_logo {
         position: absolute;
-        top: -48px; // cancels the 48px gap above part2
+        top: -48px; 
         left: 50%;
         transform: translate(-50%, -50%);
       }
@@ -172,6 +180,7 @@
         display: none;
       }
       width: 100%;
+      height: auto;
       min-height: 320px;
       padding: 20px;
       border-top-left-radius: 30px;
@@ -187,8 +196,9 @@
       }
     }
     form {
+      height: 450px;
       padding: 50px 16px;
-      gap: 15px;
+      gap: 5px;
       .cancel_btn {
         display: none;
       }
@@ -197,6 +207,15 @@
       }
       .submit_btn {
         gap: 10px;
+      }
+      .field{
+        min-height: 75px;
+      }
+      .field .error {
+        position: static;
+        display: block;
+        margin-top: 4px;
+        white-space: normal;
       }
     }
   }
@@ -208,7 +227,8 @@
 
 @media (max-width: all-styles.$breakpoint-small-devices) {
   .modal-content {
-    height: 760px;
+    width: auto;
+    height: auto;
     border-radius: 30px;
     flex-direction: column;
     transform: translate(-50%, 150%);
@@ -236,6 +256,8 @@
         display: none;
       }
       width: 100%;
+      min-height: 320px;
+      height: auto;
       padding: 20px;
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
@@ -250,14 +272,16 @@
       }
     }
     form {
+      height: 450px;
+      gap: 5px;
       .field {
-         input {
-        width: clamp(255px, calc(-79px + 104.375vw), 422px);
+        min-height: 75px;
+        input {
+          width: clamp(255px, calc(-79px + 104.375vw), 422px);
+        }
       }
-      }
-     
+
       padding: 50px 16px;
-      gap: 15px;
       .cancel_btn {
         display: none;
       }

@@ -1,7 +1,7 @@
 import { Component, inject} from '@angular/core';
 import { Router } from '@angular/router';
-import { AddContact } from '../add-contact/add-contact';
 import { Supabase } from '../../../../shared/services/supabase';
+import { AddContact } from '../contact-forms/add-contact/add-contact';
 
 @Component({
   imports: [AddContact],

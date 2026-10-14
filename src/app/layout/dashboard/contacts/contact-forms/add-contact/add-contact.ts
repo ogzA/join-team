@@ -1,6 +1,6 @@
 import { Component, inject, input, output, VERSION } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Supabase } from '../../../../shared/services/supabase';
+import { Supabase } from '../../../../../shared/services/supabase';
 import { Router } from '@angular/router';
 
 @Component({
