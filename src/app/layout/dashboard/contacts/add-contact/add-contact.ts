@@ -15,6 +15,11 @@ export class AddContact {
   isOpen = input(false);   
   closed = output<void>();
 
+
+  constructor()
+  {
+  }
+
   fb = inject(FormBuilder);
   contactForm = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z ]*$')]],
@@ -30,7 +35,7 @@ export class AddContact {
   });
 
   formSubmit() {
-   
+  
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       this.contactForm.reset(this.contactForm.value);

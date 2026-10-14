@@ -16,7 +16,9 @@
 
         <!-- this is second part of modal -->
         <div class="modal_part2">
-            <img class="profile_logo" src="assets/icons/profile_Logo.svg" alt="profile_logo">
+            <div class="profile_anchor">
+                <img class="profile_logo" src="assets/icons/profile_Logo.svg" alt="profile_logo">
+            </div>
             <form [formGroup]="contactForm" (ngSubmit)="formSubmit()">
                 <button type="button" class="modal-content-close-button" (click)="close()"><img
                         src="assets/icons/close-dialog.svg" alt="close_dialog_logo"></button>

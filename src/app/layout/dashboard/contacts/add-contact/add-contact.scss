@@ -37,7 +37,7 @@
       justify-content: center;
       gap: 12px;
       background: all-styles.$sidebar-background;
-      width: 467px;
+      width: auto;
       height: 594px;
       padding: 66px 48px;
       border-top-left-radius: 30px;
@@ -153,9 +153,18 @@
     }
     .modal_part2 {
       flex-direction: column;
+      gap: unset;
+      .profile_anchor {
+        display: block;
+        position: relative;
+        height: 0;
+      }
+
       .profile_logo {
         position: absolute;
-        top: 260px;
+        top: -48px; // cancels the 48px gap above part2
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     }
     .modal_part1 {
@@ -163,6 +172,7 @@
         display: none;
       }
       width: 100%;
+      min-height: 320px;
       padding: 20px;
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
@@ -207,9 +217,18 @@
     }
     .modal_part2 {
       flex-direction: column;
+      gap: unset;
+      .profile_anchor {
+        display: block;
+        position: relative;
+        height: 0;
+      }
+
       .profile_logo {
         position: absolute;
-        top: 260px;
+        top: -48px;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     }
     .modal_part1 {
@@ -231,9 +250,12 @@
       }
     }
     form {
-      input {
+      .field {
+         input {
         width: clamp(255px, calc(-79px + 104.375vw), 422px);
       }
+      }
+     
       padding: 50px 16px;
       gap: 15px;
       .cancel_btn {
