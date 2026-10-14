@@ -1,32 +1,34 @@
 <div class="contact-list">
   <div class="add-contact-wrapper">
     <button class="add-contact" (click)="openDialog()">
-      <span class="add-contact-text" >Add new contact</span>
+      <span class="add-contact-text">Add new contact</span>
       <img src="assets/icons/person_add.svg" />
     </button>
-    <app-add-contact [isOpen]="isDialogOpen"  (closed)="closeDialog()"></app-add-contact>
+    <app-add-contact [isOpen]="isDialogOpen" (closed)="closeDialog()"></app-add-contact>
   </div>
 
   <div class="contact-group-wrapper">
-    <div class="contact-group">
-      <h3 class="contact-group-letter">A</h3>
-      <ul class="contact-group-items">
-        @for (contact of contacts(); track contact.id) {
-          <li [class.is-selected]="contact.id === dbService.selectedContactId()">
-            <button
-              class="contact-item"
-              type="button"
-              (click)="dbService.selectContact(contact.id)"
-            >
-              <span class="contact-avatar">AM</span>
-              <span class="contact-info">
-                <span class="contact-name"> {{ contact.name }} </span>
-                <span class="contact-email"> {{ contact.email }} </span>
-              </span>
-            </button>
-          </li>
-        }
-      </ul>
-    </div>
+    @for (group of groupedContacts(); track group.letter) {
+      <div class="contact-group">
+        <h3 class="contact-group-letter">{{ group.letter }}</h3>
+        <ul class="contact-group-items">
+          @for (contact of group.contacts; track contact.id) {
+            <li [class.is-selected]="contact.id === dbService.selectedContactId()">
+              <button
+                class="contact-item"
+                type="button"
+                (click)="dbService.selectContact(contact.id)"
+              >
+                <span class="contact-avatar">AM</span>
+                <span class="contact-info">
+                  <span class="contact-name"> {{ contact.name }} </span>
+                  <span class="contact-email"> {{ contact.email }} </span>
+                </span>
+              </button>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </div>
 </div>
