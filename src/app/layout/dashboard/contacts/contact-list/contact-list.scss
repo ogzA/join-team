@@ -78,6 +78,14 @@
         &:hover {
           background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
         }
+
+        &.is-selected {
+          background: $color-primary;
+
+          span {
+            color: white;
+          }
+        }
       }
     }
 

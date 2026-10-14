@@ -11,8 +11,12 @@
       <h3 class="contact-group-letter">A</h3>
       <ul class="contact-group-items">
         @for (contact of contacts(); track contact.id) {
-          <li>
-            <button class="contact-item" type="button">
+          <li [class.is-selected]="contact.id === dbService.selectedContactId()">
+            <button
+              class="contact-item"
+              type="button"
+              (click)="dbService.selectContact(contact.id)"
+            >
               <span class="contact-avatar">AM</span>
               <span class="contact-info">
                 <span class="contact-name"> {{ contact.name }} </span>

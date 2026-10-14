@@ -1,4 +1,4 @@
-import { Service, signal, WritableSignal } from '@angular/core';
+import { computed, Service, WritableSignal, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 
 interface Contact {
@@ -75,7 +75,10 @@ export class Supabase {
   }
 
   async getContacts() {
-    let response = await this.supabase.from('contacts').select('*');
+    let response = await this.supabase
+      .from('contacts')
+      .select('*')
+      .order('name', { ascending: true });
     if (!response) return;
     this.contacts.set(response.data ?? ([] as Contact[]));
   }
@@ -118,5 +121,16 @@ export class Supabase {
 
   async deleteUser(id: number) {
     const { data: error } = await this.supabase.from('user').delete().eq('id', id);
+  }
+
+  selectedContactId = signal<number | null>(null);
+
+  selectedContact = computed(() => {
+    return this.contacts().find((contact) => contact.id === this.selectedContactId());
+  });
+
+  selectContact(id: number) {
+    this.selectedContactId.set(id);
+    console.log('Selected id:', this.selectedContactId());
   }
 }
