@@ -13,7 +13,7 @@
 
 .dashboard-main {
   overflow-y: auto; // nur Main scrollt, wenn der Platz benötigt wird, Sidbar + Header bleiben stehen
-  background-color: all-styles.$dashboard-background; // Platzhalter - vor Abgabe löschen
+  background-color: all-styles.$dashboard-background;
   scrollbar-width: none;
 }
 
@@ -69,7 +69,6 @@
       font-size: 20px;
       font-weight: 700;
       line-height: 120%;
-      padding-left: 32px;
     }
 
     p {
@@ -80,15 +79,29 @@
     }
 
     ol {
-      margin-left: 28px;
+      list-style: none;
+      counter-reset: step;
+      margin: 0;
+      padding: 0;
 
-      li::marker {
-        font-style: bold;
-        font-size: 27px;
-      }
+      li {
+        counter-increment: step;
+        display: grid;
+        grid-template-columns: 29px 1fr;
+        column-gap: 16px;
 
-      p {
-        padding-left: 32px;
+        &::before {
+          content: counter(step) '.';
+          grid-row: 1 / 3;
+          font-size: 27px;
+          font-weight: 700;
+          line-height: 120%;
+        }
+
+        h4,
+        p {
+          grid-column: 2;
+        }
       }
     }
   }
