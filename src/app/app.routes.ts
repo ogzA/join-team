@@ -8,8 +8,11 @@ import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
 export const routes: Routes = [
   {
     path: '',
-    component:AddContact,
-    children: [{ path: 'contacts', component: Contacts }],
+    component: Dashboard,
+    children: [
+      { path: '', redirectTo: 'contacts', pathMatch: 'full' },
+      { path: 'contacts', component: Contacts },
+    ],
   },
   {
     path: 'help-page',
