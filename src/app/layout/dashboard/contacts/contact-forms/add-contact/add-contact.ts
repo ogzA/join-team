@@ -23,19 +23,6 @@ export class AddContact {
     email: ['', contactValidators.email],
     phone: ['', contactValidators.phone],
   });
-  
-  // contactForm = this.fb.nonNullable.group({
-  //   name: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z ]*$')]],
-  //   email: [
-  //     '',
-  //     [
-  //       Validators.required,
-  //       Validators.email,
-  //       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'),
-  //     ],
-  //   ],
-  //   phone: ['', [Validators.required, Validators.pattern('^[\\+]?[0-9]{10,16}$')]],
-  // });
 
   formSubmit() {
   
@@ -57,6 +44,8 @@ export class AddContact {
   }
 
   close() {
+    this.contactForm.reset();
+    this.contactForm.markAsUntouched();
     this.closed.emit();
   }
 }
