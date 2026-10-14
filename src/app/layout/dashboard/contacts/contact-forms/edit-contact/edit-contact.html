@@ -1,7 +1,7 @@
 <div class="edit-contact">
   <div class="edit-contact__content">
     <button class="edit-contact__close" type="button" aria-label="Close" (click)="closed.emit()">
-      <img src="assets/icons/close.svg" alt="" />
+      <img src="assets/icons/close-dialog.svg" alt="" />
     </button>
 
     <div class="edit-contact__aside">
@@ -41,7 +41,7 @@
             autocomplete="email"
             formControlName="email"
           />
-          <img class="edit-contact__icon" src="assets/icons/mail.svg" alt="" />
+          <img class="edit-contact__icon" src="assets/icons/mail.svg" alt="Email logo" />
           @if (contactForm.controls.email.touched) {
             @if (contactForm.controls.email.errors?.['required']) {
               <p class="edit-contact__error">This field is required</p>
@@ -60,7 +60,7 @@
             autocomplete="tel"
             formControlName="phone"
           />
-          <img class="edit-contact__icon" src="assets/icons/call.svg" alt="" />
+          <img class="edit-contact__icon" src="assets/icons/call.svg" alt="Phone logo" />
           @if (contactForm.controls.phone.touched) {
             @if (contactForm.controls.phone.errors?.['required']) {
               <p class="edit-contact__error">This field is required</p>
