@@ -2,13 +2,13 @@ import { Service } from '@angular/core';
 
 @Service()
 export class NameLogo {
+  colors = ['#00AA55', '#009FD4', '#B381B3', '#E3BC00', '#939393', '#D47500', '#DC2A2A'];
+
   setNameLogo(username: string) {
     let obj = {
       name: '',
       color: '',
     };
-
-    const colors = ['#00AA55', '#009FD4', '#B381B3', '#E3BC00', '#939393', '#D47500', '#DC2A2A'];
     let shortname;
 
     if (username.includes(' ')) {
@@ -17,7 +17,7 @@ export class NameLogo {
     obj.name = shortname;
 
     if (username.includes(' ')) {
-      obj.color = colors[this.numberFromText(shortname) % colors.length];
+      obj.color = this.colors[this.numberFromText(shortname) % this.colors.length];
     } else obj.color = '#939393';
 
     return obj;
@@ -29,5 +29,13 @@ export class NameLogo {
       .map((char) => char.charCodeAt(0))
       .join('');
     return parseInt(charCodes, 10);
+  }
+
+  getLogoColor(username: string) {
+    return this.setNameLogo(username).color;
+  }
+
+  getLogoName(username: string) {
+    return this.setNameLogo(username).name;
   }
 }
