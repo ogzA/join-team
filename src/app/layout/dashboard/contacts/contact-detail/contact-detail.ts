@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { NameLogo } from '../../../../shared/services/name-logo';
 import { Supabase } from '../../../../shared/services/supabase';
+import { EditContact } from '../contact-forms/edit-contact/edit-contact';
 
 @Component({
-  imports: [],
+  imports: [EditContact],
   selector: 'app-contact-detail',
   styleUrl: './contact-detail.scss',
   templateUrl: './contact-detail.html',
@@ -12,50 +13,23 @@ export class ContactDetail {
   dbService = inject(Supabase);
   nlService = inject(NameLogo);
 
-  logoColor = '#939393';
-  shortname = 'G';
-  username = 'Guest';
+  isEditOpen = signal(false);
 
-  contact = {
-    name: 'Guest',
-    email: '',
-    phone: '',
-  };
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.username = this.dbService.contacts()[this.dbService.id().id].name;
-      this.shortname = this.nlService.setNameLogo(this.username).name;
-      this.logoColor = this.nlService.setNameLogo(this.username).color;
-
-      this.contact.name = this.dbService.contacts()[this.dbService.id().id].name;
-      this.contact.email = this.dbService.contacts()[this.dbService.id().id].email;
-      this.contact.phone = this.dbService.contacts()[this.dbService.id().id].phone;
-    }, 1000);
-
-    // console.log('Test: ', this.username, this.shortname, this.logoColor);
-
-    // requestAnimationFrame(() => this.ngOnInit());
-    // console.log(this.dbService.id().id);
-    // console.log(this.dbService.contacts());
-    // this.changeNameLogo('detailLogo', username);
-  }
+  nameLogo = computed(() => {
+    const contact = this.dbService.selectedContact();
+    return this.nlService.setNameLogo(contact?.name ?? '');
+  });
 
   changeStyles() {
-    return `background:${this.logoColor}`;
+    return `background:${this.nameLogo().color}`;
   }
 
   editContact() {
-    //Open Dialog später
-    console.log('Open Dialog folgt... Test');
+    this.isEditOpen.set(true);
   }
 
-  deleteContact() {
-    //Delete später vom Supabase Service
-    console.log('Delete Methode folgt... Test');
+  async deleteContact(id: number) {
+    await this.dbService.deleteContact(id);
+    this.dbService.selectedContactId.set(null);
   }
-
-  // isNumber(value: any) {
-  //   return !isNaN(parseFloat(value)) && isFinite(value);
-  // }
 }

@@ -2,7 +2,7 @@
   @if (dbService.selectedContact(); as contact) {
     <section class="contact">
       <div class="logo" [style]="changeStyles()">
-        <p>{{ shortname }}</p>
+        <p>{{ nameLogo().name }}</p>
       </div>
 
       <div class="contact-name">
@@ -10,14 +10,13 @@
           <h2>{{ contact.name }}</h2>
         }
 
-        <!-- {{ dbService.id().id }} -->
         <div class="contact-btn">
           <button (click)="editContact()" class="edit-btn">
             <img src="assets/icons/edit-btn.png" alt="Edit Button" />
             <p>Edit</p>
           </button>
 
-          <button (click)="deleteContact()" class="delete-btn">
+          <button (click)="deleteContact(contact.id)" class="delete-btn">
             <img src="assets/icons/delete-btn.png" alt="Delete Button" />
             <p>Delete</p>
           </button>
@@ -38,5 +37,9 @@
         <p>{{ contact.phone }}</p>
       }
     </section>
+
+    @if (isEditOpen()) {
+      <app-edit-contact [contact]="contact" (closed)="isEditOpen.set(false)" />
+    }
   }
 </section>

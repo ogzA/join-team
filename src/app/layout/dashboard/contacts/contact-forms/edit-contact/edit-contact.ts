@@ -58,7 +58,7 @@ export class EditContact implements OnInit {
   async onDelete() {
     await this.runAction(async () => {
       await this.db.deleteContact(this.contact().id);
-      this.db.id.set({ id: -1 });
+      this.db.selectedContactId.set(null);
     });
   }
 
