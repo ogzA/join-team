@@ -1,0 +1,80 @@
+<div class="modal" [class.show-modal]="isOpen()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+
+        <!-- this is first part of modal -->
+        <div class="modal_part1">
+            <button type="button" class="close-logo-mobile" (click)="close()"> <img
+                    src="assets/icons/close-reponsive.svg" alt="close_logo_mobile_view">
+            </button>
+            <img class="logo_size" src="assets/images/logo.svg" alt="join_logo">
+            <span>
+                <p class="font_add_contact">Add contact</p>
+                <p class="font-subheading">Tasks are better with a team!</p>
+            </span>
+            <span class="blue_border"></span>
+        </div>
+
+        <!-- this is second part of modal -->
+        <div class="modal_part2">
+            <div class="profile_anchor">
+                <img class="profile_logo" src="assets/icons/profile_Logo.svg" alt="profile_logo">
+            </div>
+            <form [formGroup]="contactForm" (ngSubmit)="formSubmit()">
+                <button type="button" class="modal-content-close-button" (click)="close()"><img
+                        src="assets/icons/close-dialog.svg" alt="close_dialog_logo"></button>
+
+                <div class="field">
+                    <div class="field_input">
+                        <input placeholder="Name" type="text" formControlName="name">
+                        <img class="field_icon" src="assets/icons/person.svg" alt="person_logo">
+                    </div>
+                    @if (contactForm.controls['name'].touched || contactForm.controls['name'].dirty) {
+                    @if (contactForm.controls['name'].errors?.['required']) {
+                    <p class="error">This field is required</p>
+                    } @else if(contactForm.controls['name'].errors?.['pattern']) {
+                    <p class="error">Check your name and try again</p>
+                    }
+                    }
+
+                </div>
+                <div class="field">
+                    <div class="field_input">
+                        <input placeholder="Email" type="email" formControlName="email">
+                        <img class="field_icon" src="assets/icons/mail (1).svg" alt="email_logo">
+                    </div>
+
+                    @if (contactForm.controls['email'].touched || contactForm.controls['email'].dirty) {
+                    @if (contactForm.controls['email'].errors?.['required']) {
+                    <p class="error">This field is required</p>
+                    }
+                    @else if (contactForm.controls['email'].errors?.['pattern']) {
+                    <p class="error">Check your email and try again</p>
+                    }
+                    }
+                </div>
+                <div class="field">
+                    <div class="field_input">
+                        <input placeholder="Phone" type="text" formControlName="phone">
+                        <img class="field_icon" src="assets/icons/call.svg" alt="phone_logo">
+                    </div>
+
+                    @if (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty){
+                    @if (contactForm.controls['phone'].errors?.['required']) {
+                    <p class="error">This field is required</p>
+                    }
+                    @else if (contactForm.controls['phone'].errors?.['pattern']) {
+                    <p class="error">Check your Phone number and try again</p>
+                    }
+                    }
+
+                </div>
+                <div class="form-button">
+                    <button class="cancel_btn" type="reset">Cancel <img src="assets/icons/iconoir_cancel.svg"
+                            alt="cancel_logo"></button>
+                    <button class="submit_btn" type="submit" [disabled]="contactForm.invalid">Create contact <img
+                            src="assets/icons/check.svg" alt="cancel_logo"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

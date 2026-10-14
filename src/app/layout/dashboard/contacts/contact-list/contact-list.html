@@ -1,9 +1,10 @@
 <div class="contact-list">
   <div class="add-contact-wrapper">
-    <button class="add-contact">
-      <span class="add-contact-text">Add new contact</span>
+    <button class="add-contact" (click)="openDialog()">
+      <span class="add-contact-text" >Add new contact</span>
       <img src="assets/icons/person_add.svg" />
     </button>
+    <app-add-contact [isOpen]="isDialogOpen"  (closed)="closeDialog()"></app-add-contact>
   </div>
 
   <div class="contact-group-wrapper">

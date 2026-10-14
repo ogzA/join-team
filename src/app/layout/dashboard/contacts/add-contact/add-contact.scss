@@ -1,0 +1,276 @@
+@use '../../../../../../public/assets/scss/all-styles';
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s linear 0.25s;
+  .error {
+    color: all-styles.$error-color;
+    margin: 4px 0 0;
+  }
+
+  &-content {
+    @include all-styles.flex-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    transform: translate(150%, -50%);
+    transition: transform 0.25s ease;
+    background-color: all-styles.$button-text;
+    width: auto;
+    height: 594px;
+    border-radius: 30px;
+    gap: 48px;
+
+    .modal_part1 {
+      @include all-styles.flex-col-center;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 12px;
+      background: all-styles.$sidebar-background;
+      width: auto;
+      height: 594px;
+      padding: 66px 48px;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      color: all-styles.$button-text;
+      .close-logo-mobile {
+        display: none;
+      }
+      .blue_border {
+        border: 3px solid all-styles.$join-blue;
+        width: 95px;
+        border-radius: 3px;
+      }
+      .logo_size {
+        width: 55px;
+        height: 66px;
+      }
+      .font_add_contact {
+        font-size: clamp(47px, calc(41px + 1.667vw), 61px);
+        font-weight: 700;
+      }
+      .font-subheading {
+        font-size: clamp(20px, calc(17px + 0.833vw), 27px);
+        font-weight: 400;
+      }
+    }
+    .modal_part2 {
+      @include all-styles.flex-center;
+      justify-content: center;
+      gap: 72px;
+    }
+    &-close-button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: right;
+    }
+    form {
+      @include all-styles.flex-col-center;
+      gap: 32px;
+      padding-right: 48px;
+
+      .form-button {
+        @include all-styles.flex-center;
+        justify-content: flex-start;
+        gap: 24px;
+        padding-top: 1rem;
+      }
+      .field {
+        position: relative;
+        input {
+          display: block;
+          padding: 13px 21px;
+          border-radius: 10px;
+          width: 422px;
+          height: 50px;
+          border: 1px solid #6b6b6bb6;
+          position: relative;
+        }
+      }
+      .field_icon {
+        position: absolute;
+        top: 25px;
+        right: 16px;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+      .cancel_btn,
+      .submit_btn {
+        @include all-styles.flex-center;
+        justify-content: center;
+        padding: 1rem;
+        font-size: 1.25rem;
+        border-radius: 10px;
+        border: 1px solid all-styles.$sidebar-background;
+        font-weight: 700;
+      }
+      .cancel_btn:hover {
+        border: 2px solid all-styles.$hover-button-Form;
+        box-shadow: 0px 4px 4px 0px #00000040;
+      }
+      .submit_btn:hover {
+        background-color: all-styles.$hover-button-Form;
+        box-shadow: 0px 4px 4px 0px #00000040;
+      }
+      .submit_btn {
+        background: all-styles.$sidebar-background;
+        color: all-styles.$button-text;
+      }
+    }
+  }
+}
+.show-modal .modal-content {
+  transform: translate(-50%, -50%);
+}
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s linear 0s;
+}
+
+@media (max-width: all-styles.$breakpoint-mobile) {
+  .modal-content {
+    height: 760px;
+    border-radius: 30px;
+    flex-direction: column;
+    transform: translate(-50%, 150%);
+    &-close-button {
+      display: none;
+    }
+    .modal_part2 {
+      flex-direction: column;
+      gap: unset;
+      .profile_anchor {
+        display: block;
+        position: relative;
+        height: 0;
+      }
+
+      .profile_logo {
+        position: absolute;
+        top: -48px; // cancels the 48px gap above part2
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .modal_part1 {
+      .logo_size {
+        display: none;
+      }
+      width: 100%;
+      min-height: 320px;
+      padding: 20px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      border-bottom-left-radius: unset;
+      .close-logo-mobile {
+        position: absolute;
+        display: block;
+        width: 100%;
+        top: 20px;
+        right: 20px;
+        text-align: right;
+      }
+    }
+    form {
+      padding: 50px 16px;
+      gap: 15px;
+      .cancel_btn {
+        display: none;
+      }
+      .form-button {
+        padding-top: 17px;
+      }
+      .submit_btn {
+        gap: 10px;
+      }
+    }
+  }
+
+  .show-modal .modal-content {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: all-styles.$breakpoint-small-devices) {
+  .modal-content {
+    height: 760px;
+    border-radius: 30px;
+    flex-direction: column;
+    transform: translate(-50%, 150%);
+    &-close-button {
+      display: none;
+    }
+    .modal_part2 {
+      flex-direction: column;
+      gap: unset;
+      .profile_anchor {
+        display: block;
+        position: relative;
+        height: 0;
+      }
+
+      .profile_logo {
+        position: absolute;
+        top: -48px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .modal_part1 {
+      .logo_size {
+        display: none;
+      }
+      width: 100%;
+      padding: 20px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      border-bottom-left-radius: unset;
+      .close-logo-mobile {
+        position: absolute;
+        display: block;
+        width: 100%;
+        top: 20px;
+        right: 20px;
+        text-align: right;
+      }
+    }
+    form {
+      .field {
+         input {
+        width: clamp(255px, calc(-79px + 104.375vw), 422px);
+      }
+      }
+     
+      padding: 50px 16px;
+      gap: 15px;
+      .cancel_btn {
+        display: none;
+      }
+      .form-button {
+        padding-top: 17px;
+      }
+      .submit_btn {
+        gap: 5px;
+      }
+    }
+  }
+
+  .show-modal .modal-content {
+    transform: translate(-50%, -50%);
+  }
+}
