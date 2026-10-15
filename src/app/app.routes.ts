@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Dashboard } from './layout/dashboard/dashboard';
 import { Contacts } from './layout/dashboard/contacts/contacts';
+import { LegalNotice } from './layout/legal-notice/legal-notice';
 import { HelpPage } from './layout/help-page/help-page';
 import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
 
@@ -20,5 +21,13 @@ export const routes: Routes = [
   {
     path: 'privacy-policy',
     component: PrivacyPolicy,
+  },
+  {
+    path: 'legal-notice',
+    component: LegalNotice,
+  },
+  {
+    path: 'legal-notice',
+    component: LegalNotice,
   },
 ];
