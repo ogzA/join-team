@@ -173,7 +173,12 @@
     transition:
       background-color 100ms ease,
       border-color 100ms ease,
-      color 100ms ease;
+      color 100ms ease,
+      box-shadow 100ms ease;
+
+    &:hover:not(:disabled) {
+      box-shadow: all-styles.$shadow-button;
+    }
 
     &--secondary {
       padding: 15px 24px;
@@ -182,8 +187,8 @@
       color: all-styles.$color-primary;
 
       &:hover:not(:disabled) {
-        border-color: all-styles.$color-secondary;
-        color: all-styles.$color-secondary;
+        border-color: all-styles.$hover-button-Form;
+        color: all-styles.$hover-button-Form;
       }
     }
 
@@ -195,7 +200,7 @@
       color: all-styles.$color-white;
 
       &:hover:not(:disabled) {
-        background-color: all-styles.$color-secondary;
+        background-color: all-styles.$hover-button-Form;
       }
     }
 
