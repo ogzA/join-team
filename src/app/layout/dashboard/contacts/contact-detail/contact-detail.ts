@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { NameLogo } from '../../../../shared/services/name-logo';
 import { Supabase } from '../../../../shared/services/supabase';
 import { EditContact } from '../contact-forms/edit-contact/edit-contact';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   imports: [EditContact],
@@ -12,6 +13,7 @@ import { EditContact } from '../contact-forms/edit-contact/edit-contact';
 export class ContactDetail {
   dbService = inject(Supabase);
   nlService = inject(NameLogo);
+  toast = inject(ToastService);
 
   isEditOpen = signal(false);
   isMenuOpen = signal(false);
@@ -32,7 +34,12 @@ export class ContactDetail {
 
   async deleteContact(id: number) {
     this.isMenuOpen.set(false);
-    await this.dbService.deleteContact(id);
-    this.dbService.selectedContactId.set(null);
+    try {
+      await this.dbService.deleteContact(id);
+      this.dbService.selectedContactId.set(null);
+      this.toast.success('Contact successfully deleted');
+    } catch {
+      this.toast.error('Contact could not be deleted');
+    }
   }
 }
