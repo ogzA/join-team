@@ -5,6 +5,14 @@
   <header class="contacts-details__header">
     <h1 class="contacts-details__title">Contacts</h1>
     <p class="contacts-details__subtitle">Better with a team</p>
+    <button
+      class="contacts-details__back"
+      type="button"
+      aria-label="Back to contact list"
+      (click)="closeDetails()"
+    >
+      <img src="assets/icons/arrow-left.png" alt="" />
+    </button>
   </header>
   <app-contact-detail />
 </section>
