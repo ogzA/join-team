@@ -3,35 +3,6 @@ import { Router } from '@angular/router';
 import { AddContact } from '../add-contact/add-contact';
 import { Supabase } from '../../../../shared/services/supabase';
 
-const ALPHABET = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z',
-];
-
 @Component({
   imports: [AddContact],
   selector: 'app-contact-list',
@@ -44,16 +15,22 @@ export class ContactList {
   contacts = this.dbService.contacts;
 
   groupedContacts = computed(() => {
-    const groups = ALPHABET.map((letter) => {
+    const sortedContacts = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+
+    console.log('Sorted Contacts', sortedContacts);
+
+    const letters = [
+      ...new Set(sortedContacts.map((contact) => contact.name.charAt(0).toUpperCase())),
+    ].sort((a, b) => a.localeCompare(b, 'de'));
+
+    return letters.map((letter) => {
       return {
         letter: letter,
-        contacts: this.contacts().filter(
+        contacts: sortedContacts.filter(
           (contact) => contact.name.charAt(0).toUpperCase() === letter,
         ),
       };
     });
-    console.log(groups.filter((group) => group.contacts.length > 0));
-    return groups.filter((group) => group.contacts.length > 0);
   });
 
   isDialogOpen = false;
