@@ -1,9 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Supabase } from './shared/services/supabase';
+import { ToastClass } from './shared/toast/toast';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,ToastClass],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '
 import { Supabase } from '../../../../../shared/services/supabase';
 import { Router } from '@angular/router';
 import { contactValidators } from '../contact-validators';
+import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -12,6 +13,7 @@ import { contactValidators } from '../contact-validators';
 })
 export class AddContact {
   dbservice = inject(Supabase);
+  private toast = inject(ToastService);
   showModal: boolean | undefined;
   isOpen = input(false);   
   closed = output<void>();
@@ -37,8 +39,8 @@ export class AddContact {
       role: 'User',
     };
 
-    console.log(contactObj);
     this.dbservice.setContact(contactObj);
+    this.toast.success('Contact succesfully created');
     this.close();
     } 
   }
