@@ -14,6 +14,7 @@ export class ContactDetail {
   nlService = inject(NameLogo);
 
   isEditOpen = signal(false);
+  isMenuOpen = signal(false);
 
   nameLogo = computed(() => {
     const contact = this.dbService.selectedContact();
@@ -25,10 +26,12 @@ export class ContactDetail {
   }
 
   editContact() {
+    this.isMenuOpen.set(false);
     this.isEditOpen.set(true);
   }
 
   async deleteContact(id: number) {
+    this.isMenuOpen.set(false);
     await this.dbService.deleteContact(id);
     this.dbService.selectedContactId.set(null);
   }

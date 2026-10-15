@@ -1,10 +1,10 @@
 @use '../../../../../../../public/assets/scss/all-styles';
 
 .edit-contact {
-  display: flex;
   position: fixed;
   inset: 0;
   z-index: 10;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
@@ -41,6 +41,10 @@
     }
   }
 
+  &__close-icon--white {
+    display: none;
+  }
+
   &__aside {
     display: flex;
     flex: 0 0 453px;
@@ -54,7 +58,6 @@
 
   &__logo {
     width: 54px;
-    height: auto;
   }
 
   &__title {
@@ -83,13 +86,13 @@
   }
 
   &__avatar {
-    margin-top: 67px;
     display: flex;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
     width: 120px;
     height: 120px;
+    margin-top: 67px;
     border: 3px solid all-styles.$color-white;
     border-radius: 50%;
     background-color: all-styles.$color-avatar-default;
@@ -116,7 +119,7 @@
     padding: 13px 53px 13px 21px;
     border: 1px solid all-styles.$color-input-border;
     border-radius: 10px;
-    font-family: inherit;
+    font: inherit;
     font-size: 20px;
     outline: none;
     transition: border-color 100ms ease;
@@ -128,11 +131,17 @@
 
   &__icon {
     position: absolute;
-    top: 14px;
+    top: 50%;
     right: 21px;
     width: 24px;
     height: 24px;
+    transform: translateY(-50%);
     pointer-events: none;
+  }
+
+  &__error,
+  &__error-global {
+    color: all-styles.$color-error;
   }
 
   &__error {
@@ -141,12 +150,10 @@
     left: 0;
     margin-top: 4px;
     font-size: 12px;
-    color: all-styles.$color-error;
   }
 
   &__error-global {
     font-size: 14px;
-    color: all-styles.$color-error;
   }
 
   &__actions {
@@ -159,7 +166,8 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-family: inherit;
+    border-radius: 10px;
+    font: inherit;
     font-size: 21px;
     cursor: pointer;
     transition:
@@ -170,7 +178,6 @@
     &--secondary {
       padding: 15px 24px;
       border: 1px solid all-styles.$color-primary;
-      border-radius: 8px;
       background-color: all-styles.$color-white;
       color: all-styles.$color-primary;
 
@@ -183,7 +190,6 @@
     &--primary {
       padding: 16px;
       border: none;
-      border-radius: 10px;
       background-color: all-styles.$color-primary;
       font-weight: 700;
       color: all-styles.$color-white;
@@ -200,23 +206,11 @@
   }
 }
 
-@media (max-width: all-styles.$breakpoint-mobile) {
+@media (max-width: all-styles.$breakpoint-tablet) {
   .edit-contact {
-    &__content {
-      flex-direction: column;
-      max-width: 396px;
-      min-height: auto;
-    }
-
-    &__close {
-      top: 24px;
-      right: 24px;
-    }
-
     &__aside {
-      flex-basis: auto;
-      padding: 32px 24px 80px;
-      border-radius: 30px 30px 0 0;
+      flex: 0 0 auto;
+      padding: 66px 32px;
     }
 
     &__title {
@@ -226,16 +220,88 @@
     &__main {
       flex-direction: column;
       align-items: center;
-      gap: 24px;
-      padding: 0 24px 32px;
+      justify-content: center;
+      gap: 32px;
+      padding: 48px 24px;
+    }
+
+    &__avatar {
+      margin-top: 0;
+    }
+  }
+}
+
+@media (max-width: all-styles.$breakpoint-mobile) {
+  .edit-contact {
+    &__content {
+      flex-direction: column;
+      max-width: 396px;
+      min-height: auto;
+      box-shadow: all-styles.$shadow-avatar;
+    }
+
+    &__close {
+      top: 24px;
+      right: 16px;
+
+      &:hover {
+        background-color: all-styles.$hover-button-Form;
+      }
+    }
+
+    &__close-icon {
+      display: none;
+
+      &--white {
+        display: block;
+      }
+    }
+
+    &__logo {
+      display: none;
+    }
+
+    &__aside {
+      height: 351px;
+      gap: 12px;
+      padding: 66px 24px;
+      border-radius: 30px 30px 0 0;
+    }
+
+    &__title {
+      gap: 12px;
+    }
+
+    &__main {
+      padding: 0 16px 56px;
     }
 
     &__avatar {
       margin-top: -60px;
     }
 
+    &__form {
+      gap: 24px;
+    }
+
+    &__input {
+      height: 41px;
+      padding-block: 0;
+    }
+
     &__actions {
       justify-content: center;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    &__btn {
+      height: 51px;
+      padding: 0 10px;
+
+      &--secondary {
+        font-size: 20px;
+      }
     }
   }
 }

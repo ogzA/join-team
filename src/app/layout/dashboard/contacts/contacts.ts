@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ContactList } from './contact-list/contact-list';
 import { ContactDetail } from './contact-detail/contact-detail';
+import { Supabase } from '../../../shared/services/supabase';
 
 @Component({
   imports: [ContactList, ContactDetail],
@@ -8,12 +9,15 @@ import { ContactDetail } from './contact-detail/contact-detail';
   styleUrl: './contacts.scss',
   templateUrl: './contacts.html',
   host: {
-    '[class.show-details]': 'selectedContactID() !== null',
+    '[class.show-details]': 'dbService.selectedContactId() !== null',
   },
 })
 export class Contacts {
+  dbService = inject(Supabase);
   /**
-   * ID of the currently selected contact, null if none is selected.
+   * Clears the selection and returns to the contact list on mobile
    */
-  selectedContactID = signal<number | null>(null);
+  closeDetails() {
+    this.dbService.selectedContactId.set(null);
+  }
 }
