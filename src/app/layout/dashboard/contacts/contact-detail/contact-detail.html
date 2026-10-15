@@ -38,6 +38,29 @@
       }
     </section>
 
+    <button
+      class="options-btn"
+      type="button"
+      aria-label="Open contact options"
+      (click)="isMenuOpen.set(true)"
+    >
+      <img src="assets/icons/more-vert.svg" alt="" />
+    </button>
+
+    @if (isMenuOpen()) {
+      <div class="options-backdrop" (click)="isMenuOpen.set(false)"></div>
+      <div class="options-menu">
+        <button type="button" (click)="editContact()">
+          <img src="assets/icons/edit-btn.png" alt="" />
+          <span>Edit</span>
+        </button>
+        <button type="button" (click)="deleteContact(contact.id)">
+          <img src="assets/icons/delete-btn.png" alt="" />
+          <span>Delete</span>
+        </button>
+      </div>
+    }
+
     @if (isEditOpen()) {
       <app-edit-contact [contact]="contact" (closed)="isEditOpen.set(false)" />
     }
