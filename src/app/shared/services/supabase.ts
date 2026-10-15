@@ -92,6 +92,13 @@ export class Supabase {
 
   async setContact(contact: { name: string; email: string; phone: string; role: string }) {
     const { data, error } = await this.supabase.from('contacts').insert([contact]).select();
+    if (error){
+      if (error.code === '23505') {
+        throw error;
+      }
+      throw error;
+    };
+    return data;
   }
 
   async setUser(user: { email: string; password: string; role: string }) {

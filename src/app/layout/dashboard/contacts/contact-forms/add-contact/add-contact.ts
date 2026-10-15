@@ -15,7 +15,7 @@ export class AddContact {
   dbservice = inject(Supabase);
   private toast = inject(ToastService);
   showModal: boolean | undefined;
-  isOpen = input(false);   
+  isOpen = input(false);
   closed = output<void>();
 
   fb = inject(FormBuilder);
@@ -26,23 +26,28 @@ export class AddContact {
     phone: ['', contactValidators.phone],
   });
 
-  formSubmit() {
-  
-    if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched();
-      this.contactForm.reset(this.contactForm.value);
-      return;
+  async formSubmit() {
+    try {
+      if (this.contactForm.invalid) {
+        this.contactForm.markAllAsTouched();
+        return;
+        } 
+        else {
+          const contactObj = {
+            ...this.contactForm.getRawValue(),
+            role: 'User',
+          };
+          await this.dbservice.setContact(contactObj);
+          this.toast.success('Contact succesfully created');
+          this.close();
+      }
+    } catch (error) {
+      if (error) {
+        this.toast.warning('A contact with this email already exists');
+      } else {
+        this.toast.warning('Something went wrong');
+      }
     }
-    else{
-    const contactObj = {
-      ...this.contactForm.getRawValue(),
-      role: 'User',
-    };
-
-    this.dbservice.setContact(contactObj);
-    this.toast.success('Contact succesfully created');
-    this.close();
-    } 
   }
 
   close() {
@@ -50,4 +55,13 @@ export class AddContact {
     this.contactForm.markAsUntouched();
     this.closed.emit();
   }
+
+  // private async runAction(action: () => Promise<void>) {
+  //   try {
+  //     await action();
+  //     this.toast.success('Something went wrong');
+  //   } catch(e) {
+  //     console.log(e);
+  //   }
+  // }
 }
