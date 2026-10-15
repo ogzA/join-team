@@ -1,7 +1,6 @@
-import { Component, inject, input, output, VERSION } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Component, inject, input, output } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Supabase } from '../../../../../shared/services/supabase';
-import { Router } from '@angular/router';
 import { contactValidators } from '../contact-validators';
 import { ToastService } from '../../../../../shared/services/toast.service';
 
@@ -55,13 +54,4 @@ export class AddContact {
     this.contactForm.markAsUntouched();
     this.closed.emit();
   }
-
-  // private async runAction(action: () => Promise<void>) {
-  //   try {
-  //     await action();
-  //     this.toast.success('Something went wrong');
-  //   } catch(e) {
-  //     console.log(e);
-  //   }
-  // }
 }
