@@ -1,10 +1,10 @@
 <div class="contact-list">
   <div class="add-contact-wrapper">
     <button class="add-contact" (click)="openDialog()">
-      <span class="add-contact-text" >Add new contact</span>
+      <span class="add-contact-text">Add new contact</span>
       <img src="assets/icons/person_add.svg" />
     </button>
-    <app-add-contact [isOpen]="isDialogOpen"  (closed)="closeDialog()"></app-add-contact>
+    <app-add-contact [isOpen]="isDialogOpen" (closed)="closeDialog()"></app-add-contact>
   </div>
 
   <div class="contact-group-wrapper">
@@ -18,7 +18,11 @@
               type="button"
               (click)="dbService.selectContact(contact.id)"
             >
-              <span class="contact-avatar">AM</span>
+              <span
+                class="contact-avatar"
+                [style]="changeStyles(nlService.getLogoColor(contact.name))"
+                >{{ nlService.getLogoName(contact.name) }}</span
+              >
               <span class="contact-info">
                 <span class="contact-name"> {{ contact.name }} </span>
                 <span class="contact-email"> {{ contact.email }} </span>
