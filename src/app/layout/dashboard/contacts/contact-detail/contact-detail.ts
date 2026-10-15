@@ -2,9 +2,10 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { NameLogo } from '../../../../shared/services/name-logo';
 import { Supabase } from '../../../../shared/services/supabase';
 import { EditContact } from '../contact-forms/edit-contact/edit-contact';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  imports: [EditContact],
+  imports: [EditContact,TitleCasePipe],
   selector: 'app-contact-detail',
   styleUrl: './contact-detail.scss',
   templateUrl: './contact-detail.html',
