@@ -133,6 +133,5 @@ export class Supabase {
 
   selectContact(id: number) {
     this.selectedContactId.set(id);
-    console.log('Selected id:', this.selectedContactId());
   }
 }
