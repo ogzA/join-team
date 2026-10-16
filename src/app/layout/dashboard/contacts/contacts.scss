@@ -15,8 +15,9 @@
 .contacts-details {
   flex: 1;
   min-width: 0;
-  padding: 80px 80px 0;
+  padding: 80px clamp(24px, 4vw, 80px) 0;
   background-color: all-styles.$dashboard-background;
+  container-type: inline-size;
 }
 
 .contacts-details__header {
@@ -48,46 +49,11 @@
   }
 }
 
-@media (max-width: all-styles.$breakpoint-mobile) {
-  :host {
-    display: block;
-  }
-
-  .contacts-list {
-    width: 100%;
-  }
-
-  .contacts-details {
-    display: none;
-    padding: 32px 16px 0;
-  }
-
-  :host(.show-details) {
-    .contacts-list {
-      display: none;
-    }
-
-    .contacts-details {
-      display: block;
-    }
-  }
-
+@container (max-width: 760px) {
   .contacts-details__header {
-    position: relative;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-  }
-
-  .contacts-details__back {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    padding: 4px;
-    border: unset;
-    background: none;
-    cursor: pointer;
   }
 
   .contacts-details__title {
@@ -104,5 +70,50 @@
       width: 90px;
       height: 3px;
     }
+  }
+}
+
+@media (max-width: all-styles.$breakpoint-tablet) {
+  :host {
+    display: block;
+  }
+
+  .contacts-list {
+    width: 100%;
+  }
+
+  .contacts-details {
+    display: none;
+  }
+
+  :host(.show-details) {
+    .contacts-list {
+      display: none;
+    }
+
+    .contacts-details {
+      display: block;
+    }
+  }
+
+  .contacts-details__header {
+    position: relative;
+  }
+
+  .contacts-details__back {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    padding: 4px;
+    border: unset;
+    background: none;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: all-styles.$breakpoint-mobile) {
+  .contacts-details {
+    padding: 32px 16px 0;
   }
 }
