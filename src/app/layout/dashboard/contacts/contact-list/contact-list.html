@@ -23,7 +23,7 @@
                 <span
                   class="contact-avatar"
                   [style]="changeStyles(nlService.getLogoColor(contact.name))"
-                  >{{ nlService.getLogoName(contact.name) | titlecase }}</span
+                  >{{ nlService.getLogoName(contact.name | titlecase) }}</span
                 >
                 <span class="contact-info">
                   <span class="contact-name"> {{ contact.name | titlecase }} </span>

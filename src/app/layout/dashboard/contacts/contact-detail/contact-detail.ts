@@ -6,7 +6,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  imports: [EditContact,TitleCasePipe],
+  imports: [EditContact, TitleCasePipe],
   selector: 'app-contact-detail',
   styleUrl: './contact-detail.scss',
   templateUrl: './contact-detail.html',
@@ -21,7 +21,7 @@ export class ContactDetail {
 
   nameLogo = computed(() => {
     const contact = this.dbService.selectedContact();
-    return this.nlService.setNameLogo(contact?.name ?? '');
+    return this.nlService.setNameLogo(contact?.name.toUpperCase() ?? '');
   });
 
   changeStyles() {
