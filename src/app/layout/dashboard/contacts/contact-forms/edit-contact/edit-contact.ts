@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Supabase } from '../../../../../shared/services/supabase';
 import { contactValidators } from '../contact-validators';
 import { NameLogo } from '../../../../../shared/services/name-logo';
+import { ToastService } from '../../../../../shared/services/toast.service';
 
 type EditableContact = { id: number; name: string; email: string; phone: string };
 
@@ -16,6 +17,7 @@ export class EditContact implements OnInit {
   private fb = inject(FormBuilder);
   private nlService = inject(NameLogo);
   private db = inject(Supabase);
+  private toast = inject(ToastService);
 
   contact = input.required<EditableContact>(); // Kontakt, der bearbeitet wird (kommt aus contact-detail)
   closed = output<void>(); // Meldet contact-detail, dass der Dialog geschlossen werden soll
@@ -44,8 +46,9 @@ export class EditContact implements OnInit {
       this.contactForm.markAllAsTouched();
       return;
     }
-    await this.runAction(() =>
-      this.db.updateContact(this.contact().id, this.contactForm.getRawValue()),
+    await this.runAction(
+      () => this.db.updateContact(this.contact().id, this.contactForm.getRawValue()),
+      'Contact successfully updated',
     );
   }
 
@@ -54,17 +57,17 @@ export class EditContact implements OnInit {
     await this.runAction(async () => {
       await this.db.deleteContact(this.contact().id);
       this.db.selectedContactId.set(null);
-    });
+    }, 'Contact successfully deleted');
   }
 
   // Führt eine Supabase-Aktion mit Ladezustand und Fehlerbehandlung aus
-  private async runAction(action: () => Promise<void>) {
+  private async runAction(action: () => Promise<void>, successMessage: string) {
     this.isSaving.set(true);
     this.errorMessage.set('');
     try {
       await action();
       this.closed.emit();
-      // TODO: Toast anzeigen, sobald es den gemeinsamen Toast gibt
+      this.toast.success(successMessage);
     } catch {
       this.errorMessage.set('Something went wrong. Please try again.');
     } finally {
