@@ -40,11 +40,6 @@
       justify-content: center;
       gap: 12px;
       background: all-styles.$sidebar-background;
-
-      // width: 467px;
-      // height: 594px;
-      // padding: 66px 48px;
-
       flex: 0 1 38.5%; // width: 467px; is approximately 38.5% of 1212px modal
       min-width: 0;
       width: auto;
@@ -77,12 +72,9 @@
     }
     .modal_part2 {
       @include all-styles.flex-center;
-      //justify-content: center;
-      //gap: 72px;
       flex: 1 1 0;
       min-width: 0;
       width: auto;
-
       justify-content: center;
       gap: clamp(12px, 2vw, 32px);
     }
@@ -107,14 +99,11 @@
     }
     form {
       @include all-styles.flex-col-center;
-      //
       flex: 1 1 0;
       min-width: 0;
       width: 100%;
       max-width: 422px;
-      //
       gap: 32px;
-      // padding-right: 48px;
       padding-right: clamp(0px, 2vw, 24px);
 
       .form-button {
@@ -202,7 +191,7 @@
           display: block;
         }
       }
-      .submit_btn:hover {
+      .submit_btn:hover:not(:disabled) {
         background-color: all-styles.$hover-button-Form;
         box-shadow: all-styles.$shadow-button;
       }
@@ -215,7 +204,6 @@
         min-width: 0;
         max-width: 100%;
         padding: 1rem clamp(8px, 2vw, 16px);
-        // gap: clamp(4px, 1vw, 8px);
         font-size: clamp(16px, 1.5vw, 21px);
         font-weight: 700;
         white-space: nowrap;
@@ -224,6 +212,10 @@
         img {
           flex-shrink: 0;
           width: 20px;
+        }
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
       }
     }
