@@ -1,1 +1,53 @@
-<p>board works!</p>
+<section class="board">
+  <header class="board__header">
+    <h1 class="board__title">Board</h1>
+    <div class="board__actions">
+      <div class="board__search" role="search">
+        <input
+          class="board__search-input"
+          type="text"
+          placeholder="Find Task"
+          aria-label="Find task"
+        />
+        <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
+      </div>
+      <button class="board__add-button">
+        <span class="board__add-button-text">Add task</span>
+        <img class="board__add-button-icon" src="assets/icons/add-white.svg" alt="" />
+      </button>
+    </div>
+  </header>
+
+  <div class="board__columns">
+    <section class="board__column">
+      <div class="board__column-header">
+        <h2 class="board__column-title">To do</h2>
+        <button class="board__column-button" aria-label="Add task to To do"><img class="board__column-add" src="assets/icons/add-column.svg" alt="" /></button>
+      </div>
+      <div class="board__cards"><span class="board__indication">No tasks To do</span></div>
+    </section>
+
+    <section class="board__column">
+      <div class="board__column-header">
+        <h2 class="board__column-title">In progress</h2>
+        <button class="board__column-button" aria-label="Add task to In progress"><img class="board__column-add" src="assets/icons/add-column.svg" alt="" /></button>
+      </div>
+      <div class="board__cards"><span class="board__indication">No tasks In progress</span></div>
+    </section>
+
+    <section class="board__column">
+      <div class="board__column-header">
+        <h2 class="board__column-title">Await feedback</h2>
+        <button class="board__column-button" aria-label="Add task to Await feedback"><img class="board__column-add" src="assets/icons/add-column.svg" alt="" /></button>
+      </div>
+      <div class="board__cards"><span class="board__indication">No tasks Await feedback</span></div>
+    </section>
+
+    <section class="board__column">
+      <div class="board__column-header">
+        <h2 class="board__column-title">Done</h2>
+      </div>
+      <div class="board__cards"><span class="board__indication">No tasks Done</span></div>
+    </section>
+  </div>
+</section>
