@@ -2,9 +2,10 @@ import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddContact } from '../add-contact/add-contact';
 import { Supabase } from '../../../../shared/services/supabase';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  imports: [AddContact],
+  imports: [AddContact, TitleCasePipe],
   selector: 'app-contact-list',
   styleUrl: './contact-list.scss',
   templateUrl: './contact-list.html',
@@ -16,8 +17,6 @@ export class ContactList {
 
   groupedContacts = computed(() => {
     const sortedContacts = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name, 'de'));
-
-    console.log('Sorted Contacts', sortedContacts);
 
     const letters = [
       ...new Set(sortedContacts.map((contact) => contact.name.charAt(0).toUpperCase())),
