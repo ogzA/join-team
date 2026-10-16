@@ -1,0 +1,84 @@
+<main class="add-task">
+    <h1>Add Task</h1>
+
+    <form class="task-form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div class="task-form-columns">
+
+            <!-- left column -->
+            <section class="task-form-columns-column1">
+                <div class="field">
+                    <label for="title">Title<span class="required">*</span></label>
+                    <input id="title" type="text" formControlName="title" placeholder="Enter a title">
+                    <p class="error"></p>
+                </div>
+
+                <div class="field">
+                    <label for="description">Description</label>
+                    <textarea id="description" rows="4" formControlName="description"
+                        placeholder="Enter a Description"></textarea>
+                    <p class="error"></p>
+                </div>
+
+                <div class="field">
+                    <label for="dueDate">Due date<span class="required">*</span></label>
+                    <input id="dueDate" type="date" placeholder="dd/mm/yyyy" formControlName="dueDate">
+                    <p class="error"></p>
+                </div>
+            </section>
+            <span class="divider"></span>
+            <!-- right column -->
+            <section class="task-form-columns-column2">
+                <fieldset class="priority">
+                    <legend>Priority</legend>
+
+                    <input type="radio" id="urgent" value="urgent" formControlName="priority">
+                    <label for="urgent" class="priority-btn urgent">Urgent <img src="assets/icons/urgent.svg" alt="urgent_logo"></label>
+
+                    <input type="radio" id="medium" value="medium" formControlName="priority">
+                    <label for="medium" class="priority-btn medium">Medium <img src="assets/icons/medium.svg" alt="medium_logo">
+                    </label>
+
+                    <input type="radio" id="low" value="low" formControlName="priority">
+                    <label for="low" class="priority-btn low">Low <img src="assets/icons/low.svg" alt="low_logo"></label>
+                </fieldset>
+
+                <div class="field">
+                    <label for="assignedTo">Assigned to</label>
+                    <select id="assignedTo" formControlName="assignedTo">
+                        <option value="">Select contacts to assign</option>
+                        <option value="anna">Anna Keller</option>
+                        <option value="david">David Eisenberg</option>
+                    </select>
+                    <p class="error"></p>
+                </div>
+
+                <div class="field">
+                    <label for="category">Category<span class="required">*</span></label>
+                    <select id="category" formControlName="category">
+                        <option value="technical">Technical Task</option>
+                        <option value="user-story">User Story</option>
+                    </select>
+                    <p class="error"></p>
+                </div>
+
+                <div class="field">
+                    <label for="subtask">Subtasks</label>
+                    <input id="subtask" type="text" formControlName="subtask" placeholder="Add new subtask">
+                    <p class="error"></p>
+                    <ul>
+                    <li></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- bottom row -->
+        <div class="task-form-footer">
+            <p class="hint"><span class="required">*</span>This field is required</p>
+            <div class="buttons">
+                <button type="button" class="btn clearBtn" (click)="taskForm.reset()">Clear <img src="assets/icons/close-dialog.svg" alt="close_logo"></button>
+                <button type="submit" class="btn createBtn">Create Task <img src="assets/icons/check.svg" alt="check_logo"></button>
+            </div>
+        </div>
+    </form>
+</main>
