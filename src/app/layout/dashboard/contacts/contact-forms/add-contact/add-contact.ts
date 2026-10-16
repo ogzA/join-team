@@ -1,7 +1,6 @@
-import { Component, inject, input, output, VERSION } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Component, inject, input, output, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Supabase } from '../../../../../shared/services/supabase';
-import { Router } from '@angular/router';
 import { contactValidators } from '../contact-validators';
 import { ToastService } from '../../../../../shared/services/toast.service';
 
@@ -12,13 +11,12 @@ import { ToastService } from '../../../../../shared/services/toast.service';
   templateUrl: './add-contact.html',
 })
 export class AddContact {
-  dbservice = inject(Supabase);
+  private dbService = inject(Supabase);
   private toast = inject(ToastService);
-  showModal: boolean | undefined;
-  isOpen = input(false);   
+  private fb = inject(FormBuilder);
+  isOpen = input(false);
   closed = output<void>();
-
-  fb = inject(FormBuilder);
+  isSaving = signal(false);
 
   contactForm = this.fb.nonNullable.group({
     name: ['', contactValidators.name],
@@ -26,28 +24,25 @@ export class AddContact {
     phone: ['', contactValidators.phone],
   });
 
-  formSubmit() {
-  
+  async formSubmit() {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
-      this.contactForm.reset(this.contactForm.value);
       return;
     }
-    else{
-    const contactObj = {
-      ...this.contactForm.getRawValue(),
-      role: 'User',
-    };
-
-    this.dbservice.setContact(contactObj);
-    this.toast.success('Contact succesfully created');
-    this.close();
-    } 
+    this.isSaving.set(true);
+    try {
+      await this.dbService.setContact({ ...this.contactForm.getRawValue(), role: 'User' });
+      this.toast.success('Contact successfully created');
+      this.close();
+    } catch {
+      this.toast.error('Contact could not be created');
+    } finally {
+      this.isSaving.set(false);
+    }
   }
 
   close() {
     this.contactForm.reset();
-    this.contactForm.markAsUntouched();
     this.closed.emit();
   }
 }
