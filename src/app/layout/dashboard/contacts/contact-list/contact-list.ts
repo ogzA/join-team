@@ -18,6 +18,9 @@ export class ContactList {
   groupedContacts = computed(() => {
     const sortedContacts = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name, 'de'));
 
+    // delete console.log
+    console.log('Sorted Contacts', sortedContacts);
+
     const letters = [
       ...new Set(sortedContacts.map((contact) => contact.name.charAt(0).toUpperCase())),
     ].sort((a, b) => a.localeCompare(b, 'de'));
