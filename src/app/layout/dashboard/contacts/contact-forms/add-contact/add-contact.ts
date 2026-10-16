@@ -13,6 +13,7 @@ import { ToastService } from '../../../../../shared/services/toast.service';
 export class AddContact {
   private dbService = inject(Supabase);
   private toast = inject(ToastService);
+  
   private fb = inject(FormBuilder);
   isOpen = input(false);
   closed = output<void>();
