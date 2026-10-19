@@ -14,6 +14,18 @@ interface User {
   role: string;
 }
 
+interface Task {
+  [index: number]: {
+    category: string;
+    title: string;
+    description: string;
+    date: string;
+    prio: string;
+    assigned: [''];
+    subtask: [''];
+  };
+}
+
 @Service()
 export class Supabase {
   supabseUrl = 'https://lvreicyjypltqvutgvly.supabase.co';
@@ -28,8 +40,11 @@ export class Supabase {
     { id: number; created_at: string; email: string; password: string; role: string }[]
   >([]);
 
-  // Number Typ später -1 für leere Seite
-  id = signal({ id: 0 });
+  // Task Signals Arrays with Objects
+  toDoTasks = signal([]);
+  inProgressTasks = signal([]);
+  awaitFeedbackTasks = signal([]);
+  doneTasks = signal([]);
 
   channels: RealtimeChannel | undefined;
 
@@ -69,6 +84,83 @@ export class Supabase {
     //   )
     //   .subscribe();
   }
+
+  //Ab Hier Task Tests
+  setDataTest() {
+    let arr = [
+      {
+        category: 'User Story',
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation.',
+        date: '10/05/2023',
+        prio: 'Medium',
+        assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
+        subtasks: [
+          { task: 'Implement Recipe Recommedation', done: true },
+          { task: 'Start Page Layout', done: false },
+        ],
+      },
+      {
+        category: 'Technical Task',
+        title: 'HTML Base Template Creation',
+        description: 'Create reusable HTML Base templates...',
+        date: '31/12/2026',
+        prio: 'Low',
+        assigned: ['Sofia Müller', 'Anja Schulz', 'Benedikt Ziegler', 'Davis Eisenberg'],
+        subtasks: [
+          { task: 'Create HTML Base Template', done: false },
+          { task: 'Make it resuable', done: false },
+        ],
+      },
+    ];
+
+    setTimeout(() => {
+      console.log('To Do: ', this.toDoTasks());
+      console.log('In Progress: ', this.inProgressTasks());
+      console.log('Await Feedback: ', this.awaitFeedbackTasks());
+      console.log('Done: ', this.doneTasks());
+
+      // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
+      // this.setTasks(this.toDoTasks(), 3);
+    }, 1000);
+  }
+
+  async getTasks() {
+    this.toDoTasks.set((await this.loadTasks(1)) ?? ([] as Task[]));
+    this.inProgressTasks.set((await this.loadTasks(2)) ?? ([] as Task[]));
+    this.awaitFeedbackTasks.set((await this.loadTasks(3)) ?? ([] as Task[]));
+    this.doneTasks.set((await this.loadTasks(4)) ?? ([] as Task[]));
+  }
+
+  async loadTasks(tableID: number) {
+    const response: any = await this.supabase.from('tasks').select('taskjson').eq('id', tableID);
+    if (!response) return;
+    return response.data[0].taskjson[0];
+  }
+
+  async setTasks(data: Task, rowID: number) {
+    // supabase table rowIDS
+    // to Do - 1
+    // in Progress - 2
+    // await Feedback - 3
+    // done - 4
+    const { error } = await this.supabase
+      .from('tasks')
+      .update({ taskjson: [data] })
+      .eq('id', rowID);
+    if (error) throw error;
+    await this.getTasks();
+  }
+
+  addTask(obj: Task) {
+    // if (obj) this.toDoTasks().push(obj);
+  }
+
+  editTask() {}
+
+  deleteTask() {}
+
+  // Task Tests Ende
 
   ngOnDestroy() {
     if (this.channels) this.supabase.removeChannel(this.channels);

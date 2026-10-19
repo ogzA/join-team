@@ -26,8 +26,4 @@ export const routes: Routes = [
     path: 'legal-notice',
     component: LegalNotice,
   },
-  {
-    path: 'legal-notice',
-    component: LegalNotice,
-  },
 ];
