@@ -142,6 +142,20 @@ $color-no-tasks-bg: #e7e7e7;
   height: 24px;
 }
 
+.board__column-add--hover {
+  display: none;
+}
+
+.board__column-button:hover {
+  .board__column-add {
+    display: none;
+  }
+
+  .board__column-add--hover {
+    display: block;
+  }
+}
+
 .board__column-button {
   display: flex;
   flex-shrink: 0;
