@@ -2,24 +2,25 @@
 
 .add-task {
     width: 100%;
-        max-width: 1440px;
-        font-family: 'Inter';
-        padding: 124px 16px 0 96px;
-    
-        .subtaskPosition {
-            width: 100%
-        }
-    
-        .subtaskInputWrapper {
-            position: relative;
-            width: 100%;
-        }
-    
-        .subtaskInputWrapper input {
-            width: 100%;
-            box-sizing: border-box;
-            padding-right: 90px;
-        }
+    max-width: 1440px;
+    font-family: 'Inter';
+    padding: 124px 16px 0 96px;
+
+    .subtaskPosition {
+        width: 100%
+    }
+
+    .subtaskInputWrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .subtaskInputWrapper input {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: 90px;
+    }
+
     .subtask_logos {
         @include all-styles.flex-center;
         gap: 8px;
@@ -37,44 +38,51 @@
         }
 
     }
-        .subtask_list {
-            margin-top: 10px;
-            padding: 5px 10px;
-            overflow-y: auto;
-            max-height: 100px;
-            scrollbar-width: none;
-            border-radius: 10px
-        }
-    
-        .subtask_list li {
+
+    .subtask_list {
+        margin-top: 10px;
+        padding: 5px 10px;
+        overflow-y: auto;
+        max-height: 100px;
+        scrollbar-width: thin;
+        border-radius: 10px;
+        border: 1px solid #dbd5d5;
+        // box-shadow: inset 0px 0px 15px 0px #dbd5d5
+    }
+
+    .subtask_list li {
+        @include all-styles.flex-center;
+        width: 100%;
+        list-style-type: disc;
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    .subtask_list:hover {
+        background-color: #d2cece99;
+        padding: 5px 10px;
+
+        .subtaskListPosition {
             @include all-styles.flex-center;
             width: 100%;
-            list-style-type: disc;
-            padding: 10px;
-            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer;
+
+            .imgEdit {
+                content: url("/assets/icons/subtask_edit.svg");
+            }
+
+            .divider_subtask {
+                content: url("/assets/icons/sutask_divider.svg");
+            }
+
+            .imgDelete {
+                content: url("/assets/icons/subtask_delete.svg");
+            }
         }
-        .subtask_list:hover{
-            background-color: #d2cece99;
-            padding:5px 10px;
-            .subtaskListPosition {
-                @include all-styles.flex-center;
-                width: 100%;
-                gap: 8px;
-                align-items: center;
-                cursor: pointer;
-                    .imgEdit {
-                        content: url("/assets/icons/subtask_edit.svg");
-                    }
-            
-                    .divider_subtask {
-                        content: url("/assets/icons/sutask_divider.svg");
-                    }
-            
-                    .imgDelete {
-                        content: url("/assets/icons/subtask_delete.svg");
-                    }
-                }
-        }
+    }
+
     h1 {
         font-size: 3.813rem;
     }
@@ -88,14 +96,14 @@
                 border: 1px solid #686868;
             }
 
-            &-column1 {
-                flex: 1;
-                padding: 32px 0;
-            }
-
+            &-column1,
             &-column2 {
                 flex: 1;
                 padding: 32px 0;
+
+                .field {
+                    margin-bottom: 15px;
+                }
             }
 
             .error {
@@ -182,16 +190,6 @@
             border: 1px solid #124658;
         }
 
-        select option::picker(option) {
-            background-color: #b3abab !important;
-            color: red !important;
-        }
-
-        select option:checked {
-            background-color: #b3abab;
-            color: white;
-        }
-
         textarea {
             resize: vertical;
         }
@@ -228,10 +226,15 @@
             .createBtn {
                 background: all-styles.$sidebar-background;
                 color: #fff;
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
             }
 
             .clearBtn:hover {
-                border:2px solid all-styles.$hover-button-Form;
+                border: 2px solid all-styles.$hover-button-Form;
                 color: all-styles.$hover-button-Form;
                 box-shadow: all-styles.$shadow-button;
             }
@@ -253,6 +256,35 @@
     }
 }
 
+@supports (appearance: base-select) {
+    select,
+    select::picker(select) {
+        appearance:base-select;
+    }
+
+    select::picker(select) {
+        position-area: bottom;
+        position-try-fallbacks: none;
+        border: 1px solid #ffffff;        
+        background-color: #ffffff;
+    }
+
+    select option {
+        padding: 10px 12px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        color: #2a3647;
+    }
+
+    select option::checkmark {
+        display: none;
+    }
+
+    select option:hover {
+        color: #000000;
+        background: #e7e7e7;
+    }
+}
 @media (max-width: all-styles.$breakpoint-mobile) {
     .add-task {
         padding: 48px 16px;
@@ -265,35 +297,39 @@
                 .divider {
                     display: none;
                 }
-                &-column1 {
-                flex: 1;
-                padding: unset;
-            }
 
-            &-column2 {
-                flex: 1;
-                padding: unset;
-            }
-            .priority{
-                @include all-styles.flex-center;
-                flex-wrap: wrap;  
-                &-btn{
-                    margin: 12px;
+                &-column1 {
+                    flex: 1;
+                    padding: unset;
+                }
+
+                &-column2 {
+                    flex: 1;
+                    padding: unset;
+                }
+
+                .priority {
+                    @include all-styles.flex-center;
+                    flex-wrap: wrap;
+
+                    &-btn {
+                        margin: 12px;
+                    }
                 }
             }
-            }
 
-            &-footer{
+            &-footer {
                 width: 100%;
                 flex-direction: column;
                 gap: 48px;
                 justify-content: space-between;
                 align-items: flex-start;
+
                 .buttons {
-                        align-items: flex-end;
-                        justify-content: flex-end;
-                        width: 100%;
-                    }
+                    align-items: flex-end;
+                    justify-content: flex-end;
+                    width: 100%;
+                }
             }
         }
     }

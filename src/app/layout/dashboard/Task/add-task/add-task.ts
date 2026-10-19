@@ -42,6 +42,14 @@ export class AddTask {
     }
   }
 
+  deleteSubTask() {
+    //this.subtasks.splice();
+  }
+
+  subtaskEdit() {
+
+  }
+
   getTodayDate() {
     const today = new Date();
     const year = today.getFullYear();
