@@ -21,7 +21,7 @@
 
                 <div class="field">
                     <label for="dueDate">Due date<span class="required">*</span></label>
-                    <input id="dueDate" type="date" placeholder="dd/mm/yyyy" formControlName="dueDate">
+                    <input type="date" id="dueDate"  [min]="todays_date" formControlName="dueDate">
                     <p class="error"></p>
                 </div>
             </section>
@@ -61,13 +61,33 @@
                     <p class="error"></p>
                 </div>
 
-                <div class="field">
+                <div class="field subtaskPosition">
                     <label for="subtask">Subtasks</label>
-                    <input id="subtask" type="text" formControlName="subtask" placeholder="Add new subtask">
-                    <p class="error"></p>
-                    <ul>
-                    <li></li>
+                    <div class="subtaskInputWrapper">
+                    <input id="subtask" type="text" formControlName="subtask" (keyup)="showAddSubTask()" placeholder="Add new subtask">
+                    @if(subtask_info)
+                    {
+                        <div class="subtask_logos">
+                            <img (click)="closeSubtask()" src="/assets/icons/close_subtask.svg" alt="close_subtask_logo">
+                            <img src="/assets/icons/sutask_divider.svg" alt="subtask_divider_logo">
+                            <img (click)="addSubtask()" src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo">
+                        </div>
+                    }
+                    <!-- <p class="error"></p> -->
+                    @if (subtasks.length > 0) {
+                    <ul class="subtask_list">
+                        @for (task of subtasks; track $index) {
+                        <li>{{ task }}
+                        <div class="subtaskListPosition">
+                        <img class="imgEdit" src="" alt="">
+                        <img class="divider_subtask" src="" alt="">
+                        <img class="imgDelete" src="" alt="">
+                        </div>                       
+                        </li>
+                        }
                     </ul>
+                    }
+                </div>
                 </div>
             </section>
         </div>
@@ -77,7 +97,7 @@
             <p class="hint"><span class="required">*</span>This field is required</p>
             <div class="buttons">
                 <button type="button" class="btn clearBtn" (click)="taskForm.reset()">Clear <img src="assets/icons/close-dialog.svg" alt="close_logo"></button>
-                <button type="submit" class="btn createBtn">Create Task <img src="assets/icons/check.svg" alt="check_logo"></button>
+                <button type="submit" [disabled]="taskForm.invalid || isSaving()" class="btn createBtn">Create Task <img src="assets/icons/check.svg" alt="check_logo"></button>
             </div>
         </div>
     </form>
