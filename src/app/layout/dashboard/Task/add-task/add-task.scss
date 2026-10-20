@@ -47,8 +47,17 @@
         scrollbar-width: thin;
         border-radius: 10px;
         border: 1px solid #dbd5d5;
-        // box-shadow: inset 0px 0px 15px 0px #dbd5d5
+        &_inputField{
+                    input {
+                        border: none;
+                        border-radius: 0;
+                        border-bottom: 1px solid #124658;
+                    }
+                
+        }
     }
+
+    
 
     .subtask_list li {
         @include all-styles.flex-center;
@@ -257,15 +266,16 @@
 }
 
 @supports (appearance: base-select) {
+
     select,
     select::picker(select) {
-        appearance:base-select;
+        appearance: base-select;
     }
 
     select::picker(select) {
         position-area: bottom;
         position-try-fallbacks: none;
-        border: 1px solid #ffffff;        
+        border: 1px solid #ffffff;
         background-color: #ffffff;
     }
 
@@ -285,6 +295,7 @@
         background: #e7e7e7;
     }
 }
+
 @media (max-width: all-styles.$breakpoint-mobile) {
     .add-task {
         padding: 48px 16px;

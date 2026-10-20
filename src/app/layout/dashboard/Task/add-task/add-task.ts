@@ -13,6 +13,8 @@ export class AddTask {
   subtask_info: boolean = false;
   subtasks: string[] = [];
   isSaving = signal(false);
+  editingIndex: number | null = null;
+  editedTask: string = '';  
   private fb = inject(FormBuilder);
 
   taskForm = this.fb.nonNullable.group({
@@ -24,6 +26,7 @@ export class AddTask {
     category: ['', Validators.required],
     subtask: [''],
   });
+ 
 
   onSubmit() {
     if (this.taskForm.invalid) {
@@ -32,9 +35,11 @@ export class AddTask {
     }
     this.isSaving.set(true);
     try {
-      //await this.dbService.addTask({ ...this.taskform.getRawValue()});
-      ///this.toast.success('Contact successfully created');
-      console.log(this.taskForm.getRawValue());
+      const taskData = {
+        ...this.taskForm.getRawValue(),
+        subtasks: [...this.subtasks],
+      };
+      console.log(taskData);
     } catch {
       //this.toast.error('Task not added');
     } finally {
@@ -42,12 +47,14 @@ export class AddTask {
     }
   }
 
-  deleteSubTask() {
-    //this.subtasks.splice();
+  deleteSubTask(index:number) {
+    this.subtasks.splice(index,1);
+    console.log(this.subtasks)
   }
 
-  subtaskEdit() {
-
+  subtaskEdit(index:number) {
+    this.editingIndex = index;
+    this.editedTask = this.subtasks[index];
   }
 
   getTodayDate() {
@@ -56,6 +63,27 @@ export class AddTask {
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+  }
+
+  deleteEditTask()
+  {
+    this.editingIndex = null;
+    this.editedTask = '';
+  }
+
+  confirmEditedTask(index:number){
+    const value = this.editedTask.trim();
+    if (!value) {
+      return;
+    }
+    this.subtasks[index] = value;
+    this.editingIndex = null;
+    this.editedTask = '';
+  }
+
+  collectEditValue(data:string)
+  {
+    console.log(data)
   }
 
   closeSubtask() {
