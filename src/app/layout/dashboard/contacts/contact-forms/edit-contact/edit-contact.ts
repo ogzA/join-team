@@ -38,6 +38,7 @@ export class EditContact implements OnInit {
   ngOnInit() {
     const { name, email, phone } = this.contact();
     this.contactForm.setValue({ name, email, phone });
+    this.contactForm.markAllAsTouched(); // Fehler in bestehenden Daten sofort anzeigen
   }
 
   // Validiert das Formular und speichert die Änderungen
