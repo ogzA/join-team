@@ -25,7 +25,7 @@ export class ContactDetail {
   });
 
   changeStyles() {
-    return `background:${this.nameLogo().color}`;
+    return `background:${this.nameLogo().color}; color:${this.nameLogo().textColor}`;
   }
 
   editContact() {

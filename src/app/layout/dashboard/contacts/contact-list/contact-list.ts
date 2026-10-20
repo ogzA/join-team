@@ -45,18 +45,8 @@ export class ContactList {
 
   isDialogOpen = false;
 
-  logoColor = '#939393';
-  shortname = 'G';
-
   async ngOnInit() {
     await this.dbService.getContacts();
-
-    // this.shortname = this.nlService.setNameLogo(this.contact.name).name;
-    // this.logoColor = this.nlService.setNameLogo(this.username).color;
-  }
-
-  changeStyles(logoColor: string) {
-    return `background:${logoColor}`;
   }
 
   openDialog() {

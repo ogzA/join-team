@@ -20,10 +20,12 @@
                 type="button"
                 (click)="dbService.selectContact(contact.id)"
               >
+                @let avatar = nlService.setNameLogo(contact.name);
                 <span
                   class="contact-avatar"
-                  [style]="changeStyles(nlService.getLogoColor(contact.name))"
-                  >{{ nlService.getLogoName(contact.name | titlecase) }}</span
+                  [style.background-color]="avatar.color"
+                  [style.color]="avatar.textColor"
+                  >{{ avatar.name }}</span
                 >
                 <span class="contact-info">
                   <span class="contact-name"> {{ contact.name | titlecase }} </span>
