@@ -36,7 +36,7 @@ export class AddContact {
       this.toast.success('Contact successfully created');
       this.close();
     } catch {
-      this.toast.error('Contact could not be created');
+      this.toast.error('A contact with this email already exists');
     } finally {
       this.isSaving.set(false);
     }
