@@ -1,4 +1,4 @@
-<div class="contacts-list">
+<div class="contacts-list" (click)="toggle()">
   <app-contact-list />
 </div>
 <section class="contacts-details">
@@ -14,5 +14,10 @@
       <img src="assets/icons/arrow-left.png" alt="" />
     </button>
   </header>
-  <app-contact-detail />
+
+  @if (isShown()) {
+    <div class="contact-details-wrapper" animate.enter="enter-animation">
+      <app-contact-detail />
+    </div>
+  }
 </section>

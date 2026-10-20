@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ContactList } from './contact-list/contact-list';
 import { ContactDetail } from './contact-detail/contact-detail';
 import { Supabase } from '../../../shared/services/supabase';
@@ -14,6 +14,20 @@ import { Supabase } from '../../../shared/services/supabase';
 })
 export class Contacts {
   dbService = inject(Supabase);
+
+  isShown = signal(false);
+  toggle() {
+    // if (this.isShown() == false) {
+    this.isShown.update((isShown) => !isShown);
+    // } else if (this.isShown()) {
+    //   this.isShown.update((isShown) => !isShown);
+
+    //   setTimeout(() => {
+    //     this.isShown.update((isShown) => !isShown);
+    //   }, 100);
+    // }
+  }
+
   /**
    * Clears the selection and returns to the contact list on mobile
    */

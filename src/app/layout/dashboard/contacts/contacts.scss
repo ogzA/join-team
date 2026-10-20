@@ -1,5 +1,22 @@
 @use '../../../../../public/assets/scss/all-styles';
 
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0px);
+  }
+}
+
+.contact-details-wrapper {
+  width: 100%;
+  animation-name: slide-in;
+  animation-duration: 125ms;
+  transition: all 125ms ease-in;
+}
+
 :host {
   display: flex;
   height: 100%;
