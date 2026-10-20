@@ -21,8 +21,8 @@ interface Task {
     description: string;
     date: string;
     prio: string;
-    assigned: [''];
-    subtask: [''];
+    assigned?: string[];
+    subtasks?: {}[];
   };
 }
 
@@ -41,7 +41,19 @@ export class Supabase {
   >([]);
 
   // Task Signals Arrays with Objects
-  toDoTasks = signal([]);
+  toDoTasks = signal<
+    {
+      category: string;
+      title: string;
+      description: string;
+      date: string;
+      prio: string;
+      assigned?: string[];
+      subtasks?: {}[];
+    }[]
+  >([]);
+
+  // ({}[]);
   inProgressTasks = signal([]);
   awaitFeedbackTasks = signal([]);
   doneTasks = signal([]);
@@ -87,32 +99,33 @@ export class Supabase {
 
   //Ab Hier Task Tests
   setDataTest() {
-    let arr = [
-      {
-        category: 'User Story',
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation.',
-        date: '10/05/2023',
-        prio: 'Medium',
-        assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
-        subtasks: [
-          { task: 'Implement Recipe Recommedation', done: true },
-          { task: 'Start Page Layout', done: false },
-        ],
-      },
-      {
-        category: 'Technical Task',
-        title: 'HTML Base Template Creation',
-        description: 'Create reusable HTML Base templates...',
-        date: '31/12/2026',
-        prio: 'Low',
-        assigned: ['Sofia Müller', 'Anja Schulz', 'Benedikt Ziegler', 'Davis Eisenberg'],
-        subtasks: [
-          { task: 'Create HTML Base Template', done: false },
-          { task: 'Make it resuable', done: false },
-        ],
-      },
-    ];
+    // Test Array ohne Typisierung
+    // let arr = [
+    //   {
+    //     category: 'User Story',
+    //     title: 'Kochwelt Page & Recipe Recommender',
+    //     description: 'Build start page with recipe recommendation.',
+    //     date: '10/05/2023',
+    //     prio: 'Medium',
+    //     assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
+    //     subtasks: [
+    //       { task: 'Implement Recipe Recommedation', done: true },
+    //       { task: 'Start Page Layout', done: false },
+    //     ],
+    //   },
+    //   {
+    //     category: 'Technical Task',
+    //     title: 'HTML Base Template Creation',
+    //     description: 'Create reusable HTML Base templates...',
+    //     date: '31/12/2026',
+    //     prio: 'Low',
+    //     assigned: ['Sofia Müller', 'Anja Schulz', 'Benedikt Ziegler', 'Davis Eisenberg'],
+    //     subtasks: [
+    //       { task: 'Create HTML Base Template', done: false },
+    //       { task: 'Make it resuable', done: false },
+    //     ],
+    //   },
+    // ];
 
     setTimeout(() => {
       console.log('To Do: ', this.toDoTasks());
@@ -122,6 +135,8 @@ export class Supabase {
 
       // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
       // this.setTasks(this.toDoTasks(), 3);
+
+      this.addTask();
     }, 1000);
   }
 
@@ -152,8 +167,38 @@ export class Supabase {
     await this.getTasks();
   }
 
-  addTask(obj: Task) {
-    // if (obj) this.toDoTasks().push(obj);
+  addTask() {
+    // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
+    // Task Interface später einbauen
+    let obj: {
+      category: string;
+      title: string;
+      description: string;
+      date: string;
+      prio: string;
+      assigned?: string[];
+      subtasks?: {}[];
+    } = {
+      category: 'User Story Test',
+      title: 'Kochwelt Page & Recipe Recommender',
+      description: 'Build start page with recipe recommendation.',
+      date: '10/05/2023',
+      prio: 'Medium',
+      assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
+      subtasks: [
+        { task: 'Implement Recipe Recommedation', done: true },
+        { task: 'Start Page Layout', done: false },
+      ],
+    };
+
+    setTimeout(() => {
+      console.log(this.toDoTasks());
+      this.toDoTasks().push(obj);
+      console.log('Test: ', obj);
+      console.log(this.toDoTasks());
+
+      // this.setTasks(this.toDoTasks(), 3);
+    }, 1000);
   }
 
   editTask() {}

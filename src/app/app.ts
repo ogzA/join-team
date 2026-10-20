@@ -21,8 +21,8 @@ export class App {
     // this.dbService.getUser();
     this.dbService.loadData();
 
-    // this.dbService.setDataTest();
     this.dbService.getTasks();
+    this.dbService.setDataTest();
 
     // console.log(this.dbService.contacts());
 
