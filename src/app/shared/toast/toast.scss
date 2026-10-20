@@ -1,8 +1,16 @@
+@use '../../../../public/assets/scss/all-styles' as *;
+
 .toast {
   position: fixed;
   top: 80%;
   left: 50%;
   z-index: 10000;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    top: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   display: flex;
   align-items: center;
