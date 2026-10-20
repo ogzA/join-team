@@ -212,6 +212,12 @@ $color-avatar-more: #2a3647;
   cursor: pointer;
 }
 
+// Rahmen, wenn die Karte per Tastatur fokussiert wird
+.task-card:focus-visible {
+    outline: 2px solid $color-progress-fill;
+    outline-offset: 2px;
+}
+
 .task-card__category {
   align-self: flex-start;
   padding: 4px 16px;

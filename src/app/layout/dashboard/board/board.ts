@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NameLogo } from '../../../shared/services/name-logo';
 
 // ====== DUMMY START ======
@@ -145,6 +145,9 @@ export class Board {
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
   protected maxAvatars = 3;
+  // Aktuell angeklickter Task. mull = keine Detailansicht offen
+  // Die Detailansicht liest später dieses Signal
+  protected selectedTask = signal<Task | null>(null);
 
    // Tasks werden aus Zeile geholt [[...]], "" wird zu []
   protected tasksOf(row: BoardRow): Task[] {
@@ -157,5 +160,12 @@ export class Board {
    // Fortschrittsanzeige in Prozent
   protected progress(task: Task): number {
     return (this.doneCount(task) / task.subtasks.length) * 100;
+  }
+
+  // Merkt sich den angeklickten Task für die Detailansicht
+  protected openTask(task: Task): void {
+    this.selectedTask.set(task);
+    console.log('Task geöffnet:', task.title); // Nur für Test, muss später gelöscht werden
+
   }
 }

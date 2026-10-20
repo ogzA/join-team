@@ -45,7 +45,15 @@
         <div class="board__cards">
           <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->
           @for (task of tasksOf(row); track $index) {
-            <article class="task-card">
+            <article
+              class="task-card"
+              tabindex="0"
+              role="button"
+              [attr.aria-label]="'Open task ' + task.title"
+              (click)="openTask(task)"
+              (keydown.enter)="openTask(task)"
+              (keydown.space)="openTask(task); $event.preventDefault()"
+            >
               <!-- Kategorie: Modifier-Klasse steuert Farben -->
               <span
                 class="task-card__category"
