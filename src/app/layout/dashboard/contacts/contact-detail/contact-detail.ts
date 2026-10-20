@@ -21,7 +21,7 @@ export class ContactDetail {
 
   nameLogo = computed(() => {
     const contact = this.dbService.selectedContact();
-    return this.nlService.setNameLogo(contact?.name.toUpperCase() ?? '');
+    return this.nlService.setNameLogo(contact?.name ?? '');
   });
 
   changeStyles() {

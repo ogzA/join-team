@@ -18,17 +18,26 @@ export class ContactList {
   contacts = this.dbService.contacts;
 
   groupedContacts = computed(() => {
-    const sortedContacts = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    // Sortieren nach Namen ohne Titel, damit "Dr. Vorname Nachname" unter "V" landet
+    const sortedContacts = [...this.contacts()].sort((a, b) =>
+      this.nlService.stripTitle(a.name).localeCompare(this.nlService.stripTitle(b.name), 'de'),
+    );
 
+    // Anfangsbuchstaben ohne Titel sammeln
     const letters = [
-      ...new Set(sortedContacts.map((contact) => contact.name.charAt(0).toUpperCase())),
+      ...new Set(
+        sortedContacts.map((contact) =>
+          this.nlService.stripTitle(contact.name).charAt(0).toUpperCase(),
+        ),
+      ),
     ].sort((a, b) => a.localeCompare(b, 'de'));
 
+    // Kontakte dem Buchstaben ohne Titel zuordnen
     return letters.map((letter) => {
       return {
         letter: letter,
         contacts: sortedContacts.filter(
-          (contact) => contact.name.charAt(0).toUpperCase() === letter,
+          (contact) => this.nlService.stripTitle(contact.name).charAt(0).toUpperCase() === letter,
         ),
       };
     });
