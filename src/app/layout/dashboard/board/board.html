@@ -11,7 +11,7 @@
         />
         <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
       </div>
-      <button class="board__add-button">
+      <button class="board__add-button" type="button">
         <span class="board__add-button-text">Add task</span>
         <img class="board__add-button-icon" src="assets/icons/add-white.svg" alt="" />
       </button>
@@ -19,42 +19,93 @@
   </header>
 
   <div class="board__columns">
-    <section class="board__column">
-      <div class="board__column-header">
-        <h2 class="board__column-title">To do</h2>
-        <button class="board__column-button" aria-label="Add task to To do">
-          <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
-          <img class="board__column-add board__column-add--hover" src="assets/icons/add-column-hover.svg" alt="" />
-        </button>
-      </div>
-      <div class="board__cards"><span class="board__indication">No tasks To do</span></div>
-    </section>
+    <!-- Spalte pro Zeile aus Datenbank -->
+    @for (row of rows; track row.id) {
+      <section class="board__column">
+        <div class="board__column-header">
+          <h2 class="board__column-title">{{ columnLabels[row.status] }}</h2>
 
-    <section class="board__column">
-      <div class="board__column-header">
-        <h2 class="board__column-title">In progress</h2>
-        <button class="board__column-button" aria-label="Add task to In progress">
-          <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
-        </button>
-      </div>
-      <div class="board__cards"><span class="board__indication">No tasks In progress</span></div>
-    </section>
+          <!-- "+" in allen Spalten außer "done" -->
+          @if (row.status !== 'done') {
+            <button
+              class="board__column-button"
+              type="button"
+              [attr.aria-label]="'Add task to ' + columnLabels[row.status]"
+            >
+              <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
+              <img
+                class="board__column-add board__column-add--hover"
+                src="assets/icons/add-column-hover.svg"
+                alt=""
+              />
+            </button>
+          }
+        </div>
 
-    <section class="board__column">
-      <div class="board__column-header">
-        <h2 class="board__column-title">Await feedback</h2>
-        <button class="board__column-button" aria-label="Add task to Await feedback">
-          <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
-        </button>
-      </div>
-      <div class="board__cards"><span class="board__indication">No tasks Await feedback</span></div>
-    </section>
+        <div class="board__cards">
+          <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->
+          @for (task of tasksOf(row); track $index) {
+            <article class="task-card">
+              <!-- Kategorie: Modifier-Klasse steuert Farben -->
+              <span
+                class="task-card__category"
+                [class.task-card__category--story]="task.category === 'User Story'"
+                [class.task-card__category--technical]="task.category === 'Technical Task'"
+              >
+                {{ task.category }}
+              </span>
+              <div class="task-card__text">
+                <h3 class="task-card__title">{{ task.title }}</h3>
+                <p class="task-card__description">{{ task.description }}</p>
+              </div>
 
-    <section class="board__column">
-      <div class="board__column-header">
-        <h2 class="board__column-title">Done</h2>
-      </div>
-      <div class="board__cards"><span class="board__indication">No tasks Done</span></div>
-    </section>
+              <!-- Fortschritt nur, wenn es Subtasks gibt -->
+              @if (task.subtasks.length) {
+                <div class="task-card__progress">
+                  <div class="task-card__progress-bar">
+                    <!-- [style.width.%]: Angular hängt "%" an die Zahl -->
+                    <div class="task-card__progress-fill" [style.width.%]="progress(task)"></div>
+                  </div>
+                  <span class="task-card__progress-text">
+                    {{ doneCount(task) }}/{{ task.subtasks.length }} Subtasks
+                  </span>
+                </div>
+              }
+
+              <div class="task-card__footer">
+                <div class="task-card__avatars">
+                  <!-- slice(0, maxAvatars): nur die ersten drei Namen anzeigen -->
+                  @for (name of task.assigned.slice(0, maxAvatars); track name) {
+                    <!-- @let speichert das Ergebnis, damit setNameLogo pro Name nur einmal läuft -->
+                    @let avatar = nlService.setNameLogo(name);
+                    <span class="task-card__avatar" [style.background-color]="avatar.color">
+                      {{ avatar.name }}
+                    </span>
+                  }
+                  <!-- Restliche Personen als Zahl im letzten Kreis -->
+                  @if (task.assigned.length > maxAvatars) {
+                    <span class="task-card__avatar task-card__avatar--more">
+                      +{{ task.assigned.length - maxAvatars }}
+                    </span>
+                  }
+                </div>
+
+                <!-- Icon-Pfad aus der Prio, z. B. prio-medium.svg -->
+                <span class="task-card__prio">
+                  <img
+                    class="task-card__prio-icon"
+                    [src]="'assets/icons/prio-' + task.prio.toLowerCase() + '.svg'"
+                    [alt]="task.prio"
+                  />
+                </span>
+              </div>
+            </article>
+          } @empty {
+            <!-- Erscheint automatisch, sobald die Spalte keine Task hat -->
+            <span class="board__indication">No tasks {{ columnLabels[row.status] }}</span>
+          }
+        </div>
+      </section>
+    }
   </div>
 </section>

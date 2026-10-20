@@ -5,6 +5,16 @@
 $color-column-title: #42526e;
 $color-no-tasks-bg: #e7e7e7;
 
+// -- NEU: Farben der Task-KArten ---
+$color-category-story: #0038ff;
+$color-category-technical: #1fd7c1;
+$color-task-description: #686868;
+$color-task-title: #2a3647;
+$color-progress-text: #000000;
+$color-progress-bg: #f4f4f4;
+$color-progress-fill: #4589ff;
+$color-avatar-more: #2a3647;
+
 .board {
   max-width: 1440px;
   padding: 80px 64px;
@@ -188,6 +198,141 @@ $color-no-tasks-bg: #e7e7e7;
   text-align: center;
 }
 
+// ====== Task Karte ======
+// Eigener BEM-Block, unabhängig vom Board
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  border-radius: 24px;
+  background-color: all-styles.$color-white;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.task-card__category {
+  align-self: flex-start;
+  padding: 4px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: all-styles.$color-white;
+}
+
+.task-card__category--story {
+  background-color: $color-category-story;
+}
+
+.task-card__category--technical {
+  background-color: $color-category-technical;
+}
+
+.task-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-card__title {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 120%;
+  display: -webkit-box;
+  color: $color-task-title;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.task-card__description {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 120%;
+  color: $color-task-description;
+  -webkit-line-clamp: 2; // max. zwei Zeilen, danach "..."
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.task-card__progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.task-card__progress-bar {
+  flex: 1; // Nimmt den restlichen Platz neben dem Text ein
+  height: 8px;
+  border-radius: 16px;
+  background-color: $color-progress-bg;
+  overflow: hidden; // Füllung bekommt runde Ecken
+}
+
+.task-card__progress-fill {
+  height: 100%;
+  background-color: $color-progress-fill;
+}
+
+.task-card__progress-text {
+  font-size: 16px;
+  white-space: nowrap; // "1/2 Subtasks" bricht nicht um
+  color: $color-progress-text;
+}
+
+.task-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px; // Mindestabstand zwischen Avatar und Prio-Icon
+}
+
+.task-card__avatars {
+  display: flex;
+  flex: 1; // Nimmt den freien Platz links vom Prio-Icon
+  min-width: 0; // Erlaubt dem Container, schmaler als sein Inhalt zu werden
+  overflow: hidden; // Absicherung auf sehr schale Karten
+}
+
+.task-card__avatar {
+  display: flex;
+  flex-shrink: 0; // Avatare bleiben rund, werden nicht verformt
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: -8px; // Avatar überlappen sich
+  border: 1px solid all-styles.$color-white;
+  border-radius: 50%;
+  font-size: 16px;
+  color: all-styles.$color-white;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.task-card__avatar--more {
+  background-color: $color-avatar-more; // "+Number"-Zähler
+}
+
+.task-card__prio {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.task-card__prio-icon {
+  width: 32px;
+  height: 32px;
+}
+
 @media (max-width: all-styles.$breakpoint-tablet) {
   .board {
     gap: 24px;
@@ -231,6 +376,10 @@ $color-no-tasks-bg: #e7e7e7;
   .board__cards {
     flex-direction: row;
     overflow-x: auto;
+  }
+
+  .task-card {
+    flex: 0 0 252px; // Karten behalten ihre Breite, keine Verformung
   }
 }
 
