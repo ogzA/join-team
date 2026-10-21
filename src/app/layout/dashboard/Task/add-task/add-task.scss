@@ -8,6 +8,7 @@
 
     .subtaskPosition {
             width: 100%;
+            min-width: 0;
     
             .icon_padding {
                 padding-right: 88px !important;
@@ -16,9 +17,12 @@
             .subtaskInputWrapper {
                 position: relative;
                 width: 100%;
+                min-width: 0;
     
                 input {
+                    display: block;
                     width: 100%;
+                    min-width: 0;
                     box-sizing: border-box;
                     padding-right: 90px;
                 }
@@ -43,46 +47,41 @@
 
     }
     .upper_div_ul{
-        overflow-y: auto;
-        max-height: 120px;
+        width: 100%;
+        overflow-y:auto;
+        max-height: 100px;
         scrollbar-width: thin;
         margin-top: 5px;
+        box-sizing: border-box;
+        padding: 15px;
     }
     .subtask_list {
-        padding: 20px;
-        margin: 0;
-        width: 100%;
-        box-sizing: border-box;
-
-        > span {
-            display: block;
-            flex: 1 1 0;
-            min-width: 0;
-            overflow-wrap: anywhere;
-            word-break: normal;
-        }
+        list-style-type: disc !important;
 
         li {
-            list-style-type: disc;
+            @include all-styles.flex-center;
+            align-items: flex-start;
+            justify-content: flex-start;            
+            gap: 8px;
             width: 100%;
             box-sizing: border-box;
-            min-width: 0;
+            list-style-type: disc;
+            list-style-type: circle;
+
+            span {
+            width: 100%;
+            overflow-wrap: anywhere;
+            word-break: normal;
+            }
         }
 
-        li:hover {
+        li:hover .subtaskListPosition{
         @include all-styles.flex-center;
-        justify-content: space-between;
-        align-items: flex-start;
+        justify-content:flex-end;
+        align-items: center;
         gap: 8px;
         width: 100%;
-        box-sizing: border-box;
 
-
-        .subtaskListPosition {
-            @include all-styles.flex-center;
-            gap: 8px;
-            align-items: center;
-            cursor: pointer;
 
             .imgEdit {
                 content: url("/assets/icons/subtask_edit.svg");
@@ -95,7 +94,7 @@
             .imgDelete {
                 content: url("/assets/icons/subtask_delete.svg");
             }
-            }
+            
         }
 
 
@@ -121,18 +120,24 @@
         &-columns {
             display: flex;
             gap: 32px;
+            align-items: stretch;
+            min-width: 0;
 
             .divider {
                 border: 1px solid #686868;
+                flex: 0 0 auto;
             }
 
             &-column1,
             &-column2 {
-                flex: 1;
+                flex: 1 1 0;
+                min-width: 0;
                 padding: 32px 0;
+                box-sizing: border-box;
 
                 .field {
                     margin-bottom: 15px;
+                    min-width: 0;
                 }
             }
 

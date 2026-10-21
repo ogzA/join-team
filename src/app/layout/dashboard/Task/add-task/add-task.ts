@@ -14,7 +14,8 @@ export class AddTask {
   subtasks: string[] = [];
   isSaving = signal(false);
   editingIndex: number | null = null;
-  editedTask: string = '';  
+  editedTask: string = ''; 
+  // isEditing: boolean = false; 
   private fb = inject(FormBuilder);
 
   taskForm = this.fb.nonNullable.group({
@@ -108,4 +109,14 @@ export class AddTask {
     const value = this.taskForm.get('subtask')?.value ?? '';
     this.subtask_info = value.trim().length > 0;
   }
+
+  // startEditing(index:number) {
+  //   this.isEditing = true;
+  //   this.editingIndex = index;
+  //   this.editedTask = this.subtasks[index];
+  // }
+
+  // stopEditing() {
+  //   this.isEditing = false;
+  // }
 }
