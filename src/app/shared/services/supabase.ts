@@ -1,6 +1,7 @@
 import { T } from '@angular/cdk/keycodes';
-import { computed, Service, WritableSignal, signal } from '@angular/core';
+import { computed, Service, WritableSignal, signal, Signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
+import { Sidebar } from '../sidebar/sidebar';
 
 interface Contact {
   name: string;
@@ -25,6 +26,18 @@ interface Task {
   assigned?: string[];
   subtasks?: {}[];
   // };
+}
+
+interface TaskArray {
+  [index: number]: {
+    category: string;
+    title: string;
+    description: string;
+    date: string;
+    prio: string;
+    assigned?: string[];
+    subtasks?: {}[];
+  };
 }
 
 @Service()
@@ -158,14 +171,6 @@ export class Supabase {
     // ];
 
     setTimeout(() => {
-      console.log('To Do: ', this.toDoTasks());
-      // console.log('In Progress: ', this.inProgressTasks());
-      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
-      // console.log('Done: ', this.doneTasks());
-
-      // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
-      // this.setTasks(this.toDoTasks(), 3);
-
       // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
       // Task Interface später einbauen
       let obj: {
@@ -189,10 +194,33 @@ export class Supabase {
         ],
       };
 
+      // this.addTaskToDo(obj);
+      // this.addTaskInProgress(obj);
+      // this.addTaskAwaitFeedback(obj);
+      // this.addTaskDoneTasks(obj);
+      console.log('To Do: ', this.toDoTasks());
+      console.log('In Progress: ', this.inProgressTasks());
+      console.log('Await Feedback: ', this.awaitFeedbackTasks());
+      console.log('Done: ', this.doneTasks());
+
+      // Index vom Signal Array
+      // this.deleteTaskToDo(2);
+      // this.deleteTaskInProgress(0);
+      // this.deleteTaskAwaitFeedback(0);
+      // this.deleteTaskDoneTasks(0);
+
+      // console.log('');
+      // console.log('To Do: ', this.toDoTasks());
+      // console.log('In Progress: ', this.inProgressTasks());
+      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
+      // console.log('Done: ', this.doneTasks());
+
+      // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
+      // this.setTasks(this.toDoTasks(), 3);
+
       // Task Obj welches in ein Signal gepeichert werden soll
       // Nummer 1-4 welches Signal genutzt werden soll
-      this.addTask(obj, 1);
-    }, 1000);
+    }, 2000);
   }
 
   async getTasks() {
@@ -208,7 +236,7 @@ export class Supabase {
     return response.data[0].taskjson[0];
   }
 
-  async setTasks(data: Task, rowID: number) {
+  async setTasks(data: TaskArray, rowID: number) {
     // supabase table rowIDS
     // to Do - 1
     // in Progress - 2
@@ -222,36 +250,55 @@ export class Supabase {
     await this.getTasks();
   }
 
-  addTask(object: Task, rowID: number) {
-    setTimeout(() => {
-      if (rowID == 1) {
-        console.log(this.toDoTasks());
-        this.toDoTasks().push(object);
-        console.log('Test: ', object);
-        console.log(this.toDoTasks());
-        // this.setTasks(this.toDoTasks(), rowID);
-      } else if (rowID == 2) {
-        console.log(this.inProgressTasks());
-        this.inProgressTasks().push(object);
-        console.log('Test: ', object);
-        console.log(this.inProgressTasks());
-      } else if (rowID == 3) {
-        console.log(this.awaitFeedbackTasks());
-        this.awaitFeedbackTasks().push(object);
-        console.log('Test: ', object);
-        console.log(this.awaitFeedbackTasks());
-      } else if (rowID == 4) {
-        console.log(this.doneTasks());
-        this.doneTasks().push(object);
-        console.log('Test: ', object);
-        console.log(this.doneTasks());
-      }
-    }, 1000);
+  addTaskToDo(object: Task) {
+    this.toDoTasks().push(object);
+    this.setTasks(this.toDoTasks(), 1);
+  }
+
+  addTaskInProgress(object: Task) {
+    this.inProgressTasks().push(object);
+    this.setTasks(this.inProgressTasks(), 2);
+  }
+
+  addTaskAwaitFeedback(object: Task) {
+    this.awaitFeedbackTasks().push(object);
+    this.setTasks(this.awaitFeedbackTasks(), 3);
+  }
+
+  addTaskDoneTasks(object: Task) {
+    this.doneTasks().push(object);
+    this.setTasks(this.doneTasks(), 4);
   }
 
   editTask() {}
 
-  deleteTask() {}
+  deleteTaskToDo(index: number) {
+    if (this.toDoTasks().length > index) {
+      this.toDoTasks().splice(index, 1);
+      this.setTasks(this.toDoTasks(), 1);
+    } else console.log('ToDo Index', index, 'nicht gefunden...');
+  }
+
+  deleteTaskInProgress(index: number) {
+    if (this.inProgressTasks().length > index) {
+      this.inProgressTasks().splice(index, 1);
+      this.setTasks(this.inProgressTasks(), 2);
+    } else console.log('InProgress Index', index, 'nicht gefunden...');
+  }
+
+  deleteTaskAwaitFeedback(index: number) {
+    if (this.awaitFeedbackTasks().length > index) {
+      this.awaitFeedbackTasks().splice(index, 1);
+      this.setTasks(this.awaitFeedbackTasks(), 3);
+    } else console.log('AwaitFeedback Index', index, 'nicht gefunden...');
+  }
+
+  deleteTaskDoneTasks(index: number) {
+    if (this.doneTasks().length > index) {
+      this.doneTasks().splice(index, 1);
+      this.setTasks(this.doneTasks(), 4);
+    } else console.log('DoneTasks Index', index, 'nicht gefunden...');
+  }
 
   // Task Tests Ende
 
