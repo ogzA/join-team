@@ -68,6 +68,7 @@
     .contact-group-letter {
       padding: 16px 48px;
     }
+
     .contact-group-items {
       border-top: 1px solid rgba(209, 209, 209, 1);
       padding-top: 8px;
@@ -117,10 +118,24 @@
 
         .contact-name {
           font-size: 21px;
+          display: inline-block;
+          max-width: 200px;
+          white-space: nowrap;
+          overflow: scroll;
+          scrollbar-width: none;
+          text-overflow: ellipsis;
+          vertical-align: middle;
         }
 
         .contact-email {
           color: rgba(0, 124, 238, 1);
+          display: inline-block;
+          max-width: 200px;
+          white-space: nowrap;
+          overflow: scroll;
+          scrollbar-width: none;
+          text-overflow: ellipsis;
+          vertical-align: middle;
         }
       }
     }
