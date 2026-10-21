@@ -26,7 +26,7 @@ export class NameLogo {
   // Für Initialen und alphabetische Sortierung
   // Achtung: Gleiche Titel-Regel wie NAME_PATTERN in contact-validators.ts, bei Änderungen beides anpassen
   stripTitle(username: string): string {
-    return username.trim().replace(/^(?:(?:Prof|Dr)\.\s+)*/, '');
+    return username.trim().replace(/^(?:(?:Prof|Dr)\.\s+)*/i, '');
   }
 
   // Schreibt den ersten Buchstaben jedes Namensteils groß, der Rest bleibt unverändert

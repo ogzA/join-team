@@ -34,7 +34,7 @@
             @if (contactForm.controls.name.errors?.['required']) {
               <p class="edit-contact__error">This field is required</p>
             } @else if (contactForm.controls.name.errors?.['pattern']) {
-              <p class="edit-contact__error">Please enter first and last name without numbers</p>
+              <p class="edit-contact__error">Please enter first and last name (letters only)</p>
             }
           }
         </div>

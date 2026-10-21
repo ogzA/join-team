@@ -6,11 +6,26 @@ import { Validators } from '@angular/forms';
 // Mindestens zwei Namensteile, getrennt durch Leerzeichen
 // Das "u"-Flag am Ende aktiviert \p{L} (jeder Buchstabe aus jeder Sprache)
 // Achtung: Gleiche Titel-Regel wie stripTitle() in name-logo.ts, bei Änderungen beides anpassen
-const NAME_PATTERN = /^(?:(?:Prof|Dr)\.\s+)*\p{L}+(?:[-']\p{L}+)*(?:\s+\p{L}+(?:[-']\p{L}+)*)+$/u;
+// Das "i"-Flag erlaubt Titel in beliebiger Schreibweise (z. B. "pRof."), cleanContact() vereinheitlicht sie beim Speichern
+const NAME_PATTERN = /^(?:(?:Prof|Dr)\.\s+)*\p{L}+(?:[-']\p{L}+)*(?:\s+\p{L}+(?:[-']\p{L}+)*)+$/iu;
 
 // Erlaubte internationale Endungen. Nationale Endungen (2 Buchstaben, z. B. .de, .at, .ch) sind immer erlaubt.
 // Bei Bedarf hier erweitern.
-const GENERIC_TLDS = ['com', 'net', 'org', 'info', 'biz', 'eu', 'io', 'dev', 'app', 'online', 'shop', 'email', 'pro'];
+const GENERIC_TLDS = [
+  'com',
+  'net',
+  'org',
+  'info',
+  'biz',
+  'eu',
+  'io',
+  'dev',
+  'app',
+  'online',
+  'shop',
+  'email',
+  'pro',
+];
 
 // E-Mail-Format: text@domain.endung
 // - Keine Leerzeichen, genau ein @
@@ -33,13 +48,17 @@ export const contactValidators = {
   phone: [Validators.required, Validators.pattern(PHONE_PATTERN)],
 };
 
+// Bereinigt Eingaben vor dem Speichern:
+// - Leerzeichen am Anfang und Ende entfernen
+// - Mehrere Leerzeichen zu einem zusammenfassen ("Hans    Martin" → "Hans Martin")
+// - Titel einheitlich schreiben ("pRof." → "Prof.", "dr." → "Dr.")
 export function cleanContact(contact: { name: string; email: string; phone: string }) {
   return {
     name: contact.name
-    .trim()
-    .replace(/\s+/g, ' ')
-    .replace(/\bprof\./gi, 'Prof.')
-    .replace(/\bdr\./gi, 'Dr.'),
+      .trim()
+      .replace(/\s+/g, ' ')
+      .replace(/\bprof\./gi, 'Prof.')
+      .replace(/\bdr\./gi, 'Dr.'),
     email: contact.email.trim(),
     phone: contact.phone.trim(),
   };
