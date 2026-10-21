@@ -1,7 +1,5 @@
-import { T } from '@angular/cdk/keycodes';
-import { computed, Service, WritableSignal, signal, Signal } from '@angular/core';
+import { computed, Service, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
-import { Sidebar } from '../sidebar/sidebar';
 
 interface Contact {
   name: string;
@@ -17,7 +15,6 @@ interface User {
 }
 
 interface Task {
-  // [index: number]: {
   category: string;
   title: string;
   description: string;
@@ -25,7 +22,6 @@ interface Task {
   prio: string;
   assigned?: string[];
   subtasks?: {}[];
-  // };
 }
 
 interface TaskArray {
@@ -142,34 +138,6 @@ export class Supabase {
 
   //Ab Hier Task Tests
   setDataTest() {
-    // Test Array ohne Typisierung
-    // let arr = [
-    //   {
-    //     category: 'User Story',
-    //     title: 'Kochwelt Page & Recipe Recommender',
-    //     description: 'Build start page with recipe recommendation.',
-    //     date: '10/05/2023',
-    //     prio: 'Medium',
-    //     assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
-    //     subtasks: [
-    //       { task: 'Implement Recipe Recommedation', done: true },
-    //       { task: 'Start Page Layout', done: false },
-    //     ],
-    //   },
-    //   {
-    //     category: 'Technical Task',
-    //     title: 'HTML Base Template Creation',
-    //     description: 'Create reusable HTML Base templates...',
-    //     date: '31/12/2026',
-    //     prio: 'Low',
-    //     assigned: ['Sofia Müller', 'Anja Schulz', 'Benedikt Ziegler', 'Davis Eisenberg'],
-    //     subtasks: [
-    //       { task: 'Create HTML Base Template', done: false },
-    //       { task: 'Make it resuable', done: false },
-    //     ],
-    //   },
-    // ];
-
     setTimeout(() => {
       // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
       // Task Interface später einbauen
@@ -194,32 +162,28 @@ export class Supabase {
         ],
       };
 
-      // this.addTaskToDo(obj);
-      // this.addTaskInProgress(obj);
-      // this.addTaskAwaitFeedback(obj);
-      // this.addTaskDoneTasks(obj);
       console.log('To Do: ', this.toDoTasks());
       console.log('In Progress: ', this.inProgressTasks());
       console.log('Await Feedback: ', this.awaitFeedbackTasks());
       console.log('Done: ', this.doneTasks());
 
-      // Index vom Signal Array
-      // this.deleteTaskToDo(2);
-      // this.deleteTaskInProgress(0);
-      // this.deleteTaskAwaitFeedback(0);
-      // this.deleteTaskDoneTasks(0);
-
-      // console.log('');
-      // console.log('To Do: ', this.toDoTasks());
-      // console.log('In Progress: ', this.inProgressTasks());
-      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
-      // console.log('Done: ', this.doneTasks());
-
       // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
       // this.setTasks(this.toDoTasks(), 3);
 
-      // Task Obj welches in ein Signal gepeichert werden soll
-      // Nummer 1-4 welches Signal genutzt werden soll
+      // Task Objekt welches in ein Signal gepeichert werden soll
+      // this.addTaskToDo(obj);
+      // this.addTaskInProgress(obj);
+      // this.addTaskAwaitFeedback(obj);
+      // this.addTaskDoneTasks(obj);
+
+      // Signal Array, Table Row ID zum Speichern, Neue Daten als Objekt, Array Index für Datenedit
+      // this.editTask(this.doneTasks(), 4, obj, 1);
+
+      // Index vom Signal Array
+      // this.deleteTaskToDo(0);
+      // this.deleteTaskInProgress(0);
+      // this.deleteTaskAwaitFeedback(0);
+      // this.deleteTaskDoneTasks(0);
     }, 2000);
   }
 
@@ -270,7 +234,26 @@ export class Supabase {
     this.setTasks(this.doneTasks(), 4);
   }
 
-  editTask() {}
+  editTask(data: TaskArray, rowID: number, object: Task, index: number) {
+    let length = this.checkLength(data, index);
+
+    if (data[index] && object && length > index) {
+      data[index] = object;
+      this.setTasks(data, rowID);
+    } else {
+      console.log('Keine Daten zum bearbeiten gefunden...');
+    }
+  }
+
+  checkLength(data: TaskArray, index: number) {
+    let length = 0;
+    if (data[index] !== undefined) {
+      while (data[length] !== undefined) {
+        length++;
+      }
+    }
+    return length;
+  }
 
   deleteTaskToDo(index: number) {
     if (this.toDoTasks().length > index) {
