@@ -16,14 +16,14 @@ export class DashboardHeader {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     // If the menu is open and the user clicks outside this component, close it
-    if (this.mobile_menu() && !this.elementRef.nativeElement.contains(event.target)) {
+    if (this.mobile_menu()) {
       this.closeMenu();
     }
   }
 
   openMobileMenu(event: Event) {
     event.stopPropagation(); // to prevent it from immediately closing itself
-    this.mobile_menu.set(true);
+    this.mobile_menu.set(!this.mobile_menu());
   }
 
   closeMenu() {
