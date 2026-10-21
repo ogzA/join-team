@@ -19,16 +19,26 @@
         <img class="profile_logo" src="assets/icons/profile_Logo.svg" alt="" />
       </div>
       <form [formGroup]="contactForm" (ngSubmit)="formSubmit()">
-        <button type="button" class="modal-content-close-button" aria-label="Close" (click)="close()">
+        <button
+          type="button"
+          class="modal-content-close-button"
+          aria-label="Close"
+          (click)="close()"
+        >
           <img src="assets/icons/close-dialog.svg" alt="" />
         </button>
 
         <div class="field">
           <div class="field_input">
-            <input placeholder="Name" type="text" formControlName="name" />
+            <input
+            placeholder="Name"
+            type="text"
+            aria-label="Name"
+            autocomplete="name"
+            formControlName="name" />
             <img class="field_icon" src="assets/icons/person.svg" alt="" />
           </div>
-          @if (contactForm.controls['name'].touched || contactForm.controls['name'].dirty) {
+          @if (contactForm.controls['name'].touched){
             @if (contactForm.controls['name'].errors?.['required']) {
               <p class="error">This field is required</p>
             } @else if (contactForm.controls['name'].errors?.['pattern']) {
@@ -38,11 +48,16 @@
         </div>
         <div class="field">
           <div class="field_input">
-            <input placeholder="Email" type="email" formControlName="email" />
+            <input
+            placeholder="Email"
+            type="email"
+            aria-label="Email"
+            autocomplete="email"
+            formControlName="email" />
             <img class="field_icon" src="assets/icons/mail.svg" alt="" />
           </div>
 
-          @if (contactForm.controls['email'].touched || contactForm.controls['email'].dirty) {
+          @if (contactForm.controls['email'].touched) {
             @if (contactForm.controls['email'].errors?.['required']) {
               <p class="error">This field is required</p>
             } @else if (contactForm.controls['email'].errors?.['pattern']) {
@@ -52,15 +67,21 @@
         </div>
         <div class="field">
           <div class="field_input">
-            <input placeholder="Phone" type="text" formControlName="phone" />
+            <input
+              placeholder="Phone"
+              type="tel"
+              aria-label="Phone"
+              autocomplete="tel"
+              formControlName="phone"
+            />
             <img class="field_icon" src="assets/icons/call.svg" alt="" />
           </div>
 
-          @if (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty) {
+          @if (contactForm.controls['phone'].touched) {
             @if (contactForm.controls['phone'].errors?.['required']) {
               <p class="error">This field is required</p>
             } @else if (contactForm.controls['phone'].errors?.['pattern']) {
-              <p class="error">Check your Phone number and try again</p>
+              <p class="error">Check your phone number and try again</p>
             }
           }
         </div>
