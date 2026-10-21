@@ -61,8 +61,8 @@
 
                 <div class="field">
                     <label for="category">Category<span class="required">*</span></label>
-                    <select id="category" placeholder="Select task category" formControlName="category">
-                        <!-- <option value="" selected>Select task category</option> -->
+                    <select id="category" formControlName="category">
+                        <option value="" selected>Select task category</option>
                         <option value="technical">Technical Task</option>
                         <option value="user-story">User Story</option>
                     </select>
@@ -86,7 +86,8 @@
                         </div>
                     }
                 @if (subtasks.length > 0) {
-                <ul class="subtask_list">
+                    <div class="upper_div_ul">
+                    <ul class="subtask_list">
                     @for (task of subtasks; track $index) {
                     <li>
                         @if (editingIndex === $index) {
@@ -98,15 +99,14 @@
                             <button type="button" (click)="deleteEditTask()" aria-label="Discard changes">
                                 <img src="assets/icons/delete-btn.png" alt="" />
                             </button>
-                
+                            <img src="/assets/icons/sutask_divider.svg" alt="subtask_divider_logo">
                             <!-- Save edited text -->
                             <button type="button" (click)="confirmEditedTask($index)" aria-label="Save changes">
                                 <img src="assets/icons/add_sub_task.svg" alt="" />
                             </button>
                         </div>
                         } @else {
-                        {{ task }}
-                
+                        <span>{{ task }}</span>
                         <div class="subtaskListPosition">
                             <button type="button" (click)="subtaskEdit($index)" aria-label="Edit subtask">
                                 <img class="imgEdit" src="" alt="" />
@@ -124,6 +124,8 @@
                     </li>
                     }
                 </ul>
+                    </div>
+               
 }
                 </div>
                 </div>

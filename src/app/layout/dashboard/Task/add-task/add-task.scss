@@ -7,19 +7,23 @@
     padding: 124px 16px 0 96px;
 
     .subtaskPosition {
-        width: 100%
-    }
-
-    .subtaskInputWrapper {
-        position: relative;
-        width: 100%;
-    }
-
-    .subtaskInputWrapper input {
-        width: 100%;
-        box-sizing: border-box;
-        padding-right: 90px !important;
-    }
+            width: 100%;
+    
+            .icon_padding {
+                padding-right: 88px !important;
+            }
+    
+            .subtaskInputWrapper {
+                position: relative;
+                width: 100%;
+    
+                input {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding-right: 90px;
+                }
+            }
+        }
 
     .subtask_logos {
         @include all-styles.flex-center;
@@ -38,42 +42,44 @@
         }
 
     }
-
-    .subtask_list {
-        margin-top: 10px;
-        padding: 5px 10px;
+    .upper_div_ul{
         overflow-y: auto;
-        max-height: 100px;
+        max-height: 120px;
         scrollbar-width: thin;
-        border-radius: 10px;
-        border: 1px solid #dbd5d5;
-        &_inputField{
-                    input {
-                        border: none;
-                        border-radius: 0;
-                        border-bottom: 1px solid #124658;
-                    }
-                
-        }
+        margin-top: 5px;
     }
-
-    
-
-    .subtask_list li {
-        @include all-styles.flex-center;
+    .subtask_list {
+        padding: 20px;
+        margin: 0;
         width: 100%;
-        list-style-type: disc;
-        padding: 10px;
-        justify-content: space-between;
-    }
+        box-sizing: border-box;
 
-    .subtask_list:hover {
-        background-color: #d2cece99;
-        padding: 5px 10px;
+        > span {
+            display: block;
+            flex: 1 1 0;
+            min-width: 0;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        li {
+            list-style-type: disc;
+            width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        li:hover {
+        @include all-styles.flex-center;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+
 
         .subtaskListPosition {
             @include all-styles.flex-center;
-            width: 100%;
             gap: 8px;
             align-items: center;
             cursor: pointer;
@@ -88,6 +94,21 @@
 
             .imgDelete {
                 content: url("/assets/icons/subtask_delete.svg");
+            }
+            }
+        }
+
+
+        &_inputField{
+            @include all-styles.flex-center;   
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
+            padding-right:unset;
+            input {
+                border: none !important;
+                border-radius: 0 !important;
+                border-bottom: 1px solid #124658 !important;
             }
         }
     }
