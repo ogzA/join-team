@@ -25,7 +25,7 @@ export class Contacts {
       this.shownID = this.dbService.selectedContactId();
       setTimeout(() => {
         this.isShown.update((isShown) => !isShown);
-      }, 100);
+      }, 125);
     }
   }
 
