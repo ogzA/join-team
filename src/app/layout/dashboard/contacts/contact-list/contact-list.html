@@ -14,7 +14,10 @@
         <h3 class="contact-group-letter">{{ group.letter }}</h3>
         <ul class="contact-group-items">
           @for (contact of group.contacts; track contact.id) {
-            <li [class.is-selected]="contact.id === dbService.selectedContactId()">
+            <li
+              [attr.id]="'contact-' + contact.id"
+              [class.is-selected]="contact.id === dbService.selectedContactId()"
+            >
               <button
                 class="contact-item"
                 type="button"

@@ -90,10 +90,16 @@ export class Supabase {
     this.user.set(response.data ?? ([] as User[]));
   }
 
+  // Legt einen Kontakt an und gibt die gespeicherte Zeile inkl. id zurück
   async setContact(contact: { name: string; email: string; phone: string; role: string }) {
-    const { error } = await this.supabase.from('contacts').insert([contact]);
+    const { data, error } = await this.supabase
+      .from('contacts')
+      .insert([contact])
+      .select() // gespeicherte Zeile zurückgeben
+      .single(); // als Objekt statt Array
     if (error) throw error;
     await this.getContacts();
+    return data;
   }
 
   async setUser(user: { email: string; password: string; role: string }) {
