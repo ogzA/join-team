@@ -2,7 +2,7 @@
   @if (dbService.selectedContact(); as contact) {
     <section class="contact">
       <div class="logo" [style]="changeStyles()">
-        <p>{{ nameLogo().name  }}</p>
+        <p>{{ nameLogo().name }}</p>
       </div>
 
       <div class="contact-name">
@@ -27,15 +27,21 @@
     <section class="contact-info">
       <h3>Contact Information</h3>
 
-      <h4>Email</h4>
-      @if (contact.email) {
-        <p class="email">{{ contact.email }}</p>
-      }
+      <section class="info-wrapper">
+        <h4>Email</h4>
+        @if (contact.email) {
+          <div class="info">
+            <p class="email">{{ contact.email }}</p>
+          </div>
+        }
 
-      <h4>Phone</h4>
-      @if (contact.phone) {
-        <p>{{ contact.phone }}</p>
-      }
+        <h4>Phone</h4>
+        @if (contact.phone) {
+          <div class="info">
+            <p>{{ contact.phone }}</p>
+          </div>
+        }
+      </section>
     </section>
 
     <button
