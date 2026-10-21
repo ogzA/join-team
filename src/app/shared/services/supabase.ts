@@ -1,3 +1,4 @@
+import { T } from '@angular/cdk/keycodes';
 import { computed, Service, WritableSignal, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 
@@ -15,15 +16,15 @@ interface User {
 }
 
 interface Task {
-  [index: number]: {
-    category: string;
-    title: string;
-    description: string;
-    date: string;
-    prio: string;
-    assigned?: string[];
-    subtasks?: {}[];
-  };
+  // [index: number]: {
+  category: string;
+  title: string;
+  description: string;
+  date: string;
+  prio: string;
+  assigned?: string[];
+  subtasks?: {}[];
+  // };
 }
 
 @Service()
@@ -40,7 +41,7 @@ export class Supabase {
     { id: number; created_at: string; email: string; password: string; role: string }[]
   >([]);
 
-  // Task Signals Arrays with Objects
+  // Task Signal Arrays with Objects
   toDoTasks = signal<
     {
       category: string;
@@ -53,10 +54,39 @@ export class Supabase {
     }[]
   >([]);
 
-  // ({}[]);
-  inProgressTasks = signal([]);
-  awaitFeedbackTasks = signal([]);
-  doneTasks = signal([]);
+  inProgressTasks = signal<
+    {
+      category: string;
+      title: string;
+      description: string;
+      date: string;
+      prio: string;
+      assigned?: string[];
+      subtasks?: {}[];
+    }[]
+  >([]);
+  awaitFeedbackTasks = signal<
+    {
+      category: string;
+      title: string;
+      description: string;
+      date: string;
+      prio: string;
+      assigned?: string[];
+      subtasks?: {}[];
+    }[]
+  >([]);
+  doneTasks = signal<
+    {
+      category: string;
+      title: string;
+      description: string;
+      date: string;
+      prio: string;
+      assigned?: string[];
+      subtasks?: {}[];
+    }[]
+  >([]);
 
   channels: RealtimeChannel | undefined;
 
@@ -129,14 +159,39 @@ export class Supabase {
 
     setTimeout(() => {
       console.log('To Do: ', this.toDoTasks());
-      console.log('In Progress: ', this.inProgressTasks());
-      console.log('Await Feedback: ', this.awaitFeedbackTasks());
-      console.log('Done: ', this.doneTasks());
+      // console.log('In Progress: ', this.inProgressTasks());
+      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
+      // console.log('Done: ', this.doneTasks());
 
       // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
       // this.setTasks(this.toDoTasks(), 3);
 
-      this.addTask();
+      // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
+      // Task Interface später einbauen
+      let obj: {
+        category: string;
+        title: string;
+        description: string;
+        date: string;
+        prio: string;
+        assigned?: string[];
+        subtasks?: {}[];
+      } = {
+        category: 'User Story Test',
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation.',
+        date: '10/05/2023',
+        prio: 'Medium',
+        assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
+        subtasks: [
+          { task: 'Implement Recipe Recommedation', done: true },
+          { task: 'Start Page Layout', done: false },
+        ],
+      };
+
+      // Task Obj welches in ein Signal gepeichert werden soll
+      // Nummer 1-4 welches Signal genutzt werden soll
+      this.addTask(obj, 1);
     }, 1000);
   }
 
@@ -167,37 +222,30 @@ export class Supabase {
     await this.getTasks();
   }
 
-  addTask() {
-    // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
-    // Task Interface später einbauen
-    let obj: {
-      category: string;
-      title: string;
-      description: string;
-      date: string;
-      prio: string;
-      assigned?: string[];
-      subtasks?: {}[];
-    } = {
-      category: 'User Story Test',
-      title: 'Kochwelt Page & Recipe Recommender',
-      description: 'Build start page with recipe recommendation.',
-      date: '10/05/2023',
-      prio: 'Medium',
-      assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
-      subtasks: [
-        { task: 'Implement Recipe Recommedation', done: true },
-        { task: 'Start Page Layout', done: false },
-      ],
-    };
-
+  addTask(object: Task, rowID: number) {
     setTimeout(() => {
-      console.log(this.toDoTasks());
-      this.toDoTasks().push(obj);
-      console.log('Test: ', obj);
-      console.log(this.toDoTasks());
-
-      // this.setTasks(this.toDoTasks(), 3);
+      if (rowID == 1) {
+        console.log(this.toDoTasks());
+        this.toDoTasks().push(object);
+        console.log('Test: ', object);
+        console.log(this.toDoTasks());
+        // this.setTasks(this.toDoTasks(), rowID);
+      } else if (rowID == 2) {
+        console.log(this.inProgressTasks());
+        this.inProgressTasks().push(object);
+        console.log('Test: ', object);
+        console.log(this.inProgressTasks());
+      } else if (rowID == 3) {
+        console.log(this.awaitFeedbackTasks());
+        this.awaitFeedbackTasks().push(object);
+        console.log('Test: ', object);
+        console.log(this.awaitFeedbackTasks());
+      } else if (rowID == 4) {
+        console.log(this.doneTasks());
+        this.doneTasks().push(object);
+        console.log('Test: ', object);
+        console.log(this.doneTasks());
+      }
     }, 1000);
   }
 
