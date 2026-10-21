@@ -14,18 +14,19 @@ import { Supabase } from '../../../shared/services/supabase';
 })
 export class Contacts {
   dbService = inject(Supabase);
+  shownID: number | null = 0;
 
   isShown = signal(false);
   toggle() {
-    // if (this.isShown() == false) {
-    this.isShown.update((isShown) => !isShown);
-    // } else if (this.isShown()) {
-    //   this.isShown.update((isShown) => !isShown);
-
-    //   setTimeout(() => {
-    //     this.isShown.update((isShown) => !isShown);
-    //   }, 100);
-    // }
+    if (this.dbService.selectedContactId() != this.shownID) {
+      if (this.isShown()) {
+        this.isShown.update((isShown) => !isShown);
+      }
+      this.shownID = this.dbService.selectedContactId();
+      setTimeout(() => {
+        this.isShown.update((isShown) => !isShown);
+      }, 100);
+    }
   }
 
   /**
