@@ -28,7 +28,7 @@
                   >{{ avatar.name }}</span
                 >
                 <span class="contact-info">
-                  <span class="contact-name"> {{ contact.name | titlecase }} </span>
+                  <span class="contact-name"> {{ nlService.formatName(contact.name) }} </span>
                   <span class="contact-email"> {{ contact.email }} </span>
                 </span>
               </button>

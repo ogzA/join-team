@@ -2,20 +2,24 @@ import { Service } from '@angular/core';
 
 @Service()
 export class NameLogo {
-  // Avatar-Palette "Juwel": tiefe, satte Töne plus BVB-Gelb
-  // 11 Farben, Schriftfarbe wählt getTextColor() automatisch
+  // Avatar-Palette nach Join-Design (15 Farben).
+  // Schriftfarbe wählt getTextColor() automatisch.
   colors = [
-    '#6D28D9',
-    '#BE185D',
-    '#0369A1',
-    '#047857',
-    '#B45309',
-    '#4338CA',
-    '#A21CAF',
-    '#0F766E',
-    '#9F1239',
-    '#334155',
-    '#FDE100',
+    '#FF7A00', // Orange
+    '#FF5EB3', // Pink
+    '#6E52FF', // Blauviolett
+    '#9327FF', // Lila
+    '#00BEE8', // Cyan
+    '#1FD7C1', // Türkis
+    '#FF745E', // Lachs
+    '#FFA35E', // Apricot
+    '#FC71FF', // Magenta
+    '#FFC701', // Goldgelb
+    '#0038FF', // Blau
+    '#C3FF2B', // Limette
+    '#FFE62B', // Gelb
+    '#FF4646', // Rot
+    '#FFBB2B', // Bernstein
   ];
 
   // Entfernt Titel wie "Dr." oder "Prof." am Anfang des Namens
@@ -23,6 +27,16 @@ export class NameLogo {
   // Achtung: Gleiche Titel-Regel wie NAME_PATTERN in contact-validators.ts, bei Änderungen beides anpassen
   stripTitle(username: string): string {
     return username.trim().replace(/^(?:(?:Prof|Dr)\.\s+)*/, '');
+  }
+
+  // Schreibt den ersten Buchstaben jedes Namensteils groß, der Rest bleibt unverändert
+  // Trennzeichen: Anfang, Leerzeichen, Bindestrich, Apostroph
+  // Anders als die titlecase-Pipe macht sie aus "Hans-Maria" nicht "Hans-maria"
+  formatName(name: string): string {
+    return name.replace(
+      /(^|[\s\-'])(\p{L})/gu,
+      (_match, separator, letter) => separator + letter.toUpperCase(),
+    );
   }
 
   setNameLogo(username: string) {
@@ -49,7 +63,8 @@ export class NameLogo {
   }
 
   // djb2-Hash mit Finalizer: erzeugt aus dem Namen eine feste Zahl für die Farbwahl
-  // Ohne Finalizer hinge die Farbe bei 11 Farben fast nur vom letzten Buchstaben ab (33 = 3 × 11)
+  // Der Finalizer ist nötig, weil djb2 mit Faktor 33 arbeitet: Teilt die Palettenlänge
+  // einen Faktor mit 33 (z. B. 11 oder 15), hinge die Farbe sonst stark vom letzten Buchstaben ab.
   numberFromText(text: string) {
     let hash = 5381;
     for (const char of text) {

@@ -6,7 +6,7 @@ import { NameLogo } from '../../../../shared/services/name-logo';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  imports: [AddContact, TitleCasePipe],
+  imports: [AddContact],
   selector: 'app-contact-list',
   styleUrl: './contact-list.scss',
   templateUrl: './contact-list.html',
