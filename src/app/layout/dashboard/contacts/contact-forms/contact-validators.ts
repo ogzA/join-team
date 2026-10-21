@@ -37,8 +37,9 @@ const EMAIL_PATTERN = new RegExp(
   'i',
 );
 
-// Ziffern und Leerzeichen, optional ein "+" am Anfang, muss mit einer Ziffer beginnen (z. B. "+49 176 1234567")
-const PHONE_PATTERN = /^[\\+]?[0-9 ]{10,16}$/;
+// Telefonnummer: optional "+" am Anfang, dann eine Ziffer, danach Ziffern oder Leerzeichen
+// Insgesamt 10 bis 16 Zeichen (z. B. "+49 176 1234567", "0342889900")
+const PHONE_PATTERN = /^\+?\d[\d ]{9,15}$/;
 
 // Gemeinsame Validatoren für Add- und Edit-Contact-Formular
 // Jedes Feld ist Pflicht und muss dem jeweiligen Muster entsprechen
