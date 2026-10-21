@@ -38,6 +38,7 @@
             formControlName="name" />
             <img class="field_icon" src="assets/icons/person.svg" alt="" />
           </div>
+          @if (contactForm.controls['name'].touched) {
           @if (contactForm.controls['name'].touched){
             @if (contactForm.controls['name'].errors?.['required']) {
               <p class="error">This field is required</p>
@@ -58,6 +59,7 @@
           </div>
 
           @if (contactForm.controls['email'].touched) {
+          @if (contactForm.controls['email'].touched) {
             @if (contactForm.controls['email'].errors?.['required']) {
               <p class="error">This field is required</p>
             } @else if (contactForm.controls['email'].errors?.['pattern']) {
@@ -77,6 +79,7 @@
             <img class="field_icon" src="assets/icons/call.svg" alt="" />
           </div>
 
+          @if (contactForm.controls['phone'].touched) {
           @if (contactForm.controls['phone'].touched) {
             @if (contactForm.controls['phone'].errors?.['required']) {
               <p class="error">This field is required</p>
