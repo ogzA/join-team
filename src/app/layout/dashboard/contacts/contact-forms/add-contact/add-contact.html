@@ -31,15 +31,15 @@
         <div class="field">
           <div class="field_input">
             <input
-            placeholder="Name"
-            type="text"
-            aria-label="Name"
-            autocomplete="name"
-            formControlName="name" />
+              placeholder="Name"
+              type="text"
+              aria-label="Name"
+              autocomplete="name"
+              formControlName="name"
+            />
             <img class="field_icon" src="assets/icons/person.svg" alt="" />
           </div>
           @if (contactForm.controls['name'].touched) {
-          @if (contactForm.controls['name'].touched){
             @if (contactForm.controls['name'].errors?.['required']) {
               <p class="error">This field is required</p>
             } @else if (contactForm.controls['name'].errors?.['pattern']) {
@@ -50,15 +50,14 @@
         <div class="field">
           <div class="field_input">
             <input
-            placeholder="Email"
-            type="email"
-            aria-label="Email"
-            autocomplete="email"
-            formControlName="email" />
+              placeholder="Email"
+              type="email"
+              aria-label="Email"
+              autocomplete="email"
+              formControlName="email"
+            />
             <img class="field_icon" src="assets/icons/mail.svg" alt="" />
           </div>
-
-          @if (contactForm.controls['email'].touched) {
           @if (contactForm.controls['email'].touched) {
             @if (contactForm.controls['email'].errors?.['required']) {
               <p class="error">This field is required</p>
@@ -78,8 +77,6 @@
             />
             <img class="field_icon" src="assets/icons/call.svg" alt="" />
           </div>
-
-          @if (contactForm.controls['phone'].touched) {
           @if (contactForm.controls['phone'].touched) {
             @if (contactForm.controls['phone'].errors?.['required']) {
               <p class="error">This field is required</p>
