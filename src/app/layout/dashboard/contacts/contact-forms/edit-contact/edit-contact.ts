@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Supabase } from '../../../../../shared/services/supabase';
-import { contactValidators } from '../contact-validators';
+import { cleanContact, contactValidators } from '../contact-validators';
 import { NameLogo } from '../../../../../shared/services/name-logo';
 import { ToastService } from '../../../../../shared/services/toast.service';
 
@@ -36,8 +36,7 @@ export class EditContact implements OnInit {
 
   // Befüllt das Formular mit den Daten des ausgewählten Kontakts
   ngOnInit() {
-    const { name, email, phone } = this.contact();
-    this.contactForm.setValue({ name, email, phone });
+    this.contactForm.setValue(cleanContact(this.contact())); // bestehende Daten bereinigt anzeigen
     this.contactForm.markAllAsTouched(); // Fehler in bestehenden Daten sofort anzeigen
   }
 
@@ -48,7 +47,7 @@ export class EditContact implements OnInit {
       return;
     }
     await this.runAction(
-      () => this.db.updateContact(this.contact().id, this.contactForm.getRawValue()),
+      () => this.db.updateContact(this.contact().id, cleanContact(this.contactForm.getRawValue())),
       'Contact successfully updated',
     );
   }

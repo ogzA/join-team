@@ -32,3 +32,15 @@ export const contactValidators = {
   email: [Validators.required, Validators.pattern(EMAIL_PATTERN)],
   phone: [Validators.required, Validators.pattern(PHONE_PATTERN)],
 };
+
+export function cleanContact(contact: { name: string; email: string; phone: string }) {
+  return {
+    name: contact.name
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/\bprof\./gi, 'Prof.')
+    .replace(/\bdr\./gi, 'Dr.'),
+    email: contact.email.trim(),
+    phone: contact.phone.trim(),
+  };
+}

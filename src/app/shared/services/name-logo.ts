@@ -40,7 +40,7 @@ export class NameLogo {
   }
 
   setNameLogo(username: string) {
-    username = this.stripTitle(username); // Initialen ohne Titel bilden
+    username = this.stripTitle(username).replace(/\s+/g, ' '); // Titel und doppelte Leerzeichen entfernen
 
     let obj = {
       name: '',

@@ -1,7 +1,7 @@
 import { Component, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Supabase } from '../../../../../shared/services/supabase';
-import { contactValidators } from '../contact-validators';
+import { cleanContact, contactValidators } from '../contact-validators';
 import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ToastService } from '../../../../../shared/services/toast.service';
 export class AddContact {
   private dbService = inject(Supabase);
   private toast = inject(ToastService);
-  
+
   private fb = inject(FormBuilder);
   isOpen = input(false);
   closed = output<void>();
@@ -32,7 +32,7 @@ export class AddContact {
     }
     this.isSaving.set(true);
     try {
-      await this.dbService.setContact({ ...this.contactForm.getRawValue(), role: 'User' });
+      await this.dbService.setContact({ ...cleanContact(this.contactForm.getRawValue()), role: 'User' });
       this.toast.success('Contact successfully created');
       this.close();
     } catch {
