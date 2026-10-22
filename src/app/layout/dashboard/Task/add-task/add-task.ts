@@ -27,7 +27,7 @@ export class AddTask {
     category: ['', Validators.required],
     subtask: [''],
   });
- 
+
 
   onSubmit() {
     if (this.taskForm.invalid) {
@@ -103,7 +103,11 @@ export class AddTask {
     this.subtask_info = false;
     console.log(this.subtasks);
   }
-
+resetForm()
+{
+  this.taskForm.reset()
+  this.subtasks = [];
+}
   showAddSubTask() {
     this.subtask_info = true;
     const value = this.taskForm.get('subtask')?.value ?? '';

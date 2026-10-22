@@ -106,18 +106,15 @@
                             </button>
                         </div>
                         } @else {
-                        <span>{{ task }}</span>
+                        <span class="bulletDot"></span>
+                        <span >{{ task }}</span>
                         <div class="subtaskListPosition">
                             <button type="button" (click)="subtaskEdit($index)" aria-label="Edit subtask">
-                                <img class="imgEdit" src="" alt="" />
+                                <img class="imgEdit" src="assets/icons/subtask_edit.svg" alt="" />
                             </button>
-                
-                            <button type="button" aria-hidden="true">
-                                <img class="divider_subtask" src="" alt="" />
-                            </button>
-                
+                            <img class="divider_subtask" src="assets/icons/sutask_divider.svg" alt="" />
                             <button type="button" (click)="deleteSubTask($index)" aria-label="Delete subtask">
-                                <img class="imgDelete" src="" alt="" />
+                                <img class="imgDelete" src="assets/icons/subtask_delete.svg" alt="" />
                             </button>
                         </div>
                         }
@@ -125,7 +122,6 @@
                     }
                 </ul>
                     </div>
-               
 }
                 </div>
                 </div>
@@ -136,7 +132,7 @@
         <div class="task-form-footer">
             <p class="hint"><span class="required">*</span>This field is required</p>
             <div class="buttons">
-                <button type="button" class="btn clearBtn" (click)="taskForm.reset()">Clear <img src="assets/icons/close-dialog.svg" alt="close_logo"></button>
+                <button type="button" class="btn clearBtn" (click)="resetForm()">Clear <img src="assets/icons/close-dialog.svg" alt="close_logo"></button>
                 <button type="submit" [disabled]="taskForm.invalid || isSaving()" class="btn createBtn">Create Task <img src="assets/icons/check.svg" alt="check_logo"></button>
             </div>
         </div>
