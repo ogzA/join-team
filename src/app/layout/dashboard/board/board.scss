@@ -86,7 +86,7 @@ $color-avatar-more: #2a3647;
   height: 32px;
   top: 8px;
   right: 16px;
-  pointer-events: none;
+  // pointer-events: none;
 }
 
 .board__add-button {
@@ -214,8 +214,8 @@ $color-avatar-more: #2a3647;
 
 // Rahmen, wenn die Karte per Tastatur fokussiert wird
 .task-card:focus-visible {
-    outline: 2px solid $color-progress-fill;
-    outline-offset: 2px;
+  outline: 2px solid $color-progress-fill;
+  outline-offset: 2px;
 }
 
 .task-card__category {
@@ -431,4 +431,15 @@ $color-avatar-more: #2a3647;
     width: 30px;
     height: 30px;
   }
+}
+
+.searchTest {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.search-Btn {
+  cursor: pointer;
+  width: 100%;
+  background-color: red;
 }

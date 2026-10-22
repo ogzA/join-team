@@ -17,6 +17,10 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'contacts',
+    component: Contacts,
+  },
+  {
     path: 'help-page',
     component: HelpPage,
   },
