@@ -4,7 +4,7 @@ import { Supabase } from './shared/services/supabase';
 import { ToastClass } from './shared/toast/toast';
 
 @Component({
-  imports: [RouterOutlet,ToastClass],
+  imports: [RouterOutlet, ToastClass],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -20,6 +20,9 @@ export class App {
     this.dbService.getContacts();
     // this.dbService.getUser();
     this.dbService.loadData();
+
+    this.dbService.getTasks();
+    this.dbService.setDataTest();
 
     // console.log(this.dbService.contacts());
 
