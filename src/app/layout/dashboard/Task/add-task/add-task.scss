@@ -1,6 +1,6 @@
 @use '../../../../../../public/assets/scss/all-styles';
 
-.add-task {
+.addTask {
     width: 100%;
     max-width: 1440px;
     font-family: 'Inter';
@@ -29,7 +29,7 @@
             }
         }
 
-    .subtask_logos {
+    .subtaskLogos {
         @include all-styles.flex-center;
         gap: 8px;
         align-items: center;
@@ -46,7 +46,7 @@
         }
 
     }
-    .upper_div_ul{
+    .upperDivUl{
         width: 100%;
         overflow-y:auto;
         max-height: 100px;
@@ -55,7 +55,7 @@
         box-sizing: border-box;
         padding: 15px;
     }
-    .subtask_list {
+    .subtaskList {
         touch-action: auto;
         input{
             padding-right: 20px !important;
@@ -76,9 +76,9 @@
                 width: 7px;
                 height: 7px;
             }
-            span {
-            width: 100%;
-            word-break: break-all;           
+            p {
+                width: 100%;
+                word-break: break-all;           
             }
         }
         .subtaskListPosition{
@@ -89,7 +89,7 @@
 
              // Hide icons by default on desktop
             .imgEdit,
-            .divider_subtask,
+            .dividerSubtask,
             .imgDelete {
                 visibility: hidden;
             }
@@ -100,7 +100,7 @@
                 .subtaskListPosition {
             
                                     .imgEdit,
-                                    .divider_subtask,
+                                    .dividerSubtask,
                                     .imgDelete {
                                         visibility: visible;
                                     }
@@ -116,23 +116,10 @@
         gap: 8px;
         width: 100%;
             .imgEdit,
-                .divider_subtask,
+                .dividerSubtask,
                 .imgDelete {
                     visibility: visible;
-                }
-
-            // .imgEdit {
-            //     content: url("/assets/icons/subtask_edit.svg");
-            // }
-
-            // .divider_subtask {
-            //     content: url("/assets/icons/sutask_divider.svg");
-            // }
-
-            // .imgDelete {
-            //     content: url("/assets/icons/subtask_delete.svg");
-            // }
-            
+                }            
         }
 
 
@@ -154,7 +141,7 @@
         font-size: 3.813rem;
     }
 
-    .task-form {
+    .taskForm {
         &-columns {
             display: flex;
             gap: 32px;
@@ -361,10 +348,10 @@
 }
 
 @media (max-width: all-styles.$breakpoint-mobile) {
-    .add-task {
+    .addTask {
         padding: 48px 16px;
 
-        .task-form {
+        .taskForm {
             &-columns {
                 flex-direction: column;
                 gap: 0;

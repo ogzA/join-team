@@ -1,11 +1,11 @@
-<main class="add-task">
+<main class="addTask">
     <h1>Add Task</h1>
 
-    <form class="task-form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div class="task-form-columns">
+    <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div class="taskForm-columns">
 
             <!-- left column -->
-            <section class="task-form-columns-column1">
+            <section class="taskForm-columns-column1">
                 <div class="field">
                     <label for="title">Title<span class="required">*</span></label>
                     <input id="title" type="text" formControlName="title" placeholder="Enter a title">
@@ -24,7 +24,7 @@
 
                 <div class="field">
                     <label for="dueDate">Due date<span class="required">*</span></label>
-                    <input type="date" id="dueDate"  [min]="todays_date" formControlName="dueDate">
+                    <input type="date" id="dueDate"  [min]="todaysDate" formControlName="dueDate">
                     @if (taskForm.controls['dueDate'].touched) {
                         @if (taskForm.controls['dueDate'].errors?.['required']) {
                         <p class="error">This field is required</p>
@@ -34,7 +34,7 @@
             </section>
             <span class="divider"></span>
             <!-- right column -->
-            <section class="task-form-columns-column2">
+            <section class="taskForm-columns-column2">
                 <fieldset class="priority">
                     <legend>Priority</legend>
 
@@ -62,7 +62,7 @@
                 <div class="field">
                     <label for="category">Category<span class="required">*</span></label>
                     <select id="category" formControlName="category">
-                        <option value="" selected>Select task category</option>
+                        <option value="" disabled  selected>Select task category</option>
                         <option value="technical">Technical Task</option>
                         <option value="user-story">User Story</option>
                     </select>
@@ -77,21 +77,21 @@
                     <label for="subtask">Subtasks</label>
                     <div class="subtaskInputWrapper">
                     <input id="subtask" type="text" class="icon_padding" formControlName="subtask" (keyup)="showAddSubTask()" placeholder="Add new subtask">
-                    @if(subtask_info)
+                    @if(subtaskInfo)
                     {
-                        <div class="subtask_logos">
-                            <button type="button"><img (click)="closeSubtask()" src="/assets/icons/close_subtask.svg" alt="close_subtask_logo"></button>
-                            <button type="button"><img src="/assets/icons/sutask_divider.svg" alt="subtask_divider_logo"></button>
-                            <button type="button"><img (click)="addSubtask()" src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo"></button>
+                        <div class="subtaskLogos">
+                            <button (click)="closeSubtask()" type="button"><img  src="/assets/icons/close_subtask.svg" alt="close_subtask_logo"></button>
+                            <span><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"></span>
+                            <button (click)="addSubtask()" type="button"><img  src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo"></button>
                         </div>
                     }
                 @if (subtasks.length > 0) {
-                    <div class="upper_div_ul">
-                    <ul class="subtask_list">
+                    <div class="upperDivUl">
+                    <ul class="subtaskList">
                     @for (task of subtasks; track $index) {
                     <li>
                         @if (editingIndex === $index) {
-                        <div class="subtask_list_inputField">
+                        <div class="subtaskList_inputField">
                             <input type="text" [value]="editedTask" (input)="editedTask = $any($event.target).value"
                                 aria-label="Edit subtask" />
                 
@@ -99,7 +99,7 @@
                             <button type="button" (click)="deleteEditTask()" aria-label="Discard changes">
                                 <img src="assets/icons/delete-btn.png" alt="" />
                             </button>
-                            <img src="/assets/icons/sutask_divider.svg" alt="subtask_divider_logo">
+                            <span><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"></span>
                             <!-- Save edited text -->
                             <button type="button" (click)="confirmEditedTask($index)" aria-label="Save changes">
                                 <img src="assets/icons/add_sub_task.svg" alt="" />
@@ -107,14 +107,14 @@
                         </div>
                         } @else {
                         <span class="bulletDot"></span>
-                        <span >{{ task }}</span>
+                        <p >{{ task }}</p>
                         <div class="subtaskListPosition">
                             <button type="button" (click)="subtaskEdit($index)" aria-label="Edit subtask">
-                                <img class="imgEdit" src="assets/icons/subtask_edit.svg" alt="" />
+                                <img class="imgEdit" src="assets/icons/subtask_edit.svg" alt="edit_icon" />
                             </button>
-                            <img class="divider_subtask" src="assets/icons/sutask_divider.svg" alt="" />
+                            <span><img class="dividerSubtask" src="assets/icons/subtask_divider.svg" alt="divider" /></span>
                             <button type="button" (click)="deleteSubTask($index)" aria-label="Delete subtask">
-                                <img class="imgDelete" src="assets/icons/subtask_delete.svg" alt="" />
+                                <img class="imgDelete" src="assets/icons/subtask_delete.svg" alt="delete_icon" />
                             </button>
                         </div>
                         }
@@ -129,7 +129,7 @@
         </div>
 
         <!-- bottom row -->
-        <div class="task-form-footer">
+        <div class="taskForm-footer">
             <p class="hint"><span class="required">*</span>This field is required</p>
             <div class="buttons">
                 <button type="button" class="btn clearBtn" (click)="resetForm()">Clear <img src="assets/icons/close-dialog.svg" alt="close_logo"></button>

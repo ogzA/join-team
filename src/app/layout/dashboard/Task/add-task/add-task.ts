@@ -8,9 +8,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   templateUrl: './add-task.html',
 })
 export class AddTask {
-  todays_date: string = this.getTodayDate();
+  todaysDate: string = this.getTodayDate();
   placeholder: string = 'dd/mm/yyyy';
-  subtask_info: boolean = false;
+  subtaskInfo: boolean = false;
   subtasks: string[] = [];
   isSaving = signal(false);
   editingIndex: number | null = null;
@@ -89,7 +89,7 @@ export class AddTask {
 
   closeSubtask() {
     this.taskForm.get('subtask')?.reset('');
-    this.subtask_info = false;
+    this.subtaskInfo = false;
   }
 
   addSubtask() {
@@ -100,8 +100,7 @@ export class AddTask {
     }
     this.subtasks.push(value);
     control?.reset('');
-    this.subtask_info = false;
-    console.log(this.subtasks);
+    this.subtaskInfo = false;
   }
 resetForm()
 {
@@ -109,9 +108,9 @@ resetForm()
   this.subtasks = [];
 }
   showAddSubTask() {
-    this.subtask_info = true;
+    this.subtaskInfo = true;
     const value = this.taskForm.get('subtask')?.value ?? '';
-    this.subtask_info = value.trim().length > 0;
+    this.subtaskInfo = value.trim().length > 0;
   }
 
   // startEditing(index:number) {
