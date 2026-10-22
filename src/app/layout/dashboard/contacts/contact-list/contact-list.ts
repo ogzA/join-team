@@ -1,9 +1,8 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Supabase } from '../../../../shared/services/supabase';
 import { AddContact } from '../contact-forms/add-contact/add-contact';
 import { NameLogo } from '../../../../shared/services/name-logo';
-import { TitleCasePipe } from '@angular/common';
 
 @Component({
   imports: [AddContact],
@@ -16,6 +15,19 @@ export class ContactList {
   dbService = inject(Supabase);
   nlService = inject(NameLogo);
   contacts = this.dbService.contacts;
+
+  // Scrollt zum ausgewählten Kontakt, z. B. direkt nach dem Anlegen
+  constructor() {
+    effect(() => {
+      const id = this.dbService.selectedContactId();
+      if (id === null) return;
+      setTimeout(() =>
+        document
+          .getElementById('contact-' + id)
+          ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }),
+      );
+    });
+  }
 
   groupedContacts = computed(() => {
     // Sortieren nach Namen ohne Titel, damit "Dr. Vorname Nachname" unter "V" landet
