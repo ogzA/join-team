@@ -162,10 +162,10 @@ export class Supabase {
         ],
       };
 
-      console.log('To Do: ', this.toDoTasks());
-      console.log('In Progress: ', this.inProgressTasks());
-      console.log('Await Feedback: ', this.awaitFeedbackTasks());
-      console.log('Done: ', this.doneTasks());
+      // console.log('To Do: ', this.toDoTasks());
+      // console.log('In Progress: ', this.inProgressTasks());
+      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
+      // console.log('Done: ', this.doneTasks());
 
       // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
       // this.setTasks(this.toDoTasks(), 3);
