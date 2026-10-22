@@ -12,6 +12,8 @@
                     @if (taskForm.controls['title'].touched) {
                         @if (taskForm.controls['title'].errors?.['required']) {
                         <p class="error">This field is required</p>
+                        }@else if (taskForm.controls['title'].errors?.['pattern']) {
+                        <p class="error">Enter valid title</p>
                         }
                     }
                 </div>

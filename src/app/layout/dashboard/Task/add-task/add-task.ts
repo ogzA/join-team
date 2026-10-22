@@ -19,7 +19,7 @@ export class AddTask {
   private fb = inject(FormBuilder);
 
   taskForm = this.fb.nonNullable.group({
-    title: ['', Validators.required],
+    title: ['', [Validators.required, Validators.pattern(/^[A-Za-z][a-zA-Z0-9_ -]*$/)]],
     description: [''],
     dueDate: ['', Validators.required],
     priority: ['medium'],

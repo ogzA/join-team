@@ -94,7 +94,7 @@
                 visibility: hidden;
             }
         }
-            @media (max-width: all-styles.$breakpoint-mobile)
+            @media screen and (min-width: all-styles.$breakpoint-xsmall-device) and (max-width: all-styles.$breakpoint-tablet) 
             {
                             
                 .subtaskListPosition {
