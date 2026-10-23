@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../../../../public/assets/scss/all-styles';
 
 // ToDo: zu all-styles hinzufügen
@@ -14,8 +15,16 @@ $color-progress-text: #000000;
 $color-progress-bg: #f4f4f4;
 $color-progress-fill: #4589ff;
 $color-avatar-more: #2a3647;
+$color-scrollbar: color.change($color-task-title, $alpha: 0.4);
+
+:host {
+  display: block;
+  height: 100%;
+}
 
 .board {
+  box-sizing: border-box;
+  height: 100%;
   max-width: 1440px;
   padding: 80px 64px;
 
@@ -121,8 +130,10 @@ $color-avatar-more: #2a3647;
 
 .board__columns {
   display: grid;
+  flex: 1;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 26px;
+  min-height: 0;
 }
 
 .board__column {
@@ -130,6 +141,7 @@ $color-avatar-more: #2a3647;
   flex-direction: column;
   gap: 16px;
   min-width: 0;
+  min-height: 0;
 }
 
 .board__column-header {
@@ -178,12 +190,35 @@ $color-avatar-more: #2a3647;
 .board__cards {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 16px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px;
+  margin: -12px;
+
+  // Schmale Scrollbar (Firefox, Chrome, Edge)
+  scrollbar-width: thin;
+  scrollbar-color: $color-scrollbar transparent;
+
+  // Safari
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $color-scrollbar;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
 .board__indication {
   display: flex;
-  flex-grow: 1;
   align-items: center;
   justify-content: center;
   height: 48px;
@@ -342,6 +377,15 @@ $color-avatar-more: #2a3647;
 @media (max-width: all-styles.$breakpoint-tablet) {
   .board {
     gap: 24px;
+    height: auto;
+  }
+
+  .board__columns {
+    flex: none;
+  }
+
+  .board__column {
+    min-height: auto;
   }
 
   .board__header {
@@ -382,6 +426,10 @@ $color-avatar-more: #2a3647;
   .board__cards {
     flex-direction: row;
     overflow-x: auto;
+  }
+
+  .board__indication {
+    flex-grow: 1;
   }
 
   .task-card {
