@@ -16,6 +16,7 @@ $color-progress-bg: #f4f4f4;
 $color-progress-fill: #4589ff;
 $color-avatar-more: #2a3647;
 $color-scrollbar: color.change($color-task-title, $alpha: 0.4);
+$color-drag-placeholder: #a8a8a8;
 
 :host {
   display: block;
@@ -251,6 +252,41 @@ $color-scrollbar: color.change($color-task-title, $alpha: 0.4);
 .task-card:focus-visible {
   outline: 2px solid $color-progress-fill;
   outline-offset: 2px;
+}
+
+// ====== Drag & Drop ======
+
+// Gezogene Karte am Mauszeiger: leicht gedreht
+// "rotate" statt "transform", weil das CDK transform für die Position nutzt
+.task-card.cdk-drag-preview {
+  rotate: 5deg;
+}
+
+// Placeholder: leere Fläche mit gepunktetem Rahmen an der Zielposition
+.task-card.cdk-drag-placeholder {
+  border: 1px dotted $color-drag-placeholder;
+  background-color: transparent;
+  box-shadow: none;
+
+  // Inhalt bleibt für die Größe erhalten, wird aber nicht angezeigt
+  > * {
+    visibility: hidden;
+  }
+}
+
+// Loslassen: Karte gleitet sanft an ihren Platz
+.task-card.cdk-drag-animating {
+  transition: transform 100ms ease;
+}
+
+// Andere Karten rücken während des Ziehens weich nach
+.board__cards.cdk-drop-list-dragging .task-card:not(.cdk-drag-placeholder) {
+  transition: transform 100ms ease;
+}
+
+// "No tasks"-Hinweis ausblenden, sobald der Platzhalter in der Spalte ist
+.board__cards:has(.cdk-drag-placeholder) .board__indication {
+  display: none;
 }
 
 .task-card__category {
