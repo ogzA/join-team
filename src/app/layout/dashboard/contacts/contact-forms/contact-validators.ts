@@ -1,13 +1,18 @@
 import { Validators } from '@angular/forms';
 
-// Vor- und Nachname, nur Buchstaben (inkl. Umlaute)
-// Optional ein oder mehrere Titel davor: "Dr." oder "Prof."
-// Bindestrich und Apostroph innerhalb eines Namens erlaubt (z. B. "Anna-Lena O'Brien")
-// Mindestens zwei Namensteile, getrennt durch Leerzeichen
-// Das "u"-Flag am Ende aktiviert \p{L} (jeder Buchstabe aus jeder Sprache)
+// Ein Namensteil: mindestens 2 Buchstaben (inkl. Umlaute)
+// Bindestrich und Apostroph innerhalb erlaubt (z. B. "Anna-Lena", "O'Brien")
+// Ein einzelner Buchstabe wie "A" ist kein gültiger Namensteil
+const NAME_PART = String.raw`(?:\p{L}{2,}|\p{L}[-']\p{L}+)(?:[-']\p{L}+)*`;
+
+// Vor- und Nachname: optional Titel "Dr." oder "Prof." (beliebige Schreibweise),
+// danach mindestens zwei Namensteile, getrennt durch Leerzeichen
+// "u"-Flag aktiviert \p{L}, "i"-Flag erlaubt z. B. "pRof.", cleanContact() vereinheitlicht beim Speichern
 // Achtung: Gleiche Titel-Regel wie stripTitle() in name-logo.ts, bei Änderungen beides anpassen
-// Das "i"-Flag erlaubt Titel in beliebiger Schreibweise (z. B. "pRof."), cleanContact() vereinheitlicht sie beim Speichern
-const NAME_PATTERN = /^(?:(?:Prof|Dr)\.\s+)*\p{L}+(?:[-']\p{L}+)*(?:\s+\p{L}+(?:[-']\p{L}+)*)+$/iu;
+const NAME_PATTERN = new RegExp(
+  String.raw`^(?:(?:Prof|Dr)\.\s+)*${NAME_PART}(?:\s+${NAME_PART})+$`,
+  'iu',
+);
 
 // Erlaubte internationale Endungen. Nationale Endungen (2 Buchstaben, z. B. .de, .at, .ch) sind immer erlaubt.
 // Bei Bedarf hier erweitern.

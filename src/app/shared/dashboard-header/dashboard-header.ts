@@ -1,4 +1,4 @@
-import { Component, HostListener, signal,ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, signal, ElementRef, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,19 +11,19 @@ export class DashboardHeader {
   mobile_menu = signal<boolean>(false);
 
   constructor(private elementRef: ElementRef) {}
-  
-   // Automatically listen to all document clicks
+
+  // Automatically listen to all document clicks
   @HostListener('document:click', ['$event'])
-    onDocumentClick(event: Event) {
-      // If the menu is open and the user clicks outside this component, close it
-      if (this.mobile_menu() && !this.elementRef.nativeElement.contains(event.target)) {
-        this.closeMenu();
-      }
+  onDocumentClick(event: Event) {
+    // If the menu is open and the user clicks outside this component, close it
+    if (this.mobile_menu()) {
+      this.closeMenu();
     }
+  }
 
   openMobileMenu(event: Event) {
-    event.stopPropagation();// to prevent it from immediately closing itself
-    this.mobile_menu.set(true);
+    event.stopPropagation(); // to prevent it from immediately closing itself
+    this.mobile_menu.set(!this.mobile_menu());
   }
 
   closeMenu() {
