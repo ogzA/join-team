@@ -1,4 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
 
 // ====== DUMMY START ======
@@ -134,7 +142,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -185,5 +193,14 @@ export class Board {
   // Merkt sich den angeklickten Task für die Detailansicht
   protected openTask(task: Task): void {
     this.selectedTask.set(task);
+  }
+
+  // Verschiebt einen Task nach dem Loslassen
+  protected dropTask(event: CdkDragDrop<Task[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
   }
 }

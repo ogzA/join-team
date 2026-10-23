@@ -18,7 +18,7 @@
     </div>
   </header>
 
-  <div class="board__columns">
+  <div class="board__columns" cdkDropListGroup>
     <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
     @for (column of columns; track column.status) {
       <section class="board__column">
@@ -42,10 +42,16 @@
           }
         </div>
 
-        <div class="board__cards">
+        <div
+          class="board__cards"
+          cdkDropList
+          [cdkDropListData]="column.tasks"
+          (cdkDropListDropped)="dropTask($event)"
+          >
           <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->
           @for (task of column.tasks; track $index) {
             <article
+              cdkDrag
               class="task-card"
               tabindex="0"
               role="button"
