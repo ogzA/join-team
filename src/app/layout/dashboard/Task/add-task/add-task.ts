@@ -1,6 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
+interface SUBTASK{
+  task:string,
+  done:boolean
+}
+
+
 @Component({
   imports: [ReactiveFormsModule],
   selector: 'app-add-task',
@@ -11,7 +17,7 @@ export class AddTask {
   todaysDate: string = this.getTodayDate();
   placeholder: string = 'dd/mm/yyyy';
   subtaskInfo: boolean = false;
-  subtasks: string[] = [];
+  subtasks: SUBTASK[] = [];
   isSaving = signal(false);
   editingIndex: number | null = null;
   editedTask: string = ''; 
@@ -55,7 +61,8 @@ export class AddTask {
 
   subtaskEdit(index:number) {
     this.editingIndex = index;
-    this.editedTask = this.subtasks[index];
+    this.editedTask = this.subtasks[index].task;
+    console.log("after edit:",this.editedTask)
   }
 
   getTodayDate() {
@@ -69,7 +76,8 @@ export class AddTask {
   deleteEditTask()
   {
     this.editingIndex = null;
-    this.editedTask = '';
+    this.editedTask = "";
+    console.log("after delete:",this.editedTask);
   }
 
   confirmEditedTask(index:number){
@@ -77,7 +85,10 @@ export class AddTask {
     if (!value) {
       return;
     }
-    this.subtasks[index] = value;
+    this.subtasks[index] = {
+      ...this.subtasks[index],
+      task: value
+    };
     this.editingIndex = null;
     this.editedTask = '';
   }
@@ -98,7 +109,7 @@ export class AddTask {
     if (!value) {
       return;
     }
-    this.subtasks.push(value);
+    this.subtasks.push({task:value,done:false});
     control?.reset('');
     this.subtaskInfo = false;
   }
