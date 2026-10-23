@@ -36,7 +36,7 @@ const DUMMY_ROWS: BoardRow[] = [
           date: '10/05/2023',
           prio: 'Medium',
           title: 'Kochwelt Page & Recipe Recommender',
-          assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
+          assigned: ['Linda Blütenzauber', 'Hans Zimmer', 'Susi Sorglos'],
           category: 'User Story',
           subtasks: [
             { done: true, task: 'Implement Recipe Recommedation' },
@@ -48,7 +48,7 @@ const DUMMY_ROWS: BoardRow[] = [
           date: '31/12/2026',
           prio: 'Low',
           title: 'HTML Base Template Creation',
-          assigned: ['Sofia Müller', 'Anja Schulz', 'Benedikt Ziegler', 'Davis Eisenberg'],
+          assigned: ['Angela Merkel', 'Hans Zimmer', 'Lara Bach', 'Jürgen Schulz'],
           category: 'Technical Task',
           subtasks: [
             { done: false, task: 'Create HTML Base Template' },
@@ -69,7 +69,7 @@ const DUMMY_ROWS: BoardRow[] = [
           date: '15/11/2026',
           prio: 'Urgent',
           title: 'Daily Kochwelt Recipe',
-          assigned: ['Marcel Bauer'],
+          assigned: ['Jürgen Schulz'],
           category: 'User Story',
           subtasks: [
             { done: true, task: 'Define recipe data structure' },
@@ -83,12 +83,12 @@ const DUMMY_ROWS: BoardRow[] = [
           prio: 'Medium',
           title: 'Very long task title to test text overflow inside the card container',
           assigned: [
-            'Anton Mayer',
-            'Sofia Müller',
-            'Anja Schulz',
-            'Benedikt Ziegler',
-            'Davis Eisenberg',
-            'Emannuel Mauer',
+            'Angela Merkel',
+            'Jürgen Schulz',
+            'Susi Sorglos',
+            'Hans Zimmer',
+            'Lara Bach',
+            'Linda Blütenzauber',
           ],
           category: 'Technical Task',
           subtasks: [],
@@ -112,7 +112,7 @@ const DUMMY_ROWS: BoardRow[] = [
           date: '01/10/2026',
           prio: 'Low',
           title: 'CSS Architecture Planning',
-          assigned: ['Sofia Müller', 'Benedikt Ziegler'],
+          assigned: ['Susi Sorglos', 'Jürgen Schulz'],
           category: 'Technical Task',
           subtasks: [
             { done: true, task: 'Establish CSS methodology' },
@@ -147,7 +147,7 @@ export class Board {
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
   protected maxAvatars = 3;
-  // Aktuell angeklickter Task. mull = keine Detailansicht offen
+  // Aktuell angeklickter Task. null = keine Detailansicht offen
   // Die Detailansicht liest später dieses Signal
   protected selectedTask = signal<Task | null>(null);
 

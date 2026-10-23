@@ -140,10 +140,14 @@
               <div class="task-card__footer">
                 <div class="task-card__avatars">
                   <!-- slice(0, maxAvatars): nur die ersten drei Namen anzeigen -->
-                  @for (name of task.assigned.slice(0, maxAvatars); track name) {
+                  @for (name of task.assigned.slice(0, maxAvatars); track $index) {
                     <!-- @let speichert das Ergebnis, damit setNameLogo pro Name nur einmal läuft -->
                     @let avatar = nlService.setNameLogo(name);
-                    <span class="task-card__avatar" [style.background-color]="avatar.color">
+                    <span
+                      class="task-card__avatar"
+                      [style.background-color]="avatar.color"
+                      [style.color]="avatar.textColor"
+                    >
                       {{ avatar.name }}
                     </span>
                   }
