@@ -1,9 +1,11 @@
+@use '../../../../public/assets/scss/all-styles' as *;
 @import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
 
 :host {
   display: flex;
   justify-content: center;
   font-family: var(--inter-font);
+  flex-direction: column;
 }
 
 .select {
@@ -24,7 +26,6 @@
   -webkit-user-select: none;
   outline: none;
   border: 2px solid;
-  margin-top: 100px;
 }
 
 .select span {
@@ -159,4 +160,35 @@
 
 .example-option-text {
   flex: 1;
+}
+
+.assigned-avatar {
+  display: flex;
+  flex-shrink: 0; // Avatare bleiben rund, werden nicht verformt
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid $color-white;
+  border-radius: 50%;
+  font-size: 16px;
+  color: $color-white;
+}
+
+// Ausgewählte Kontakte unter dem Dropdown, überlappen sich wie auf der Task-Karte
+.assigned-avatars {
+  display: flex;
+  margin-top: 8px;
+
+  .assigned-avatar {
+    margin-left: -8px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.assigned-avatar-more {
+  background-color: $color-avatar-more; // "+Number"-Zähler
 }
