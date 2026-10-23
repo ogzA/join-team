@@ -56,13 +56,11 @@ export class AddTask {
 
   deleteSubTask(index:number) {
     this.subtasks.splice(index,1);
-    console.log(this.subtasks)
   }
 
   subtaskEdit(index:number) {
     this.editingIndex = index;
     this.editedTask = this.subtasks[index].task;
-    console.log("after edit:",this.editedTask)
   }
 
   getTodayDate() {
@@ -77,7 +75,6 @@ export class AddTask {
   {
     this.editingIndex = null;
     this.editedTask = "";
-    console.log("after delete:",this.editedTask);
   }
 
   confirmEditedTask(index:number){
@@ -91,11 +88,6 @@ export class AddTask {
     };
     this.editingIndex = null;
     this.editedTask = '';
-  }
-
-  collectEditValue(data:string)
-  {
-    console.log(data)
   }
 
   closeSubtask() {
