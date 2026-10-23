@@ -214,8 +214,8 @@ $color-avatar-more: #2a3647;
 
 // Rahmen, wenn die Karte per Tastatur fokussiert wird
 .task-card:focus-visible {
-    outline: 2px solid $color-progress-fill;
-    outline-offset: 2px;
+  outline: 2px solid $color-progress-fill;
+  outline-offset: 2px;
 }
 
 .task-card__category {
@@ -432,3 +432,19 @@ $color-avatar-more: #2a3647;
     height: 30px;
   }
 }
+
+// Test Bereich
+.subtask-tests {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .testbalken {
+    width: 110px;
+    height: 8px;
+    border-radius: 16px;
+    border: 1px solid black;
+    color: #f4f4f4;
+  }
+}
+// Tests Ende

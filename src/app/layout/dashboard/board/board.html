@@ -18,6 +18,26 @@
     </div>
   </header>
 
+  <!-- Subtask Fortschrittsbalken Test -->
+  <section class="test-section">
+    <h2>Subtask Fortschrittsbalken Test</h2>
+    <br />
+    <article class="test-card">
+      <h3>{{ dbService.doneTasks()[0]?.category }}</h3>
+      <h3>{{ dbService.doneTasks()[0]?.title }}</h3>
+      <p>{{ dbService.doneTasks()[0]?.description }}</p>
+      <div class="subtask-tests">
+        <div class="testbalken"></div>
+        <p>
+          {{ setDoneSubTasks(0) }}
+          /
+          {{ dbService.doneTasks()[0]?.subtasks?.length }} Subtasks
+        </p>
+      </div>
+    </article>
+  </section>
+  <!-- Test Ende -->
+
   <div class="board__columns">
     <!-- Spalte pro Zeile aus Datenbank -->
     @for (row of rows; track row.id) {

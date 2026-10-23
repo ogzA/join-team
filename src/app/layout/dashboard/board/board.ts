@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { NameLogo } from '../../../shared/services/name-logo';
+import { Supabase } from '../../../shared/services/supabase';
 
 // ====== DUMMY START ======
 
@@ -133,7 +134,8 @@ const DUMMY_ROWS: BoardRow[] = [
 })
 export class Board {
   protected nlService = inject(NameLogo);
-   // Datenquelle für das Board - Andres Daten später aus dem Service
+  dbService = inject(Supabase);
+  // Datenquelle für das Board - Andres Daten später aus dem Service
   protected rows: BoardRow[] = DUMMY_ROWS;
   // Spaltennamen Anzeige
   protected columnLabels: Record<string, string> = {
@@ -149,15 +151,15 @@ export class Board {
   // Die Detailansicht liest später dieses Signal
   protected selectedTask = signal<Task | null>(null);
 
-   // Tasks werden aus Zeile geholt [[...]], "" wird zu []
+  // Tasks werden aus Zeile geholt [[...]], "" wird zu []
   protected tasksOf(row: BoardRow): Task[] {
     return Array.isArray(row.taskjson) ? row.taskjson.flat() : [];
   }
-   // Subtasks erledigt zählen
+  // Subtasks erledigt zählen
   protected doneCount(task: Task): number {
     return task.subtasks.filter((subtask) => subtask.done).length;
   }
-   // Fortschrittsanzeige in Prozent
+  // Fortschrittsanzeige in Prozent
   protected progress(task: Task): number {
     return (this.doneCount(task) / task.subtasks.length) * 100;
   }
@@ -166,6 +168,28 @@ export class Board {
   protected openTask(task: Task): void {
     this.selectedTask.set(task);
     console.log('Task geöffnet:', task.title); // Nur für Test, muss später gelöscht werden
-
   }
+
+  // Subtask Balken Tests
+  setDoneSubTasks(index: number) {
+    let l: number | undefined = 0;
+    let count: number = 0;
+
+    if (this.dbService.doneTasks()[index]?.subtasks!.length)
+      l! = this.dbService.doneTasks()[index]?.subtasks!.length;
+
+    if (l) {
+      for (let i: number = 0; i < l; i++) {
+        // console.log(this.dbService.doneTasks()[index].subtasks![i]);
+
+        if (this.dbService.doneTasks()[index].subtasks![i]) {
+          let test: boolean = this.dbService.doneTasks()[index].subtasks![i].done;
+          console.log(test);
+
+          if (test == true) count++;
+        }
+      }
+    }
+  }
+  // Tests Ende
 }

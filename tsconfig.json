@@ -8,6 +8,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "strict":true,
+    "strictNullChecks": false,
     "isolatedModules": true,
     "experimentalDecorators": true,
     "importHelpers": true,

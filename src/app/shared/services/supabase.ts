@@ -21,7 +21,7 @@ interface Task {
   date: string;
   prio: string;
   assigned?: string[];
-  subtasks?: {}[];
+  subtasks?: { done: boolean; task: string }[];
 }
 
 interface TaskArray {
@@ -32,7 +32,7 @@ interface TaskArray {
     date: string;
     prio: string;
     assigned?: string[];
-    subtasks?: {}[];
+    subtasks?: { done: boolean; task: string }[];
   };
 }
 
@@ -59,7 +59,7 @@ export class Supabase {
       date: string;
       prio: string;
       assigned?: string[];
-      subtasks?: {}[];
+      subtasks?: { done: boolean; task: string }[];
     }[]
   >([]);
 
@@ -71,7 +71,7 @@ export class Supabase {
       date: string;
       prio: string;
       assigned?: string[];
-      subtasks?: {}[];
+      subtasks?: { done: boolean; task: string }[];
     }[]
   >([]);
   awaitFeedbackTasks = signal<
@@ -82,7 +82,7 @@ export class Supabase {
       date: string;
       prio: string;
       assigned?: string[];
-      subtasks?: {}[];
+      subtasks?: { done: boolean; task: string }[];
     }[]
   >([]);
   doneTasks = signal<
@@ -93,7 +93,7 @@ export class Supabase {
       date: string;
       prio: string;
       assigned?: string[];
-      subtasks?: {}[];
+      subtasks?: { done: boolean; task: string }[];
     }[]
   >([]);
 
@@ -148,7 +148,7 @@ export class Supabase {
         date: string;
         prio: string;
         assigned?: string[];
-        subtasks?: {}[];
+        subtasks?: { done: boolean; task: string }[];
       } = {
         category: 'User Story Test',
         title: 'Kochwelt Page & Recipe Recommender',
