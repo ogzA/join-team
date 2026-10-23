@@ -24,6 +24,14 @@ interface BoardRow {
   taskjson: Task[][] | '';
 }
 
+// Eine Spalte im Board: Status, Anzeigename und ihre Tasks
+// Das Array bleibt bestehen, damit Drag & Drop Tasks darin verschieben kann
+interface BoardColumn {
+  status: string;
+  label: string;
+  tasks: Task[];
+}
+
 const DUMMY_ROWS: BoardRow[] = [
   {
     id: 1,
@@ -133,8 +141,7 @@ const DUMMY_ROWS: BoardRow[] = [
 })
 export class Board {
   protected nlService = inject(NameLogo);
-  // Datenquelle für das Board - Andres Daten später aus dem Service
-  protected rows: BoardRow[] = DUMMY_ROWS;
+
   // Spaltennamen Anzeige
   protected columnLabels: Record<string, string> = {
     'to do': 'To do',
@@ -142,6 +149,10 @@ export class Board {
     'await feedback': 'Await feedback',
     done: 'Done',
   };
+
+  // Spalten fürs Board, einmalig aus den Rohdaten erzeugt
+  // Muss nach columnLabels stehen, weil toColumns() die Labels nutzt
+  protected columns: BoardColumn[] = this.toColumns(DUMMY_ROWS);
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
   protected maxAvatars = 3;
@@ -153,6 +164,15 @@ export class Board {
   protected tasksOf(row: BoardRow): Task[] {
     return Array.isArray(row.taskjson) ? row.taskjson.flat() : [];
   }
+
+  protected toColumns(rows: BoardRow[]): BoardColumn[] {
+    return rows.map((row) => ({
+      status: row.status,
+      label: this.columnLabels[row.status],
+      tasks: this.tasksOf(row),
+    }));
+  }
+
   // Subtasks erledigt zählen
   protected doneCount(task: Task): number {
     return task.subtasks.filter((subtask) => subtask.done).length;

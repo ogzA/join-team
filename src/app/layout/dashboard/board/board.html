@@ -19,18 +19,18 @@
   </header>
 
   <div class="board__columns">
-    <!-- Spalte pro Zeile aus Datenbank -->
-    @for (row of rows; track row.id) {
+    <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
+    @for (column of columns; track column.status) {
       <section class="board__column">
         <div class="board__column-header">
-          <h2 class="board__column-title">{{ columnLabels[row.status] }}</h2>
+          <h2 class="board__column-title">{{ column.label }}</h2>
 
           <!-- "+" in allen Spalten außer "done" -->
-          @if (row.status !== 'done') {
+          @if (column.status !== 'done') {
             <button
               class="board__column-button"
               type="button"
-              [attr.aria-label]="'Add task to ' + columnLabels[row.status]"
+              [attr.aria-label]="'Add task to ' + column.label"
             >
               <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
               <img
@@ -44,7 +44,7 @@
 
         <div class="board__cards">
           <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->
-          @for (task of tasksOf(row); track $index) {
+          @for (task of column.tasks; track $index) {
             <article
               class="task-card"
               tabindex="0"
@@ -114,7 +114,7 @@
             </article>
           } @empty {
             <!-- Erscheint automatisch, sobald die Spalte keine Task hat -->
-            <span class="board__indication">No tasks {{ columnLabels[row.status] }}</span>
+            <span class="board__indication">No tasks {{ column.label }}</span>
           }
         </div>
       </section>
