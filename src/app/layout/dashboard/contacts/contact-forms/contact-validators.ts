@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 // Ein Namensteil: mindestens 2 Buchstaben (inkl. Umlaute)
 // Bindestrich und Apostroph innerhalb erlaubt (z. B. "Anna-Lena", "O'Brien")
 // Ein einzelner Buchstabe wie "A" ist kein gültiger Namensteil
-const NAME_PART = String.raw`(?:\p{L}{2,}|\p{L}[-']\p{L}+)(?:[-']\p{L}+)*`;
+const NAME_PART = String.raw`(?:\p{L}{2,}|\p{L}[-'’´]\p{L}+)(?:[-'’´]\p{L}+)*`;
 
 // Vor- und Nachname: optional Titel "Dr." oder "Prof." (beliebige Schreibweise),
 // danach mindestens zwei Namensteile, getrennt durch Leerzeichen
