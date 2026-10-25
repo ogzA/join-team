@@ -58,13 +58,15 @@ export const contactValidators = {
 // - Leerzeichen am Anfang und Ende entfernen
 // - Mehrere Leerzeichen zu einem zusammenfassen ("Hans    Martin" → "Hans Martin")
 // - Titel einheitlich schreiben ("pRof." → "Prof.", "dr." → "Dr.")
+// - Apostroph-Varianten vereinheitlichen ("O´Brien", "O’Brien" → "O'Brien")
 export function cleanContact(contact: { name: string; email: string; phone: string }) {
   return {
     name: contact.name
       .trim()
       .replace(/\s+/g, ' ')
       .replace(/\bprof\./gi, 'Prof.')
-      .replace(/\bdr\./gi, 'Dr.'),
+      .replace(/\bdr\./gi, 'Dr.')
+      .replace(/[’´]/g, "'"),
     email: contact.email.trim(),
     phone: contact.phone.trim(),
   };
