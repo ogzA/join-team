@@ -102,6 +102,7 @@
         <div
           class="board__cards"
           cdkDropList
+          [cdkDropListOrientation]="dropOrientation()"
           [cdkDropListData]="column.tasks"
           (cdkDropListDropped)="dropTask($event)"
         >

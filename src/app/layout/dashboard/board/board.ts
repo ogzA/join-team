@@ -1,8 +1,22 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { CdkDrag, CdkDragDrop, CdkDropList,  CdkDropListGroup, moveItemInArray, transferArrayItem, } from '@angular/cdk/drag-drop';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  CdkDropListGroup,
+  DropListOrientation,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
 import { JsonPipe } from '@angular/common';
+
+// Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
+const TABLET_QUERY = '(max-width: 1100px)';
 
 // ====== DUMMY START ======
 
@@ -144,6 +158,19 @@ const DUMMY_ROWS: BoardRow[] = [
 })
 export class Board {
   protected nlService = inject(NameLogo);
+  private breakpointObserver = inject(BreakpointObserver);
+
+  // true, solange das Tablet-Layout aktiv ist (Karten einer Spalte nebeneinander)
+  // Startwert direkt abfragen, damit beim ersten Rendern schon die richtige Richtung gilt
+  protected isTablet = toSignal(
+    this.breakpointObserver.observe(TABLET_QUERY).pipe(map((state) => state.matches)),
+    { initialValue: this.breakpointObserver.isMatched(TABLET_QUERY) },
+  );
+
+  // Drag-Richtung fürs CDK: nebeneinander auf Tablet/mobile, untereinander auf Desktop
+  protected dropOrientation = computed<DropListOrientation>(() =>
+    this.isTablet() ? 'horizontal' : 'vertical',
+  );
 
   // Spaltennamen Anzeige
   protected columnLabels: Record<string, string> = {
@@ -195,7 +222,12 @@ export class Board {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
     }
   }
 
