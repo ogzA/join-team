@@ -8,16 +8,19 @@
   <span class="combobox-label">
     <span class="selected-label-text">{{ displayValue() }}</span>
   </span>
-  <span class="example-arrow material-symbols-outlined" translate="no" aria-hidden="true"
-    >arrow_drop_down</span
-  >
 </div>
 
 @if (assigned().length > 0) {
   <div class="assigned-avatars">
     @for (name of assigned().slice(0, maxAvatars); track name) {
       @let avatar = nlService.setNameLogo(name);
-      <span class="assigned-avatar" [style.background-color]="avatar.color">{{ avatar.name }}</span>
+      <span
+        class="assigned-avatar"
+        [style.background-color]="avatar.color"
+        // Beim Integrieren in Board aktivieren
+        /*  [style.color]="avatar.TextColor" */
+        >{{ avatar.name }}</span
+      >
     }
     @if (assigned().length > maxAvatars) {
       <span class="assigned-avatar assigned-avatar-more">
@@ -47,16 +50,16 @@
         @for (contact of contacts(); track contact.id) {
           @let avatar = nlService.setNameLogo(contact.name);
           <div ngOption [value]="contact.name" [label]="contact.name">
-            <span class="assigned-avatar" [style.background-color]="avatar.color">{{
-              avatar.name
-            }}</span>
-            <span class="example-option-text">{{ contact.name }}</span>
             <span
-              class="example-option-check material-symbols-outlined"
-              translate="no"
-              aria-hidden="true"
-              >check</span
+              class="assigned-avatar"
+              [style.background-color]="avatar.color"
+              // Beim Integrieren in Board aktivieren
+              /*  [style.color]="avatar.TextColor" */
+              >{{ avatar.name }}</span
             >
+            <span class="example-option-text">{{ contact.name }}</span>
+
+            <span class="assigned-checkbox" aria-hidden="true"></span>
           </div>
         }
       </div>

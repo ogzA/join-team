@@ -1,5 +1,4 @@
 @use '../../../../public/assets/scss/all-styles' as *;
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
 
 :host {
   display: flex;
@@ -12,29 +11,22 @@
   display: flex;
   position: relative;
   align-items: center;
-  color: color-mix(in srgb, var(--hot-pink) 90%, var(--primary-contrast));
-  background-color: color-mix(in srgb, var(--hot-pink) 5%, transparent);
+  color: #000000;
   border-radius: 0.5rem;
-  border: 1px solid color-mix(in srgb, var(--hot-pink) 80%, transparent);
+
   /* Modernized additions for div-trigger Select: */
-  height: 2.5rem;
+  height: 48px;
   padding: 0 2.5rem;
   cursor: pointer;
-  box-sizing: border-box;
-  width: 16rem;
   user-select: none;
   -webkit-user-select: none;
   outline: none;
-  border: 2px solid;
+  border: 2px solid #686868;
 }
 
 .select span {
   user-select: none;
   -webkit-user-select: none;
-}
-
-.select:hover {
-  background-color: color-mix(in srgb, var(--hot-pink) 15%, transparent);
 }
 
 .select[aria-disabled='true'] {
@@ -44,7 +36,7 @@
 
 .select:focus,
 .select:focus-within {
-  outline: 2px solid color-mix(in srgb, var(--hot-pink) 50%, transparent);
+  outline: 2px solid #686868;
 }
 
 .combobox-label {
@@ -68,14 +60,11 @@
 }
 
 .example-popup-container {
+  background-color: $color-white;
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 8px;
   border-radius: 0.5rem;
-  background-color: var(--septenary-contrast);
   font-size: 0.9rem;
-  max-height: 11rem;
-  box-sizing: border-box;
+  max-height: 350px;
   overflow: hidden;
   animation: smoothPopupOpen 150ms ease-out forwards;
   transform-origin: top;
@@ -90,7 +79,7 @@
     opacity: 1;
   }
   100% {
-    max-height: 11rem;
+    max-height: 350px;
     opacity: 1;
   }
 }
@@ -119,19 +108,22 @@
   outline: none;
 }
 
+// Option-Zeile: Avatar, Name und Checkbox nebeneinander
 [ngOption] {
   display: flex;
   cursor: pointer;
   align-items: center;
+  gap: 16px;
   margin: 1px;
-  padding: 0 1rem;
+  padding: 32px;
   min-height: 2.25rem;
   border-radius: 0.5rem;
   outline: none;
+  text-transform: capitalize;
 }
 
 [ngOption]:hover {
-  background-color: color-mix(in srgb, var(--primary-contrast) 5%, transparent);
+  background-color: #eeeeee;
 }
 
 [ngOption][data-active='true'] {
@@ -139,9 +131,22 @@
   outline: 2px solid color-mix(in srgb, var(--hot-pink) 50%, transparent);
 }
 
+// Ausgewählte Option: dunkler Hintergrund und Häkchen in der Checkbox
 [ngOption][aria-selected='true'] {
-  color: var(--hot-pink);
-  background-color: color-mix(in srgb, var(--hot-pink) 5%, transparent);
+  background-color: $color-primary;
+  color: $color-white;
+
+  .assigned-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid currentColor;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
 }
 
 .example-option-icon {
@@ -162,17 +167,29 @@
   flex: 1;
 }
 
+// Leere Checkbox, immer sichtbar
+.assigned-checkbox {
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-left: auto; // ganz nach rechts
+  border: 2px solid currentColor;
+  border-radius: 3px;
+}
+
 .assigned-avatar {
   display: flex;
   flex-shrink: 0; // Avatare bleiben rund, werden nicht verformt
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   border: 1px solid $color-white;
   border-radius: 50%;
   font-size: 16px;
   color: $color-white;
+  text-transform: uppercase;
 }
 
 // Ausgewählte Kontakte unter dem Dropdown, überlappen sich wie auf der Task-Karte

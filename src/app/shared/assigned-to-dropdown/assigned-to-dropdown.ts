@@ -27,7 +27,7 @@ export class AssignedToDropdown {
   readonly listbox = viewChild(Listbox);
   /** The contacts available in the listbox. */
   readonly contacts = this.dbService.contacts;
-  /** The ids of the selected contacts. */
+  /** The names of the selected contacts. */
   readonly assigned = model<string[]>([]);
 
   /** The string that is displayed in the combobox. */
