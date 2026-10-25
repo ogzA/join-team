@@ -1,13 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  CdkDropListGroup,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { Component, computed, inject, signal } from '@angular/core';
+import { CdkDrag, CdkDragDrop, CdkDropList,  CdkDropListGroup, moveItemInArray, transferArrayItem, } from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
+import { Supabase } from '../../../shared/services/supabase';
+import { JsonPipe } from '@angular/common';
 
 // ====== DUMMY START ======
 
@@ -142,7 +137,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, JsonPipe],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -203,4 +198,56 @@ export class Board {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }
+
+  // Such Test
+  dbService = inject(Supabase);
+  searchTerm = signal('');
+  lowerCaseSearchTerm = signal('');
+
+  searchFilter() {
+    this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
+    this.searchTerm.set('');
+  }
+
+  filteredToDo = computed(() => {
+    return this.dbService
+      .toDoTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredinProgress = computed(() => {
+    return this.dbService
+      .inProgressTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredAwaitFeedback = computed(() => {
+    return this.dbService
+      .awaitFeedbackTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredDoneTasks = computed(() => {
+    return this.dbService
+      .doneTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  // Such Test Ende
 }

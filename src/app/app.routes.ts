@@ -5,6 +5,7 @@ import { Board } from './layout/dashboard/board/board';
 import { LegalNotice } from './layout/legal-notice/legal-notice';
 import { HelpPage } from './layout/help-page/help-page';
 import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
+import { AddTask } from './layout/dashboard/Task/add-task/add-task';
 
 export const routes: Routes = [
   {
@@ -13,8 +14,13 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'contacts', pathMatch: 'full' },
       { path: 'contacts', component: Contacts },
+      { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
     ],
+  },
+  {
+    path: 'contacts',
+    component: Contacts,
   },
   {
     path: 'help-page',

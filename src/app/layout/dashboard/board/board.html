@@ -8,8 +8,12 @@
           type="text"
           placeholder="Find Task"
           aria-label="Find task"
+          [value]="searchTerm()"
+          (input)="searchTerm.set($event.target.value)"
         />
-        <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
+        <button class="search-Btn" (click)="searchFilter()">
+          <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
+        </button>
       </div>
       <button class="board__add-button" type="button">
         <span class="board__add-button-text">Add task</span>
@@ -17,6 +21,59 @@
       </button>
     </div>
   </header>
+
+  <section class="searchTest">
+    <h2>Such Test</h2>
+    @if (
+      filteredToDo().length == 0 &&
+      filteredinProgress().length == 0 &&
+      filteredAwaitFeedback().length == 0 &&
+      filteredDoneTasks().length == 0
+    ) {
+      <p>Keine Suchtreffer...</p>
+    }
+    <br />
+
+    <h3>To Do Liste</h3>
+    <ul>
+      @for (item of filteredToDo(); track $index) {
+        <li>{{ item | json }}</li>
+        <li>
+          <p><br /></p>
+        </li>
+      }
+    </ul>
+
+    <h3>In Progress Liste</h3>
+    <ul>
+      @for (item of filteredinProgress(); track $index) {
+        <li>{{ item | json }}</li>
+        <li>
+          <p><br /></p>
+        </li>
+      }
+    </ul>
+
+    <h3>Await Feedback Liste</h3>
+    <ul>
+      @for (item of filteredAwaitFeedback(); track $index) {
+        <li>{{ item | json }}</li>
+        <li>
+          <p><br /></p>
+        </li>
+      }
+    </ul>
+
+    <h3>Done Tasks Liste</h3>
+    <ul>
+      @for (item of filteredDoneTasks(); track $index) {
+        <li>{{ item | json }}</li>
+        <li>
+          <p><br /></p>
+        </li>
+      }
+    </ul>
+  </section>
 
   <div class="board__columns" cdkDropListGroup>
     <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
@@ -47,7 +104,7 @@
           cdkDropList
           [cdkDropListData]="column.tasks"
           (cdkDropListDropped)="dropTask($event)"
-          >
+        >
           <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->
           @for (task of column.tasks; track $index) {
             <article

@@ -46,6 +46,7 @@ export class Supabase {
   contacts = signal<
     { id: number; created_at: string; name: string; email: string; phone: string; role: string }[]
   >([]);
+
   user = signal<
     { id: number; created_at: string; email: string; password: string; role: string }[]
   >([]);
@@ -74,6 +75,7 @@ export class Supabase {
       subtasks?: {}[];
     }[]
   >([]);
+
   awaitFeedbackTasks = signal<
     {
       category: string;
@@ -85,6 +87,7 @@ export class Supabase {
       subtasks?: {}[];
     }[]
   >([]);
+
   doneTasks = signal<
     {
       category: string;
@@ -162,10 +165,10 @@ export class Supabase {
         ],
       };
 
-      console.log('To Do: ', this.toDoTasks());
-      console.log('In Progress: ', this.inProgressTasks());
-      console.log('Await Feedback: ', this.awaitFeedbackTasks());
-      console.log('Done: ', this.doneTasks());
+      // console.log('To Do: ', this.toDoTasks());
+      // console.log('In Progress: ', this.inProgressTasks());
+      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
+      // console.log('Done: ', this.doneTasks());
 
       // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
       // this.setTasks(this.toDoTasks(), 3);

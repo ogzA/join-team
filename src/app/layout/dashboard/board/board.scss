@@ -96,7 +96,7 @@ $color-drag-placeholder: #a8a8a8;
   height: 32px;
   top: 8px;
   right: 16px;
-  pointer-events: none;
+  // pointer-events: none;
 }
 
 .board__add-button {
@@ -515,4 +515,15 @@ $color-drag-placeholder: #a8a8a8;
     width: 30px;
     height: 30px;
   }
+}
+
+.searchTest {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.search-Btn {
+  cursor: pointer;
+  width: 100%;
+  background-color: red;
 }
