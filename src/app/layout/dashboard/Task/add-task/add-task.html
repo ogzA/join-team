@@ -78,7 +78,7 @@
                 <div class="field subtaskPosition">
                     <label for="subtask">Subtasks</label>
                     <div class="subtaskInputWrapper">
-                    <input id="subtask" type="text" class="icon_padding" formControlName="subtasks" (keyup)="showAddSubTask()" placeholder="Add new subtask">
+                    <input id="subtask" type="text" class="icon_padding" formControlName="subtasks" (keyup)="showAddSubTask()" (keydown.enter)="addSubtask(); $event.preventDefault()" placeholder="Add new subtask">
                     @if(subtaskInfo)
                     {
                         <div class="subtaskLogos">
