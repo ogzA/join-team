@@ -1,5 +1,6 @@
 import { computed, Service, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
+import { Task } from '../models/task';
 
 interface Contact {
   name: string;
@@ -12,28 +13,6 @@ interface User {
   email: string;
   password: string;
   role: string;
-}
-
-interface Task {
-  category: string;
-  title: string;
-  description: string;
-  date: string;
-  prio: string;
-  assigned?: string[];
-  subtasks?: {}[];
-}
-
-interface TaskArray {
-  [index: number]: {
-    category: string;
-    title: string;
-    description: string;
-    date: string;
-    prio: string;
-    assigned?: string[];
-    subtasks?: {}[];
-  };
 }
 
 @Service()
@@ -52,53 +31,10 @@ export class Supabase {
   >([]);
 
   // Task Signal Arrays with Objects
-  toDoTasks = signal<
-    {
-      category: string;
-      title: string;
-      description: string;
-      date: string;
-      prio: string;
-      assigned?: string[];
-      subtasks?: {}[];
-    }[]
-  >([]);
-
-  inProgressTasks = signal<
-    {
-      category: string;
-      title: string;
-      description: string;
-      date: string;
-      prio: string;
-      assigned?: string[];
-      subtasks?: {}[];
-    }[]
-  >([]);
-
-  awaitFeedbackTasks = signal<
-    {
-      category: string;
-      title: string;
-      description: string;
-      date: string;
-      prio: string;
-      assigned?: string[];
-      subtasks?: {}[];
-    }[]
-  >([]);
-
-  doneTasks = signal<
-    {
-      category: string;
-      title: string;
-      description: string;
-      date: string;
-      prio: string;
-      assigned?: string[];
-      subtasks?: {}[];
-    }[]
-  >([]);
+  toDoTasks = signal<Task[]>([]);
+  inProgressTasks = signal<Task[]>([]);
+  awaitFeedbackTasks = signal<Task[]>([]);
+  doneTasks = signal<Task[]>([]);
 
   channels: RealtimeChannel | undefined;
 
@@ -143,17 +79,8 @@ export class Supabase {
   setDataTest() {
     setTimeout(() => {
       // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
-      // Task Interface später einbauen
-      let obj: {
-        category: string;
-        title: string;
-        description: string;
-        date: string;
-        prio: string;
-        assigned?: string[];
-        subtasks?: {}[];
-      } = {
-        category: 'User Story Test',
+      let obj: Task = {
+        category: 'User Story',
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation.',
         date: '10/05/2023',
@@ -203,7 +130,7 @@ export class Supabase {
     return response.data[0].taskjson[0];
   }
 
-  async setTasks(data: TaskArray, rowID: number) {
+  async setTasks(data: Task[], rowID: number) {
     // supabase table rowIDS
     // to Do - 1
     // in Progress - 2
@@ -237,7 +164,7 @@ export class Supabase {
     this.setTasks(this.doneTasks(), 4);
   }
 
-  editTask(data: TaskArray, rowID: number, object: Task, index: number) {
+  editTask(data: Task[], rowID: number, object: Task, index: number) {
     let length = this.checkLength(data, index);
 
     if (data[index] && object && length > index) {
@@ -248,7 +175,7 @@ export class Supabase {
     }
   }
 
-  checkLength(data: TaskArray, index: number) {
+  checkLength(data: Task[], index: number) {
     let length = 0;
     if (data[index] !== undefined) {
       while (data[length] !== undefined) {
