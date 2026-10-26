@@ -120,6 +120,7 @@ export class AddTask {
   resetForm() {
     this.taskForm.reset();
     this.subtasks = [];
+    this.assigned.set([]);
   }
   showAddSubTask() {
     this.subtaskInfo = true;
