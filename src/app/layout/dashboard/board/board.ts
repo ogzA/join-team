@@ -14,26 +14,12 @@ import {
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
 import { JsonPipe } from '@angular/common';
+import { Task } from '../../../shared/models/task';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
 const TABLET_QUERY = '(max-width: 1100px)';
 
 // ====== DUMMY START ======
-
-interface Subtask {
-  done: boolean;
-  task: string;
-}
-
-interface Task {
-  date: string;
-  prio: string;
-  title: string;
-  assigned: string[];
-  category: string;
-  subtasks: Subtask[];
-  description: string;
-}
 
 interface BoardRow {
   id: number;
