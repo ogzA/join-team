@@ -1,142 +1,197 @@
 <section class="addTask">
-    <h1>Add Task</h1>
+  <h1>Add Task</h1>
 
-    <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div class="taskForm-columns">
+  <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="taskForm-columns">
+      <!-- left column -->
+      <section class="taskForm-columns-column1">
+        <div class="field">
+          <label for="title">Title<span class="required">*</span></label>
+          <input id="title" type="text" formControlName="title" placeholder="Enter a title" />
+          @if (taskForm.controls['title'].touched) {
+            @if (taskForm.controls['title'].errors?.['required']) {
+              <p class="error">This field is required</p>
+            } @else if (taskForm.controls['title'].errors?.['pattern']) {
+              <p class="error">Enter valid title</p>
+            }
+          }
+        </div>
 
-            <!-- left column -->
-            <section class="taskForm-columns-column1">
-                <div class="field">
-                    <label for="title">Title<span class="required">*</span></label>
-                    <input id="title" type="text" formControlName="title" placeholder="Enter a title">
-                    @if (taskForm.controls['title'].touched) {
-                        @if (taskForm.controls['title'].errors?.['required']) {
-                        <p class="error">This field is required</p>
-                        }@else if (taskForm.controls['title'].errors?.['pattern']) {
-                        <p class="error">Enter valid title</p>
-                        }
-                    }
-                </div>
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            rows="4"
+            formControlName="description"
+            placeholder="Enter a Description"
+          ></textarea>
+        </div>
 
-                <div class="field">
-                    <label for="description">Description</label>
-                    <textarea id="description" rows="4" formControlName="description"
-                        placeholder="Enter a Description"></textarea>
-                </div>
+        <div class="field">
+          <label for="date">Due date<span class="required">*</span></label>
+          <input type="date" id="date" [min]="todaysDate" formControlName="date" />
+          @if (taskForm.controls['date'].touched) {
+            @if (taskForm.controls['date'].errors?.['required']) {
+              <p class="error">This field is required</p>
+            }
+          }
+        </div>
+      </section>
+      <span class="divider"></span>
+      <!-- right column -->
+      <section class="taskForm-columns-column2">
+        <fieldset class="priority">
+          <legend>Priority</legend>
 
-                <div class="field">
-                    <label for="date">Due date<span class="required">*</span></label>
-                    <input type="date" id="date"  [min]="todaysDate" formControlName="date">
-                    @if (taskForm.controls['date'].touched) {
-                        @if (taskForm.controls['date'].errors?.['required']) {
-                        <p class="error">This field is required</p>
-                        }
-                    }
-                </div>
-            </section>
-            <span class="divider"></span>
-            <!-- right column -->
-            <section class="taskForm-columns-column2">
-                <fieldset class="priority">
-                    <legend>Priority</legend>
+          <input type="radio" id="urgent" value="urgent" formControlName="prio" />
+          <label for="urgent" class="priority-btn urgent"
+            >Urgent <img src="assets/icons/urgent.svg" alt="urgent_logo"
+          /></label>
 
-                    <input type="radio" id="urgent" value="urgent" formControlName="prio">
-                    <label for="urgent" class="priority-btn urgent">Urgent <img src="assets/icons/urgent.svg" alt="urgent_logo"></label>
+          <input type="radio" id="medium" value="medium" formControlName="prio" />
+          <label for="medium" class="priority-btn medium"
+            >Medium <img src="assets/icons/medium.svg" alt="medium_logo" />
+          </label>
 
-                    <input type="radio" id="medium" value="medium" formControlName="prio">
-                    <label for="medium" class="priority-btn medium">Medium <img src="assets/icons/medium.svg" alt="medium_logo">
-                    </label>
+          <input type="radio" id="low" value="low" formControlName="prio" />
+          <label for="low" class="priority-btn low"
+            >Low <img src="assets/icons/low.svg" alt="low_logo"
+          /></label>
+        </fieldset>
 
-                    <input type="radio" id="low" value="low" formControlName="prio">
-                    <label for="low" class="priority-btn low">Low <img src="assets/icons/low.svg" alt="low_logo"></label>
+        <div class="field">
+          <label for="assignedTo">Assigned to</label>
+        </div>
 
-                </fieldset>
+        <div class="field">
+          <label for="category">Category<span class="required">*</span></label>
+          <select id="category" formControlName="category">
+            <option value="" disabled selected>Select task category</option>
+            <option value="technical">Technical Task</option>
+            <option value="user-story">User Story</option>
+          </select>
+          @if (taskForm.controls['category'].touched) {
+            @if (taskForm.controls['category'].errors?.['required']) {
+              <p class="error">This field is required</p>
+            }
+          }
+        </div>
 
-                <div class="field">
-                    <label for="assignedTo">Assigned to</label>
-                    <select id="assignedTo" formControlName="assigned">
-                        <option value="">Select contacts to assign</option>
-                        <option value="anna">Anna Keller</option>
-                        <option value="david">David Eisenberg</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label for="category">Category<span class="required">*</span></label>
-                    <select id="category" formControlName="category">
-                        <option value="" disabled  selected>Select task category</option>
-                        <option value="technical">Technical Task</option>
-                        <option value="user-story">User Story</option>
-                    </select>
-                    @if (taskForm.controls['category'].touched) {
-                        @if (taskForm.controls['category'].errors?.['required']) {
-                        <p class="error">This field is required</p>
-                        }
-                    }
-                </div>
-
-                <div class="field subtaskPosition">
-                    <label for="subtask">Subtasks</label>
-                    <div class="subtaskInputWrapper">
-                    <input id="subtask" type="text" class="icon_padding" formControlName="subtasks" (keyup)="showAddSubTask()" (keydown.enter)="addSubtask(); $event.preventDefault()" placeholder="Add new subtask">
-                    @if(subtaskInfo)
-                    {
-                        <div class="subtaskLogos">
-                            <button (click)="closeSubtask()" type="button"><img  src="/assets/icons/close_subtask.svg" alt="close_subtask_logo"></button>
-                            <span><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"></span>
-                            <button (click)="addSubtask()" type="button"><img  src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo"></button>
-                        </div>
-                    }
-                @if (subtasks.length > 0) {
-                    <div class="upperDivUl">
-                    <ul class="subtaskList">
-                    @for (task of subtasks; track $index) {
+        <div class="field subtaskPosition">
+          <label for="subtask">Subtasks</label>
+          <div class="subtaskInputWrapper">
+            <input
+              id="subtask"
+              type="text"
+              class="icon_padding"
+              formControlName="subtasks"
+              (keyup)="showAddSubTask()"
+              (keydown.enter)="addSubtask(); $event.preventDefault()"
+              placeholder="Add new subtask"
+            />
+            @if (subtaskInfo) {
+              <div class="subtaskLogos">
+                <button (click)="closeSubtask()" type="button">
+                  <img src="/assets/icons/close_subtask.svg" alt="close_subtask_logo" />
+                </button>
+                <span
+                  ><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"
+                /></span>
+                <button (click)="addSubtask()" type="button">
+                  <img src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo" />
+                </button>
+              </div>
+            }
+            @if (subtasks.length > 0) {
+              <div class="upperDivUl">
+                <ul class="subtaskList">
+                  @for (task of subtasks; track $index) {
                     <li>
-                        @if (editingIndex === $index) {
+                      @if (editingIndex === $index) {
                         <div class="subtaskList_inputField">
-                            <input type="text" [value]="editedTask" (input)="editedTask = $any($event.target).value"
-                                aria-label="Edit subtask" (keydown.enter)="confirmEditedTask($index); $event.preventDefault()" />
-                
-                            <!-- Cancel editing: keep the original text -->
-                            <button type="button" (click)="deleteEditTask()" aria-label="Discard changes">
-                                <img src="assets/icons/subtask_delete.svg" alt="delete_button" />
-                            </button>
-                            <span><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"></span>
-                            <!-- Save edited text -->
-                            <button type="button" (click)="confirmEditedTask($index)" aria-label="Save changes">
-                                <img src="assets/icons/add_sub_task.svg" alt="add_subtask_button" />
-                            </button>
-                        </div>
-                        } @else {
-                        <span class="bulletDot"></span>
-                        <p (dblclick)="subtaskEdit($index)">{{task.task}}</p>
-                        <div class="subtaskListPosition">
-                            <button type="button" (click)="subtaskEdit($index)" aria-label="Edit subtask">
-                                <img class="imgEdit" src="assets/icons/subtask_edit.svg" alt="edit_icon" />
-                            </button>
-                            <span><img class="dividerSubtask" src="assets/icons/subtask_divider.svg" alt="divider" /></span>
-                            <button type="button" (click)="deleteSubTask($index)" aria-label="Delete subtask">
-                                <img class="imgDelete" src="assets/icons/subtask_delete.svg" alt="delete_icon" />
-                            </button>
-                        </div>
-                        }
-                    </li>
-                    }
-                </ul>
-                    </div>
-}
-                </div>
-                </div>
-            </section>
-        </div>
+                          <input
+                            type="text"
+                            [value]="editedTask"
+                            (input)="editedTask = $any($event.target).value"
+                            aria-label="Edit subtask"
+                            (keydown.enter)="confirmEditedTask($index); $event.preventDefault()"
+                          />
 
-        <!-- bottom row -->
-        <div class="taskForm-footer">
-            <p class="hint"><span class="required">*</span>This field is required</p>
-            <div class="buttons">
-                <button type="button" class="btn clearBtn" (click)="resetForm()">Clear <img src="assets/icons/close-dialog.svg" alt="close_logo"></button>
-                <button type="submit" [disabled]="taskForm.invalid || isSaving()" class="btn createBtn">Create Task <img src="assets/icons/check.svg" alt="check_logo"></button>
-            </div>
+                          <!-- Cancel editing: keep the original text -->
+                          <button
+                            type="button"
+                            (click)="deleteEditTask()"
+                            aria-label="Discard changes"
+                          >
+                            <img src="assets/icons/subtask_delete.svg" alt="delete_button" />
+                          </button>
+                          <span
+                            ><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"
+                          /></span>
+                          <!-- Save edited text -->
+                          <button
+                            type="button"
+                            (click)="confirmEditedTask($index)"
+                            aria-label="Save changes"
+                          >
+                            <img src="assets/icons/add_sub_task.svg" alt="add_subtask_button" />
+                          </button>
+                        </div>
+                      } @else {
+                        <span class="bulletDot"></span>
+                        <p (dblclick)="subtaskEdit($index)">{{ task.task }}</p>
+                        <div class="subtaskListPosition">
+                          <button
+                            type="button"
+                            (click)="subtaskEdit($index)"
+                            aria-label="Edit subtask"
+                          >
+                            <img
+                              class="imgEdit"
+                              src="assets/icons/subtask_edit.svg"
+                              alt="edit_icon"
+                            />
+                          </button>
+                          <span
+                            ><img
+                              class="dividerSubtask"
+                              src="assets/icons/subtask_divider.svg"
+                              alt="divider"
+                          /></span>
+                          <button
+                            type="button"
+                            (click)="deleteSubTask($index)"
+                            aria-label="Delete subtask"
+                          >
+                            <img
+                              class="imgDelete"
+                              src="assets/icons/subtask_delete.svg"
+                              alt="delete_icon"
+                            />
+                          </button>
+                        </div>
+                      }
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
         </div>
-    </form>
+      </section>
+    </div>
+
+    <!-- bottom row -->
+    <div class="taskForm-footer">
+      <p class="hint"><span class="required">*</span>This field is required</p>
+      <div class="buttons">
+        <button type="button" class="btn clearBtn" (click)="resetForm()">
+          Clear <img src="assets/icons/close-dialog.svg" alt="close_logo" />
+        </button>
+        <button type="submit" [disabled]="taskForm.invalid || isSaving()" class="btn createBtn">
+          Create Task <img src="assets/icons/check.svg" alt="check_logo" />
+        </button>
+      </div>
+    </div>
+  </form>
 </section>
