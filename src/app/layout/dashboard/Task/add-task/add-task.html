@@ -1,4 +1,4 @@
-<main class="addTask">
+<section class="addTask">
     <h1>Add Task</h1>
 
     <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
@@ -25,10 +25,10 @@
                 </div>
 
                 <div class="field">
-                    <label for="dueDate">Due date<span class="required">*</span></label>
-                    <input type="date" id="dueDate"  [min]="todaysDate" formControlName="dueDate">
-                    @if (taskForm.controls['dueDate'].touched) {
-                        @if (taskForm.controls['dueDate'].errors?.['required']) {
+                    <label for="date">Due date<span class="required">*</span></label>
+                    <input type="date" id="date"  [min]="todaysDate" formControlName="date">
+                    @if (taskForm.controls['date'].touched) {
+                        @if (taskForm.controls['date'].errors?.['required']) {
                         <p class="error">This field is required</p>
                         }
                     }
@@ -40,21 +40,21 @@
                 <fieldset class="priority">
                     <legend>Priority</legend>
 
-                    <input type="radio" id="urgent" value="urgent" formControlName="priority">
+                    <input type="radio" id="urgent" value="urgent" formControlName="prio">
                     <label for="urgent" class="priority-btn urgent">Urgent <img src="assets/icons/urgent.svg" alt="urgent_logo"></label>
 
-                    <input type="radio" id="medium" value="medium" formControlName="priority">
+                    <input type="radio" id="medium" value="medium" formControlName="prio">
                     <label for="medium" class="priority-btn medium">Medium <img src="assets/icons/medium.svg" alt="medium_logo">
                     </label>
 
-                    <input type="radio" id="low" value="low" formControlName="priority">
+                    <input type="radio" id="low" value="low" formControlName="prio">
                     <label for="low" class="priority-btn low">Low <img src="assets/icons/low.svg" alt="low_logo"></label>
 
                 </fieldset>
 
                 <div class="field">
                     <label for="assignedTo">Assigned to</label>
-                    <select id="assignedTo" formControlName="assignedTo">
+                    <select id="assignedTo" formControlName="assigned">
                         <option value="">Select contacts to assign</option>
                         <option value="anna">Anna Keller</option>
                         <option value="david">David Eisenberg</option>
@@ -78,7 +78,7 @@
                 <div class="field subtaskPosition">
                     <label for="subtask">Subtasks</label>
                     <div class="subtaskInputWrapper">
-                    <input id="subtask" type="text" class="icon_padding" formControlName="subtask" (keyup)="showAddSubTask()" placeholder="Add new subtask">
+                    <input id="subtask" type="text" class="icon_padding" formControlName="subtasks" (keyup)="showAddSubTask()" placeholder="Add new subtask">
                     @if(subtaskInfo)
                     {
                         <div class="subtaskLogos">
@@ -99,17 +99,17 @@
                 
                             <!-- Cancel editing: keep the original text -->
                             <button type="button" (click)="deleteEditTask()" aria-label="Discard changes">
-                                <img src="assets/icons/delete-btn.png" alt="" />
+                                <img src="assets/icons/subtask_delete.svg" alt="delete_button" />
                             </button>
                             <span><img src="assets/icons/subtask_divider.svg" alt="subtask_divider_logo"></span>
                             <!-- Save edited text -->
                             <button type="button" (click)="confirmEditedTask($index)" aria-label="Save changes">
-                                <img src="assets/icons/add_sub_task.svg" alt="" />
+                                <img src="assets/icons/add_sub_task.svg" alt="add_subtask_button" />
                             </button>
                         </div>
                         } @else {
                         <span class="bulletDot"></span>
-                        <p>{{task.task}}</p>
+                        <p (dblclick)="subtaskEdit($index)">{{task.task}}</p>
                         <div class="subtaskListPosition">
                             <button type="button" (click)="subtaskEdit($index)" aria-label="Edit subtask">
                                 <img class="imgEdit" src="assets/icons/subtask_edit.svg" alt="edit_icon" />
@@ -139,4 +139,4 @@
             </div>
         </div>
     </form>
-</main>
+</section>
