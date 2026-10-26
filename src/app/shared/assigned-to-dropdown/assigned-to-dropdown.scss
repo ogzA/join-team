@@ -23,7 +23,7 @@
   user-select: none;
   -webkit-user-select: none;
   outline: none;
-  border: 2px solid #686868;
+  border: 1px solid $color-input-border;
 }
 
 .select span {
@@ -38,7 +38,7 @@
 
 .select:focus,
 .select:focus-within {
-  outline: 2px solid #686868;
+  outline: 2px solid $color-input-border;
 }
 
 .combobox-label {
