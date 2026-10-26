@@ -13,7 +13,6 @@ import {
 } from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
-import { JsonPipe } from '@angular/common';
 import { Task } from '../../../shared/models/task';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
@@ -137,7 +136,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag, JsonPipe],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -217,7 +216,7 @@ export class Board {
     }
   }
 
-  // Such Test
+  // Suche: Eingabe im Header, Filterung der Karten folgt
   dbService = inject(Supabase);
   searchTerm = signal('');
   lowerCaseSearchTerm = signal('');
@@ -226,16 +225,6 @@ export class Board {
     this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
     this.searchTerm.set('');
   }
-
-  filteredToDo = computed(() => {
-    return this.dbService
-      .toDoTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
 
   filteredinProgress = computed(() => {
     return this.dbService
@@ -246,26 +235,4 @@ export class Board {
           item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
       );
   });
-
-  filteredAwaitFeedback = computed(() => {
-    return this.dbService
-      .awaitFeedbackTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
-
-  filteredDoneTasks = computed(() => {
-    return this.dbService
-      .doneTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
-
-  // Such Test Ende
 }

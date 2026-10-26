@@ -22,59 +22,6 @@
     </div>
   </header>
 
-  <!-- <section class="searchTest">
-    <h2>Such Test</h2>
-    @if (
-      filteredToDo().length == 0 &&
-      filteredinProgress().length == 0 &&
-      filteredAwaitFeedback().length == 0 &&
-      filteredDoneTasks().length == 0
-    ) {
-      <p>Keine Suchtreffer...</p>
-    }
-    <br />
-
-    <h3>To Do Liste</h3>
-    <ul>
-      @for (item of filteredToDo(); track $index) {
-        <li>{{ item | json }}</li>
-        <li>
-          <p><br /></p>
-        </li>
-      }
-    </ul>
-
-    <h3>In Progress Liste</h3>
-    <ul>
-      @for (item of filteredinProgress(); track $index) {
-        <li>{{ item | json }}</li>
-        <li>
-          <p><br /></p>
-        </li>
-      }
-    </ul>
-
-    <h3>Await Feedback Liste</h3>
-    <ul>
-      @for (item of filteredAwaitFeedback(); track $index) {
-        <li>{{ item | json }}</li>
-        <li>
-          <p><br /></p>
-        </li>
-      }
-    </ul>
-
-    <h3>Done Tasks Liste</h3>
-    <ul>
-      @for (item of filteredDoneTasks(); track $index) {
-        <li>{{ item | json }}</li>
-        <li>
-          <p><br /></p>
-        </li>
-      }
-    </ul>
-  </section> -->
-
   <div class="board__columns" cdkDropListGroup>
     <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
     @for (column of columns; track column.status) {
