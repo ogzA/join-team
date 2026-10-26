@@ -6,6 +6,7 @@ import { LegalNotice } from './layout/legal-notice/legal-notice';
 import { HelpPage } from './layout/help-page/help-page';
 import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
 import { AddTask } from './layout/dashboard/Task/add-task/add-task';
+import { AssignedToDropdown } from './shared/assigned-to-dropdown/assigned-to-dropdown';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'contacts', component: Contacts },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
+      { path: 'assigned-to-dropdown', component: AssignedToDropdown },
     ],
   },
   {
