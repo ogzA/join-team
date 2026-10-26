@@ -40,14 +40,14 @@
                 <fieldset class="priority">
                     <legend>Priority</legend>
 
-                    <input type="radio" id="urgent" value="urgent" formControlName="prio">
+                    <input type="radio" id="urgent" value="Urgent" formControlName="prio">
                     <label for="urgent" class="priority-btn urgent">Urgent <img src="assets/icons/urgent.svg" alt="urgent_logo"></label>
 
-                    <input type="radio" id="medium" value="medium" formControlName="prio">
+                    <input type="radio" id="medium" value="Medium" formControlName="prio">
                     <label for="medium" class="priority-btn medium">Medium <img src="assets/icons/medium.svg" alt="medium_logo">
                     </label>
 
-                    <input type="radio" id="low" value="low" formControlName="prio">
+                    <input type="radio" id="low" value="Low" formControlName="prio">
                     <label for="low" class="priority-btn low">Low <img src="assets/icons/low.svg" alt="low_logo"></label>
 
                 </fieldset>
@@ -65,8 +65,8 @@
                     <label for="category">Category<span class="required">*</span></label>
                     <select id="category" formControlName="category">
                         <option value="" disabled  selected>Select task category</option>
-                        <option value="technical">Technical Task</option>
-                        <option value="user-story">User Story</option>
+                        <option value="Technical Task">Technical Task</option>
+                        <option value="User Story">User Story</option>
                     </select>
                     @if (taskForm.controls['category'].touched) {
                         @if (taskForm.controls['category'].errors?.['required']) {

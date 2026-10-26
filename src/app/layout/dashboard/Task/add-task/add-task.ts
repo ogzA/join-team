@@ -32,7 +32,7 @@ export class AddTask {
     title: ['', [Validators.required, Validators.pattern(/^[A-Za-z][a-zA-Z0-9_ -]*$/)]],
     description: [''],
     date: ['', Validators.required],
-    prio: ['medium'],
+    prio: ['Medium'],
     assigned: [''],
     category: ['', Validators.required],
     subtasks: [''],
