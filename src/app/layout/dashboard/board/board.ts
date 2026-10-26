@@ -225,14 +225,4 @@ export class Board {
     this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
     this.searchTerm.set('');
   }
-
-  filteredinProgress = computed(() => {
-    return this.dbService
-      .inProgressTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
 }
