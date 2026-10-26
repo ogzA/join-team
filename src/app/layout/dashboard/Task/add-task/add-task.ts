@@ -1,5 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Supabase } from '../../../../shared/services/supabase';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 interface SUBTASK{
   task:string,
@@ -21,34 +23,47 @@ export class AddTask {
   isSaving = signal(false);
   editingIndex: number | null = null;
   editedTask: string = ''; 
-  // isEditing: boolean = false; 
+
   private fb = inject(FormBuilder);
+  private dbService = inject(Supabase);
+  private toast = inject(ToastService);
 
   taskForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/^[A-Za-z][a-zA-Z0-9_ -]*$/)]],
     description: [''],
-    dueDate: ['', Validators.required],
-    priority: ['medium'],
-    assignedTo: [''],
+    date: ['', Validators.required],
+    prio: ['medium'],
+    assigned: [''],
     category: ['', Validators.required],
-    subtask: [''],
+    subtasks: [''],
   });
 
 
-  onSubmit() {
+  async onSubmit() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
       return;
     }
     this.isSaving.set(true);
     try {
+      const formValue = this.taskForm.getRawValue();
       const taskData = {
-        ...this.taskForm.getRawValue(),
-        subtasks: [...this.subtasks],
-      };
+      title: formValue.title,
+      description: formValue.description,
+      date: formValue.date,
+      prio: formValue.prio,
+      assigned: formValue.assigned
+        ? [formValue.assigned]
+        : [],
+      category: formValue.category,
+      subtasks: [...this.subtasks],
+    }; 
+      await this.dbService.addTaskToDo(taskData);   
       console.log(taskData);
+      this.toast.success('Task added to board');
+      this.resetForm();
     } catch {
-      //this.toast.error('Task not added');
+      this.toast.error('Task not added to board');
     } finally {
       this.isSaving.set(false);
     }
@@ -91,12 +106,12 @@ export class AddTask {
   }
 
   closeSubtask() {
-    this.taskForm.get('subtask')?.reset('');
+    this.taskForm.get('subtasks')?.reset('');
     this.subtaskInfo = false;
   }
 
   addSubtask() {
-    const control = this.taskForm.get('subtask');
+    const control = this.taskForm.get('subtasks');
     const value = control?.value?.trim();
     if (!value) {
       return;
@@ -112,18 +127,7 @@ resetForm()
 }
   showAddSubTask() {
     this.subtaskInfo = true;
-    const value = this.taskForm.get('subtask')?.value ?? '';
+    const value = this.taskForm.get('subtasks')?.value ?? '';
     this.subtaskInfo = value.trim().length > 0;
   }
-  
-  //Bhagyashri: dont remove: I need this for further functionality
-  // startEditing(index:number) {
-  //   this.isEditing = true;
-  //   this.editingIndex = index;
-  //   this.editedTask = this.subtasks[index];
-  // }
-
-  // stopEditing() {
-  //   this.isEditing = false;
-  // }
 }
