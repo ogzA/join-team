@@ -95,7 +95,7 @@
                         @if (editingIndex === $index) {
                         <div class="subtaskList_inputField">
                             <input type="text" [value]="editedTask" (input)="editedTask = $any($event.target).value"
-                                aria-label="Edit subtask" />
+                                aria-label="Edit subtask" (keydown.enter)="confirmEditedTask($index); $event.preventDefault()" />
                 
                             <!-- Cancel editing: keep the original text -->
                             <button type="button" (click)="deleteEditTask()" aria-label="Discard changes">
