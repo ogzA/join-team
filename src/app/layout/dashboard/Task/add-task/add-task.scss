@@ -322,6 +322,10 @@
     appearance: base-select;
   }
 
+  ::picker-icon {
+    display: none;
+  }
+
   select::picker(select) {
     position-area: bottom;
     position-try-fallbacks: none;
