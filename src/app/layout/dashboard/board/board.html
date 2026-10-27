@@ -50,7 +50,7 @@
           class="board__cards"
           cdkDropList
           [cdkDropListOrientation]="dropOrientation()"
-          [cdkDropListData]="column.tasks"
+          [cdkDropListData]="column"
           (cdkDropListDropped)="dropTask($event)"
         >
           <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->
@@ -61,9 +61,9 @@
               tabindex="0"
               role="button"
               [attr.aria-label]="'Open task ' + task.title"
-              (click)="openTask(task)"
-              (keydown.enter)="openTask(task)"
-              (keydown.space)="openTask(task); $event.preventDefault()"
+              (click)="openTask(task, column.rowId, $index)"
+              (keydown.enter)="openTask(task, column.rowId, $index)"
+              (keydown.space)="openTask(task, column.rowId, $index); $event.preventDefault()"
             >
               <!-- Kategorie: Modifier-Klasse steuert Farben -->
               <span

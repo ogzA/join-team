@@ -13,7 +13,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
-import { Task } from '../../../shared/models/task';
+import { SelectedTask, Task } from '../../../shared/models/task';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
 const TABLET_QUERY = '(max-width: 1100px)';
@@ -31,6 +31,8 @@ interface BoardRow {
 interface BoardColumn {
   status: string;
   label: string;
+  // Supabase-Zeile dieser Spalte (1 = to do ... 4 = done)
+  rowId: number;
   tasks: Task[];
 }
 
@@ -170,42 +172,29 @@ export class Board implements OnInit {
   // Wird automatisch neu gebaut, sobald getTasks() neue Daten liefert
   // Muss nach columnLabels stehen, weil buildColumn() die Labels nutzt
   protected columns = computed<BoardColumn[]>(() => [
-    this.buildColumn('to do', this.dbService.toDoTasks()),
-    this.buildColumn('in progress', this.dbService.inProgressTasks()),
-    this.buildColumn('await feedback', this.dbService.awaitFeedbackTasks()),
-    this.buildColumn('done', this.dbService.doneTasks()),
+    this.buildColumn('to do', 1, this.dbService.toDoTasks()),
+    this.buildColumn('in progress', 2, this.dbService.inProgressTasks()),
+    this.buildColumn('await feedback', 3, this.dbService.awaitFeedbackTasks()),
+    this.buildColumn('done', 4, this.dbService.doneTasks()),
   ]);
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
   protected maxAvatars = 3;
-  // Aktuell angeklickter Task. null = keine Detailansicht offen
-  // Die Detailansicht liest später dieses Signal
-  protected selectedTask = signal<Task | null>(null);
+  // Angeklickter Task samt Spalte und Position, null = kein Dialog offen
+  protected selectedTask = signal<SelectedTask | null>(null);
 
   // Lädt beim Öffnen des Boards die Tasks aller Spalten aus Supabase
   ngOnInit(): void {
     this.dbService.getTasks();
   }
 
-  // Tasks werden aus Zeile geholt [[...]], "" wird zu []
-  protected tasksOf(row: BoardRow): Task[] {
-    return Array.isArray(row.taskjson) ? row.taskjson.flat() : [];
-  }
-
-  protected toColumns(rows: BoardRow[]): BoardColumn[] {
-    return rows.map((row) => ({
-      status: row.status,
-      label: this.columnLabels[row.status],
-      tasks: this.tasksOf(row),
-    }));
-  }
-
   // Baut eine Spalte aus den Tasks eines Service-Signals.
   // Fehlende assigned/subtasks (ältere Daten) werden mit [] aufgefüllt.
-  private buildColumn(status: string, tasks: Task[]): BoardColumn {
+  private buildColumn(status: string, rowId: number, tasks: Task[]): BoardColumn {
     return {
       status,
       label: this.columnLabels[status],
+      rowId,
       tasks: tasks.map((task) => ({
         ...task,
         assigned: task.assigned ?? [],
@@ -223,22 +212,21 @@ export class Board implements OnInit {
     return (this.doneCount(task) / task.subtasks.length) * 100;
   }
 
-  // Merkt sich den angeklickten Task für die Detailansicht
-  protected openTask(task: Task): void {
-    this.selectedTask.set(task);
+  // Merkt sich den angeklickten Task samt Spalte und Position für den Detail-Dialog
+  protected openTask(task: Task, rowId: number, index: number): void {
+    this.selectedTask.set({ task, rowId, index });
   }
 
   // Verschiebt einen Task nach dem Loslassen
-  protected dropTask(event: CdkDragDrop<Task[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  protected dropTask(event: CdkDragDrop<BoardColumn>): void {
+    const from = event.previousContainer.data;
+    const to = event.container.data;
+    if (from === to) {
+      moveItemInArray(to.tasks, event.previousIndex, event.currentIndex);
+      this.dbService.setTasks(to.tasks, to.rowId);
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
+      transferArrayItem(from.tasks, to.tasks, event.previousIndex, event.currentIndex);
+      this.dbService.moveTask(from.tasks, from.rowId, to.tasks, to.rowId);
     }
   }
 

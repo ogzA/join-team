@@ -144,6 +144,23 @@ export class Supabase {
     await this.getTasks();
   }
 
+  // Speichert nach Drag & Drop beide betroffenen Spalten gleichzeitig
+  // und lädt danach nur einmal neu. So wird keine Karte kurz verschwinden
+  // fromTasks - Tasks der Ursprungsspalte nach dem Verschieden
+  // fromRowId - Supabase-Zeile der Ursprungsspalte
+  // toTasks - Tasks der Zielspalte nach dem Verschieben
+  // toRowId - Supabase-Zeile der Zielspalte
+
+  async moveTask(fromTask: Task[], fromRowId: number, toTasks: Task[], toRowId: number) {
+    const results = await Promise.all([
+      this.supabase.from('tasks').update({ taskjson: [fromTask] }).eq('id', fromRowId),
+      this.supabase.from('tasks').update({ taskjson: [toTasks] }).eq('id', toRowId),
+    ]);
+    await this.getTasks();
+    const failed = results.find((result) => result.error);
+    if (failed) throw failed.error;
+  }
+
   addTaskToDo(object: Task) {
     this.toDoTasks().push(object);
     this.setTasks(this.toDoTasks(), 1);
