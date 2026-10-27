@@ -1,0 +1,81 @@
+@use '../../../../../../public/assets/scss/all-styles';
+@use 'sass:color';
+
+$color-category-story: #0038ff;
+$color-category-technical: #1fd7c1;
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    @include all-styles.flex-center;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    background-color: all-styles.$color-overlay;
+
+    &_content {
+        @include all-styles.flex-center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        min-height: 592px;
+        border-radius: 30px;
+        background-color: all-styles.$color-white;
+        padding: 48px 40px;
+
+        &_head{
+            @include all-styles.flex-center;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+        &_data{
+            @include all-styles.flex-center;
+            width: 100%;
+            justify-content: flex-start;
+            gap: 20px;
+            align-items: center;
+        }
+        &_scrollableDiv{
+            width: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            max-height: 150px;
+        }
+        &_buttons{
+            @include all-styles.flex-center;
+            width: 100%;
+            justify-content: flex-end;
+            gap: 15px;
+            align-items: center;
+            &_actionBtn{
+                @include all-styles.flex-center;
+                gap: 5px;
+            }
+        }
+    }
+    &__category {
+    align-self: flex-start;
+    padding: 4px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: all-styles.$color-white;
+    }
+
+    &__category--story {
+    background-color: $color-category-story;
+    }
+
+    &__category--technical {
+    background-color: $color-category-technical;
+    }
+    h1{
+        font-size: clamp(25px, calc(14.714px + 3.214vw), 61px);
+    }
+    
+}
