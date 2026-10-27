@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { TaskCategory, TaskPrio } from '../../../../shared/models/task';
 
 interface SUBTASK {
@@ -10,7 +11,7 @@ interface SUBTASK {
 }
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AssignedToDropdown],
   selector: 'app-add-task',
   styleUrl: './add-task.scss',
   templateUrl: './add-task.html',
@@ -23,6 +24,7 @@ export class AddTask {
   isSaving = signal(false);
   editingIndex: number | null = null;
   editedTask: string = '';
+  assigned = signal<string[]>([]);
 
   private fb = inject(FormBuilder);
   private dbService = inject(Supabase);
@@ -51,7 +53,7 @@ export class AddTask {
         description: formValue.description,
         date: formValue.date,
         prio: formValue.prio as TaskPrio,
-        assigned: formValue.assigned ? [formValue.assigned] : [],
+        assigned: this.assigned(),
         category: formValue.category as TaskCategory,
         subtasks: [...this.subtasks],
       };
@@ -119,6 +121,7 @@ export class AddTask {
   resetForm() {
     this.taskForm.reset();
     this.subtasks = [];
+    this.assigned.set([]);
   }
   showAddSubTask() {
     this.subtaskInfo = true;

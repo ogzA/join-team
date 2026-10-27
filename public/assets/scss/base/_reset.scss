@@ -26,3 +26,12 @@ html {
   scroll-behavior: smooth;
   position: relative;
 }
+
+select,
+.select {
+  background-image: url('../../../assets/icons/select-picker-icon.svg');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 24px;
+  cursor: pointer;
+}
