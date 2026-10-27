@@ -3,11 +3,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
 
-interface SUBTASK{
-  task:string,
-  done:boolean
+interface SUBTASK {
+  task: string;
+  done: boolean;
 }
-
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -22,7 +21,7 @@ export class AddTask {
   subtasks: SUBTASK[] = [];
   isSaving = signal(false);
   editingIndex: number | null = null;
-  editedTask: string = ''; 
+  editedTask: string = '';
 
   private fb = inject(FormBuilder);
   private dbService = inject(Supabase);
@@ -38,7 +37,6 @@ export class AddTask {
     subtasks: [''],
   });
 
-
   async onSubmit() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
@@ -48,17 +46,15 @@ export class AddTask {
     try {
       const formValue = this.taskForm.getRawValue();
       const taskData = {
-      title: formValue.title,
-      description: formValue.description,
-      date: formValue.date,
-      prio: formValue.prio,
-      assigned: formValue.assigned
-        ? [formValue.assigned]
-        : [],
-      category: formValue.category,
-      subtasks: [...this.subtasks],
-    }; 
-      await this.dbService.addTaskToDo(taskData);   
+        title: formValue.title,
+        description: formValue.description,
+        date: formValue.date,
+        prio: formValue.prio,
+        assigned: formValue.assigned ? [formValue.assigned] : [],
+        category: formValue.category,
+        subtasks: [...this.subtasks],
+      };
+      await this.dbService.addTaskToDo(taskData);
       console.log(taskData);
       this.toast.success('Task added to board');
       this.resetForm();
@@ -69,11 +65,11 @@ export class AddTask {
     }
   }
 
-  deleteSubTask(index:number) {
-    this.subtasks.splice(index,1);
+  deleteSubTask(index: number) {
+    this.subtasks.splice(index, 1);
   }
 
-  subtaskEdit(index:number) {
+  subtaskEdit(index: number) {
     this.editingIndex = index;
     this.editedTask = this.subtasks[index].task;
   }
@@ -86,20 +82,19 @@ export class AddTask {
     return `${year}-${month}-${day}`;
   }
 
-  deleteEditTask()
-  {
+  deleteEditTask() {
     this.editingIndex = null;
-    this.editedTask = "";
+    this.editedTask = '';
   }
 
-  confirmEditedTask(index:number){
+  confirmEditedTask(index: number) {
     const value = this.editedTask.trim();
     if (!value) {
       return;
     }
     this.subtasks[index] = {
       ...this.subtasks[index],
-      task: value
+      task: value,
     };
     this.editingIndex = null;
     this.editedTask = '';
@@ -116,15 +111,14 @@ export class AddTask {
     if (!value) {
       return;
     }
-    this.subtasks.push({task:value,done:false});
+    this.subtasks.push({ task: value, done: false });
     control?.reset('');
     this.subtaskInfo = false;
   }
-resetForm()
-{
-  this.taskForm.reset()
-  this.subtasks = [];
-}
+  resetForm() {
+    this.taskForm.reset();
+    this.subtasks = [];
+  }
   showAddSubTask() {
     this.subtaskInfo = true;
     const value = this.taskForm.get('subtasks')?.value ?? '';
