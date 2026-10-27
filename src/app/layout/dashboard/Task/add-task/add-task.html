@@ -87,11 +87,11 @@
                             <button (click)="addSubtask()" type="button"><img  src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo"></button>
                         </div>
                     }
-                @if (subtasks.length > 0) {
+                    @if (subtasks.length > 0) {
                     <div class="upperDivUl">
                     <ul class="subtaskList">
-                    @for (task of subtasks; track $index) {
-                    <li>
+                        @for (task of subtasks; track $index) {
+                        <li>
                         @if (editingIndex === $index) {
                         <div class="subtaskList_inputField">
                             <input type="text" [value]="editedTask" (input)="editedTask = $any($event.target).value"

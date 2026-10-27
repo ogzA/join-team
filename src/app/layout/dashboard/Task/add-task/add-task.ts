@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { DatePipe } from '@angular/common';
 
 interface SUBTASK{
   task:string,
@@ -10,7 +11,7 @@ interface SUBTASK{
 
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,DatePipe],
   selector: 'app-add-task',
   styleUrl: './add-task.scss',
   templateUrl: './add-task.html',
@@ -29,7 +30,7 @@ export class AddTask {
   private toast = inject(ToastService);
 
   taskForm = this.fb.nonNullable.group({
-    title: ['', [Validators.required, Validators.pattern(/^[A-Za-z][a-zA-Z0-9_ -]*$/)]],
+    title: ['', [Validators.required, Validators.pattern(/^[A-ZÄÖÜßa-zäöüẞ][a-zäöüẞA-ZÄÖÜß0-9_ -]*$/)]],
     description: [''],
     date: ['', Validators.required],
     prio: ['Medium'],
