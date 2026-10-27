@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs';
@@ -141,9 +141,10 @@ const DUMMY_ROWS: BoardRow[] = [
   styleUrl: './board.scss',
   templateUrl: './board.html',
 })
-export class Board {
+export class Board implements OnInit {
   protected nlService = inject(NameLogo);
   private breakpointObserver = inject(BreakpointObserver);
+  private dbService = inject(Supabase);
 
   // true, solange das Tablet-Layout aktiv ist (Karten einer Spalte nebeneinander)
   // Startwert direkt abfragen, damit beim ersten Rendern schon die richtige Richtung gilt
@@ -174,6 +175,11 @@ export class Board {
   // Aktuell angeklickter Task. null = keine Detailansicht offen
   // Die Detailansicht liest später dieses Signal
   protected selectedTask = signal<Task | null>(null);
+
+  // Lädt beim Öffnen des Boards die Tasks aller Spalten aus Supabase
+  ngOnInit(): void {
+    this.dbService.getTasks();
+  }
 
   // Tasks werden aus Zeile geholt [[...]], "" wird zu []
   protected tasksOf(row: BoardRow): Task[] {
@@ -217,7 +223,6 @@ export class Board {
   }
 
   // Suche: Eingabe im Header, Filterung der Karten folgt
-  dbService = inject(Supabase);
   searchTerm = signal('');
   lowerCaseSearchTerm = signal('');
 
