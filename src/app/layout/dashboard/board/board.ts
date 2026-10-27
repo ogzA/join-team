@@ -14,6 +14,7 @@ import {
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
 import { SelectedTask, Task } from '../../../shared/models/task';
+import { JsonPipe } from '@angular/common';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
 const TABLET_QUERY = '(max-width: 1100px)';
@@ -138,7 +139,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, JsonPipe],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -171,11 +172,12 @@ export class Board implements OnInit {
   // Spalten fürs Board aus den vier Service-Signals
   // Wird automatisch neu gebaut, sobald getTasks() neue Daten liefert
   // Muss nach columnLabels stehen, weil buildColumn() die Labels nutzt
+  // 4 Signals vom DB Service durch die Filter ersetzt - this.dbService.toDoTasks() => this.filteredToDo()
   protected columns = computed<BoardColumn[]>(() => [
-    this.buildColumn('to do', 1, this.dbService.toDoTasks()),
-    this.buildColumn('in progress', 2, this.dbService.inProgressTasks()),
-    this.buildColumn('await feedback', 3, this.dbService.awaitFeedbackTasks()),
-    this.buildColumn('done', 4, this.dbService.doneTasks()),
+    this.buildColumn('to do', 1, this.filteredToDo()),
+    this.buildColumn('in progress', 2, this.filteredinProgress()),
+    this.buildColumn('await feedback', 3, this.filteredAwaitFeedback()),
+    this.buildColumn('done', 4, this.filteredDoneTasks()),
   ]);
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
@@ -230,7 +232,7 @@ export class Board implements OnInit {
     }
   }
 
-  // Suche: Eingabe im Header, Filterung der Karten folgt
+  // Suche: Eingabe im Header, Filterung durch die Signals, Einbindung oben in columns
   searchTerm = signal('');
   lowerCaseSearchTerm = signal('');
 
@@ -238,4 +240,45 @@ export class Board implements OnInit {
     this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
     this.searchTerm.set('');
   }
+
+  // Search Filter Signals, ohne Änderung wie die anderen 4 Signals
+  filteredToDo = computed(() => {
+    return this.dbService
+      .toDoTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredinProgress = computed(() => {
+    return this.dbService
+      .inProgressTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredAwaitFeedback = computed(() => {
+    return this.dbService
+      .awaitFeedbackTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredDoneTasks = computed(() => {
+    return this.dbService
+      .doneTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
 }

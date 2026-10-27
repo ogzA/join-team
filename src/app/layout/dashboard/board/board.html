@@ -22,6 +22,18 @@
     </div>
   </header>
 
+  <!-- Search MSG wenn nix gefunden -->
+  @if (
+    filteredToDo().length == 0 &&
+    filteredinProgress().length == 0 &&
+    filteredAwaitFeedback().length == 0 &&
+    filteredDoneTasks().length == 0
+  ) {
+    <div class="search-msg">
+      <p>Nothing found...</p>
+    </div>
+  }
+
   <div class="board__columns" cdkDropListGroup>
     <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
     @for (column of columns(); track column.status) {
