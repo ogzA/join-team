@@ -153,8 +153,14 @@ export class Supabase {
 
   async moveTask(fromTask: Task[], fromRowId: number, toTasks: Task[], toRowId: number) {
     const results = await Promise.all([
-      this.supabase.from('tasks').update({ taskjson: [fromTask] }).eq('id', fromRowId),
-      this.supabase.from('tasks').update({ taskjson: [toTasks] }).eq('id', toRowId),
+      this.supabase
+        .from('tasks')
+        .update({ taskjson: [fromTask] })
+        .eq('id', fromRowId),
+      this.supabase
+        .from('tasks')
+        .update({ taskjson: [toTasks] })
+        .eq('id', toRowId),
     ]);
     await this.getTasks();
     const failed = results.find((result) => result.error);
@@ -162,8 +168,8 @@ export class Supabase {
   }
 
   addTaskToDo(object: Task) {
-    this.toDoTasks().push(object);
-    this.setTasks(this.toDoTasks(), 1);
+    this.toDoTasks().push(object); // Speichern ins Signal
+    this.setTasks(this.toDoTasks(), 1); // Speichern in Supabase Tabelle
   }
 
   addTaskInProgress(object: Task) {
