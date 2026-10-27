@@ -1,6 +1,7 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { Supabase } from '../../../../shared/services/supabase';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 
 interface SUBTASK {
   task: string;
@@ -8,7 +9,7 @@ interface SUBTASK {
 }
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,AssignedToDropdown],
   selector: 'app-task-details',
   styleUrl: './task-details.scss',
   templateUrl: './task-details.html',
@@ -19,6 +20,8 @@ export class TaskDetails {
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
   editedTask: string = ''; 
+  assigned = signal<string[]>([]);
+  
   private dbService = inject(Supabase);
   private fb = inject(FormBuilder);
   subtasks: SUBTASK[] = [
