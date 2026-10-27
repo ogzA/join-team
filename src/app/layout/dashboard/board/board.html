@@ -24,7 +24,7 @@
 
   <div class="board__columns" cdkDropListGroup>
     <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
-    @for (column of columns; track column.status) {
+    @for (column of columns(); track column.status) {
       <section class="board__column">
         <div class="board__column-header">
           <h2 class="board__column-title">{{ column.label }}</h2>

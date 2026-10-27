@@ -166,9 +166,15 @@ export class Board implements OnInit {
     done: 'Done',
   };
 
-  // Spalten fürs Board, einmalig aus den Rohdaten erzeugt
-  // Muss nach columnLabels stehen, weil toColumns() die Labels nutzt
-  protected columns: BoardColumn[] = this.toColumns(DUMMY_ROWS);
+  // Spalten fürs Board aus den vier Service-Signals
+  // Wird automatisch neu gebaut, sobald getTasks() neue Daten liefert
+  // Muss nach columnLabels stehen, weil buildColumn() die Labels nutzt
+  protected columns = computed<BoardColumn[]>(() => [
+    this.buildColumn('to do', this.dbService.toDoTasks()),
+    this.buildColumn('in progress', this.dbService.inProgressTasks()),
+    this.buildColumn('await feedback', this.dbService.awaitFeedbackTasks()),
+    this.buildColumn('done', this.dbService.doneTasks()),
+  ]);
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
   protected maxAvatars = 3;
@@ -192,6 +198,20 @@ export class Board implements OnInit {
       label: this.columnLabels[row.status],
       tasks: this.tasksOf(row),
     }));
+  }
+
+  // Baut eine Spalte aus den Tasks eines Service-Signals.
+  // Fehlende assigned/subtasks (ältere Daten) werden mit [] aufgefüllt.
+  private buildColumn(status: string, tasks: Task[]): BoardColumn {
+    return {
+      status,
+      label: this.columnLabels[status],
+      tasks: tasks.map((task) => ({
+        ...task,
+        assigned: task.assigned ?? [],
+        subtasks: task.subtasks ?? [],
+      })),
+    };
   }
 
   // Subtasks erledigt zählen
