@@ -7,6 +7,13 @@ interface SUBTASK {
   task: string;
   done: boolean;
 }
+export interface SelectedTask {
+  // task: Task;
+  // Supabase row = column (1 = to do, 2 = in progress, 3 = await feedback, 4 = done)
+  rowId: number;
+  // Position of the task inside its column
+  index: number;
+}
 
 @Component({
   imports: [ReactiveFormsModule,AssignedToDropdown],
@@ -21,7 +28,8 @@ export class TaskDetails {
   editingIndex: number | null = null;
   editedTask: string = ''; 
   assigned = signal<string[]>([]);
-  SelectedTask = signal<string[]>([]);
+  selected = input.required<SelectedTask>();
+  close = output<void>();
   
   private dbService = inject(Supabase);
   private fb = inject(FormBuilder);
