@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { SelectedTask, Subtask } from '../../../../shared/models/task';
 import { TitleCasePipe } from '@angular/common';
+import { NameLogo } from '../../../../shared/services/name-logo';
 
 @Component({
   imports: [ReactiveFormsModule,AssignedToDropdown,TitleCasePipe],
@@ -27,6 +28,7 @@ export class ShowTaskDetails {
   
   private dbService = inject(Supabase);
   private fb = inject(FormBuilder);
+  protected nlService = inject(NameLogo);
 
 
   taskDetailForm = this.fb.nonNullable.group({
@@ -42,9 +44,7 @@ export class ShowTaskDetails {
 
   ngOnInit()
   {    
-    console.log('Selected task data:', this.selected().task)
-    const taskData = this.selected().task
-    
+    console.log('Selected task data:', this.selected().task)    
   }
 
   async onSubmit()

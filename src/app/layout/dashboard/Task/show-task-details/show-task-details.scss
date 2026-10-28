@@ -72,9 +72,34 @@ $color-category-technical: #1fd7c1;
         }
         &_dropdown{
             width: 100%;
+
+        }
+        &__assignedPersons{
+            @include all-styles.flex-center;
+                align-items: center;
+                width: 100%;
+                gap: 16px;
+                padding: 10px;
         }
         &_spacing{
             padding-top: 16px;
+        }
+        &__avatar{
+        display: flex;
+        flex-shrink: 0; // Avatare bleiben rund, werden nicht verformt
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        margin-left: -8px; // Avatar überlappen sich
+        border: 1px solid all-styles.$color-white;
+        border-radius: 50%;
+        font-size: 16px;
+        color: all-styles.$color-white;
+
+        &:first-child {
+            margin-left: 0;
+        }
         }
     }
     &__category {

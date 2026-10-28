@@ -3,9 +3,8 @@
 
         <div class="modal_content_head">
             <span class="modal__category"
-            
-            [class.task-card__category--story]="this.selected().task.category === 'User Story'"
-                [class.task-card__category--technical]="this.selected().task.category === 'Technical Task'"
+            [class.modal__category--story]="this.selected().task.category === 'User Story'"
+            [class.modal__category--technical]="this.selected().task.category === 'Technical Task'"
             >
             {{this.selected().task.category | titlecase}}
             </span>
@@ -18,7 +17,7 @@
         <p>  {{this.selected().task.description}}</p>
         <div class="modal_content_data">
             <p>Due date: </p>
-            <p>  {{this.selected().task.date}}</p>
+            <p>{{this.selected().task.date}}</p>
         </div>
         <div class="modal_content_data">
             <p>Priority: </p>
@@ -27,7 +26,19 @@
         </div>
         <div class="modal_content_dropdown">
             <label for="assignedTo">Assigned to</label>
-            <!-- <app-assigned-to-dropdown class="modal_content_spacing" [(assigned)]="assigned" /> -->
+            @for (name of this.selected().task.assigned; track $index) {
+                    @let avatar = nlService.setNameLogo(name);
+                    <div class="modal_content__assignedPersons">
+                    <span
+                        class="modal_content__avatar"
+                        [style.background-color]="avatar.color"
+                        [style.color]="avatar.textColor"
+                    >
+                    {{ avatar.name }}
+                    </span>
+                    <p>{{name |titlecase}}</p>
+                    </div>
+        }
         </div>
         <div>
             <p>Subtasks</p>
