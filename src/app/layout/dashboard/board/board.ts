@@ -14,7 +14,6 @@ import {
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
 import { SelectedTask, Task } from '../../../shared/models/task';
-import { JsonPipe } from '@angular/common';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
 const TABLET_QUERY = '(max-width: 1100px)';
@@ -139,7 +138,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag, JsonPipe],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -188,6 +187,10 @@ export class Board implements OnInit {
   // Lädt beim Öffnen des Boards die Tasks aller Spalten aus Supabase
   ngOnInit(): void {
     this.dbService.getTasks();
+
+    // Auto Fokus beim Seitenladen aufs Input Feld
+    const elemRef = document.getElementById(`seachInput`);
+    elemRef?.focus();
   }
 
   // Baut eine Spalte aus den Tasks eines Service-Signals.
@@ -235,10 +238,26 @@ export class Board implements OnInit {
   // Suche: Eingabe im Header, Filterung durch die Signals, Einbindung oben in columns
   searchTerm = signal('');
   lowerCaseSearchTerm = signal('');
+  protected isSearching = computed(() => this.lowerCaseSearchTerm().length > 0);
+  searchPlaceHolder = signal('Find Task');
 
   searchFilter() {
     this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
     this.searchTerm.set('');
+    const elemRef = document.getElementById(`seachInput`);
+
+    if (
+      this.filteredToDo().length == 0 &&
+      this.filteredinProgress().length == 0 &&
+      this.filteredAwaitFeedback().length == 0 &&
+      this.filteredDoneTasks().length == 0
+    ) {
+      this.searchPlaceHolder.set('Nothing found...'); // Platzhalter Text wenn nix gefunden
+      elemRef?.classList.add('red-placeholder'); // Zusätzliche Klasse für die rote Farbe
+    } else {
+      this.searchPlaceHolder.set('Find Task'); // Platzhalter zurücksetzen
+      elemRef?.classList.remove('red-placeholder'); // Klasse wieder entfernen
+    }
   }
 
   // Search Filter Signals, ohne Änderung wie die anderen 4 Signals

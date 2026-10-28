@@ -6,10 +6,13 @@
         <input
           class="board__search-input"
           type="text"
-          placeholder="Find Task"
+          placeholder="{{ searchPlaceHolder() }}"
           aria-label="Find task"
           [value]="searchTerm()"
           (input)="searchTerm.set($event.target.value)"
+          (keydown.enter)="searchFilter(); $event.preventDefault()"
+          tabindex="-1"
+          id="seachInput"
         />
         <button class="search-Btn" (click)="searchFilter()">
           <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
@@ -21,18 +24,6 @@
       </button>
     </div>
   </header>
-
-  <!-- Search MSG wenn nix gefunden -->
-  @if (
-    filteredToDo().length == 0 &&
-    filteredinProgress().length == 0 &&
-    filteredAwaitFeedback().length == 0 &&
-    filteredDoneTasks().length == 0
-  ) {
-    <div class="search-msg">
-      <p>Nothing found...</p>
-    </div>
-  }
 
   <div class="board__columns" cdkDropListGroup>
     <!-- Eine Spalte pro Status, Tasks liegen in column.tasks -->
@@ -63,6 +54,7 @@
           cdkDropList
           [cdkDropListOrientation]="dropOrientation()"
           [cdkDropListData]="column"
+          [cdkDropListDisabled]="isSearching()"
           (cdkDropListDropped)="dropTask($event)"
         >
           <!-- track $index: Tasks haben keine eigene ID, nur für statische Dummies aktuell in Ordnung -->

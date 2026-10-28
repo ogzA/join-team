@@ -471,10 +471,6 @@ $color-drag-placeholder: #a8a8a8;
   .task-card {
     flex: 0 0 252px; // Karten behalten ihre Breite, keine Verformung
   }
-
-  .search-msg {
-    margin-top: -16px !important;
-  }
 }
 
 @media (max-width: all-styles.$breakpoint-mobile) {
@@ -519,25 +515,8 @@ $color-drag-placeholder: #a8a8a8;
     width: 30px;
     height: 30px;
   }
-
-  .search-msg {
-    margin-top: -16px !important;
-  }
 }
 
-// Nothing Found Text wenn bei der Suche nix gefunden wird
-.search-msg {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 150px;
-  margin-top: -48px;
-  padding: 10px;
-  border-radius: 16px;
-  background-color: rgb(231, 231, 231);
+.red-placeholder::placeholder {
   color: red;
-
-  p {
-    font-size: 16px;
-  }
 }
