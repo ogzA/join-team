@@ -17,7 +17,11 @@ $color-category-technical: #1fd7c1;
     font-family: "Inter";
     overflow: hidden;
 
-
+    .header_modal{
+        @include all-styles.flex-center;
+        width: 100%;
+        justify-content: space-between;
+    }
     &_content {
         @include all-styles.flex-center;
         flex-direction: column;

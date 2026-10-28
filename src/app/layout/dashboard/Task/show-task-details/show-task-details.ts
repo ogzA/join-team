@@ -71,7 +71,7 @@ export class ShowTaskDetails {
 
   openDialog() {
   }
-  
+
   closeDialog(): void {
     if (this.isClosing()) return;
     this.isClosing.set(true);          
@@ -79,5 +79,56 @@ export class ShowTaskDetails {
         this.close.emit();
     }, 300);    
   }
+deleteSubTask(index:number) {
+      this.subtasks.splice(index,1);
+    }
 
+    subtaskEdit(index:number) {
+      this.editingIndex = index;
+      //this.editedTask = this.subtasks[index].task;
+    }
+    deleteEditTask()
+    {
+      this.editingIndex = null;
+      this.editedTask = "";
+    }
+
+  confirmEditedTask(index:number){
+    const value = this.editedTask.trim();
+    if (!value) {
+      return;
+    }
+    this.subtasks[index] = {
+      ...this.subtasks[index],
+      task: value
+    };
+    this.editingIndex = null;
+    this.editedTask = '';
+  }
+
+  closeSubtask() {
+    this.taskDetailForm.get('subtasks')?.reset('');
+    this.subtaskInfo = false;
+  }
+
+  addSubtask() {
+    const control = this.taskDetailForm.get('subtasks');
+    const value = control?.value?.trim();
+    if (!value) {
+      return;
+    }
+    this.subtasks.push({task:value,done:false});
+    control?.reset('');
+    this.subtaskInfo = false;
+  }
+
+  showAddSubTask() {
+    this.subtaskInfo = true;
+    const value = this.taskDetailForm.get('subtasks')?.value ?? '';
+    this.subtaskInfo = value.trim().length > 0;
+  }
+  goBackToDetailsView()
+  {
+    this.isEdit = false;
+  }
 }
