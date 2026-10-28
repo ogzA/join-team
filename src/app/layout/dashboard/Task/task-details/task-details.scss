@@ -70,6 +70,12 @@ $color-category-technical: #1fd7c1;
                 gap: 5px;
             }
         }
+        &_dropdown{
+            width: 100%;
+        }
+        &_spacing{
+            padding-top: 16px;
+        }
     }
     &__category {
     align-self: flex-start;

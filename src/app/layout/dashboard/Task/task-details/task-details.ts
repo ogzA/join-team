@@ -21,6 +21,7 @@ export class TaskDetails {
   editingIndex: number | null = null;
   editedTask: string = ''; 
   assigned = signal<string[]>([]);
+  SelectedTask = signal<string[]>([]);
   
   private dbService = inject(Supabase);
   private fb = inject(FormBuilder);
