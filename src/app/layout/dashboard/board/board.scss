@@ -27,7 +27,7 @@ $color-drag-placeholder: #a8a8a8;
   box-sizing: border-box;
   height: 100%;
   max-width: 1440px;
-  padding: 80px 64px;
+  padding: 40px 64px 20px;
 
   display: flex;
   flex-direction: column;
@@ -132,7 +132,7 @@ $color-drag-placeholder: #a8a8a8;
 .board__columns {
   display: grid;
   flex: 1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 252px));
   gap: 26px;
   min-height: 0;
 }
@@ -140,7 +140,7 @@ $color-drag-placeholder: #a8a8a8;
 .board__column {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   min-width: 0;
   min-height: 0;
 }
@@ -150,6 +150,7 @@ $color-drag-placeholder: #a8a8a8;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  min-height: 24px;
 }
 
 .board__column-title {
@@ -262,9 +263,9 @@ $color-drag-placeholder: #a8a8a8;
   rotate: 5deg;
 }
 
-// Placeholder: leere Fläche mit gepunktetem Rahmen an der Zielposition
+// Placeholder: leere Fläche mit gestricheltem Rahmen an der Zielposition
 .task-card.cdk-drag-placeholder {
-  border: 1px dotted $color-drag-placeholder;
+  border: 1px dashed $color-drag-placeholder;
   background-color: transparent;
   box-shadow: none;
 
@@ -475,16 +476,16 @@ $color-drag-placeholder: #a8a8a8;
 
 @media (max-width: all-styles.$breakpoint-mobile) {
   .board {
-    padding: 48px 16px;
+    padding: 28px 16px;
   }
 
   .board__header {
     grid-template-areas: 'title add' 'search search';
-    row-gap: 40px;
+    row-gap: 22px;
   }
 
   .board__title {
-    font-size: 47px;
+    font-size: 42px;
   }
 
   .board__add-button {
@@ -508,7 +509,7 @@ $color-drag-placeholder: #a8a8a8;
   }
 
   .board__column-title {
-    font-size: 27px;
+    font-size: 24px;
   }
 
   .board__column-add {
