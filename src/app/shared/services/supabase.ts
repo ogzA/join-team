@@ -118,16 +118,22 @@ export class Supabase {
   }
 
   async getTasks() {
-    this.toDoTasks.set((await this.loadTasks(1)) ?? ([] as Task[]));
-    this.inProgressTasks.set((await this.loadTasks(2)) ?? ([] as Task[]));
-    this.awaitFeedbackTasks.set((await this.loadTasks(3)) ?? ([] as Task[]));
-    this.doneTasks.set((await this.loadTasks(4)) ?? ([] as Task[]));
+    const { data, error } = await this.supabase
+      .from('tasks')
+      .select('id, taskjson')
+      .in('id', [1, 2, 3, 4]);
+    if (error) throw error;
+    const rows = data ?? [];
+    this.toDoTasks.set(this.taskOfRow(rows, 1));
+    this.inProgressTasks.set(this.taskOfRow(rows, 2));
+    this.awaitFeedbackTasks.set(this.taskOfRow(rows, 3));
+    this.doneTasks.set(this.taskOfRow(rows, 4));
   }
 
-  async loadTasks(tableID: number) {
-    const response: any = await this.supabase.from('tasks').select('taskjson').eq('id', tableID);
-    if (!response) return;
-    return response.data[0].taskjson[0];
+  private taskOfRow(rows: { id: number; taskjson: Task[][] | '' }[], rowId: number): Task[] {
+    const row = rows.find((r) => r.id === rowId);
+    if (!row || !Array.isArray(row.taskjson)) return [];
+    return row.taskjson[0] ?? [];
   }
 
   async setTasks(data: Task[], rowID: number) {
