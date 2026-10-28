@@ -57,6 +57,7 @@
           @for (task of column.tasks; track $index) {
             <article
               cdkDrag
+              [cdkDragStartDelay]="{ touch: 500, mouse: 0 }"
               class="task-card"
               tabindex="0"
               role="button"
