@@ -3,10 +3,28 @@ import { Supabase } from '../../../../shared/services/supabase';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 
-interface SUBTASK {
+
+export interface Task {
+  title: string;
+  description: string;
+  // Due date in YYYY-MM-DD format
+  date: string;
+  prio: TaskPrio;
+  category: TaskCategory;
+  // Names of assigned contacts, empty = []
+  assigned: string[];
+  // Empty = []
+  subtasks: Subtask[];
+}
+
+
+// A sub-item of a task
+export interface Subtask {
   task: string;
   done: boolean;
 }
+
+
 export interface SelectedTask {
   // task: Task;
   // Supabase row = column (1 = to do, 2 = in progress, 3 = await feedback, 4 = done)
@@ -33,16 +51,7 @@ export class TaskDetails {
   
   private dbService = inject(Supabase);
   private fb = inject(FormBuilder);
-  subtasks: SUBTASK[] = [
-      {
-        task: 'Implement Recipe Recommendation',
-        done: true
-      },
-      {
-        task: 'Start Page Layout',
-        done: false
-      }
-    ];
+  subtasks: Subtask[]=[];
 
 
   taskDetailForm = this.fb.nonNullable.group({
@@ -62,8 +71,8 @@ export class TaskDetails {
 
   async loadData()
   {
-    // const data = await this.dbService.loadTasks(2);
-    // console.log(data)
+    const data = await this.dbService.loadTasks(2);
+    console.log(data)
   }
 
   async onSubmit()
@@ -71,7 +80,7 @@ export class TaskDetails {
 
   }
 
-  onSubtaskChange(subtask: SUBTASK, event: Event): void {
+  onSubtaskChange(subtask: Subtask, event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     subtask.done = checkbox.checked;
   }
