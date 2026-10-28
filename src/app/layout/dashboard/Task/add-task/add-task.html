@@ -1,4 +1,4 @@
-<section class="addTask">
+<section class="addTask" [class.inDialog]="inDialog()">
   <h1>Add Task</h1>
 
   <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="onSubmit()">

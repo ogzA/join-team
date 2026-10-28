@@ -15,7 +15,7 @@
           <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
         </button>
       </div>
-      <button class="board__add-button" type="button">
+      <button class="board__add-button" type="button" (click)="openAddTask()">
         <span class="board__add-button-text">Add task</span>
         <img class="board__add-button-icon" src="assets/icons/add-white.svg" alt="" />
       </button>
@@ -178,3 +178,11 @@
     }
   </div>
 </section>
+
+@if (isAddTaskOpen()) {
+  <div class="dialog-backdrop" (click)="closeAddTask()">
+    <div class="dialog" (click)="$event.stopPropagation()">
+      <app-add-task [inDialog]="true" (closed)="closeAddTask()" />
+    </div>
+  </div>
+}

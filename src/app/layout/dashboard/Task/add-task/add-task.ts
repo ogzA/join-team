@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -58,6 +58,7 @@ export class AddTask {
       console.log(taskData);
       this.toast.success('Task added to board');
       this.resetForm();
+      this.closed.emit();
     } catch {
       this.toast.error('Task not added to board');
     } finally {
@@ -124,4 +125,10 @@ export class AddTask {
     const value = this.taskForm.get('subtasks')?.value ?? '';
     this.subtaskInfo = value.trim().length > 0;
   }
+
+  // Board Add Task Dialog
+  inDialog = input(false);
+  closed = output<void>();
+
+  // Board Add Task Dialog
 }

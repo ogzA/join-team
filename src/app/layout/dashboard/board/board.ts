@@ -2,6 +2,7 @@ import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
 import { JsonPipe } from '@angular/common';
+import { AddTask } from '../Task/add-task/add-task';
 
 // ====== DUMMY START ======
 
@@ -128,7 +129,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [JsonPipe],
+  imports: [JsonPipe, AddTask],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -221,4 +222,15 @@ export class Board {
   });
 
   // Such Test Ende
+
+  // Add Task Dialog
+  isAddTaskOpen = signal(false);
+
+  openAddTask() {
+    this.isAddTaskOpen.set(true);
+  }
+
+  closeAddTask() {
+    this.isAddTaskOpen.set(false);
+  }
 }
