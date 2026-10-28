@@ -26,7 +26,7 @@ $color-category-technical: #1fd7c1;
         gap: 16px;
         position: relative;
         width: 100%;
-        max-width: 525px;
+        max-width: 625px;
         min-height: 592px;
         max-height: 750px;
         border-radius: 30px;
@@ -114,12 +114,12 @@ $color-category-technical: #1fd7c1;
             align-items: center;
         }
 
-        &_scrollableDiv {
-            width: 100%;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            max-height: 150px;
-        }
+        // &_scrollableDiv {
+        //     width: 100%;
+        //     overflow-y: auto;
+        //     scrollbar-width: thin;
+        //     max-height: 150px;
+        // }
 
         &_buttons {
             @include all-styles.flex-center;
@@ -192,18 +192,8 @@ $color-category-technical: #1fd7c1;
 
     h1 {
         font-size: clamp(20px, calc(13.571px + 1.786vw), 35px);
-        max-height: 200px;
-        overflow: auto;
-        scrollbar-width: thin;
         margin-bottom: 8px;
     }
-
-    p {
-        max-height: 100px;
-        overflow: auto;
-        scrollbar-width: thin;
-    }
-
     form {
         .priority {
             border: none;

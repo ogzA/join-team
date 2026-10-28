@@ -1,3 +1,4 @@
+
 <div class="modal" (closed)="closeDialog()">
     <div class="modal_content" (click)="$event.stopPropagation()">
         <div class="modal_content__botton-spacing">
@@ -12,14 +13,16 @@
                         <img src="assets/icons/close_subtask.svg" alt="close_logo" />
                     </button>
                 </div>
-                <h1> {{this.selected().task.title | titlecase}}</h1>
-                <p> {{this.selected().task.description}}</p>
-                <div class="modal_content_data">
-                    <p>Due date: </p>
-                    <p>{{this.selected().task.date}}</p>
-                </div>
-
-                <div class="modal_content_data">
+                                
+                @if(!this.isEdit)
+                {
+                    <h1> {{this.selected().task.title | titlecase}}</h1>
+                    <p> {{this.selected().task.description}}</p>
+                    <div class="modal_content_data">
+                        <p>Due date: </p>
+                        <p>{{this.selected().task.date}}</p>
+                    </div>
+                    <div class="modal_content_data">
                     <p>Priority: </p>
                     <p> {{this.selected().task.prio| titlecase}}</p>
                     @if(this.selected().task.prio == "Low"){
@@ -29,7 +32,6 @@
                     <img [src]="priorityLogos.urgent" alt="urgent_priority_logo">
                     }
                 </div>
-
                 <div class="modal_content_dropdown">
                     <label for="assignedTo">Assigned to</label>
                     @for (name of this.selected().task.assigned; track $index) {
@@ -43,7 +45,6 @@
                     </div>
                     }
                 </div>
-
                 <div>
                     <p>Subtasks</p>
                     <div class="modal_content_subtask">
@@ -56,23 +57,27 @@
                             <span class="subtask-title">{{ subtask.task }}</span>
                         </label>
                         }
-
                     </div>
-
-
                 </div>
-            </div>
-            <div class="modal_content_buttons">
-                <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
-                    <img src="assets/icons/delete-btn.png" alt="delete_icon" />
-                    <span>Delete</span>
-                </button>
-                <img src="assets/icons/subtask_divider.svg" alt="divider">
-                <button class="modal_content_buttons_actionBtn" (click)="editTask()">
-                    <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
-                    <span>Edit</span>
-                </button>
-            </div>
+                <div class="modal_content_buttons">
+                    <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
+                        <img src="assets/icons/delete-btn.png" alt="delete_icon" />
+                        <span>Delete</span>
+                    </button>
+                    <img src="assets/icons/subtask_divider.svg" alt="divider">
+                    <button class="modal_content_buttons_actionBtn" (click)="editTask()">
+                        <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
+                        <span>Edit</span>
+                    </button>
+                </div>
+                }
+                
+                @else if(this.isEdit)
+                {
+                        
+                }
+        </div>
         </div>
     </div>
 </div>
+

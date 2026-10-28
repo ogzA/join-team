@@ -13,7 +13,7 @@ import { NameLogo } from '../../../../shared/services/name-logo';
   templateUrl: './show-task-details.html',
 })
 export class ShowTaskDetails {
-  isDialogOpen: boolean = false;
+  isDialogOpen: boolean = true;
   isEdit:boolean = false;
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
