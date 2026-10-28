@@ -1,71 +1,78 @@
 <div class="modal" (closed)="closeDialog()">
     <div class="modal_content" (click)="$event.stopPropagation()">
+        <div class="modal_content__botton-spacing">
+            <div class="modal_content_head">
+                <div class="header_modal">
+                    <span class="modal__category"
+                        [class.modal__category--story]="this.selected().task.category === 'User Story'"
+                        [class.modal__category--technical]="this.selected().task.category === 'Technical Task'">
+                        {{this.selected().task.category | titlecase}}
+                    </span>
+                    <button type="button" aria-label="Close" (click)="closeDialog()">
+                        <img src="assets/icons/close_subtask.svg" alt="close_logo" />
+                    </button>
+                </div>
+                <h1> {{this.selected().task.title | titlecase}}</h1>
+                <p> {{this.selected().task.description}}</p>
+                <div class="modal_content_data">
+                    <p>Due date: </p>
+                    <p>{{this.selected().task.date}}</p>
+                </div>
 
-        <div class="modal_content_head">
-            <span class="modal__category"
-            [class.modal__category--story]="this.selected().task.category === 'User Story'"
-            [class.modal__category--technical]="this.selected().task.category === 'Technical Task'"
-            >
-            {{this.selected().task.category | titlecase}}
-            </span>
-            <button type="button" aria-label="Close" (click)="closeDialog()">
-                <img src="assets/icons/close_subtask.svg" alt="close_logo" />
-            </button>
-        </div>
+                <div class="modal_content_data">
+                    <p>Priority: </p>
+                    <p> {{this.selected().task.prio| titlecase}}</p>
+                    @if(this.selected().task.prio == "Low"){
+                    <img [src]="priorityLogos.low" alt="low_priority_logo" />
+                    }@else if(this.selected().task.prio == "Medium"){
+                    <img [src]="priorityLogos.medium" alt="medium_priority_logo" />}@else {
+                    <img [src]="priorityLogos.urgent" alt="urgent_priority_logo">
+                    }
+                </div>
 
-        <h1>  {{this.selected().task.title | titlecase}}</h1>
-        <p>  {{this.selected().task.description}}</p>
-        <div class="modal_content_data">
-            <p>Due date: </p>
-            <p>{{this.selected().task.date}}</p>
-        </div>
-        <div class="modal_content_data">
-            <p>Priority: </p>
-            <p>  {{this.selected().task.prio | titlecase}}</p>
-            <img src="assets/icons/detailsMediumPrio.svg" alt="medium_priority_logo">
-        </div>
-        <div class="modal_content_dropdown">
-            <label for="assignedTo">Assigned to</label>
-            @for (name of this.selected().task.assigned; track $index) {
+                <div class="modal_content_dropdown">
+                    <label for="assignedTo">Assigned to</label>
+                    @for (name of this.selected().task.assigned; track $index) {
                     @let avatar = nlService.setNameLogo(name);
                     <div class="modal_content__assignedPersons">
-                    <span
-                        class="modal_content__avatar"
-                        [style.background-color]="avatar.color"
-                        [style.color]="avatar.textColor"
-                    >
-                    {{ avatar.name }}
-                    </span>
-                    <p>{{name |titlecase}}</p>
+                        <span class="modal_content__avatar" [style.background-color]="avatar.color"
+                            [style.color]="avatar.textColor">
+                            {{ avatar.name }}
+                        </span>
+                        <p>{{name |titlecase}}</p>
                     </div>
-        }
-        </div>
-        <div>
-            <p>Subtasks</p>
-            <div class="scrollableDiv  modal_content_subtask">
-                @for (subtask of subtasks; track $index) {
+                    }
+                </div>
 
-                <label>
-                    <input type="checkbox" [checked]="subtask" (change)="onSubtaskChange(subtask, $event)" />
-                    <span>
-                        {{ subtask.task }}
-                    </span>
-                </label>
-                }
+                <div>
+                    <p>Subtasks</p>
+                    <div class="modal_content_subtask">
+                        @for (subtask of this.selected().task.subtasks; track $index) {
+                        <label class="subtask-item">
+                            <input type="checkbox" [checked]="subtask.done" (change)="toggleSubtask($event)" />
 
+                            <span class="checkbox-image" aria-hidden="true"></span>
+
+                            <span class="subtask-title">{{ subtask.task }}</span>
+                        </label>
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal_content_buttons">
+                <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
+                    <img src="assets/icons/delete-btn.png" alt="delete_icon" />
+                    <span>Delete</span>
+                </button>
+                <img src="assets/icons/subtask_divider.svg" alt="divider">
+                <button class="modal_content_buttons_actionBtn" (click)="editTask()">
+                    <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
+                    <span>Edit</span>
+                </button>
             </div>
         </div>
-        <div class="modal_content_buttons">
-            <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
-                <img src="assets/icons/delete-btn.png" alt="delete_icon" />
-                <span>Delete</span>
-            </button>
-            <img src="assets/icons/subtask_divider.svg" alt="divider">
-            <button class="modal_content_buttons_actionBtn" (click)="editTask()">
-                <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
-                <span>Edit</span>
-            </button>
-        </div>
-
     </div>
 </div>

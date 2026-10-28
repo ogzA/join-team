@@ -18,6 +18,13 @@ export class ShowTaskDetails {
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
   editedTask: string = ''; 
+
+  priorityLogos = {
+  low: "assets/icons/prio-low.svg",
+  medium: "assets/icons/prio-medium.svg",
+  urgent: "assets/icons/prio-urgent.svg",
+  };
+
   subtasks: Subtask[]=[];
   assigned = signal<string[]>([]);
 
@@ -25,7 +32,7 @@ export class ShowTaskDetails {
   taskData = computed(() => this.selected()); 
 
   close = output<void>();
-  
+
   private dbService = inject(Supabase);
   private fb = inject(FormBuilder);
   protected nlService = inject(NameLogo);
@@ -41,12 +48,6 @@ export class ShowTaskDetails {
   });
 
   
-
-  ngOnInit()
-  {    
-    console.log('Selected task data:', this.selected().task)    
-  }
-
   async onSubmit()
   {
 
@@ -61,10 +62,13 @@ export class ShowTaskDetails {
   {
     this.isEdit = true;
   }
-  onSubtaskChange(subtask: Subtask, event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    subtask.done = checkbox.checked;
+
+  toggleSubtask(event: Event): void {
+    const done = (event.target as HTMLInputElement).checked;
+    //this.done = checkbox.checked;
+    
   }
+
   openDialog() {
     this.isDialogOpen = true;
   }
