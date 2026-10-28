@@ -16,7 +16,7 @@ $color-category-technical: #1fd7c1;
     background-color: all-styles.$color-overlay;
     transform: translateX(0);
     transition: transform 5s ease-in-out;
-
+    font-family: "Inter";
 
 
     &_content {
@@ -32,6 +32,7 @@ $color-category-technical: #1fd7c1;
         border-radius: 30px;
         background-color: all-styles.$color-white;
         padding: 48px 40px;
+        font-size: 1.2rem;
         
 
         &_subtask {
@@ -101,6 +102,7 @@ $color-category-technical: #1fd7c1;
                 @include all-styles.flex-center;
                 width: 100%;
                 justify-content: space-between;
+                margin-bottom: 8px;
             }
         }
 
@@ -125,10 +127,13 @@ $color-category-technical: #1fd7c1;
             justify-content: flex-end;
             gap: 15px;
             align-items: center;
+            font-size: 1rem;
 
             &_actionBtn {
                 @include all-styles.flex-center;
                 gap: 5px;
+                font-size: 1rem;
+                font-family: "Inter";
             }
         }
 
@@ -190,6 +195,7 @@ $color-category-technical: #1fd7c1;
         max-height: 200px;
         overflow: auto;
         scrollbar-width: thin;
+        margin-bottom: 8px;
     }
 
     p {
