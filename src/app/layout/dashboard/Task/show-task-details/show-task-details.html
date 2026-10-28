@@ -1,5 +1,5 @@
 
-<div class="modal" (closed)="closeDialog()">
+<div class="modal" [class.modal--closing]="isClosing()">
     <div class="modal_content" (click)="$event.stopPropagation()">
         <div class="modal_content__botton-spacing">
             <div class="modal_content_head">
@@ -74,7 +74,7 @@
                 
                 @else if(this.isEdit)
                 {
-                        
+
                 }
         </div>
         </div>

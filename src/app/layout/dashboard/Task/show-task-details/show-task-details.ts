@@ -13,11 +13,11 @@ import { NameLogo } from '../../../../shared/services/name-logo';
   templateUrl: './show-task-details.html',
 })
 export class ShowTaskDetails {
-  isDialogOpen: boolean = true;
   isEdit:boolean = false;
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
   editedTask: string = ''; 
+  isClosing = signal(false);
 
   priorityLogos = {
   low: "assets/icons/prio-low.svg",
@@ -70,11 +70,14 @@ export class ShowTaskDetails {
   }
 
   openDialog() {
-    this.isDialogOpen = true;
   }
+  
   closeDialog(): void {
-    this.close.emit();
-    this.isDialogOpen = false;
+    if (this.isClosing()) return;
+    this.isClosing.set(true);          
+    setTimeout(() => {
+        this.close.emit();
+    }, 300);    
   }
 
 }
