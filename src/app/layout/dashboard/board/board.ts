@@ -9,11 +9,12 @@ import {
   CdkDropListGroup,
   DropListOrientation,
   moveItemInArray,
-  transferArrayItem,
+  transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
 import { SelectedTask, Task } from '../../../shared/models/task';
+import { ShowTaskDetails } from '../Task/show-task-details/show-task-details';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
 const TABLET_QUERY = '(max-width: 1100px)';
@@ -138,7 +139,7 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, ShowTaskDetails],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
@@ -216,6 +217,10 @@ export class Board implements OnInit {
   protected openTask(task: Task, rowId: number, index: number): void {
     this.selectedTask.set({ task, rowId, index });
   }
+
+  protected closeTaskDetails(): void {
+      this.selectedTask.set(null);
+    }
 
   // Verschiebt einen Task nach dem Loslassen
   protected dropTask(event: CdkDragDrop<BoardColumn>): void {

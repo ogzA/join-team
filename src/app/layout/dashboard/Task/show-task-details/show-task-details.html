@@ -1,0 +1,60 @@
+<div class="modal" (closed)="closeDialog()">
+    <div class="modal_content" (click)="$event.stopPropagation()">
+
+        <div class="modal_content_head">
+            <span class="modal__category"
+            
+            [class.task-card__category--story]="this.selected().task.category === 'User Story'"
+                [class.task-card__category--technical]="this.selected().task.category === 'Technical Task'"
+            >
+            {{this.selected().task.category | titlecase}}
+            </span>
+            <button type="button" aria-label="Close" (click)="closeDialog()">
+                <img src="assets/icons/close_subtask.svg" alt="close_logo" />
+            </button>
+        </div>
+
+        <h1>  {{this.selected().task.title | titlecase}}</h1>
+        <p>  {{this.selected().task.description}}</p>
+        <div class="modal_content_data">
+            <p>Due date: </p>
+            <p>  {{this.selected().task.date}}</p>
+        </div>
+        <div class="modal_content_data">
+            <p>Priority: </p>
+            <p>  {{this.selected().task.prio | titlecase}}</p>
+            <img src="assets/icons/detailsMediumPrio.svg" alt="medium_priority_logo">
+        </div>
+        <div class="modal_content_dropdown">
+            <label for="assignedTo">Assigned to</label>
+            <!-- <app-assigned-to-dropdown class="modal_content_spacing" [(assigned)]="assigned" /> -->
+        </div>
+        <div>
+            <p>Subtasks</p>
+            <div class="scrollableDiv  modal_content_subtask">
+                @for (subtask of subtasks; track $index) {
+
+                <label>
+                    <input type="checkbox" [checked]="subtask" (change)="onSubtaskChange(subtask, $event)" />
+                    <span>
+                        {{ subtask.task }}
+                    </span>
+                </label>
+                }
+
+            </div>
+        </div>
+        <div class="modal_content_buttons">
+            <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
+                <img src="assets/icons/delete-btn.png" alt="delete_icon" />
+                <span>Delete</span>
+            </button>
+            <img src="assets/icons/subtask_divider.svg" alt="divider">
+            <button class="modal_content_buttons_actionBtn" (click)="editTask()">
+                <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
+                <span>Edit</span>
+            </button>
+        </div>
+
+    </div>
+</div>

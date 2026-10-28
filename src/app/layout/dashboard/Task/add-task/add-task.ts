@@ -34,7 +34,7 @@ export class AddTask {
     title: ['', [Validators.required, Validators.pattern(/^[A-Za-z][a-zA-Z0-9_ -]*$/)]],
     description: [''],
     date: ['', Validators.required],
-    prio: ['medium'],
+    prio: ['Medium'],
     assigned: [''],
     category: ['', Validators.required],
     subtasks: [''],
@@ -58,7 +58,6 @@ export class AddTask {
         subtasks: [...this.subtasks],
       };
       await this.dbService.addTaskToDo(taskData);
-      console.log(taskData);
       this.toast.success('Task added to board');
       this.resetForm();
     } catch {
