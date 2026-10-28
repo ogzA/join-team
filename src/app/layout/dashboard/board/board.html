@@ -180,7 +180,7 @@
 </section>
 
 @if (isAddTaskOpen()) {
-  <div class="dialog-backdrop" (click)="closeAddTask()">
+  <div class="dialog-backdrop" animate.leave="dialog-closing" (click)="closeAddTask()">
     <div class="dialog" (click)="$event.stopPropagation()">
       <app-add-task [inDialog]="true" (closed)="closeAddTask()" />
     </div>
