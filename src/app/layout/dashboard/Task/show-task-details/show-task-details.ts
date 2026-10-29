@@ -52,7 +52,6 @@ export class ShowTaskDetails {
     description: [''],
     date: ['', Validators.required],
     prio: [''],
-    assigned: [''],
     subtasks: [''],
   });
 

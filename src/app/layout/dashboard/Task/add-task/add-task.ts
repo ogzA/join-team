@@ -31,7 +31,7 @@ export class AddTask {
   private toast = inject(ToastService);
 
   taskForm = this.fb.nonNullable.group({
-    title: ['', [Validators.required, Validators.pattern(/^[A-Za-z][a-zA-Z0-9_. -]*$/)]],
+    title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
     date: ['', Validators.required],
     prio: ['Medium'],
