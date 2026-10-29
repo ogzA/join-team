@@ -30,7 +30,7 @@ $color-category-technical: #1fd7c1;
     gap: 16px;
     position: relative;
     width: 100%;
-    max-width: 625px;
+    max-width: 525px;
     min-height: 592px;
     max-height: 750px;
     border-radius: 30px;
@@ -121,13 +121,6 @@ $color-category-technical: #1fd7c1;
       align-items: center;
     }
 
-    // &_scrollableDiv {
-    //     width: 100%;
-    //     overflow-y: auto;
-    //     scrollbar-width: thin;
-    //     max-height: 150px;
-    // }
-
     &_buttons {
       @include all-styles.flex-center;
       width: 100%;
@@ -202,6 +195,31 @@ $color-category-technical: #1fd7c1;
   }
 
   form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      .submitBtnAlign{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    .submitBtn{  
+      display: flex;
+      align-items: center;
+      justify-content: space-between; 
+      background-color: all-styles.$sidebar-background;
+      padding: 16px;
+      border-radius: 10px;
+      gap: 5px;
+      
+      button{
+        color: all-styles.$color-white;
+        font-size: 1rem;
+      }
+      
+    }
+
     .priority {
       border: none;
       padding: 0;

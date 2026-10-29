@@ -4,16 +4,17 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { SelectedTask, Subtask, Task, TaskPrio } from '../../../../shared/models/task';
 import { ToastService } from '../../../../shared/services/toast.service';
-import { TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { NameLogo } from '../../../../shared/services/name-logo';
 
 @Component({
-  imports: [ReactiveFormsModule, AssignedToDropdown, TitleCasePipe],
+  imports: [ReactiveFormsModule, AssignedToDropdown, TitleCasePipe, DatePipe],
   selector: 'app-show-task-details',
   styleUrl: './show-task-details.scss',
   templateUrl: './show-task-details.html',
 })
 export class ShowTaskDetails {
+  todaysDate: string = this.getTodayDate();
   isEdit = signal(false);
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
@@ -61,6 +62,7 @@ export class ShowTaskDetails {
       return;
     }
     const { title, description, date, prio } = this.taskDetailForm.getRawValue();
+  
     const updated: Task = {
       ...this.task(),
       title,
@@ -103,6 +105,13 @@ export class ShowTaskDetails {
     return rows[rowId - 1]();
   }
 
+  getTodayDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
   toInputDate(date: string): string {
     if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date; // already correct
     const m = date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/); // dd/mm/yyyy
