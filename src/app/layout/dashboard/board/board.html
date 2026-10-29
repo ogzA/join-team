@@ -182,6 +182,9 @@
 @if (isAddTaskOpen()) {
   <div class="dialog-backdrop" animate.leave="dialog-closing" (click)="closeAddTask()">
     <div class="dialog" (click)="$event.stopPropagation()">
+      <button type="button" class="dialog-close-btn" aria-label="Close" (click)="closeAddTask()">
+        <img src="assets/icons/close-dialog.svg" alt="" />
+      </button>
       <app-add-task [inDialog]="true" (closed)="closeAddTask()" />
     </div>
   </div>

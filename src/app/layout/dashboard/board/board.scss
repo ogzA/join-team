@@ -515,6 +515,32 @@ $color-scrollbar: color.change($color-task-title, $alpha: 0.4);
   background-color: all-styles.$color-white;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
   animation: dialog-slide-in 300ms ease-out;
+  position: relative;
+
+  .dialog-close-btn {
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    margin-right: 30px;
+
+    img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      transition: background-color 100ms ease;
+      &:hover {
+        background-color: all-styles.$color-hover-light;
+      }
+    }
+  }
 }
 
 @keyframes dialog-slide-in {
