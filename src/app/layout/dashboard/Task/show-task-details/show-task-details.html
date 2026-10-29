@@ -3,7 +3,7 @@
     <div class="modal_content" (click)="$event.stopPropagation()">
     
     <div class="header_modal">
-        @if(!this.isEdit)
+        @if(!this.isEdit())
             {
                 <span class="modal__category" [class.modal__category--story]="this.selected().task.category === 'User Story'"
                     [class.modal__category--technical]="this.selected().task.category === 'Technical Task'">
@@ -18,7 +18,7 @@
     </div>
         <div class="modal_content__botton-spacing">
             <div class="modal_content_head">     
-                @if(!this.isEdit)
+                @if(!this.isEdit())
                 {
                     <h1> {{this.selected().task.title | titlecase}}</h1>
                     <p> {{this.selected().task.description}}</p>
@@ -54,10 +54,8 @@
                     <div class="modal_content_subtask">
                         @for (subtask of this.selected().task.subtasks; track $index) {
                         <label class="subtask-item">
-                            <input type="checkbox" [checked]="subtask.done" (change)="toggleSubtask($event)" />
-
+                            <input type="checkbox" [checked]="subtask.done" (change)="toggleSubtask($event,$index)" />
                             <span class="checkbox-image" aria-hidden="true"></span>
-
                             <span class="subtask-title">{{ subtask.task }}</span>
                         </label>
                         }
@@ -65,22 +63,22 @@
                 </div>
                 }
                 <!-- Edit form start here -->
-                @else if(this.isEdit)
+                @else if(this.isEdit())
                 {
                     <form class="taskForm" [formGroup]="taskDetailForm" (ngSubmit)="onSubmit()">
                         <div class="field">
                             <label for="title">Title</label>
-                            <input type="text" id="title" value="title" formControlName="title">
+                            <input type="text" id="title" formControlName="title">
                         </div>
                     
                         <div class="field">
                             <label for="description">Description</label>
-                            <textarea type="text" id="description" value="description" formControlName="description"></textarea>
+                            <textarea id="description" value="description" formControlName="description"></textarea>
                         </div>
                     
                         <div class="field">
                             <label for="date">Due date</label>
-                            <input type="date" id="date" value="date" formControlName="date">
+                            <input type="date" id="date" formControlName="date">
                         </div>
                     
                         <fieldset class="priority">
@@ -137,7 +135,7 @@
                                                 </div>
                                                 } @else {
                                                 <span class="bulletDot"></span>
-                                                <p (dblclick)="subtaskEdit($index)">{{task}}</p>
+                                                <p (dblclick)="subtaskEdit($index)">{{task.task}}</p>
                                                 <div class="subtaskListPosition">
                                                     <button type="button" (click)="subtaskEdit($index)" aria-label="Edit subtask">
                                                         <img class="imgEdit" src="assets/icons/subtask_edit.svg" alt="edit_icon" />
@@ -157,7 +155,7 @@
                                 </div>
                             </div>
                     
-                            <button type="submit" (click)="goBackToDetailsView()">Ok</button>
+                            <button class="submitBtn" type="submit">Ok</button>
                             <img src="assets/icons/check.svg" alt="check_logo">
                         </div>
                     
@@ -165,7 +163,7 @@
                 }
                 </div>
         </div>
-        @if(!this.isEdit)
+        @if(!this.isEdit())
         {
             <div class="modal_content_buttons">
                         <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">

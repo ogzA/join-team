@@ -15,13 +15,14 @@ $color-category-technical: #1fd7c1;
     overflow-y: auto;
     background-color: all-styles.$color-overlay;
     font-family: "Inter";
-    overflow: hidden;
+    overflow: clip;
 
-    .header_modal{
+    .header_modal {
         @include all-styles.flex-center;
         width: 100%;
         justify-content: space-between;
     }
+
     &_content {
         @include all-styles.flex-center;
         flex-direction: column;
@@ -36,7 +37,7 @@ $color-category-technical: #1fd7c1;
         background-color: all-styles.$color-white;
         padding: 40px 40px;
         font-size: 1.2rem;
-        
+        overflow: clip;
 
         &_subtask {
             width: 100%;
@@ -47,15 +48,18 @@ $color-category-technical: #1fd7c1;
             padding-top: 10px;
 
             .subtask-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-            cursor: pointer;
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 1rem;
+                cursor: pointer;
             }
 
             .subtask-item input[type="checkbox"] {
                 position: absolute;
+                top: 0;
+                left: 0;
                 width: 16px;
                 height: 16px;
                 opacity: 0;
@@ -72,11 +76,11 @@ $color-category-technical: #1fd7c1;
                 background-size: contain;
             }
 
-            .subtask-item input[type="checkbox"]:checked + .checkbox-image {
+            .subtask-item input[type="checkbox"]:checked+.checkbox-image {
                 background-image: url('/assets/icons/checkbox-checked.svg');
             }
 
-            .subtask-item input[type="checkbox"]:focus-visible + .checkbox-image {
+            .subtask-item input[type="checkbox"]:focus-visible+.checkbox-image {
                 outline-offset: 3px;
                 border-radius: 2px;
             }
@@ -88,10 +92,10 @@ $color-category-technical: #1fd7c1;
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
-            gap:16px;
+            gap: 16px;
             overflow-y: auto;
             scrollbar-width: thin;
-            
+
         }
 
         &_head {
@@ -101,7 +105,8 @@ $color-category-technical: #1fd7c1;
             justify-content: space-between;
             align-items: flex-start;
             gap: 16px;
-            .header_modal{
+
+            .header_modal {
                 @include all-styles.flex-center;
                 width: 100%;
                 justify-content: space-between;
@@ -197,6 +202,7 @@ $color-category-technical: #1fd7c1;
         font-size: clamp(20px, calc(13.571px + 1.786vw), 35px);
         margin-bottom: 8px;
     }
+
     form {
         .priority {
             border: none;
@@ -428,15 +434,30 @@ $color-category-technical: #1fd7c1;
             resize: vertical;
         }
     }
+
 }
+
 @keyframes modal-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes modal-slide-in {
-    from { transform: translateX(100vw); }   // fully off-screen on the right
-    to   { transform: translateX(0); }       // its normal centered spot
+    from {
+        transform: translateX(100vw);
+    }
+
+    // fully off-screen on the right
+    to {
+        transform: translateX(0);
+    }
+
+    // its normal centered spot
 }
 
 .modal {
@@ -444,19 +465,23 @@ $color-category-technical: #1fd7c1;
 }
 
 .modal_content {
-    animation: modal-slide-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);   // fast start, soft landing
+    animation: modal-slide-in 0.4s cubic-bezier(0.22, 1, 0.36, 1); // fast start, soft landing
 }
 
 @keyframes modal-fade-out {
-    to { opacity: 0; }
+    to {
+        opacity: 0;
+    }
 }
 
 @keyframes modal-slide-out {
-    to { transform: translateX(100vw); }
+    to {
+        transform: translateX(100vw);
+    }
 }
 
 .modal--closing {
-    animation: modal-fade-out 0.3s ease-in forwards;   // forwards keeps the end state until Angular removes it
+    animation: modal-fade-out 0.3s ease-in forwards; // forwards keeps the end state until Angular removes it
 
     .modal_content {
         animation: modal-slide-out 0.3s ease-in forwards;

@@ -13,7 +13,7 @@ import { NameLogo } from '../../../../shared/services/name-logo';
   templateUrl: './show-task-details.html',
 })
 export class ShowTaskDetails {
-  isEdit:boolean = false;
+  isEdit = signal(false);
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
   editedTask: string = ''; 
@@ -50,7 +50,19 @@ export class ShowTaskDetails {
   
   async onSubmit()
   {
-
+    if (this.taskDetailForm.invalid) {
+    this.taskDetailForm.markAllAsTouched();
+    return;
+    }
+    const { title, description, date, prio } = this.taskDetailForm.getRawValue();
+    const updated = {
+      ...this.selected().task,
+      title, description, date, prio,
+      subtasks: this.subtasks,
+      assigned: this.assigned(),
+    };
+  // await this.dbService.<your update method>(updated);
+  this.isEdit.set(false);
   }
 
   deleteTask()
@@ -58,16 +70,35 @@ export class ShowTaskDetails {
     
   }
 
-  editTask()
-  {
-    this.isEdit = true;
+  toInputDate(date: string): string {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;   // already correct
+    const m = date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);  // dd/mm/yyyy
+    return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
   }
 
-  toggleSubtask(event: Event): void {
-    const done = (event.target as HTMLInputElement).checked;
-    //this.done = checkbox.checked;
-    
+  editTask()
+  {
+    const task = this.selected().task;
+
+    // reset(values) fills the form and clears any old touched/dirty fileds
+    this.taskDetailForm.reset({
+      title: task.title,
+      description: task.description,
+      date: this.toInputDate(task.date),
+      prio: task.prio.charAt(0).toUpperCase() + task.prio.slice(1).toLowerCase(),
+    });
+  // copy the lists so editing doesn't change the displayed task before saving
+    this.subtasks = task.subtasks.map((s) => ({ ...s }));
+    this.assigned.set([...task.assigned]);
+
+    this.isEdit.set(true);
   }
+
+toggleSubtask(event: Event, index: number): void {
+  const done = (event.target as HTMLInputElement).checked;
+  this.selected().task.subtasks[index].done = done;
+  console.log( this.selected())
+}
 
   openDialog() {
   }
@@ -78,14 +109,15 @@ export class ShowTaskDetails {
     setTimeout(() => {
         this.close.emit();
     }, 300);    
-  }
-deleteSubTask(index:number) {
+    }
+
+    deleteSubTask(index:number) {
       this.subtasks.splice(index,1);
     }
 
     subtaskEdit(index:number) {
       this.editingIndex = index;
-      //this.editedTask = this.subtasks[index].task;
+      this.editedTask = this.subtasks[index].task;
     }
     deleteEditTask()
     {
@@ -127,8 +159,5 @@ deleteSubTask(index:number) {
     const value = this.taskDetailForm.get('subtasks')?.value ?? '';
     this.subtaskInfo = value.trim().length > 0;
   }
-  goBackToDetailsView()
-  {
-    this.isEdit = false;
-  }
+
 }
