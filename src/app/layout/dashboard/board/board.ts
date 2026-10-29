@@ -133,6 +133,9 @@ const DUMMY_ROWS: BoardRow[] = [
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
+  host: {
+    '(document:keydown.escape)': 'closeAddTask()',
+  },
 })
 export class Board {
   protected nlService = inject(NameLogo);
