@@ -7,7 +7,7 @@ import { TitleCasePipe } from '@angular/common';
 import { NameLogo } from '../../../../shared/services/name-logo';
 
 @Component({
-  imports: [ReactiveFormsModule,AssignedToDropdown,TitleCasePipe],
+  imports: [ReactiveFormsModule, AssignedToDropdown,TitleCasePipe],
   selector: 'app-show-task-details',
   styleUrl: './show-task-details.scss',
   templateUrl: './show-task-details.html',
@@ -29,7 +29,7 @@ export class ShowTaskDetails {
   assigned = signal<string[]>([]);
 
   selected = input.required<SelectedTask>();
-  taskData = computed(() => this.selected()); 
+  // taskData = computed(() => this.selected()); 
 
   close = output<void>();
 
@@ -47,6 +47,12 @@ export class ShowTaskDetails {
     subtasks: [''],
   });
 
+constructor()
+{
+    effect(() => {
+      console.log(this.selected());
+    });
+}
   
   async onSubmit()
   {
@@ -61,13 +67,14 @@ export class ShowTaskDetails {
       subtasks: this.subtasks,
       assigned: this.assigned(),
     };
-  // await this.dbService.<your update method>(updated);
-  this.isEdit.set(false);
+    console.log(updated);
+   // await this.dbService.editTask(updated,this.selected().rowId,this.selected().index,);
+    this.isEdit.set(false);
   }
 
   deleteTask()
   {
-    
+    //code for delete will go here..
   }
 
   toInputDate(date: string): string {
@@ -87,10 +94,9 @@ export class ShowTaskDetails {
       date: this.toInputDate(task.date),
       prio: task.prio.charAt(0).toUpperCase() + task.prio.slice(1).toLowerCase(),
     });
-  // copy the lists so editing doesn't change the displayed task before saving
+    // copy the lists so editing doesn't change the displayed task before saving
     this.subtasks = task.subtasks.map((s) => ({ ...s }));
     this.assigned.set([...task.assigned]);
-
     this.isEdit.set(true);
   }
 
@@ -100,8 +106,6 @@ toggleSubtask(event: Event, index: number): void {
   console.log( this.selected())
 }
 
-  openDialog() {
-  }
 
   closeDialog(): void {
     if (this.isClosing()) return;
