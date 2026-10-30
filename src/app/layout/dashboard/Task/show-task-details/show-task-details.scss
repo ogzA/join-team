@@ -35,7 +35,7 @@ $color-category-technical: #1fd7c1;
     max-height: 750px;
     border-radius: 30px;
     background-color: $color-white;
-    padding: 40px 40px;
+    padding: 48px 40px;
     font-size: 1.2rem;
     overflow: clip;
 
@@ -430,7 +430,11 @@ $color-category-technical: #1fd7c1;
       border-radius: 8px;
       font-size: 1.25rem;
       box-sizing: border-box;
-      color: $color-input-border;
+      color: $color-input-text;
+
+      &::placeholder {
+        color: $color-input-border;
+      }
     }
 
     input:focus {
