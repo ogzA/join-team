@@ -1,4 +1,4 @@
-<section class="addTask">
+<section class="addTask" [class.inDialog]="inDialog()">
   <h1>Add Task</h1>
 
   <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
@@ -140,6 +140,7 @@
                         </div>
                       } @else {
                         <span class="bulletDot"></span>
+                        <p (dblclick)="subtaskEdit($index)">{{ task.task }}</p>
                         <p (dblclick)="subtaskEdit($index)">{{ task.task }}</p>
                         <div class="subtaskListPosition">
                           <button

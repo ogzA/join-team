@@ -18,7 +18,7 @@
           <img class="board__search-icon" src="assets/icons/search.svg" alt="" />
         </button>
       </div>
-      <button class="board__add-button" type="button">
+      <button class="board__add-button" type="button" (click)="openAddTask()">
         <span class="board__add-button-text">Add task</span>
         <img class="board__add-button-icon" src="assets/icons/add-white.svg" alt="" />
       </button>
@@ -137,6 +137,17 @@
     }
   </div>
 </section>
+
+@if (isAddTaskOpen()) {
+  <div class="dialog-backdrop" animate.leave="dialog-closing" (click)="closeAddTask()">
+    <div class="dialog" (click)="$event.stopPropagation()">
+      <button type="button" class="dialog-close-btn" aria-label="Close" (click)="closeAddTask()">
+        <img src="assets/icons/close-dialog.svg" alt="" />
+      </button>
+      <app-add-task [inDialog]="true" (closed)="closeAddTask()" />
+    </div>
+  </div>
+}
 
 @if (selectedTask(); as selected) {
   <app-show-task-details

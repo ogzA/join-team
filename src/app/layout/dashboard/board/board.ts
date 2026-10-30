@@ -18,6 +18,7 @@ import { ShowTaskDetails } from '../Task/show-task-details/show-task-details';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
 const TABLET_QUERY = '(max-width: 1100px)';
+import { AddTask } from '../Task/add-task/add-task';
 
 // ====== DUMMY START ======
 
@@ -139,10 +140,13 @@ const DUMMY_ROWS: BoardRow[] = [
 // ====== DUMMY ENDE ======
 
 @Component({
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag, ShowTaskDetails],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, ShowTaskDetails, AddTask],
   selector: 'app-board',
   styleUrl: './board.scss',
   templateUrl: './board.html',
+  host: {
+    '(document:keydown.escape)': 'closeAddTask()',
+  },
 })
 export class Board implements OnInit {
   protected nlService = inject(NameLogo);
@@ -305,4 +309,15 @@ export class Board implements OnInit {
           item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
       );
   });
+
+  // Add Task Dialog
+  isAddTaskOpen = signal(false);
+
+  openAddTask() {
+    this.isAddTaskOpen.set(true);
+  }
+
+  closeAddTask() {
+    this.isAddTaskOpen.set(false);
+  }
 }
