@@ -242,7 +242,16 @@
       border-radius: 8px;
       font-size: 1.25rem;
       box-sizing: border-box;
-      color: #686868;
+      color: $color-input-text;
+
+      &::placeholder {
+        color: $color-input-border;
+      }
+    }
+
+    input[type='date'].ng-invalid,
+    select.ng-invalid {
+      color: $color-input-border;
     }
 
     input:focus {
