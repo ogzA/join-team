@@ -38,6 +38,7 @@
               class="board__column-button"
               type="button"
               [attr.aria-label]="'Add task to ' + column.label"
+              (click)="openAddTask()"
             >
               <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
               <img
@@ -150,8 +151,6 @@
 }
 
 @if (selectedTask(); as selected) {
-  <app-show-task-details
-    [selected]="selected"
-    (close)="closeTaskDetails()">
+  <app-show-task-details [selected]="selected" (close)="closeTaskDetails()">
   </app-show-task-details>
 }
