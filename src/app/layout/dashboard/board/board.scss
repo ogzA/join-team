@@ -518,13 +518,6 @@ $color-drag-placeholder: #a8a8a8;
   }
 }
 
-.searchTest {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.search-Btn {
-  cursor: pointer;
-  width: 100%;
-  background-color: red;
+.red-placeholder::placeholder {
+  color: red;
 }

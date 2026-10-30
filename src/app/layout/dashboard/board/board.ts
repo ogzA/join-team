@@ -171,11 +171,12 @@ export class Board implements OnInit {
   // Spalten fürs Board aus den vier Service-Signals
   // Wird automatisch neu gebaut, sobald getTasks() neue Daten liefert
   // Muss nach columnLabels stehen, weil buildColumn() die Labels nutzt
+  // 4 Signals vom DB Service durch die Filter ersetzt - this.dbService.toDoTasks() => this.filteredToDo()
   protected columns = computed<BoardColumn[]>(() => [
-    this.buildColumn('to do', 1, this.dbService.toDoTasks()),
-    this.buildColumn('in progress', 2, this.dbService.inProgressTasks()),
-    this.buildColumn('await feedback', 3, this.dbService.awaitFeedbackTasks()),
-    this.buildColumn('done', 4, this.dbService.doneTasks()),
+    this.buildColumn('to do', 1, this.filteredToDo()),
+    this.buildColumn('in progress', 2, this.filteredinProgress()),
+    this.buildColumn('await feedback', 3, this.filteredAwaitFeedback()),
+    this.buildColumn('done', 4, this.filteredDoneTasks()),
   ]);
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
@@ -186,6 +187,10 @@ export class Board implements OnInit {
   // Lädt beim Öffnen des Boards die Tasks aller Spalten aus Supabase
   ngOnInit(): void {
     this.dbService.getTasks();
+
+    // Auto Fokus beim Seitenladen aufs Input Feld
+    const elemRef = document.getElementById(`seachInput`);
+    elemRef?.focus();
   }
 
   // Baut eine Spalte aus den Tasks eines Service-Signals.
@@ -230,12 +235,69 @@ export class Board implements OnInit {
     }
   }
 
-  // Suche: Eingabe im Header, Filterung der Karten folgt
+  // Suche: Eingabe im Header, Filterung durch die Signals, Einbindung oben in columns
   searchTerm = signal('');
   lowerCaseSearchTerm = signal('');
+  protected isSearching = computed(() => this.lowerCaseSearchTerm().length > 0);
+  searchPlaceHolder = signal('Find Task');
 
   searchFilter() {
     this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
     this.searchTerm.set('');
+    const elemRef = document.getElementById(`seachInput`);
+
+    if (
+      this.filteredToDo().length == 0 &&
+      this.filteredinProgress().length == 0 &&
+      this.filteredAwaitFeedback().length == 0 &&
+      this.filteredDoneTasks().length == 0
+    ) {
+      this.searchPlaceHolder.set('Nothing found...'); // Platzhalter Text wenn nix gefunden
+      elemRef?.classList.add('red-placeholder'); // Zusätzliche Klasse für die rote Farbe
+    } else {
+      this.searchPlaceHolder.set('Find Task'); // Platzhalter zurücksetzen
+      elemRef?.classList.remove('red-placeholder'); // Klasse wieder entfernen
+    }
   }
+
+  // Search Filter Signals, ohne Änderung wie die anderen 4 Signals
+  filteredToDo = computed(() => {
+    return this.dbService
+      .toDoTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredinProgress = computed(() => {
+    return this.dbService
+      .inProgressTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredAwaitFeedback = computed(() => {
+    return this.dbService
+      .awaitFeedbackTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
+
+  filteredDoneTasks = computed(() => {
+    return this.dbService
+      .doneTasks()
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
+          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
+      );
+  });
 }
