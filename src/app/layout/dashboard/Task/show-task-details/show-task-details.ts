@@ -29,6 +29,7 @@ export class ShowTaskDetails {
 
   subtasks: Subtask[] = [];
   assigned = signal<string[]>([]);
+  private snapshot = '';
 
   selected = input.required<SelectedTask>();
 
@@ -46,10 +47,7 @@ export class ShowTaskDetails {
   private toast = inject(ToastService);
 
   taskDetailForm = this.fb.nonNullable.group({
-    title: [
-      '',
-      [Validators.required, Validators.pattern(/^[A-ZÄÖÜßa-zäöüẞ][a-zäöüẞA-ZÄÖÜß0-9_ -]*$/)],
-    ],
+    title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
     date: ['', Validators.required],
     prio: [''],
@@ -62,7 +60,7 @@ export class ShowTaskDetails {
       return;
     }
     const { title, description, date, prio } = this.taskDetailForm.getRawValue();
-  
+
     const updated: Task = {
       ...this.task(),
       title,
@@ -131,7 +129,26 @@ export class ShowTaskDetails {
     // copy the lists so editing doesn't change the displayed task before saving
     this.subtasks = task.subtasks.map((s) => ({ ...s }));
     this.assigned.set([...task.assigned]);
+    this.snapshot = this.currentState();
     this.isEdit.set(true);
+  }
+
+  /** Serializes the editable fields to compare them with the snapshot. */
+  private currentState(): string {
+    const { title, description, date, prio } = this.taskDetailForm.getRawValue();
+    return JSON.stringify({
+      title,
+      description,
+      date,
+      prio,
+      assigned: this.assigned(),
+      subtasks: this.subtasks,
+    });
+  }
+
+  /** Returns true if any field differs from the state when editing started. */
+  hasChanges(): boolean {
+    return this.currentState() !== this.snapshot;
   }
 
   async toggleSubtask(event: Event, index: number): Promise<void> {

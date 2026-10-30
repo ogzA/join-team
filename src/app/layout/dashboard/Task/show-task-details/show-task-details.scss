@@ -1,4 +1,4 @@
-@use '../../../../../../public/assets/scss/all-styles';
+@use '../../../../../../public/assets/scss/all-styles' as *;
 @use 'sass:color';
 
 $color-category-story: #0038ff;
@@ -8,23 +8,23 @@ $color-category-technical: #1fd7c1;
   position: fixed;
   inset: 0;
   z-index: 10;
-  @include all-styles.flex-center;
+  @include flex-center;
   justify-content: space-between;
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  background-color: all-styles.$color-overlay;
+  background-color: $color-overlay;
   font-family: 'Inter';
   overflow: clip;
 
   .header_modal {
-    @include all-styles.flex-center;
+    @include flex-center;
     width: 100%;
     justify-content: space-between;
   }
 
   &_content {
-    @include all-styles.flex-center;
+    @include flex-center;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
@@ -34,14 +34,14 @@ $color-category-technical: #1fd7c1;
     min-height: 592px;
     max-height: 750px;
     border-radius: 30px;
-    background-color: all-styles.$color-white;
+    background-color: $color-white;
     padding: 40px 40px;
     font-size: 1.2rem;
     overflow: clip;
 
     &_subtask {
       width: 100%;
-      @include all-styles.flex-center;
+      @include flex-center;
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
@@ -87,18 +87,20 @@ $color-category-technical: #1fd7c1;
     }
 
     &__botton-spacing {
-      @include all-styles.flex-center;
+      @include flex-center;
+      flex: 1;
       justify-content: space-between;
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
+      min-height: 0;
       gap: 16px;
       overflow-y: auto;
       scrollbar-width: thin;
     }
 
     &_head {
-      @include all-styles.flex-center;
+      @include flex-center;
       flex-direction: column;
       width: 100%;
       justify-content: space-between;
@@ -106,7 +108,7 @@ $color-category-technical: #1fd7c1;
       gap: 16px;
 
       .header_modal {
-        @include all-styles.flex-center;
+        @include flex-center;
         width: 100%;
         justify-content: space-between;
         margin-bottom: 8px;
@@ -114,7 +116,7 @@ $color-category-technical: #1fd7c1;
     }
 
     &_data {
-      @include all-styles.flex-center;
+      @include flex-center;
       width: 100%;
       justify-content: flex-start;
       gap: 20px;
@@ -122,18 +124,19 @@ $color-category-technical: #1fd7c1;
     }
 
     &_buttons {
-      @include all-styles.flex-center;
+      @include flex-center;
       width: 100%;
+      flex-shrink: 0;
       justify-content: flex-end;
       gap: 15px;
       align-items: center;
       font-size: 1rem;
 
       &_actionBtn {
-        @include all-styles.flex-center;
+        @include flex-center;
         gap: 5px;
         font-size: 1rem;
-        font-family: 'Inter';
+        font-family: inherit;
       }
     }
 
@@ -142,7 +145,7 @@ $color-category-technical: #1fd7c1;
     }
 
     &__assignedPersons {
-      @include all-styles.flex-center;
+      @include flex-center;
       align-items: center;
       width: 100%;
       gap: 16px;
@@ -161,10 +164,10 @@ $color-category-technical: #1fd7c1;
       width: 32px;
       height: 32px;
       margin-left: -8px; // Avatar überlappen sich
-      border: 1px solid all-styles.$color-white;
+      border: 1px solid $color-white;
       border-radius: 50%;
       font-size: 16px;
-      color: all-styles.$color-white;
+      color: $color-white;
 
       &:first-child {
         margin-left: 0;
@@ -178,7 +181,7 @@ $color-category-technical: #1fd7c1;
     padding: 4px 16px;
     border-radius: 8px;
     font-size: 16px;
-    color: all-styles.$color-white;
+    color: $color-white;
   }
 
   &__category--story {
@@ -189,36 +192,35 @@ $color-category-technical: #1fd7c1;
     background-color: $color-category-technical;
   }
 
+  .submitBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: $sidebar-background;
+    color: $color-white;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
   h1 {
     font-size: clamp(20px, calc(13.571px + 1.786vw), 35px);
     margin-bottom: 8px;
   }
 
   form {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 16px;
-      .submitBtnAlign{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-    .submitBtn{  
-      display: flex;
-      align-items: center;
-      justify-content: space-between; 
-      background-color: all-styles.$sidebar-background;
-      padding: 16px;
-      border-radius: 10px;
-      gap: 5px;
-      
-      button{
-        color: all-styles.$color-white;
-        font-size: 1rem;
-      }
-      
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
 
     .priority {
       border: none;
@@ -285,7 +287,7 @@ $color-category-technical: #1fd7c1;
     }
 
     .subtaskLogos {
-      @include all-styles.flex-center;
+      @include flex-center;
       gap: 8px;
       align-items: center;
       position: absolute;
@@ -310,7 +312,7 @@ $color-category-technical: #1fd7c1;
       box-sizing: border-box;
       padding: 15px;
 
-      @media (min-width: all-styles.$breakpoint-mobile) {
+      @media (min-width: $breakpoint-mobile) {
         padding: 0px;
       }
     }
@@ -321,7 +323,7 @@ $color-category-technical: #1fd7c1;
       }
 
       li {
-        @include all-styles.flex-center;
+        @include flex-center;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
@@ -336,7 +338,7 @@ $color-category-technical: #1fd7c1;
           width: 7px;
           height: 7px;
 
-          @media (min-width: all-styles.$breakpoint-mobile) and (max-width: all-styles.$breakpoint-tablet) {
+          @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
             width: 10px;
             height: 7px;
           }
@@ -349,12 +351,12 @@ $color-category-technical: #1fd7c1;
       }
 
       .subtaskListPosition {
-        @include all-styles.flex-center;
+        @include flex-center;
         justify-content: flex-end;
         align-items: center;
         gap: 8px;
 
-        @media (min-width: all-styles.$breakpoint-mobile) and (max-width: all-styles.$breakpoint-tablet) {
+        @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
           gap: 0px;
         }
 
@@ -366,7 +368,7 @@ $color-category-technical: #1fd7c1;
         }
       }
 
-      @media screen and (min-width: all-styles.$breakpoint-xsmall-device) and (max-width: all-styles.$breakpoint-tablet) {
+      @media screen and (min-width: $breakpoint-xsmall-device) and (max-width: $breakpoint-tablet) {
         .subtaskListPosition {
           .imgEdit,
           .dividerSubtask,
@@ -377,7 +379,7 @@ $color-category-technical: #1fd7c1;
       }
 
       li:hover {
-        @include all-styles.flex-center;
+        @include flex-center;
         justify-content: flex-end;
         align-items: center;
         gap: 8px;
@@ -391,7 +393,7 @@ $color-category-technical: #1fd7c1;
       }
 
       &_inputField {
-        @include all-styles.flex-center;
+        @include flex-center;
         justify-content: space-between;
         gap: 8px;
         width: 100%;
@@ -403,7 +405,7 @@ $color-category-technical: #1fd7c1;
           border-bottom: 1px solid #124658 !important;
         }
 
-        @media (min-width: all-styles.$breakpoint-mobile) and (max-width: all-styles.$breakpoint-tablet) {
+        @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
           gap: 0px;
         }
       }
@@ -424,15 +426,15 @@ $color-category-technical: #1fd7c1;
       font-family: 'Inter';
       width: 100%;
       padding: 10px 12px;
-      border: 1px solid all-styles.$color-input-border;
+      border: 1px solid $color-input-border;
       border-radius: 8px;
       font-size: 1.25rem;
       box-sizing: border-box;
-      color: all-styles.$color-input-border;
+      color: $color-input-border;
     }
 
     input:focus {
-      border: 1px solid all-styles.$color-input-focus;
+      border: 1px solid $color-input-focus;
     }
 
     textarea {
