@@ -1,0 +1,198 @@
+<div class="modal" [class.modal--closing]="isClosing()">
+    <div class="modal_content" (click)="$event.stopPropagation()">
+        <div class="header_modal">
+            @if (!this.isEdit()) {
+            <span class="modal__category" [class.modal__category--story]="task().category === 'User Story'"
+                [class.modal__category--technical]="task().category === 'Technical Task'">
+                {{ task().category | titlecase }}
+            </span>
+            } @else {
+            <span></span>
+            }
+            <button type="button" aria-label="Close" (click)="closeDialog()">
+                <img src="assets/icons/close_subtask.svg" alt="close_logo" />
+            </button>
+        </div>
+        <div  class="modal_content__botton-spacing" [class.modal_content__botton-spacing--edit]="isEdit()">
+            <div class="modal_content_head">
+                @if (!this.isEdit()) {
+                <h1>{{ task().title }}</h1>
+                <p>{{ task().description }}</p>
+                <div class="modal_content_data">
+                    <p>Due date:</p>
+                    <p>{{ task().date | date:'dd/MM/yyyy' }}</p>
+                </div>
+                <div class="modal_content_data">
+                    <p>Priority:</p>
+                    <p>{{ task().prio | titlecase }}</p>
+                    @if (task().prio == 'Low') {
+                    <img [src]="priorityLogos.low" alt="low_priority_logo" />
+                    } @else if (task().prio == 'Medium') {
+                    <img [src]="priorityLogos.medium" alt="medium_priority_logo" />
+                    } @else {
+                    <img [src]="priorityLogos.urgent" alt="urgent_priority_logo" />
+                    }
+                </div>
+                <div class="modal_content_dropdown">
+                    <label for="assignedTo">Assigned to</label>
+                    @for (name of task().assigned; track $index) {
+                    @let avatar = nlService.setNameLogo(name);
+                    <div class="modal_content__assignedPersons">
+                        <span class="modal_content__avatar" [style.background-color]="avatar.color"
+                            [style.color]="avatar.textColor">
+                            {{ avatar.name }}
+                        </span>
+                        <p>{{ name | titlecase }}</p>
+                    </div>
+                    }
+                </div>
+                <div>
+                    <p>Subtasks</p>
+                    <div class="modal_content_subtask">
+                        @for (subtask of task().subtasks; track $index) {
+                        <label class="subtask-item">
+                            <input type="checkbox" [checked]="subtask.done" (change)="toggleSubtask($event, $index)" />
+                            <span class="checkbox-image" aria-hidden="true"></span>
+                            <span class="subtask-title">{{ subtask.task }}</span>
+                        </label>
+                        }
+                    </div>
+                </div>
+                }
+                <!-- Edit form start here -->
+                @else if (this.isEdit()) {
+                <form class="taskForm" [formGroup]="taskDetailForm" (ngSubmit)="onSubmit()">
+                    <!-- <div class="taskForm__scroll"> -->
+                    <div class="field">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" formControlName="title" />
+                    </div>
+
+                    <div class="field">
+                        <label for="description">Description</label>
+                        <textarea id="description" value="description" formControlName="description"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="date">Due date</label>
+                        <input type="date" [min]="todaysDate" id="date" formControlName="date"  />
+                    </div>
+
+                    <fieldset class="priority">
+                        <legend>Priority</legend>
+
+                        <input type="radio" id="urgent" value="Urgent" formControlName="prio" />
+                        <label for="urgent" class="priority-btn urgent">Urgent <img src="assets/icons/urgent.svg"
+                                alt="urgent_logo" /></label>
+
+                        <input type="radio" id="medium" value="Medium" formControlName="prio" />
+                        <label for="medium" class="priority-btn medium">Medium <img src="assets/icons/medium.svg"
+                                alt="medium_logo" />
+                        </label>
+
+                        <input type="radio" id="low" value="Low" formControlName="prio" />
+                        <label for="low" class="priority-btn low">Low <img src="assets/icons/low.svg"
+                                alt="low_logo" /></label>
+                    </fieldset>
+
+                    <div class="field">
+                        <label>Assigned to</label>
+                        <app-assigned-to-dropdown [(assigned)]="assigned" />
+                    </div>
+
+                    <div>
+                        <div class="field">
+                            <label for="subtask">Subtasks</label>
+                            <div class="subtaskInputWrapper">
+                                <input id="subtask" type="text" class="icon_padding" formControlName="subtasks"
+                                    (keyup)="showAddSubTask()" (keydown.enter)="addSubtask(); $event.preventDefault()"
+                                    placeholder="Add new subtask" />
+                                @if (subtaskInfo) {
+                                <div class="subtaskLogos">
+                                    <button (click)="closeSubtask()" type="button">
+                                        <img src="/assets/icons/close_subtask.svg" alt="close_subtask_logo" />
+                                    </button>
+                                    <span><img src="assets/icons/subtask_divider.svg"
+                                            alt="subtask_divider_logo" /></span>
+                                    <button (click)="addSubtask()" type="button">
+                                        <img src="/assets/icons/add_sub_task.svg" alt="add_subtask_logo" />
+                                    </button>
+                                </div>
+                                }
+                                @if (subtasks.length > 0) {
+                                <div class="upperDivUl">
+                                    <ul class="subtaskList">
+                                        @for (task of subtasks; track $index) {
+                                        <li>
+                                            @if (editingIndex === $index) {
+                                            <div class="subtaskList_inputField">
+                                                <input type="text" [value]="editedTask"
+                                                    (input)="editedTask = $any($event.target).value"
+                                                    aria-label="Edit subtask" (keydown.enter)="
+                                    confirmEditedTask($index); $event.preventDefault()
+                                  " />
+
+                                                <button type="button" (click)="deleteEditTask()"
+                                                    aria-label="Discard changes">
+                                                    <img src="assets/icons/subtask_delete.svg" alt="delete_button" />
+                                                </button>
+                                                <span><img src="assets/icons/subtask_divider.svg"
+                                                        alt="subtask_divider_logo" /></span>
+                                                <button type="button" (click)="confirmEditedTask($index)"
+                                                    aria-label="Save changes">
+                                                    <img src="assets/icons/add_sub_task.svg" alt="add_subtask_button" />
+                                                </button>
+                                            </div>
+                                            } @else {
+                                            <span class="bulletDot"></span>
+                                            <p (dblclick)="subtaskEdit($index)">{{ task.task }}</p>
+                                            <div class="subtaskListPosition">
+                                                <button type="button" (click)="subtaskEdit($index)"
+                                                    aria-label="Edit subtask">
+                                                    <img class="imgEdit" src="assets/icons/subtask_edit.svg"
+                                                        alt="edit_icon" />
+                                                </button>
+                                                <span><img class="dividerSubtask" src="assets/icons/subtask_divider.svg"
+                                                        alt="divider" /></span>
+                                                <button type="button" (click)="deleteSubTask($index)"
+                                                    aria-label="Delete subtask">
+                                                    <img class="imgDelete" src="assets/icons/subtask_delete.svg"
+                                                        alt="delete_icon" />
+                                                </button>
+                                            </div>
+                                            }
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                    <div class="submitBtnAlign">
+                        <div></div>
+                        <div class="submitBtn">
+                            <button type="submit">Ok</button>
+                            <img src="assets/icons/check.svg" alt="check_logo" />
+                        </div>
+                    </div>
+                </form>
+                }
+            </div>
+        </div>
+        @if (!this.isEdit()) {
+        <div class="modal_content_buttons">
+            <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
+                <img src="assets/icons/delete-btn.png" alt="delete_icon" />
+                <span>Delete</span>
+            </button>
+            <img src="assets/icons/subtask_divider.svg" alt="divider" />
+            <button class="modal_content_buttons_actionBtn" (click)="editTask()">
+                <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
+                <span>Edit</span>
+            </button>
+        </div>
+        }
+    </div>
+</div>

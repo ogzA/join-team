@@ -137,3 +137,10 @@
     }
   </div>
 </section>
+
+@if (selectedTask(); as selected) {
+  <app-show-task-details
+    [selected]="selected"
+    (close)="closeTaskDetails()">
+  </app-show-task-details>
+}

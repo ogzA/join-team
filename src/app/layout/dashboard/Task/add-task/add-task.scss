@@ -223,7 +223,6 @@
         }
       }
     }
-
     label,
     legend {
       display: block;
@@ -294,7 +293,7 @@
       }
 
       .clearBtn:hover {
-        border: 2px solid $hover-button-Form;
+        border: 1px solid $hover-button-Form;
         color: $hover-button-Form;
         box-shadow: $shadow-button;
       }
