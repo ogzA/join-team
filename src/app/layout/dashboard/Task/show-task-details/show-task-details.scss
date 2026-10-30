@@ -16,6 +16,12 @@ $color-category-technical: #1fd7c1;
   background-color: $color-overlay;
   font-family: 'Inter';
   overflow: clip;
+  padding: 16px;
+  box-sizing: border-box;
+
+  @media (max-width: $breakpoint-small-devices) {
+    padding: 8px;
+  }
 
   .header_modal {
     @include flex-center;
@@ -31,13 +37,23 @@ $color-category-technical: #1fd7c1;
     position: relative;
     width: 100%;
     max-width: 525px;
-    min-height: 592px;
-    max-height: 750px;
+    min-height: min(592px, calc(100dvh - 32px));
+    max-height: min(750px, calc(100dvh - 32px));
     border-radius: 30px;
     background-color: $color-white;
     padding: 48px 40px;
     font-size: 1.2rem;
     overflow: clip;
+    box-sizing: border-box;
+
+    @media (max-width: $breakpoint-mobile) {
+        padding: 32px 24px;
+        font-size: 16px;
+    }
+
+    @media (max-width: $breakpoint-small-devices) {
+        padding: 24px 16px;
+    }
 
     &_subtask {
       width: 100%;
@@ -214,6 +230,10 @@ $color-category-technical: #1fd7c1;
   h1 {
     font-size: clamp(20px, calc(13.571px + 1.786vw), 35px);
     margin-bottom: 8px;
+
+    @media (max-width: $breakpoint-mobile) {
+        font-size: 36px;
+    }
   }
 
   form {
@@ -226,6 +246,12 @@ $color-category-technical: #1fd7c1;
       border: none;
       padding: 0;
       margin: 0 0 16px;
+
+      @media (max-width: $breakpoint-mobile) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
     }
 
     .priority input {
@@ -239,6 +265,14 @@ $color-category-technical: #1fd7c1;
       border-radius: 8px;
       cursor: pointer;
       box-shadow: 0px 0px 4px 0px #00000066;
+
+      @media (max-width: $breakpoint-mobile) {
+        flex: 1;
+        margin: 0;
+        padding: 10px 8px;
+        text-align: center;
+        white-space: nowrap;
+      }
     }
 
     .priority-btn:hover {
@@ -417,6 +451,10 @@ $color-category-technical: #1fd7c1;
       margin-bottom: 4px;
       font-size: 1.25rem;
       color: #2a3647;
+
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 16px;
+      }
     }
 
     input[type='text'],
@@ -431,6 +469,10 @@ $color-category-technical: #1fd7c1;
       font-size: 1.25rem;
       box-sizing: border-box;
       color: $color-input-text;
+
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 16px;
+      }
 
       &::placeholder {
         color: $color-input-border;
