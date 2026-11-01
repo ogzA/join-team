@@ -61,7 +61,10 @@
 
         <div class="field">
           <label for="assignedTo">Assigned to</label>
-          <app-assigned-to-dropdown [(assigned)]="assigned" />
+          <app-assigned-to-dropdown
+            [(assigned)]="assigned"
+            [popupMaxHeight]="inDialog() ? '150px' : '250px'"
+          />
         </div>
 
         <div class="field">

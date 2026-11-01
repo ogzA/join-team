@@ -9,6 +9,7 @@ import {
   signal,
   viewChild,
   model,
+  input,
 } from '@angular/core';
 import { Supabase } from '../services/supabase';
 import { NameLogo } from '../services/name-logo';
@@ -29,6 +30,9 @@ export class AssignedToDropdown {
   readonly contacts = this.dbService.contacts;
   /** The names of the selected contacts. */
   readonly assigned = model<string[]>([]);
+
+  // Dropdown height
+  readonly popupMaxHeight = input('250px');
 
   /** The string that is displayed in the combobox. */
   readonly displayValue = computed(() => {

@@ -35,7 +35,7 @@
   [cdkConnectedOverlayOpen]="popupExpanded()"
 >
   <ng-template ngComboboxPopup [combobox]="combobox">
-    <div class="example-popup-container">
+    <div class="example-popup-container" [style.--popup-max-height]="popupMaxHeight()">
       <div
         #listbox="ngListbox"
         ngListbox
