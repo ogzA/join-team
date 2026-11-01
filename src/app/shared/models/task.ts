@@ -10,7 +10,7 @@ export type TaskCategory = 'User Story' | 'Technical Task';
 // Allowed priorities
 export type TaskPrio = 'Urgent' | 'Medium' | 'Low';
 
-export type TaskStatus = 'to do' | 'in progress' | 'await feedback';
+export type TaskStatus = 'to do' | 'in progress' | 'await feedback' | 'done';
 
 // A task, as it is stored in Supabase in `taskjson` format
 export interface Task {

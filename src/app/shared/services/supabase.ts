@@ -1,6 +1,6 @@
 import { computed, Service, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
-import { Task } from '../models/task';
+import { Task, TaskStatus } from '../models/task';
 
 interface Contact {
   name: string;
@@ -176,6 +176,18 @@ export class Supabase {
   addTaskToDo(object: Task) {
     this.toDoTasks().push(object); // Speichern ins Signal
     this.setTasks(this.toDoTasks(), 1); // Speichern in Supabase Tabelle
+  }
+
+  async addTask(object: Task, status: TaskStatus) {
+    console.log('3. service addTask:', status);
+    switch (status) {
+      case 'to do':
+        return this.setTasks([...this.toDoTasks(), object], 1);
+      case 'in progress':
+        return this.setTasks([...this.inProgressTasks(), object], 2);
+      case 'await feedback':
+        return this.setTasks([...this.awaitFeedbackTasks(), object], 3);
+    }
   }
 
   addTaskInProgress(object: Task) {

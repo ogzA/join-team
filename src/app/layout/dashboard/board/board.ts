@@ -9,11 +9,11 @@ import {
   CdkDropListGroup,
   DropListOrientation,
   moveItemInArray,
-  transferArrayItem
+  transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { NameLogo } from '../../../shared/services/name-logo';
 import { Supabase } from '../../../shared/services/supabase';
-import { SelectedTask, Task } from '../../../shared/models/task';
+import { SelectedTask, Task, TaskStatus } from '../../../shared/models/task';
 import { ShowTaskDetails } from '../Task/show-task-details/show-task-details';
 
 // Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
@@ -31,7 +31,7 @@ interface BoardRow {
 // Eine Spalte im Board: Status, Anzeigename und ihre Tasks
 // Das Array bleibt bestehen, damit Drag & Drop Tasks darin verschieben kann
 interface BoardColumn {
-  status: string;
+  status: TaskStatus;
   label: string;
   // Supabase-Zeile dieser Spalte (1 = to do ... 4 = done)
   rowId: number;
@@ -200,7 +200,7 @@ export class Board implements OnInit {
 
   // Baut eine Spalte aus den Tasks eines Service-Signals.
   // Fehlende assigned/subtasks (ältere Daten) werden mit [] aufgefüllt.
-  private buildColumn(status: string, rowId: number, tasks: Task[]): BoardColumn {
+  private buildColumn(status: TaskStatus, rowId: number, tasks: Task[]): BoardColumn {
     return {
       status,
       label: this.columnLabels[status],
@@ -228,8 +228,8 @@ export class Board implements OnInit {
   }
 
   protected closeTaskDetails(): void {
-      this.selectedTask.set(null);
-    }
+    this.selectedTask.set(null);
+  }
 
   // Verschiebt einen Task nach dem Loslassen
   protected dropTask(event: CdkDragDrop<BoardColumn>): void {
@@ -313,11 +313,16 @@ export class Board implements OnInit {
   // Add Task Dialog
   isAddTaskOpen = signal(false);
 
-  openAddTask() {
+  protected openAddTask(status: TaskStatus = 'to do') {
+    console.log('1. openAddTask:', status);
+    this.addTaskStatus.set(status);
     this.isAddTaskOpen.set(true);
   }
 
   closeAddTask() {
     this.isAddTaskOpen.set(false);
   }
+
+  // Task Status
+  protected addTaskStatus = signal<TaskStatus>('to do');
 }

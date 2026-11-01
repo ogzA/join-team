@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
-import { TaskCategory, TaskPrio } from '../../../../shared/models/task';
+import { TaskCategory, TaskPrio, TaskStatus } from '../../../../shared/models/task';
 
 interface SUBTASK {
   task: string;
@@ -57,7 +57,8 @@ export class AddTask {
         category: formValue.category as TaskCategory,
         subtasks: [...this.subtasks],
       };
-      await this.dbService.addTaskToDo(taskData);
+      console.log('2. AddTask status:', this.status());
+      await this.dbService.addTask(taskData, this.status());
       this.toast.success('Task added to board');
       this.resetForm();
       this.closed.emit();
@@ -131,6 +132,7 @@ export class AddTask {
 
   // Board Add Task Dialog
   inDialog = input(false);
+  status = input<TaskStatus>('to do');
   closed = output<void>();
 
   // Board Add Task Dialog
