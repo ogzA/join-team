@@ -17,10 +17,9 @@
       <span
         class="assigned-avatar"
         [style.background-color]="avatar.color"
-        // Beim Integrieren in Board aktivieren
-        /*  [style.color]="avatar.TextColor" */
-        >{{ avatar.name }}</span
-      >
+        [style.color]="avatar.textColor"
+        >{{ avatar.name }}
+      </span>
     }
     @if (assigned().length > maxAvatars) {
       <span class="assigned-avatar assigned-avatar-more">
@@ -53,8 +52,7 @@
             <span
               class="assigned-avatar"
               [style.background-color]="avatar.color"
-              // Beim Integrieren in Board aktivieren
-              /*  [style.color]="avatar.TextColor" */
+              [style.color]="avatar.textColor"
               >{{ avatar.name }}</span
             >
             <span class="example-option-text">{{ contact.name }}</span>
