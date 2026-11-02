@@ -38,7 +38,7 @@
               class="board__column-button"
               type="button"
               [attr.aria-label]="'Add task to ' + column.label"
-              (click)="openAddTask()"
+              (click)="openAddTask(column.status)"
             >
               <img class="board__column-add" src="assets/icons/add-column.svg" alt="" />
               <img
@@ -147,7 +147,7 @@
           <img src="assets/icons/close-dialog.svg" alt="" />
         </button>
       </div>
-      <app-add-task [inDialog]="true" (closed)="closeAddTask()" />
+      <app-add-task [inDialog]="true" [status]="addTaskStatus()" (closed)="closeAddTask()" />
     </div>
   </div>
 }
