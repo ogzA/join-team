@@ -30,12 +30,14 @@ $color-category-technical: #1fd7c1;
     gap: 16px;
     position: relative;
     width: 100%;
-    max-width: 525px;
+    // max-width: 525px;
+    max-width: clamp(290px, calc(222.857px + 20.982vw), 525px);
     min-height: 592px;
     max-height: 750px;
     border-radius: 30px;
     background-color: all-styles.$color-white;
-    padding: 40px 40px;
+    // padding: 40px 40px;
+    padding: clamp(32px, calc(29.714px + 0.714vw), 40px) clamp(24px, calc(17.143px + 2.143vw), 48px);
     font-size: 1.2rem;
     overflow: clip;
 
@@ -171,6 +173,7 @@ $color-category-technical: #1fd7c1;
         padding: 20px;
       }
     }
+  
   }
 
   &__category {
