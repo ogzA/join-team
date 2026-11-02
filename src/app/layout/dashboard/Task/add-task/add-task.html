@@ -70,9 +70,9 @@
         <div class="field">
           <label for="category">Category<span class="required">*</span></label>
           <select id="category" formControlName="category">
-            <option value="" disabled selected>Select task category</option>
-            <option value="Technical Task">Technical Task</option>
-            <option value="User Story">User Story</option>
+            <option selected hidden class="options" value="">Select Task Category</option>
+            <option class="options" value="Technical Task">Technical Task</option>
+            <option class="options" value="User Story">User Story</option>
           </select>
           @if (taskForm.controls['category'].touched) {
             @if (taskForm.controls['category'].errors?.['required']) {

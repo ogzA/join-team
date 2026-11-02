@@ -321,6 +321,11 @@
     .required {
       color: #ff8190;
     }
+
+    #category,
+    .options {
+      color: $color-input-text;
+    }
   }
 }
 
