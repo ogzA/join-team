@@ -74,7 +74,12 @@
         }
         <!-- Edit form start here -->
         @else if (this.isEdit()) {
-          <form class="taskForm" [formGroup]="taskDetailForm" (ngSubmit)="onSubmit()">
+          <form
+            id="taskDetailForm"
+            class="taskForm"
+            [formGroup]="taskDetailForm"
+            (ngSubmit)="onSubmit()"
+          >
             <!-- <div class="taskForm__scroll"> -->
             <div class="field">
               <label for="title">Title</label>
@@ -227,30 +232,27 @@
                 </div>
               </div>
             </div>
-            <!-- </div> -->
-            <div class="submitBtnAlign">
-              <div></div>
-              <div class="submitBtn">
-                <button type="submit">Ok</button>
-                <img src="assets/icons/check.svg" alt="check_logo" />
-              </div>
-            </div>
           </form>
         }
       </div>
     </div>
-    @if (!this.isEdit()) {
-      <div class="modal_content_buttons">
+    <div class="modal_content_buttons">
+      @if (!this.isEdit()) {
         <button class="modal_content_buttons_actionBtn" (click)="deleteTask()">
-          <img src="assets/icons/delete-btn.png" alt="delete_icon" />
+          <img src="assets/icons/delete-btn.png" alt="" />
           <span>Delete</span>
         </button>
-        <img src="assets/icons/subtask_divider.svg" alt="divider" />
+        <img src="assets/icons/subtask_divider.svg" alt="" />
         <button class="modal_content_buttons_actionBtn" (click)="editTask()">
-          <img src="assets/icons/subtask_edit.svg" alt="edit_icon" />
+          <img src="assets/icons/subtask_edit.svg" alt="" />
           <span>Edit</span>
         </button>
-      </div>
-    }
+      } @else {
+        <button type="submit" form="taskDetailForm" class="submitBtn" [disabled]="!hasChanges()">
+          Ok
+          <img src="assets/icons/check.svg" alt="" />
+        </button>
+      }
+    </div>
   </div>
 </div>
