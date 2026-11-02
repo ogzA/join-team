@@ -67,9 +67,11 @@
               tabindex="0"
               role="button"
               [attr.aria-label]="'Open task ' + task.title"
-              (click)="openTask(task, column.rowId, $index)"
-              (keydown.enter)="openTask(task, column.rowId, $index)"
-              (keydown.space)="openTask(task, column.rowId, $index); $event.preventDefault()"
+              (click)="openTask(task, column.rowId, column.positions[$index])"
+              (keydown.enter)="openTask(task, column.rowId, column.positions[$index])"
+              (keydown.space)="
+                openTask(task, column.rowId, column.positions[$index]); $event.preventDefault()
+              "
             >
               <!-- Kategorie: Modifier-Klasse steuert Farben -->
               <span

@@ -36,6 +36,7 @@ interface BoardColumn {
   // Supabase-Zeile dieser Spalte (1 = to do ... 4 = done)
   rowId: number;
   tasks: Task[];
+  positions: number[];
 }
 
 const DUMMY_ROWS: BoardRow[] = [
@@ -175,13 +176,12 @@ export class Board implements OnInit {
 
   // Spalten fürs Board aus den vier Service-Signals
   // Wird automatisch neu gebaut, sobald getTasks() neue Daten liefert
-  // Muss nach columnLabels stehen, weil buildColumn() die Labels nutzt
-  // 4 Signals vom DB Service durch die Filter ersetzt - this.dbService.toDoTasks() => this.filteredToDo()
+  // Volle Service-Listen, gefiltert wird in buildColumn()
   protected columns = computed<BoardColumn[]>(() => [
-    this.buildColumn('to do', 1, this.filteredToDo()),
-    this.buildColumn('in progress', 2, this.filteredinProgress()),
-    this.buildColumn('await feedback', 3, this.filteredAwaitFeedback()),
-    this.buildColumn('done', 4, this.filteredDoneTasks()),
+    this.buildColumn('to do', 1, this.dbService.toDoTasks()),
+    this.buildColumn('in progress', 2, this.dbService.inProgressTasks()),
+    this.buildColumn('await feedback', 3, this.dbService.awaitFeedbackTasks()),
+    this.buildColumn('done', 4, this.dbService.doneTasks()),
   ]);
 
   // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
@@ -198,19 +198,32 @@ export class Board implements OnInit {
     elemRef?.focus();
   }
 
-  // Baut eine Spalte aus den Tasks eines Service-Signals.
-  // Fehlende assigned/subtasks (ältere Daten) werden mit [] aufgefüllt.
-  private buildColumn(status: TaskStatus, rowId: number, tasks: Task[]): BoardColumn {
+  // Baut eine Spalte und merkt sich vor dem Filtern die Original-Position jedes Tasks
+  private buildColumn(status: TaskStatus, rowId: number, allTasks: Task[]): BoardColumn {
+    const visible = allTasks
+      .map((task, position) => ({ task, position }))
+      .filter(({ task }) => this.matchesSearch(task));
     return {
       status,
       label: this.columnLabels[status],
       rowId,
-      tasks: tasks.map((task) => ({
-        ...task,
-        assigned: task.assigned ?? [],
-        subtasks: task.subtasks ?? [],
-      })),
+      tasks: visible.map(({ task }) => this.normalizeTask(task)),
+      positions: visible.map(({ position }) => position),
     };
+  }
+
+  // true, wenn Titel oder Beschreibung den Suchbegriff enthalten
+  private matchesSearch(task: Task): boolean {
+    const term = this.lowerCaseSearchTerm();
+    return (
+      task.title.toLowerCase().includes(term) ||
+      (task.description ?? '').toLowerCase().includes(term)
+    );
+  }
+
+  // Fehlende assigned/subtasks (ältere Daten) mit [] auffüllen
+  private normalizeTask(task: Task): Task {
+    return { ...task, assigned: task.assigned ?? [], subtasks: task.subtasks ?? [] };
   }
 
   // Subtasks erledigt zählen
@@ -244,7 +257,7 @@ export class Board implements OnInit {
     }
   }
 
-  // Suche: Eingabe im Header, Filterung durch die Signals, Einbindung oben in columns
+  // Suche: Eingabe im Header, Filterung in buildColumn() über matchesSearch()
   searchTerm = signal('');
   lowerCaseSearchTerm = signal('');
   protected isSearching = computed(() => this.lowerCaseSearchTerm().length > 0);
@@ -255,12 +268,7 @@ export class Board implements OnInit {
     this.searchTerm.set('');
     const elemRef = document.getElementById(`seachInput`);
 
-    if (
-      this.filteredToDo().length == 0 &&
-      this.filteredinProgress().length == 0 &&
-      this.filteredAwaitFeedback().length == 0 &&
-      this.filteredDoneTasks().length == 0
-    ) {
+    if (this.columns().every((column) => column.tasks.length === 0)) {
       this.searchPlaceHolder.set('Nothing found...'); // Platzhalter Text wenn nix gefunden
       elemRef?.classList.add('red-placeholder'); // Zusätzliche Klasse für die rote Farbe
     } else {
@@ -269,52 +277,10 @@ export class Board implements OnInit {
     }
   }
 
-  // Search Filter Signals, ohne Änderung wie die anderen 4 Signals
-  filteredToDo = computed(() => {
-    return this.dbService
-      .toDoTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
-
-  filteredinProgress = computed(() => {
-    return this.dbService
-      .inProgressTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
-
-  filteredAwaitFeedback = computed(() => {
-    return this.dbService
-      .awaitFeedbackTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
-
-  filteredDoneTasks = computed(() => {
-    return this.dbService
-      .doneTasks()
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(this.lowerCaseSearchTerm()) ||
-          item.description.toLowerCase().includes(this.lowerCaseSearchTerm()),
-      );
-  });
-
   // Add Task Dialog
   isAddTaskOpen = signal(false);
 
   protected openAddTask(status: TaskStatus = 'to do') {
-    console.log('1. openAddTask:', status);
     this.addTaskStatus.set(status);
     this.isAddTaskOpen.set(true);
   }
