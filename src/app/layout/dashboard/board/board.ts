@@ -146,7 +146,7 @@ const DUMMY_ROWS: BoardRow[] = [
   styleUrl: './board.scss',
   templateUrl: './board.html',
   host: {
-    '(document:keydown.escape)': 'closeAddTask()',
+    '(document:keydown.escape)': 'onEscape()',
   },
 })
 export class Board implements OnInit {
@@ -188,6 +188,8 @@ export class Board implements OnInit {
   protected maxAvatars = 3;
   // Angeklickter Task samt Spalte und Position, null = kein Dialog offen
   protected selectedTask = signal<SelectedTask | null>(null);
+  // Offenes Verschieben-Menü (mobile): Spalte und Index der Karte, null = zu
+  protected moveMenu = signal<{ rowId: number; index: number } | null>(null);
 
   // Lädt beim Öffnen des Boards die Tasks aller Spalten aus Supabase
   ngOnInit(): void {
@@ -244,6 +246,29 @@ export class Board implements OnInit {
     this.selectedTask.set(null);
   }
 
+  /** Opens the mobile move menu for the task at the given index. */
+  protected openMoveMenu(rowId: number, index: number): void {
+    this.moveMenu.set({ rowId, index });
+  }
+
+  /** Closes the mobile move menu. */
+  protected closeMoveMenu(): void {
+    this.moveMenu.set(null);
+  }
+
+  /** Returns true if the open move menu belongs to this task. */
+  protected isMoveMenuOpen(rowId: number, index: number): boolean {
+    const menu = this.moveMenu();
+    return menu?.rowId === rowId && menu.index === index;
+  }
+
+  /** Moves a task to the end of another column, same as dropping it there. */
+  protected moveTaskTo(from: BoardColumn, index: number, to: BoardColumn): void {
+    transferArrayItem(from.tasks, to.tasks, index, to.tasks.length);
+    this.closeMoveMenu();
+    this.dbService.moveTask(from.tasks, from.rowId, to.tasks, to.rowId);
+  }
+
   // Verschiebt einen Task nach dem Loslassen
   protected dropTask(event: CdkDragDrop<BoardColumn>): void {
     const from = event.previousContainer.data;
@@ -287,6 +312,12 @@ export class Board implements OnInit {
 
   closeAddTask() {
     this.isAddTaskOpen.set(false);
+  }
+
+  /** Closes the open move menu and the add task dialog on Escape. */
+  protected onEscape(): void {
+    this.closeMoveMenu();
+    this.closeAddTask();
   }
 
   // Task Status
