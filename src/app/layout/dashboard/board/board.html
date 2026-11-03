@@ -63,6 +63,8 @@
             <article
               cdkDrag
               [cdkDragStartDelay]="{ touch: 500, mouse: 0 }"
+              [cdkDragDisabled]="moveMenu() !== null"
+              [class.task-card--menu-open]="isMoveMenuOpen(column.rowId, $index)"
               class="task-card"
               tabindex="0"
               role="button"
@@ -74,13 +76,63 @@
               "
             >
               <!-- Kategorie: Modifier-Klasse steuert Farben -->
-              <span
-                class="task-card__category"
-                [class.task-card__category--story]="task.category === 'User Story'"
-                [class.task-card__category--technical]="task.category === 'Technical Task'"
-              >
-                {{ task.category }}
-              </span>
+              <div class="task-card__top">
+                <span
+                  class="task-card__category"
+                  [class.task-card__category--story]="task.category === 'User Story'"
+                  [class.task-card__category--technical]="task.category === 'Technical Task'"
+                >
+                  {{ task.category }}
+                </span>
+                @if (!isSearching()) {
+                  <!-- Nur Mobile (SCSS), nicht während der Suche (wie Drag & Drop) -->
+                  <button
+                    class="task-card__move-button"
+                    type="button"
+                    aria-label="Move task"
+                    (click)="openMoveMenu(column.rowId, $index); $event.stopPropagation()"
+                    (keydown.enter)="$event.stopPropagation()"
+                    (keydown.space)="$event.stopPropagation()"
+                  >
+                    <img src="assets/icons/move-task.svg" alt="" />
+                  </button>
+                }
+              </div>
+
+              @let cardIndex = $index;
+              @if (isMoveMenuOpen(column.rowId, cardIndex)) {
+                <div
+                  class="task-card__move-menu"
+                  role="menu"
+                  (click)="$event.stopPropagation()"
+                  (keydown.enter)="$event.stopPropagation()"
+                  (keydown.space)="$event.stopPropagation()"
+                >
+                  <span class="task-card__move-title">Move to</span>
+                  <div class="task-card__move-options">
+                    @for (target of columns(); track target.rowId) {
+                      @if (target.rowId !== column.rowId) {
+                        <button
+                          class="task-card__move-option"
+                          type="button"
+                          role="menuitem"
+                          (click)="moveTaskTo(column, cardIndex, target)"
+                        >
+                          <img
+                            [src]="
+                              target.rowId < column.rowId
+                                ? 'assets/icons/arrow-upward.svg'
+                                : 'assets/icons/arrow-downward.svg'
+                            "
+                            alt=""
+                          />
+                          {{ target.label }}
+                        </button>
+                      }
+                    }
+                  </div>
+                </div>
+              }
               <div class="task-card__text">
                 <h3 class="task-card__title">{{ task.title }}</h3>
                 <p class="task-card__description">{{ task.description }}</p>
@@ -140,6 +192,10 @@
     }
   </div>
 </section>
+
+@if (moveMenu()) {
+  <div class="move-menu-backdrop" (click)="closeMoveMenu()"></div>
+}
 
 @if (isAddTaskOpen()) {
   <div class="dialog-backdrop" animate.leave="dialog-closing" (click)="closeAddTask()">
