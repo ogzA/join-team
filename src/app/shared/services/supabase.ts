@@ -179,7 +179,7 @@ export class Supabase {
   }
 
   async addTask(object: Task, status: TaskStatus) {
-    console.log('3. service addTask:', status);
+    // console.log('3. service addTask:', status);
     switch (status) {
       case 'to do':
         return this.setTasks([...this.toDoTasks(), object], 1);
@@ -212,7 +212,7 @@ export class Supabase {
       data[index] = object;
       this.setTasks(data, rowID);
     } else {
-      console.log('Keine Daten zum bearbeiten gefunden...');
+      // console.log('Keine Daten zum bearbeiten gefunden...');
     }
   }
 
@@ -230,28 +230,36 @@ export class Supabase {
     if (this.toDoTasks().length > index) {
       this.toDoTasks().splice(index, 1);
       this.setTasks(this.toDoTasks(), 1);
-    } else console.log('ToDo Index', index, 'nicht gefunden...');
+    } else {
+      // console.log('ToDo Index', index, 'nicht gefunden...');
+    }
   }
 
   deleteTaskInProgress(index: number) {
     if (this.inProgressTasks().length > index) {
       this.inProgressTasks().splice(index, 1);
       this.setTasks(this.inProgressTasks(), 2);
-    } else console.log('InProgress Index', index, 'nicht gefunden...');
+    } else {
+      // console.log('InProgress Index', index, 'nicht gefunden...');
+    }
   }
 
   deleteTaskAwaitFeedback(index: number) {
     if (this.awaitFeedbackTasks().length > index) {
       this.awaitFeedbackTasks().splice(index, 1);
       this.setTasks(this.awaitFeedbackTasks(), 3);
-    } else console.log('AwaitFeedback Index', index, 'nicht gefunden...');
+    } else {
+      // console.log('AwaitFeedback Index', index, 'nicht gefunden...');
+    }
   }
 
   deleteTaskDoneTasks(index: number) {
     if (this.doneTasks().length > index) {
       this.doneTasks().splice(index, 1);
       this.setTasks(this.doneTasks(), 4);
-    } else console.log('DoneTasks Index', index, 'nicht gefunden...');
+    } else {
+      // console.log('DoneTasks Index', index, 'nicht gefunden...');
+    }
   }
 
   // Task Tests Ende

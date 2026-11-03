@@ -314,7 +314,7 @@ export class Board implements OnInit {
   isAddTaskOpen = signal(false);
 
   protected openAddTask(status: TaskStatus = 'to do') {
-    console.log('1. openAddTask:', status);
+    // console.log('1. openAddTask:', status);
     this.addTaskStatus.set(status);
     this.isAddTaskOpen.set(true);
   }

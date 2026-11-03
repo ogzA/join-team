@@ -57,7 +57,7 @@ export class AddTask {
         category: formValue.category as TaskCategory,
         subtasks: [...this.subtasks],
       };
-      console.log('2. AddTask status:', this.status());
+      // console.log('2. AddTask status:', this.status());
       await this.dbService.addTask(taskData, this.status());
       this.toast.success('Task added to board');
       this.resetForm();
