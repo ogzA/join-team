@@ -8,13 +8,16 @@
         <div class="field">
           <label for="title">Title<span class="required">*</span></label>
           <input id="title" type="text" formControlName="title" placeholder="Enter a title" />
-          @if (taskForm.controls['title'].touched) {
-            @if (taskForm.controls['title'].errors?.['required']) {
-              <p class="error">This field is required</p>
-            } @else if (taskForm.controls['title'].errors?.['pattern']) {
-              <p class="error">Enter valid title</p>
+          <div class="error-container">
+            @if (taskForm.controls['title'].touched) {
+              @if (taskForm.controls['title'].errors?.['required']) {
+                <p class="error">This field is required</p>
+              } @else if (taskForm.controls['title'].errors?.['pattern']) {
+                <p class="error">Enter valid title</p>
+              }
             }
-          }
+          </div>
+          
         </div>
 
         <div class="field">
@@ -30,11 +33,14 @@
         <div class="field">
           <label for="date">Due date<span class="required">*</span></label>
           <input type="date" id="date" [min]="todaysDate" formControlName="date" />
-          @if (taskForm.controls['date'].touched) {
-            @if (taskForm.controls['date'].errors?.['required']) {
-              <p class="error">This field is required</p>
+          <div class="error-container">
+            @if (taskForm.controls['date'].touched) {
+              @if (taskForm.controls['date'].errors?.['required']) {
+                <p class="error">This field is required</p>
+              }
             }
-          }
+          </div>
+          
         </div>
       </section>
       <span class="divider"></span>
@@ -74,11 +80,14 @@
             <option value="Technical Task">Technical Task</option>
             <option value="User Story">User Story</option>
           </select>
-          @if (taskForm.controls['category'].touched) {
-            @if (taskForm.controls['category'].errors?.['required']) {
-              <p class="error">This field is required</p>
+          <div class="error-container">
+            @if (taskForm.controls['category'].touched) {
+              @if (taskForm.controls['category'].errors?.['required']) {
+                <p class="error">This field is required</p>
+              }
             }
-          }
+          </div>
+          
         </div>
 
         <div class="field subtaskPosition">
