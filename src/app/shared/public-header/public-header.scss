@@ -1,0 +1,17 @@
+@use '../../../../public/assets/scss/all-styles';
+
+.container{
+    @include all-styles.flex-center;
+    justify-content: space-between;
+    &__sub{
+            @include all-styles.flex-center;
+            justify-content: space-between;
+            gap: 30px;
+    button{
+        padding: 15px;
+        color: $button-text;
+        border-radius: 8px;
+        background-color: $sidebar-background;
+    }
+    }
+}

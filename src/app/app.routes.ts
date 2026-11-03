@@ -8,6 +8,7 @@ import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
 import { AddTask } from './layout/dashboard/Task/add-task/add-task';
 import { AssignedToDropdown } from './shared/assigned-to-dropdown/assigned-to-dropdown';
 import { ShowTaskDetails } from './layout/dashboard/Task/show-task-details/show-task-details';
+import { PublicHeader } from './shared/public-header/public-header';
 
 export const routes: Routes = [
   {
@@ -19,8 +20,12 @@ export const routes: Routes = [
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
       { path: 'assigned-to-dropdown', component: AssignedToDropdown },
-      { path: 'show-task-detail', component: ShowTaskDetails }
+      { path: 'show-task-detail', component: ShowTaskDetails },
     ],
+  },
+  {
+    path: 'public-header',
+    component: PublicHeader,
   },
   {
     path: 'contacts',
