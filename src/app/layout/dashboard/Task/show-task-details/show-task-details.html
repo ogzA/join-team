@@ -23,7 +23,7 @@
       <div class="modal_content_head">
         @if (!this.isEdit()) {
           <h1>{{ task().title }}</h1>
-          <p>{{ task().description }}</p>
+          <p class="scrollLongText">{{ task().description }}</p>
           <div class="modal_content_data">
             <p>Due date:</p>
             <p>{{ task().date | date: 'dd/MM/yyyy' }}</p>
@@ -55,8 +55,8 @@
               </div>
             }
           </div>
-          <div>
-            <p>Subtasks</p>
+          <div class="subtaskLargeListScroll">
+            <p>Subtasks</p>         
             <div class="modal_content_subtask">
               @for (subtask of task().subtasks; track $index) {
                 <label class="subtask-item">
