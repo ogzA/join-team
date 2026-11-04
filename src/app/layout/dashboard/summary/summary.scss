@@ -1,26 +1,24 @@
-@use '../../../../../public/assets/scss/all-styles' as all;
+@use '../../../../../public/assets/scss/all-styles' as *;
 
 .summary {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1440px;
+  max-width: 90rem;
   height: 100%;
   // calc(100svh - 96px)
-  padding: clamp(16px, calc(4.571px + 3.571vw), 56px) 40px 0 96px;
-  color: black;
-  // background-color: red;
+  padding: clamp(1rem, calc(0.2856875rem + 3.571vw), 3.5rem) 2.5rem 0 6rem;
+  color: $color-input-text;
 
-  @media screen and (max-width: 768px) {
-    padding-left: 16px;
-    padding-right: 16px;
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .headline {
-    display: flex;
-    align-items: center;
+    @include flex-center;
     width: 100%;
-    gap: clamp(16px, calc(12px + 1.25vw), 30px);
+    gap: clamp(1rem, calc(0.75rem + 1.25vw), 1.875rem);
 
     h2 {
       font-size: clamp(2rem, calc(1.482rem + 2.589vw), 3.81rem);
@@ -32,20 +30,21 @@
       font-size: clamp(1.25rem, calc(1.125rem + 0.625vw), 1.69rem);
       font-weight: 400;
       line-height: 120%;
-      color: #2a3647;
+      color: $color-avatar-more;
     }
 
-    @media screen and (max-width: 1000px) {
+    // Umbrechen der Headline Elemente
+    @media screen and (max-width: $breakpoint-summary) {
       flex-direction: column;
       align-items: flex-start;
-      gap: 2px;
+      gap: 0.125rem;
 
       img {
         background-color: red;
-        width: 150px;
-        height: 3px;
+        width: 9.375rem;
+        height: 0.1875rem;
         position: relative;
-        top: 45px;
+        top: 2.8125rem;
       }
     }
   }
@@ -53,51 +52,47 @@
   .summary-content {
     display: flex;
     width: 100%;
-    margin-top: 40px;
-    // background-color: red;
+    margin-top: 2.5rem;
 
     .side-text {
-      display: flex;
+      @include flex-center;
       flex: 1;
-      align-items: center;
-      padding-left: clamp(16px, calc(-129.455px + 14.545vw), 80px);
-      // background-color: red;
+      padding-left: clamp(1rem, calc(-8.0909375rem + 14.545vw), 5rem);
 
       h3 {
         font-size: clamp(1.06rem, calc(-2.915rem + 6.364vw), 2.81rem);
         font-weight: 500;
         line-height: 120%;
         font-style: normal;
-        color: #2a3647;
+        color: $color-avatar-more;
       }
 
-      @media screen and (max-width: 1000px) {
+      // Ausblenden vom Good Morning Text
+      @media screen and (max-width: $breakpoint-summary) {
         display: none;
       }
     }
 
     .grid {
       display: grid;
-      grid-template-columns: clamp(396px, calc(349.143px + 14.643vw), 560px);
-      grid-template-rows: repeat(3, clamp(116px, calc(93.429px + 5.179vw), 168px));
-      gap: clamp(28px, calc(27.429px + 0.179vw), 30px);
+      grid-template-columns: clamp(18rem, calc(13.142875rem + 24.286vw), 35rem);
+      grid-template-rows: repeat(3, clamp(7.25rem, calc(5.8393125rem + 5.179vw), 10.5rem));
+      gap: clamp(1.75rem, calc(1.7143125rem + 0.179vw), 1.875rem);
 
       .card {
-        border-radius: 30px;
-        padding: clamp(8px, calc(5.714px + 0.714vw), 16px);
-        background: #ffffff;
-        box-shadow: 0px 0px 4px 0px #00000066;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: clamp(12px, calc(10.286px + 0.536vw), 18px);
+        border-radius: 1.875rem;
+        padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
+        background: $color-white;
+        box-shadow: $shadow-summary-card;
+        @include all-center;
+        gap: clamp(0.75rem, calc(0.642875rem + 0.536vw), 1.125rem);
 
         &:hover {
-          background-color: #2a3647;
+          background-color: $color-avatar-more;
 
           h3,
           p {
-            color: #ffffff !important;
+            color: $color-white !important;
           }
 
           .circle {
@@ -111,24 +106,21 @@
         }
 
         .content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 8px;
+          @include all-col-center;
+          padding: 0.5rem;
 
           h3 {
-            font-size: clamp(2.94rem, calc(2.634rem + 1.518vw), 4rem);
+            font-size: clamp(2.5rem, calc(2.071rem + 2.143vw), 4rem);
             font-weight: 600;
             line-height: 120%;
           }
 
           p {
-            font-size: clamp(1rem, calc(0.929rem + 0.357vw), 1.25rem);
+            font-size: clamp(0.88rem, calc(0.768rem + 0.536vw), 1.25rem);
             font-weight: 400;
             line-height: 120%;
             text-align: center;
-            color: #2a3647;
+            color: $color-avatar-more;
           }
         }
       }
@@ -137,20 +129,20 @@
         grid-column: 1 / 2;
         grid-row: 1 / 2;
         display: flex;
-        gap: clamp(24px, calc(21.714px + 0.714vw), 32px);
+        gap: clamp(1.5rem, calc(1.357125rem + 0.714vw), 2rem);
 
         .to-do,
         .done {
-          width: clamp(186px, calc(162.571px + 7.321vw), 268px);
+          width: clamp(11.625rem, calc(10.1606875rem + 7.321vw), 16.75rem);
         }
       }
 
       .upcoming {
         grid-column: 1 / 2;
         grid-row: 2 / 2;
-        gap: clamp(20px, calc(13.714px + 1.964vw), 42px);
-        padding: clamp(12px, calc(7.429px + 1.429vw), 28px)
-          clamp(20px, calc(13.714px + 1.964vw), 42px);
+        gap: clamp(0.5rem, calc(-0.107125rem + 3.036vw), 2.625rem);
+        padding: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem)
+          clamp(0.5rem, calc(-0.0714375rem + 2.857vw), 2.5rem);
 
         img {
           width: unset;
@@ -158,18 +150,15 @@
         }
 
         .content-left {
-          display: flex;
-          align-items: center;
-          gap: clamp(8px, calc(4.857px + 0.982vw), 19px);
+          @include flex-center;
+          gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
 
           .prio-circle {
             width: clamp(2.5rem, calc(2.143rem + 1.786vw), 3.75rem);
             height: clamp(2.5rem, calc(2.143rem + 1.786vw), 3.75rem);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #ff3d00;
-            padding: clamp(8px, calc(5.714px + 0.714vw), 16px);
+            @include all-center;
+            background-color: $prio-background-urgent;
+            padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
             border-radius: 50%;
 
             img {
@@ -184,12 +173,12 @@
           flex-direction: column;
 
           h3 {
-            font-size: clamp(1rem, calc(0.911rem + 0.446vw), 1.31rem);
+            font-size: clamp(0.8rem, calc(0.589rem + 0.804vw), 1.31rem);
             font-weight: 700;
             line-height: 120%;
           }
           p {
-            font-size: 16px;
+            font-size: clamp(0.88rem, calc(0.839rem + 0.179vw), 1rem);
             font-weight: 400;
             line-height: 120%;
           }
@@ -200,12 +189,12 @@
         grid-column: 1 / 2;
         grid-row: 3 / 3;
         display: flex;
-        gap: clamp(24px, calc(22.857px + 0.357vw), 28px);
+        gap: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem);
 
         .tasks,
         .progress,
         .feedback {
-          width: clamp(7.25rem, calc(6rem + 6.25vw), 11.63rem);
+          width: clamp(5.625rem, calc(3.9106875rem + 8.571vw), 11.625rem);
         }
       }
     }
