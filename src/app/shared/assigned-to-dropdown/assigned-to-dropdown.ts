@@ -64,10 +64,15 @@ export class AssignedToDropdown {
     });
 
     const document = inject(DOCUMENT);
-    const onScroll = () => {
-      if (this.popupExpanded()) {
-        this.overlay()?.overlayRef?.updatePosition();
-      }
+
+    const onScroll = (event: Event) => {
+      if (!this.popupExpanded()) return;
+
+      const target = event.target;
+
+      if (target instanceof Element && target.closest('.example-popup-container')) return;
+
+      this.popupExpanded.set(false);
     };
 
     document.addEventListener('scroll', onScroll, true);
