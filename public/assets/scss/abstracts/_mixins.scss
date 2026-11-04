@@ -1,9 +1,25 @@
+@use 'variables' as *;
+
 @mixin flex-center{
     display: flex;
-    align-items: center;    
+    align-items: center;
 }
 @mixin flex-col-center{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+// Mobile: Dialog-Bereich über der NavBar, 16px Abstand oben und unten
+@mixin dialog-area-mobile {
+    @media (max-width: $breakpoint-mobile) {
+        padding: 16px 16px calc($mobile-navbar-height + 16px);
+    }
+}
+
+// Mobile: Dialog füllt den Bereich aus, damit alle Dialoge gleich groß sind
+@mixin dialog-box-mobile {
+    @media (max-width: $breakpoint-mobile) {
+        height: 100%;
+    }
 }
