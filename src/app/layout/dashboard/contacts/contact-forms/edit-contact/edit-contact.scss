@@ -1,5 +1,8 @@
 @use '../../../../../../../public/assets/scss/all-styles';
 
+// Avatar auf Mobile: wächst mit der Breite von 80px bis 120px
+$avatar-size-mobile: clamp(80px, 25vw, 120px);
+
 .edit-contact {
   position: fixed;
   inset: 0;
@@ -8,7 +11,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px;
-  overflow-y: auto;
+  @include all-styles.dialog-area-mobile;
   background-color: all-styles.$color-overlay;
 
   &__content {
@@ -244,9 +247,11 @@
 @media (max-width: all-styles.$breakpoint-mobile) {
   .edit-contact {
     &__content {
+      @include all-styles.dialog-box-mobile;
       flex-direction: column;
-      max-width: 396px;
-      min-height: auto;
+      max-width: 100%;
+      min-height: 0;
+      overflow-y: auto;
       box-shadow: all-styles.$shadow-avatar;
     }
 
@@ -272,26 +277,33 @@
     }
 
     &__aside {
-      height: 351px;
+      flex-shrink: 0;
+      height: clamp(120px, 28dvh, 351px);
       gap: 12px;
-      padding: 66px 24px;
+      padding: 0 24px;
       border-radius: 30px 30px 0 0;
     }
 
     &__title {
       gap: 12px;
+      font-size: clamp(32px, 8vw, 47px);
     }
 
     &__main {
-      padding: 0 16px 56px;
+      justify-content: flex-start;
+      gap: clamp(8px, 2dvh, 32px);
+      padding: 0 16px clamp(16px, 4dvh, 56px);
     }
 
     &__avatar {
-      margin-top: -60px;
+      width: $avatar-size-mobile;
+      height: $avatar-size-mobile;
+      font-size: clamp(32px, 10vw, 47px);
+      margin-top: calc($avatar-size-mobile / -2); // halb über dem dunklen Kopfbereich
     }
 
     &__form {
-      gap: 24px;
+      gap: clamp(20px, 3dvh, 24px);
     }
 
     &__input {
