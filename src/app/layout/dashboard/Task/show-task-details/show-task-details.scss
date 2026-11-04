@@ -112,7 +112,7 @@ $color-category-technical: #1fd7c1;
       min-height: 0;
       gap: 16px;
       overflow-y: auto;
-      scrollbar-width: thin;
+      scrollbar-width: none;
     }
 
     &_head {
@@ -123,6 +123,20 @@ $color-category-technical: #1fd7c1;
       align-items: flex-start;
       gap: 16px;
 
+      .scrollLongText{
+        width: 100%;
+          max-height: 100px;
+          min-height: 30px;
+          overflow-y: auto;
+          scrollbar-width: thin;
+      }
+      .subtaskLargeListScroll{
+        width: 100%;
+        max-height: 150px;
+        min-height: 30px;
+        overflow: auto;
+        scrollbar-width: thin;
+      }
       .header_modal {
         @include flex-center;
         width: 100%;
@@ -158,6 +172,9 @@ $color-category-technical: #1fd7c1;
 
     &_dropdown {
       width: 100%;
+      scrollbar-width: thin;
+      max-height: 200px;
+      overflow: auto;
     }
 
     &__assignedPersons {
