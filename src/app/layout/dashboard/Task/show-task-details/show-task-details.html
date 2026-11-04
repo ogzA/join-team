@@ -98,6 +98,11 @@
             <div class="field">
               <label for="date">Due date</label>
               <input type="date" [min]="todaysDate" id="date" formControlName="date" />
+              <div class="error-container">
+                @if (taskDetailForm.controls.date.errors?.['pastDate']) {
+                  <p class="error">Please select today or a future date</p>
+                }
+              </div>
             </div>
 
             <fieldset class="priority">
@@ -248,7 +253,7 @@
           <span>Edit</span>
         </button>
       } @else {
-        <button type="submit" form="taskDetailForm" class="submitBtn" [disabled]="!hasChanges()">
+        <button type="submit" form="taskDetailForm" class="submitBtn"  [disabled]=" taskDetailForm.invalid || !hasChanges()">
           Ok
           <img src="assets/icons/check.svg" alt="" />
         </button>
