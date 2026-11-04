@@ -37,6 +37,8 @@
             @if (taskForm.controls['date'].touched) {
               @if (taskForm.controls['date'].errors?.['required']) {
                 <p class="error">This field is required</p>
+              } @else if (taskForm.controls.date.errors?.['pastDate']) {
+                  <p class="error">Please select today or a future date</p>
               }
             }
           </div>
