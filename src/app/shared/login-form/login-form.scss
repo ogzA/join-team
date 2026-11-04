@@ -1,0 +1,81 @@
+@use '../../../../public/assets/scss/all-styles' as *;
+
+.container{
+    height: 100dvh;   
+    background-color: $dashboard-background;
+        .form-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            padding: 48px 115px;
+            height: 450px;
+            width: 650px;
+            background-color: $color-white;            
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border-radius: 30px;
+            box-shadow: 0px 0px 14px 3px #00000024;
+
+            &_textBorder{
+                width: 150px;
+                border-bottom: 3px solid $color-secondary;
+            }
+            h1{
+                font-size: clamp(40px, calc(34px + 1.875vw), 61px);
+            }
+            .form-button{
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                
+                .logIn{
+                    cursor: pointer;
+                    background-color: $color-avatar-more;
+                    padding: 15px 24px;
+                    border-radius: 8px;
+                    color: $color-white;
+                }
+                .logIn:hover{
+                    background-color: $color-input-focus;
+                }
+                .asGuestLogIn{
+                    cursor: pointer;
+                    border: 1px solid $color-avatar-more;
+                    background-color: $color-white;
+                    padding: 15px 24px;
+                    border-radius: 8px;
+                    color: $color-avatar-more;
+                }
+                .asGuestLogIn:hover{
+                    border: 2px solid $color-input-focus;
+                }
+            }
+            button{
+                font-size: 1.2rem;
+                font-weight: 700;
+            }
+
+            input[type="password"],
+            input[type="email"]{
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid $color-input-border;
+                border-radius: 8px;
+                font-size: 1.25rem;
+                box-sizing: border-box;
+                color: $color-input-text;
+
+                &::placeholder {
+                    color: $color-input-border;
+                }
+            }
+            input:focus {
+            border: 1px solid #124658;
+            }
+        }
+}
