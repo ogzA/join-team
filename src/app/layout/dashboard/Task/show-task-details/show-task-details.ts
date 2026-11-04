@@ -1,11 +1,14 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { Supabase } from '../../../../shared/services/supabase';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { SelectedTask, Subtask, Task, TaskPrio } from '../../../../shared/models/task';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { NameLogo } from '../../../../shared/services/name-logo';
+
+
+
 
 @Component({
   imports: [ReactiveFormsModule, AssignedToDropdown, TitleCasePipe, DatePipe],
@@ -46,13 +49,20 @@ export class ShowTaskDetails {
   protected nlService = inject(NameLogo);
   private toast = inject(ToastService);
 
+  // Gives an error when the date is before today.
+  private noPastDate = (control: AbstractControl): ValidationErrors | null => {
+    const value: string = control.value;
+    if (!value || value >= this.todaysDate) return null;
+    return { pastDate: true };
+  };
+
   taskDetailForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
-    date: ['', Validators.required],
+    date: ['',[Validators.required, this.noPastDate]],
     prio: [''],
     subtasks: [''],
-  });
+  });  
 
   async onSubmit() {
     if (this.taskDetailForm.invalid) {
@@ -110,6 +120,7 @@ export class ShowTaskDetails {
     const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+
   toInputDate(date: string): string {
     if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date; // already correct
     const m = date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/); // dd/mm/yyyy
