@@ -628,9 +628,8 @@ $color-move-option-hover: #091931;
 }
 
 // Add-Task-Dialog
-
 .dialog-backdrop {
-  position: relative;
+  position: fixed;
   inset: 0;
   z-index: 100;
   display: flex;
@@ -640,6 +639,7 @@ $color-move-option-hover: #091931;
   background-color: rgba(0, 0, 0, 0.3);
   animation: backdrop-fade-in 300ms ease-out;
 }
+
 
 .dialog {
   width: 100%;
