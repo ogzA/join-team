@@ -1,17 +1,31 @@
-@use '../../../../public/assets/scss/all-styles';
+@use '../../../../public/assets/scss/all-styles' as *;
 
 .container{
-    @include all-styles.flex-center;
+    background: $dashboard-background;
+    @include flex-center;
     justify-content: space-between;
+    padding: 67px 70px;
     &__sub{
-            @include all-styles.flex-center;
+            @include flex-center;
             justify-content: space-between;
             gap: 30px;
+            font-size: 1.2rem;
     button{
         padding: 15px;
+        font-weight: 700;
+        font-size: 1rem;
         color: $button-text;
         border-radius: 8px;
         background-color: $sidebar-background;
     }
+    }
+    @media (max-width: $breakpoint-mobile) {
+        img{
+            width: 64px;
+            height: 78px;
+        }
+        &__sub{
+            display: none;
+        }
     }
 }
