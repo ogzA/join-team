@@ -1,4 +1,4 @@
-<div class="modal" [class.modal--closing]="isClosing()">
+<div class="modal" [class.modal--closing]="isClosing()" (click)="closeDialog()">
   <div class="modal_content" (click)="$event.stopPropagation()">
     <div class="header_modal">
       @if (!this.isEdit()) {
@@ -56,7 +56,7 @@
             }
           </div>
           <div class="subtaskLargeListScroll">
-            <p>Subtasks</p>         
+            <p>Subtasks</p>
             <div class="modal_content_subtask">
               @for (subtask of task().subtasks; track $index) {
                 <label class="subtask-item">

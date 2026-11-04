@@ -9,10 +9,8 @@ $color-category-technical: #1fd7c1;
   inset: 0;
   z-index: 10;
   @include flex-center;
-  justify-content: space-between;
   align-items: center;
   justify-content: center;
-  overflow-y: auto;
   background-color: $color-overlay;
   font-family: 'Inter';
   overflow: clip;
@@ -30,9 +28,7 @@ $color-category-technical: #1fd7c1;
     font-size: 0.8rem;
   }
 
-  @media (max-width: $breakpoint-small-devices) {
-    padding: 8px;
-  }
+  @include dialog-area-mobile;
 
   .header_modal {
     @include flex-center;
@@ -48,8 +44,8 @@ $color-category-technical: #1fd7c1;
     position: relative;
     width: 100%;
     max-width: 525px;
-    min-height: min(592px, calc(100dvh - 32px));
-    max-height: min(750px, calc(100dvh - 32px));
+    height: min(750px, 100%);
+    @include dialog-box-mobile;
     border-radius: 30px;
     background-color: $color-white;
     padding: 48px 40px;
@@ -123,7 +119,7 @@ $color-category-technical: #1fd7c1;
       min-height: 0;
       gap: 16px;
       overflow-y: auto;
-      scrollbar-width: none;
+      scrollbar-width: thin;
     }
 
     &_head {
