@@ -516,10 +516,6 @@ $color-drag-placeholder: #a8a8a8;
     width: 30px;
     height: 30px;
   }
-
-  .dialog {
-    max-height: 80vh !important;
-  }
 }
 
 .red-placeholder::placeholder {
@@ -542,19 +538,26 @@ $color-drag-placeholder: #a8a8a8;
 
 .dialog {
   width: 100%;
-  z-index: 2;
-  max-width: 1116px;
-  max-height: 90vh;
-  overflow-y: auto; // Scrollen, wenn das Formular höher als der Bildschirm ist
-  border-radius: 30px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  @media screen and (min-width: all-styles.$breakpoint-tablet) {
+    height: fit-content;
+    width: fit-content;
+    margin-inline: auto;
+    margin-block: auto;
+    max-width: fit-content;
+    border-radius: 30px;
+  }
+  align-items: center;
+
   background-color: all-styles.$color-white;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
   animation: dialog-slide-in 300ms ease-out;
   position: fixed;
   inset: 0;
-  margin-top: 70px;
-  margin-left: auto;
-  margin-right: auto;
 
   .dialog-header {
     width: 100%;

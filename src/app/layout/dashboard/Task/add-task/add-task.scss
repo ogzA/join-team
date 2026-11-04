@@ -409,5 +409,9 @@
 }
 
 .addTask.inDialog {
-  padding: 64px;
+  padding: 1rem;
+
+  @media screen and (min-width: $breakpoint-tablet) {
+    padding: 4rem;
+  }
 }
