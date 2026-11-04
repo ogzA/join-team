@@ -17,6 +17,8 @@ $color-progress-fill: #4589ff;
 $color-avatar-more: #2a3647;
 $color-scrollbar: color.change($color-task-title, $alpha: 0.4);
 $color-drag-placeholder: #a8a8a8;
+$color-move-menu-bg: #2a3647;
+$color-move-option-hover: #091931;
 
 :host {
   display: block;
@@ -247,6 +249,7 @@ $color-drag-placeholder: #a8a8a8;
   background-color: all-styles.$color-white;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
   cursor: pointer;
+  position: relative; // Bezugspunkt für das Verschiebe-Menü
 }
 
 // Rahmen, wenn die Karte per Tastatur fokussiert wird
@@ -306,10 +309,103 @@ $color-drag-placeholder: #a8a8a8;
   background-color: $color-category-technical;
 }
 
+// ====== Mobile: Verschiebe-Menü ======
+
+// Kategorie links, Verschiebe-Icon rechts
+.task-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .task-card__text {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+// Standardmäßig versteckt, nur im Mobile sichtbar
+.task-card__move-button {
+  display: none;
+  flex-shrink: 0;
+  width: 24px;
+  height: 26px;
+  padding: 0;
+  border: unset;
+  background: none;
+  cursor: pointer;
+}
+
+// Karte mit offenem Menü liegt über dem Backdrop
+.task-card--menu-open {
+  z-index: 11;
+}
+
+.task-card__move-menu {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: max-content;
+  min-width: 106px;
+  box-sizing: border-box;
+  padding: 6px 8px 16px;
+  border-radius: 20px 0 20px 20px;
+  background-color: $color-move-menu-bg;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.04);
+  color: all-styles.$color-white;
+  cursor: default;
+}
+
+// Optionen mit 4px Abstand, Titel bleibt 16px darüber
+.task-card__move-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-card__move-title {
+  padding: 7px 0 0 9px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.task-card__move-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 90px;
+  white-space: nowrap;
+  text-align: left;
+  padding: 4px 5px 4px 2px;
+  border: unset;
+  border-radius: 8px;
+  background: none;
+  color: all-styles.$color-white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 100ms ease;
+
+  &:hover {
+    background-color: $color-move-option-hover;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Transparente Fläche über der Seite: Tap schließt das Menü, kein Scrollen per Touch
+.move-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  touch-action: none;
 }
 
 .task-card__title {
@@ -515,6 +611,11 @@ $color-drag-placeholder: #a8a8a8;
   .board__column-add {
     width: 30px;
     height: 30px;
+  }
+
+  // Verschiebe-Icon nur auf Mobile
+  .task-card__move-button {
+    display: flex;
   }
 
   .dialog {
