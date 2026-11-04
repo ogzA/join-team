@@ -22,8 +22,8 @@
     >
       <div class="modal_content_head">
         @if (!this.isEdit()) {
-          <h1>{{ task().title }}</h1>
-          <p class="scrollLongText">{{ task().description }}</p>
+          <h1 class="section-scroll">{{ task().title }}</h1>
+          <p class="section-scroll">{{ task().description }}</p>
           <div class="modal_content_data">
             <p>Due date:</p>
             <p>{{ task().date | date: 'dd/MM/yyyy' }}</p>
@@ -39,8 +39,9 @@
               <img [src]="priorityLogos.urgent" alt="urgent_priority_logo" />
             }
           </div>
-          <div class="modal_content_dropdown">
-            <label for="assignedTo">Assigned to</label>
+          <div class="modal_content_section">
+            <p>Assigned to</p>
+            <div class="section-scroll">
             @for (name of task().assigned; track $index) {
               @let avatar = nlService.setNameLogo(name);
               <div class="modal_content__assignedPersons">
@@ -54,10 +55,11 @@
                 <p>{{ name | titlecase }}</p>
               </div>
             }
+            </div>
           </div>
-          <div class="subtaskLargeListScroll">
+          <div class="modal_content_section">
             <p>Subtasks</p>
-            <div class="modal_content_subtask">
+            <div class="modal_content_subtask section-scroll">
               @for (subtask of task().subtasks; track $index) {
                 <label class="subtask-item">
                   <input

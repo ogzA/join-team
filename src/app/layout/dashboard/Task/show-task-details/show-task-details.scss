@@ -40,7 +40,7 @@ $color-category-technical: #1fd7c1;
     @include flex-center;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: clamp(8px, 2.5vw, 16px);
     position: relative;
     width: 100%;
     max-width: 525px;
@@ -53,14 +53,10 @@ $color-category-technical: #1fd7c1;
     overflow: clip;
     box-sizing: border-box;
 
-    @media (max-width: $breakpoint-mobile) {
-      padding: 32px 24px;
-      font-size: 16px;
-    }
-
-    @media (max-width: $breakpoint-small-devices) {
-      padding: 24px 16px;
-    }
+@media (max-width: $breakpoint-mobile) {
+  padding: clamp(16px, 5vw, 32px) clamp(16px, 4vw, 24px);
+  font-size: 16px;
+}
 
     &_subtask {
       width: 100%;
@@ -118,31 +114,46 @@ $color-category-technical: #1fd7c1;
       width: 100%;
       min-height: 0;
       gap: 16px;
-      overflow-y: auto;
+      overflow: hidden;
       scrollbar-width: thin;
+
+      // Edit-Modus: Formular passt auf kleinen Geräten nicht, hier scrollt der Formularbereich
+      &--edit {
+        overflow-y: auto;
+
+        .modal_content_head {
+          flex: none;
+        }
+      }
     }
 
     &_head {
       @include flex-center;
       flex-direction: column;
       width: 100%;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: flex-start;
       gap: 16px;
+      flex: 1;
+      min-height: 0;
 
-      .scrollLongText{
+      // Titel, Beschreibung, Assigned- und Subtask-Liste:
+      // schrumpfen nur, wenn der Platz nicht reicht, und scrollen dann in sich
+      .section-scroll {
         width: 100%;
-          max-height: 100px;
-          min-height: 30px;
-          overflow-y: auto;
-          scrollbar-width: thin;
-      }
-      .subtaskLargeListScroll{
-        width: 100%;
-        max-height: 150px;
-        min-height: 30px;
-        overflow: auto;
+        flex: 0 1 auto;
+        min-height: 1.5em;
+        overflow-y: auto;
         scrollbar-width: thin;
+      }
+
+      // Bereich mit fester Überschrift und scrollbarer Liste darunter
+      .modal_content_section {
+        display: flex;
+        flex-direction: column;
+        flex: 0 1 auto;
+        width: 100%;
+        min-height: 4em;
       }
       .header_modal {
         @include flex-center;
@@ -175,13 +186,6 @@ $color-category-technical: #1fd7c1;
         font-size: 1rem;
         font-family: inherit;
       }
-    }
-
-    &_dropdown {
-      width: 100%;
-      scrollbar-width: thin;
-      max-height: 200px;
-      overflow: auto;
     }
 
     &__assignedPersons {
@@ -245,6 +249,10 @@ $color-category-technical: #1fd7c1;
     font-size: 16px;
     cursor: pointer;
 
+    @media (max-width: $breakpoint-mobile) {
+      padding: clamp(8px, 2.5vw, 16px) clamp(12px, 3.5vw, 16px);
+    }
+
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -256,15 +264,16 @@ $color-category-technical: #1fd7c1;
     margin-bottom: 8px;
 
     @media (max-width: $breakpoint-mobile) {
-      font-size: 36px;
+      font-size: clamp(24px, 7vw, 36px);
     }
   }
 
   form {
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: space-between;
-    gap: 16px;
+    gap: clamp(8px, 2.5vw, 16px);
 
     .priority {
       border: none;
