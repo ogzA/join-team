@@ -237,8 +237,12 @@ export class Board implements OnInit {
     return (this.doneCount(task) / task.subtasks.length) * 100;
   }
 
-  // Merkt sich den angeklickten Task samt Spalte und Position für den Detail-Dialog
+  /** Opens the task details. If the move menu is open, the tap only closes the menu. */
   protected openTask(task: Task, rowId: number, index: number): void {
+    if (this.moveMenu()) {
+      this.closeMoveMenu();
+      return;
+    }
     this.selectedTask.set({ task, rowId, index });
   }
 
