@@ -182,11 +182,11 @@ export class Supabase {
     // console.log('3. service addTask:', status);
     switch (status) {
       case 'to do':
-        return this.setTasks([...this.toDoTasks(), object], 1);
+        return this.setTasks([object, ...this.toDoTasks()], 1);
       case 'in progress':
-        return this.setTasks([...this.inProgressTasks(), object], 2);
+        return this.setTasks([object, ...this.inProgressTasks()], 2);
       case 'await feedback':
-        return this.setTasks([...this.awaitFeedbackTasks(), object], 3);
+        return this.setTasks([object, ...this.awaitFeedbackTasks()], 3);
     }
   }
 
