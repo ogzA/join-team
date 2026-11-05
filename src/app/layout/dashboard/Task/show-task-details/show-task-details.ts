@@ -33,6 +33,7 @@ export class ShowTaskDetails {
   subtasks: Subtask[] = [];
   assigned = signal<string[]>([]);
   private snapshot = '';
+  private originalDate = '';
 
   selected = input.required<SelectedTask>();
 
@@ -49,10 +50,10 @@ export class ShowTaskDetails {
   protected nlService = inject(NameLogo);
   private toast = inject(ToastService);
 
-  // Gives an error when the date is before today.
+ /** Gives an error when the date is before today. The original date of the task stays valid. */
   private noPastDate = (control: AbstractControl): ValidationErrors | null => {
     const value: string = control.value;
-    if (!value || value >= this.todaysDate) return null;
+    if (!value || value >= this.todaysDate || value === this.originalDate) return null;
     return { pastDate: true };
   };
 
@@ -62,7 +63,7 @@ export class ShowTaskDetails {
     date: ['',[Validators.required, this.noPastDate]],
     prio: [''],
     subtasks: [''],
-  });  
+  });
 
   async onSubmit() {
     if (this.taskDetailForm.invalid) {
@@ -129,6 +130,7 @@ export class ShowTaskDetails {
 
   editTask() {
     const task = this.task();
+    this.originalDate = this.toInputDate(task.date);
 
     // reset(values) fills the form and clears any old touched/dirty fileds
     this.taskDetailForm.reset({
