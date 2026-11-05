@@ -26,6 +26,12 @@
   border: 1px solid $color-input-border;
 }
 
+@media (max-width: $breakpoint-mobile) {
+  .select {
+    font-size: 16px;
+  }
+}
+
 .select span {
   user-select: none;
   -webkit-user-select: none;
@@ -39,10 +45,19 @@
 .combobox-label {
   gap: 1rem;
   left: 12px;
+  right: 2.5rem; // Platz für den Pfeil, wie das Padding von .select
   display: flex;
   position: absolute;
   align-items: center;
   pointer-events: none;
+}
+
+// Platzhalter bzw. Auswahl einzeilig, zu langer Text endet mit "..."
+.selected-label-text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .example-arrow {
