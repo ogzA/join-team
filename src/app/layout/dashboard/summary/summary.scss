@@ -47,6 +47,11 @@
         top: 2.8125rem;
       }
     }
+
+    // Mobil Zentrierung
+    @media screen and (max-width: $breakpoint-mobile) {
+      @include flex-center;
+    }
   }
 
   .summary-content {
@@ -78,6 +83,13 @@
       grid-template-columns: clamp(18rem, calc(13.142875rem + 24.286vw), 35rem);
       grid-template-rows: repeat(3, clamp(7.25rem, calc(5.8393125rem + 5.179vw), 10.5rem));
       gap: clamp(1.75rem, calc(1.7143125rem + 0.179vw), 1.875rem);
+      // background-color: yellow;
+
+      @media screen and (max-width: $breakpoint-mobile) {
+        grid-template-columns: calc(100vw - 2rem);
+        grid-template-rows: repeat(3, 18svh);
+        margin-top: 1rem;
+      }
 
       .card {
         border-radius: 1.875rem;
@@ -103,6 +115,10 @@
         img {
           width: clamp(2.5rem, calc(1.982rem + 2.589vw), 4.31rem);
           height: clamp(2.5rem, calc(1.982rem + 2.589vw), 4.31rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            width: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
+            height: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
+          }
         }
 
         .content {
@@ -113,6 +129,9 @@
             font-size: clamp(2.5rem, calc(2.071rem + 2.143vw), 4rem);
             font-weight: 600;
             line-height: 120%;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(2.5rem, calc(1.429rem + 5.357vw), 4rem);
+            }
           }
 
           p {
@@ -121,6 +140,9 @@
             line-height: 120%;
             text-align: center;
             color: $color-avatar-more;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(1rem, calc(0.821rem + 0.893vw), 1.25rem);
+            }
           }
         }
       }
@@ -131,9 +153,17 @@
         display: flex;
         gap: clamp(1.5rem, calc(1.357125rem + 0.714vw), 2rem);
 
+        @media screen and (max-width: $breakpoint-mobile) {
+          justify-content: center;
+        }
+
         .to-do,
         .done {
           width: clamp(11.625rem, calc(10.1606875rem + 7.321vw), 16.75rem);
+
+          @media screen and (max-width: $breakpoint-mobile) {
+            width: 50%;
+          }
         }
       }
 
@@ -147,6 +177,10 @@
         img {
           width: unset;
           height: unset;
+          // @media screen and (max-width: $breakpoint-mobile) {
+          //   width: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
+          //   height: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
+          // }
         }
 
         .content-left {
@@ -176,11 +210,17 @@
             font-size: clamp(0.8rem, calc(0.589rem + 0.804vw), 1.31rem);
             font-weight: 700;
             line-height: 120%;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(0.88rem, calc(0.563rem + 1.563vw), 1.31rem);
+            }
           }
           p {
             font-size: clamp(0.88rem, calc(0.839rem + 0.179vw), 1rem);
             font-weight: 400;
             line-height: 120%;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: 1rem;
+            }
           }
         }
       }
@@ -190,13 +230,24 @@
         grid-row: 3 / 3;
         display: flex;
         gap: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem);
+        @media screen and (max-width: $breakpoint-mobile) {
+          justify-content: center;
+        }
 
         .tasks,
         .progress,
         .feedback {
           width: clamp(5.625rem, calc(3.9106875rem + 8.571vw), 11.625rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            flex: 1;
+          }
         }
       }
+    }
+
+    // Mobil Zentrierung
+    @media screen and (max-width: $breakpoint-mobile) {
+      @include flex-col-center;
     }
   }
 }
