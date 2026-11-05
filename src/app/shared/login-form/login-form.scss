@@ -27,6 +27,10 @@
     &_textBorder {
         width: clamp(100px, 10vw, 150px);
         border-bottom: 3px solid $color-secondary;
+        margin-top: -24px;
+        @media screen and (max-width:$breakpoint-tablet) {
+            margin-top: -10px;
+        }
     }
 
     .field {
