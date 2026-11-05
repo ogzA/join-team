@@ -120,6 +120,7 @@ $color-category-technical: #1fd7c1;
       // Edit-Modus: Formular passt auf kleinen Geräten nicht, hier scrollt der Formularbereich
       &--edit {
         overflow-y: auto;
+        padding-right: 8px;
 
         .modal_content_head {
           flex: none;
@@ -284,6 +285,7 @@ $color-category-technical: #1fd7c1;
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        min-inline-size: 0;
       }
     }
 
