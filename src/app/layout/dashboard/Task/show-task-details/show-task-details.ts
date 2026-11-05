@@ -60,7 +60,7 @@ export class ShowTaskDetails {
   taskDetailForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
-    date: ['',[Validators.required, this.noPastDate]],
+    date: ['',[Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/), this.noPastDate]],
     prio: [''],
     subtasks: [''],
   });
