@@ -1,6 +1,6 @@
 import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
 import { Listbox, Option } from '@angular/aria/listbox';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule, CdkConnectedOverlay } from '@angular/cdk/overlay';
 import {
   afterRenderEffect,
   Component,
@@ -10,6 +10,8 @@ import {
   viewChild,
   model,
   input,
+  DestroyRef,
+  DOCUMENT,
 } from '@angular/core';
 import { Supabase } from '../services/supabase';
 import { NameLogo } from '../services/name-logo';
@@ -26,6 +28,10 @@ export class AssignedToDropdown {
 
   /** The combobox listbox popup. */
   readonly listbox = viewChild(Listbox);
+
+  /** The overlay that positions the popup next to the combobox. */
+  private readonly overlay = viewChild(CdkConnectedOverlay);
+
   /** The contacts available in the listbox. */
   readonly contacts = this.dbService.contacts;
   /** The names of the selected contacts. */
@@ -56,6 +62,21 @@ export class AssignedToDropdown {
     afterRenderEffect(() => {
       this.listbox()?.scrollActiveItemIntoView();
     });
+
+    const document = inject(DOCUMENT);
+
+    const onScroll = (event: Event) => {
+      if (!this.popupExpanded()) return;
+
+      const target = event.target;
+
+      if (target instanceof Element && target.closest('.example-popup-container')) return;
+
+      this.popupExpanded.set(false);
+    };
+
+    document.addEventListener('scroll', onScroll, true);
+    inject(DestroyRef).onDestroy(() => document.removeEventListener('scroll', onScroll, true));
   }
 
   async ngOnInit(): Promise<void> {
