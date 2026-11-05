@@ -433,22 +433,82 @@
   }
 }
 
+// Dialog: Inhalt füllt die Karte, Footer sitzt unten
 .addTask.inDialog {
-  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
+
+  .taskForm {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .taskForm-footer {
+    margin-top: auto;
+  }
+}
+
+@media (min-width: #{$breakpoint-mobile + 1}) {
+  .addTask.inDialog {
+    padding: clamp(24px, min(4.762vw - 4.571px, 6.25dvh), 64px) clamp(32px, 5.06vw - 6.86px, 66px)
+      clamp(24px, min(4.762vw - 4.571px, 6.25dvh), 64px) clamp(32px, 6.25vw - 16px, 74px);
+
+    h1 {
+      font-size: clamp(36px, min(3.72vw + 7.43px, 5.96dvh), 61px);
+    }
+
+    .taskForm-columns {
+      gap: clamp(24px, 3.571vw - 3.429px, 48px);
+
+      &-column1,
+      &-column2 {
+        padding: clamp(16px, min(2.381vw - 2.286px, 3.125dvh), 32px) 0 24px;
+
+        .field {
+          margin-bottom: clamp(8px, min(2.53vw - 11.43px, 2.44dvh), 25px);
+        }
+      }
+
+      // Prio-Buttons als Zeile wie Figma
+      .priority {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(8px, 1.19vw - 1.14px, 16px);
+        margin-bottom: clamp(8px, min(2.53vw - 11.43px, 2.44dvh), 25px);
+
+        .priority-btn {
+          flex: 1;
+          margin: 0;
+          text-align: center;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
 }
 
 // Mobile im Dialog: kleineres Padding, wächst mit der Breite (wie Task-Detail)
 @media (max-width: $breakpoint-mobile) {
   .addTask.inDialog {
-    padding: clamp(16px, 5vw, 32px) clamp(16px, 4vw, 24px);
+    padding: 0 clamp(16px, 4vw, 24px);
 
     h1 {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      margin: 0 calc(-1 * clamp(16px, 4vw, 24px));
+      padding: clamp(16px, 5vw, 32px) clamp(16px, 4vw, 24px) 16px;
+      background-color: $color-white;
       font-size: clamp(24px, 7vw, 36px);
     }
 
     // Prio-Buttons als Zeile wie im Task-Detail, brechen nur bei Platzmangel um
     .taskForm-columns .priority {
       gap: 8px;
+      min-inline-size: 0;
 
       .priority-btn {
         flex: 1;
@@ -464,10 +524,23 @@
       position: sticky;
       bottom: 0;
       z-index: 2;
+      width: auto;
       gap: 16px;
-      margin-top: 16px;
-      padding: 16px 0;
+      margin: 16px calc(-1 * clamp(16px, 4vw, 24px)) 0;
+      padding: 16px clamp(16px, 4vw, 24px);
       background-color: $color-white;
+
+      .hint {
+        font-size: 14px;
+      }
+
+      // Kleinere Schrift, aber mind. 48px hoch für Touch
+      .btn {
+        min-height: 48px;
+        padding: 12px 16px;
+        font-size: 16px;
+        white-space: nowrap;
+      }
     }
   }
 }
