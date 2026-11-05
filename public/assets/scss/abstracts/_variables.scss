@@ -20,13 +20,18 @@ $error-color: #e60026;
 $join-blue: #29abe2;
 $button-text: #ffffff;
 $hover-button-Form: #124658;
+$prio-background-urgent: #ff3d00;
+$prio-background-medium: #ffa800;
+$prio-background-low: #7ae229;
 
 // Shadows
 $shadow-avatar: 0 0 4px rgba(0, 0, 0, 0.4);
 $shadow-button: 0 4px 4px rgba(0, 0, 0, 0.25);
+$shadow-summary-card: 0px 0px 4px 0px #00000066;
 
 // Breakpoints
 $breakpoint-mobile: 768px;
 $breakpoint-tablet: 1100px;
 $breakpoint-small-devices: 480px;
 $breakpoint-xsmall-device: 320px;
+$breakpoint-summary: 945px;

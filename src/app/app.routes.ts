@@ -8,24 +8,39 @@ import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
 import { AddTask } from './layout/dashboard/Task/add-task/add-task';
 import { AssignedToDropdown } from './shared/assigned-to-dropdown/assigned-to-dropdown';
 import { ShowTaskDetails } from './layout/dashboard/Task/show-task-details/show-task-details';
+import { Summary } from './layout/dashboard/summary/summary';
 
 export const routes: Routes = [
   {
     path: '',
     component: Dashboard,
     children: [
-      { path: '', redirectTo: 'contacts', pathMatch: 'full' },
-      { path: 'contacts', component: Contacts },
+      { path: '', redirectTo: 'summary', pathMatch: 'full' },
+      { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
+      { path: 'contacts', component: Contacts },
       { path: 'assigned-to-dropdown', component: AssignedToDropdown },
-      { path: 'show-task-detail', component: ShowTaskDetails }
+      { path: 'show-task-detail', component: ShowTaskDetails },
     ],
+  },
+  {
+    path: 'summary',
+    component: Summary,
+  },
+  {
+    path: 'add-task',
+    component: AddTask,
+  },
+  {
+    path: 'board',
+    component: Board,
   },
   {
     path: 'contacts',
     component: Contacts,
   },
+
   {
     path: 'help-page',
     component: HelpPage,
