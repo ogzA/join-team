@@ -86,7 +86,7 @@
       // background-color: yellow;
 
       @media screen and (max-width: $breakpoint-mobile) {
-        grid-template-columns: calc(100vw - 2rem);
+        grid-template-columns: calc(100vw - 4rem);
         grid-template-rows: repeat(3, 18svh);
         margin-top: 1rem;
       }
@@ -98,6 +98,10 @@
         box-shadow: $shadow-summary-card;
         @include all-center;
         gap: clamp(0.75rem, calc(0.642875rem + 0.536vw), 1.125rem);
+
+        @media screen and (max-width: $breakpoint-mobile) {
+          gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
+        }
 
         &:hover {
           background-color: $color-avatar-more;
@@ -177,19 +181,22 @@
         img {
           width: unset;
           height: unset;
-          // @media screen and (max-width: $breakpoint-mobile) {
-          //   width: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
-          //   height: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
-          // }
         }
 
         .content-left {
           @include flex-center;
           gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
+          }
 
           .prio-circle {
             width: clamp(2.5rem, calc(2.143rem + 1.786vw), 3.75rem);
             height: clamp(2.5rem, calc(2.143rem + 1.786vw), 3.75rem);
+            @media screen and (max-width: $breakpoint-mobile) {
+              width: clamp(2.5rem, calc(1.607rem + 4.464vw), 3.75rem);
+              height: clamp(2.5rem, calc(1.607rem + 4.464vw), 3.75rem);
+            }
             @include all-center;
             background-color: $prio-background-urgent;
             padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
@@ -211,7 +218,7 @@
             font-weight: 700;
             line-height: 120%;
             @media screen and (max-width: $breakpoint-mobile) {
-              font-size: clamp(0.88rem, calc(0.563rem + 1.563vw), 1.31rem);
+              font-size: clamp(0.75rem, calc(0.348rem + 2.009vw), 1.31rem);
             }
           }
           p {
@@ -219,7 +226,7 @@
             font-weight: 400;
             line-height: 120%;
             @media screen and (max-width: $breakpoint-mobile) {
-              font-size: 1rem;
+              font-size: clamp(0.75rem, calc(0.571rem + 0.893vw), 1rem);
             }
           }
         }
@@ -232,6 +239,7 @@
         gap: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem);
         @media screen and (max-width: $breakpoint-mobile) {
           justify-content: center;
+          gap: clamp(1rem, calc(0.464rem + 2.679vw), 1.75rem);
         }
 
         .tasks,
