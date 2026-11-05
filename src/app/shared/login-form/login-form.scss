@@ -3,7 +3,7 @@
 .container {
     min-height: 100dvh;
     display: grid;
-    place-items: center; // centers the card horizontally and vertically
+    place-items: center;
     padding: clamp(16px, 4vw, 32px);
     background-color: $dashboard-background;
 }
@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     gap: clamp(20px, 3vw, 32px);
-    width: min(650px, 100%); // 650px on desktop, full width minus page padding on phones
+    width: min(650px, 100%); 
     padding: clamp(28px, 4vw, 48px) clamp(20px, 5vw, 48px);
     box-sizing: border-box;
     background-color: $color-white;
@@ -37,7 +37,7 @@
         width: min(100%, 420px);
 
         &_input {
-            position: relative; // the icon is measured from this box
+            position: relative; 
         }
 
         &_icon {
@@ -45,7 +45,7 @@
             top: 50%;
             right: 12px;
             transform: translateY(-50%);
-            pointer-events: none; // clicks reach the input underneath
+            pointer-events: none; 
         }
     }
 
@@ -53,7 +53,7 @@
     input[type='password'] {
         display: block;
         width: 100%;
-        padding: 10px 42px 10px 12px; // right padding keeps text away from the icon
+        padding: 10px 42px 10px 12px;
         border: 1px solid $color-input-border;
         border-radius: 8px;
         font-size: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
@@ -71,9 +71,9 @@
 
     .form-button {
         display: flex;
-        flex-wrap: wrap; // buttons stack by themselves when the card is too narrow
+        flex-wrap: wrap; 
         justify-content: center;
-        gap: 16px 30px; // row gap, column gap
+        gap: 16px 30px; 
         padding-top: 8px;
 
         button {
