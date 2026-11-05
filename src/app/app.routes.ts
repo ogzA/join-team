@@ -8,6 +8,7 @@ import { PrivacyPolicy } from './layout/privacy-policy/privacy-policy';
 import { AddTask } from './layout/dashboard/Task/add-task/add-task';
 import { AssignedToDropdown } from './shared/assigned-to-dropdown/assigned-to-dropdown';
 import { ShowTaskDetails } from './layout/dashboard/Task/show-task-details/show-task-details';
+import { PublicHeader } from './shared/public-header/public-header';
 import { LoginForm } from './shared/login-form/login-form';
 import { Summary } from './layout/dashboard/summary/summary';
 
@@ -36,6 +37,14 @@ export const routes: Routes = [
   {
     path: 'board',
     component: Board,
+  },
+  {
+    path: 'public-header',
+    component: PublicHeader,
+  },
+  {
+    path: 'public-header',
+    component: PublicHeader,
   },
   {
     path: 'contacts',
