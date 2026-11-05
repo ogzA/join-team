@@ -1,20 +1,26 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { Supabase } from '../../../../shared/services/supabase';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { SelectedTask, Subtask, Task, TaskPrio } from '../../../../shared/models/task';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { NameLogo } from '../../../../shared/services/name-logo';
 
-
-
-
 @Component({
   imports: [ReactiveFormsModule, AssignedToDropdown, TitleCasePipe, DatePipe],
   selector: 'app-show-task-details',
   styleUrl: './show-task-details.scss',
   templateUrl: './show-task-details.html',
+  host: {
+    '(document:keydown.escape)': 'closeDialog()',
+  },
 })
 export class ShowTaskDetails {
   todaysDate: string = this.getTodayDate();
