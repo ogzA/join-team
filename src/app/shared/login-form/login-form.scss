@@ -53,7 +53,7 @@
     input[type='password'] {
         display: block;
         width: 100%;
-        padding: 10px 44px 10px 12px; // right padding keeps text away from the icon
+        padding: 10px 42px 10px 12px; // right padding keeps text away from the icon
         border: 1px solid $color-input-border;
         border-radius: 8px;
         font-size: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
@@ -103,7 +103,8 @@
         }
 
         .asGuestLogIn:hover {
-            border: 2px solid $color-input-focus;
+            box-shadow: 0px 4px 4px 0px #00000040;
+
         }
     }
 }
