@@ -1,0 +1,19 @@
+@use '../../../../public/assets/scss/all-styles' as *;
+
+.container{
+    background: $dashboard-background;
+    @include flex-center;
+    color: $color-input-border;
+    justify-content: center;
+    padding: 40px ;
+    gap: 24px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    p{
+        cursor: pointer;
+    }
+    @media (max-width: $breakpoint-small-devices) {
+        gap: 16px;
+    }
+}

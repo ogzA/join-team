@@ -11,6 +11,7 @@ import { ShowTaskDetails } from './layout/dashboard/Task/show-task-details/show-
 import { PublicHeader } from './shared/public-header/public-header';
 import { LoginForm } from './shared/login-form/login-form';
 import { Summary } from './layout/dashboard/summary/summary';
+import { PublicFooter } from './shared/public-footer/public-footer';
 
 export const routes: Routes = [
   {
@@ -43,10 +44,13 @@ export const routes: Routes = [
     component: PublicHeader,
   },
   {
+    path: 'public-footer',
+    component: PublicFooter
+  },
+  {
     path: 'contacts',
     component: Contacts,
   },
-
   {
     path: 'help-page',
     component: HelpPage,
