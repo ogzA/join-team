@@ -1,0 +1,261 @@
+@use '../../../../../public/assets/scss/all-styles' as *;
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 90rem;
+  height: 100%;
+  // calc(100svh - 96px)
+  padding: clamp(1rem, calc(0.2856875rem + 3.571vw), 3.5rem) 2.5rem 0 6rem;
+  color: $color-input-text;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .headline {
+    @include flex-center;
+    width: 100%;
+    gap: clamp(1rem, calc(0.75rem + 1.25vw), 1.875rem);
+
+    h2 {
+      font-size: clamp(2rem, calc(1.482rem + 2.589vw), 3.81rem);
+      font-weight: 700;
+      line-height: 120%;
+    }
+
+    p {
+      font-size: clamp(1.25rem, calc(1.125rem + 0.625vw), 1.69rem);
+      font-weight: 400;
+      line-height: 120%;
+      color: $color-avatar-more;
+    }
+
+    // Umbrechen der Headline Elemente
+    @media screen and (max-width: $breakpoint-summary) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.125rem;
+
+      img {
+        background-color: red;
+        width: 9.375rem;
+        height: 0.1875rem;
+        position: relative;
+        top: 2.8125rem;
+      }
+    }
+
+    // Mobil Zentrierung
+    @media screen and (max-width: $breakpoint-mobile) {
+      @include flex-center;
+    }
+  }
+
+  .summary-content {
+    display: flex;
+    width: 100%;
+    margin-top: 2.5rem;
+
+    .side-text {
+      @include flex-center;
+      flex: 1;
+      padding-left: clamp(1rem, calc(-8.0909375rem + 14.545vw), 5rem);
+
+      h3 {
+        font-size: clamp(1.06rem, calc(-2.915rem + 6.364vw), 2.81rem);
+        font-weight: 500;
+        line-height: 120%;
+        font-style: normal;
+        color: $color-avatar-more;
+      }
+
+      // Ausblenden vom Good Morning Text
+      @media screen and (max-width: $breakpoint-summary) {
+        display: none;
+      }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: clamp(18rem, calc(13.142875rem + 24.286vw), 35rem);
+      grid-template-rows: repeat(3, clamp(7.25rem, calc(5.8393125rem + 5.179vw), 10.5rem));
+      gap: clamp(1.75rem, calc(1.7143125rem + 0.179vw), 1.875rem);
+      // background-color: yellow;
+
+      @media screen and (max-width: $breakpoint-mobile) {
+        grid-template-columns: calc(100vw - 4rem);
+        grid-template-rows: repeat(3, 18svh);
+        margin-top: 1rem;
+      }
+
+      .card {
+        border-radius: 1.875rem;
+        padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
+        background: $color-white;
+        box-shadow: $shadow-summary-card;
+        @include all-center;
+        gap: clamp(0.75rem, calc(0.642875rem + 0.536vw), 1.125rem);
+
+        @media screen and (max-width: $breakpoint-mobile) {
+          gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
+        }
+
+        &:hover {
+          background-color: $color-avatar-more;
+
+          h3,
+          p {
+            color: $color-white !important;
+          }
+
+          .circle {
+            filter: invert(100%) sepia(100%) saturate(0%) brightness(100%) contrast(100%);
+          }
+        }
+
+        img {
+          width: clamp(2.5rem, calc(1.982rem + 2.589vw), 4.31rem);
+          height: clamp(2.5rem, calc(1.982rem + 2.589vw), 4.31rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            width: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
+            height: clamp(2.5rem, calc(1.205rem + 6.473vw), 4.31rem);
+          }
+        }
+
+        .content {
+          @include all-col-center;
+          padding: 0.5rem;
+
+          h3 {
+            font-size: clamp(2.5rem, calc(2.071rem + 2.143vw), 4rem);
+            font-weight: 600;
+            line-height: 120%;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(2.5rem, calc(1.429rem + 5.357vw), 4rem);
+            }
+          }
+
+          p {
+            font-size: clamp(0.88rem, calc(0.768rem + 0.536vw), 1.25rem);
+            font-weight: 400;
+            line-height: 120%;
+            text-align: center;
+            color: $color-avatar-more;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(1rem, calc(0.821rem + 0.893vw), 1.25rem);
+            }
+          }
+        }
+      }
+
+      .top-cards {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        display: flex;
+        gap: clamp(1.5rem, calc(1.357125rem + 0.714vw), 2rem);
+
+        @media screen and (max-width: $breakpoint-mobile) {
+          justify-content: center;
+        }
+
+        .to-do,
+        .done {
+          width: clamp(11.625rem, calc(10.1606875rem + 7.321vw), 16.75rem);
+
+          @media screen and (max-width: $breakpoint-mobile) {
+            width: 50%;
+          }
+        }
+      }
+
+      .upcoming {
+        grid-column: 1 / 2;
+        grid-row: 2 / 2;
+        gap: clamp(0.5rem, calc(-0.107125rem + 3.036vw), 2.625rem);
+        padding: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem)
+          clamp(0.5rem, calc(-0.0714375rem + 2.857vw), 2.5rem);
+
+        img {
+          width: unset;
+          height: unset;
+        }
+
+        .content-left {
+          @include flex-center;
+          gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
+          }
+
+          .prio-circle {
+            width: clamp(2.5rem, calc(2.143rem + 1.786vw), 3.75rem);
+            height: clamp(2.5rem, calc(2.143rem + 1.786vw), 3.75rem);
+            @media screen and (max-width: $breakpoint-mobile) {
+              width: clamp(2.5rem, calc(1.607rem + 4.464vw), 3.75rem);
+              height: clamp(2.5rem, calc(1.607rem + 4.464vw), 3.75rem);
+            }
+            @include all-center;
+            background-color: $prio-background-urgent;
+            padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
+            border-radius: 50%;
+
+            img {
+              width: 100%;
+              object-fit: contain;
+            }
+          }
+        }
+
+        .content-right {
+          display: flex;
+          flex-direction: column;
+
+          h3 {
+            font-size: clamp(0.8rem, calc(0.589rem + 0.804vw), 1.31rem);
+            font-weight: 700;
+            line-height: 120%;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(0.75rem, calc(0.348rem + 2.009vw), 1.31rem);
+            }
+          }
+          p {
+            font-size: clamp(0.88rem, calc(0.839rem + 0.179vw), 1rem);
+            font-weight: 400;
+            line-height: 120%;
+            @media screen and (max-width: $breakpoint-mobile) {
+              font-size: clamp(0.75rem, calc(0.571rem + 0.893vw), 1rem);
+            }
+          }
+        }
+      }
+
+      .bottom-cards {
+        grid-column: 1 / 2;
+        grid-row: 3 / 3;
+        display: flex;
+        gap: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem);
+        @media screen and (max-width: $breakpoint-mobile) {
+          justify-content: center;
+          gap: clamp(1rem, calc(0.464rem + 2.679vw), 1.75rem);
+        }
+
+        .tasks,
+        .progress,
+        .feedback {
+          width: clamp(5.625rem, calc(3.9106875rem + 8.571vw), 11.625rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    // Mobil Zentrierung
+    @media screen and (max-width: $breakpoint-mobile) {
+      @include flex-col-center;
+    }
+  }
+}

@@ -42,19 +42,19 @@
           <div class="modal_content_section">
             <p>Assigned to</p>
             <div class="section-scroll">
-            @for (name of task().assigned; track $index) {
-              @let avatar = nlService.setNameLogo(name);
-              <div class="modal_content__assignedPersons">
-                <span
-                  class="modal_content__avatar"
-                  [style.background-color]="avatar.color"
-                  [style.color]="avatar.textColor"
-                >
-                  {{ avatar.name }}
-                </span>
-                <p>{{ name | titlecase }}</p>
-              </div>
-            }
+              @for (name of task().assigned; track $index) {
+                @let avatar = nlService.setNameLogo(name);
+                <div class="modal_content__assignedPersons">
+                  <span
+                    class="modal_content__avatar"
+                    [style.background-color]="avatar.color"
+                    [style.color]="avatar.textColor"
+                  >
+                    {{ avatar.name }}
+                  </span>
+                  <p>{{ name | titlecase }}</p>
+                </div>
+              }
             </div>
           </div>
           <div class="modal_content_section">
@@ -101,7 +101,12 @@
               <label for="date">Due date</label>
               <input type="date" [min]="todaysDate" id="date" formControlName="date" />
               <div class="error-container">
-                @if (taskDetailForm.controls.date.errors?.['pastDate']) {
+                @if (
+                  taskDetailForm.controls.date.errors?.['required'] ||
+                  taskDetailForm.controls.date.errors?.['pattern']
+                ) {
+                  <p class="error">Please enter a valid date</p>
+                } @else if (taskDetailForm.controls.date.errors?.['pastDate']) {
                   <p class="error">Please select today or a future date</p>
                 }
               </div>
@@ -255,7 +260,12 @@
           <span>Edit</span>
         </button>
       } @else {
-        <button type="submit" form="taskDetailForm" class="submitBtn"  [disabled]=" taskDetailForm.invalid || !hasChanges()">
+        <button
+          type="submit"
+          form="taskDetailForm"
+          class="submitBtn"
+          [disabled]="taskDetailForm.invalid || !hasChanges()"
+        >
           Ok
           <img src="assets/icons/check.svg" alt="" />
         </button>

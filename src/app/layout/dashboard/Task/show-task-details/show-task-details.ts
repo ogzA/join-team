@@ -1,20 +1,26 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { Supabase } from '../../../../shared/services/supabase';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { SelectedTask, Subtask, Task, TaskPrio } from '../../../../shared/models/task';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { NameLogo } from '../../../../shared/services/name-logo';
 
-
-
-
 @Component({
   imports: [ReactiveFormsModule, AssignedToDropdown, TitleCasePipe, DatePipe],
   selector: 'app-show-task-details',
   styleUrl: './show-task-details.scss',
   templateUrl: './show-task-details.html',
+  host: {
+    '(document:keydown.escape)': 'closeDialog()',
+  },
 })
 export class ShowTaskDetails {
   todaysDate: string = this.getTodayDate();
@@ -33,6 +39,7 @@ export class ShowTaskDetails {
   subtasks: Subtask[] = [];
   assigned = signal<string[]>([]);
   private snapshot = '';
+  private originalDate = '';
 
   selected = input.required<SelectedTask>();
 
@@ -49,20 +56,20 @@ export class ShowTaskDetails {
   protected nlService = inject(NameLogo);
   private toast = inject(ToastService);
 
-  // Gives an error when the date is before today.
+ /** Gives an error when the date is before today. The original date of the task stays valid. */
   private noPastDate = (control: AbstractControl): ValidationErrors | null => {
     const value: string = control.value;
-    if (!value || value >= this.todaysDate) return null;
+    if (!value || value >= this.todaysDate || value === this.originalDate) return null;
     return { pastDate: true };
   };
 
   taskDetailForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
-    date: ['',[Validators.required, this.noPastDate]],
+    date: ['',[Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/), this.noPastDate]],
     prio: [''],
     subtasks: [''],
-  });  
+  });
 
   async onSubmit() {
     if (this.taskDetailForm.invalid) {
@@ -129,6 +136,7 @@ export class ShowTaskDetails {
 
   editTask() {
     const task = this.task();
+    this.originalDate = this.toInputDate(task.date);
 
     // reset(values) fills the form and clears any old touched/dirty fileds
     this.taskDetailForm.reset({
