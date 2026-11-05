@@ -40,17 +40,14 @@
       gap: 0.125rem;
 
       img {
-        background-color: red;
-        width: 9.375rem;
+        width: clamp(11.875rem, calc(6.413rem + 11.364vw), 13.125rem);
         height: 0.1875rem;
         position: relative;
         top: 2.8125rem;
+        @media screen and (max-width: $breakpoint-mobile) {
+          width: clamp(8.5rem, calc(6.268rem + 11.161vw), 11.625rem);
+        }
       }
-    }
-
-    // Mobil Zentrierung
-    @media screen and (max-width: $breakpoint-mobile) {
-      @include flex-center;
     }
   }
 
@@ -86,8 +83,8 @@
       // background-color: yellow;
 
       @media screen and (max-width: $breakpoint-mobile) {
-        grid-template-columns: calc(100vw - 4rem);
-        grid-template-rows: repeat(3, 18svh);
+        grid-template-columns: calc(100vw - 2rem);
+        grid-template-rows: repeat(3, 15svh);
         margin-top: 1rem;
       }
 
@@ -146,7 +143,7 @@
             text-align: center;
             color: $color-avatar-more;
             @media screen and (max-width: $breakpoint-mobile) {
-              font-size: clamp(1rem, calc(0.821rem + 0.893vw), 1.25rem);
+              font-size: clamp(0.88rem, calc(0.607rem + 1.339vw), 1.25rem);
             }
           }
         }
@@ -157,7 +154,6 @@
         grid-row: 1 / 2;
         display: flex;
         gap: clamp(1.5rem, calc(1.357125rem + 0.714vw), 2rem);
-
         @media screen and (max-width: $breakpoint-mobile) {
           justify-content: center;
         }
@@ -165,7 +161,6 @@
         .to-do,
         .done {
           width: clamp(11.625rem, calc(10.1606875rem + 7.321vw), 16.75rem);
-
           @media screen and (max-width: $breakpoint-mobile) {
             width: 50%;
           }
@@ -178,10 +173,13 @@
         gap: clamp(0.5rem, calc(-0.107125rem + 3.036vw), 2.625rem);
         padding: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem)
           clamp(0.5rem, calc(-0.0714375rem + 2.857vw), 2.5rem);
+        @media screen and (max-width: $breakpoint-mobile) {
+          gap: clamp(0.5rem, calc(-1.018rem + 7.589vw), 2.625rem);
+        }
 
-        img {
-          width: unset;
-          height: unset;
+        .line {
+          height: 100%;
+          width: 2px;
         }
 
         .content-left {
@@ -199,6 +197,7 @@
               height: clamp(2.5rem, calc(1.607rem + 4.464vw), 3.75rem);
             }
             @include all-center;
+            // Aktuell nur für Urgent als roter kreis
             background-color: $prio-background-urgent;
             padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
             border-radius: 50%;
@@ -219,7 +218,7 @@
             font-weight: 700;
             line-height: 120%;
             @media screen and (max-width: $breakpoint-mobile) {
-              font-size: clamp(0.75rem, calc(0.348rem + 2.009vw), 1.31rem);
+              font-size: clamp(1rem, calc(0.777rem + 1.116vw), 1.31rem);
             }
           }
           p {
@@ -227,7 +226,7 @@
             font-weight: 400;
             line-height: 120%;
             @media screen and (max-width: $breakpoint-mobile) {
-              font-size: clamp(0.75rem, calc(0.571rem + 0.893vw), 1rem);
+              font-size: clamp(0.88rem, calc(0.786rem + 0.446vw), 1rem);
             }
           }
         }
@@ -240,7 +239,7 @@
         gap: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem);
         @media screen and (max-width: $breakpoint-mobile) {
           justify-content: center;
-          gap: clamp(1rem, calc(0.464rem + 2.679vw), 1.75rem);
+          gap: clamp(0.75rem, calc(0.214rem + 2.679vw), 1.5rem);
         }
 
         .tasks,
@@ -248,7 +247,7 @@
         .feedback {
           width: clamp(5.625rem, calc(3.9106875rem + 8.571vw), 11.625rem);
           @media screen and (max-width: $breakpoint-mobile) {
-            flex: 1;
+            width: clamp(5.5rem, calc(-0.795rem + 31.473vw), 14.313rem);
           }
         }
       }
