@@ -43,10 +43,6 @@ export const routes: Routes = [
     component: PublicHeader,
   },
   {
-    path: 'public-header',
-    component: PublicHeader,
-  },
-  {
     path: 'contacts',
     component: Contacts,
   },
