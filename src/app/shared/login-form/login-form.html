@@ -1,0 +1,25 @@
+<section class="container">
+    <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h1>Log in</h1>
+        <span class="form-container_textBorder"></span>
+
+        <div class="field">
+            <div class="field_input">
+            <input type="email" id="email" formControlName="email" placeholder="Email" />
+            <img class="field_icon" src="assets/icons/mail.svg" alt="" />
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="field_input">
+            <input type="password" id="password" formControlName="password" placeholder="Password" />
+            <img class="field_icon" src="assets/icons/lock.svg" alt="" />
+            </div>
+        </div>
+
+        <div class="form-button">
+            <button class="logIn" type="submit">Log in</button>
+            <button class="asGuestLogIn" type="button">Guest Log in</button>
+        </div>
+    </form>
+</section>
