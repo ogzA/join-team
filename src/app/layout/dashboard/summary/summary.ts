@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../shared/services/supabase';
 import { DatePipe } from '@angular/common';
+import { Task } from '../../../shared/models/task';
 
 @Component({
   imports: [RouterLink, DatePipe],
@@ -11,27 +12,81 @@ import { DatePipe } from '@angular/common';
 })
 export class Summary {
   dbService = inject(Supabase);
-  deadline = signal('');
+  deadline: string = '';
   deadlineArray: string[] = [];
-  nextText = signal('Upcoming');
+  nextText: string = 'Upcoming';
+  nextCounts: number[] = [];
 
   ngOnInit() {
     setTimeout(() => {
-      this.checkNextDeadline();
-    }, 250);
+      this.checkNextCounts();
+    }, 1000);
   }
 
-  checkNextDeadline() {
+  clearArray() {
+    for (let index = 0; index < this.deadlineArray.length; index++) {
+      this.deadlineArray[index] = '';
+    }
+  }
+
+  addSignalDateToArray() {
+    this.clearArray();
     this.addToDoinArray();
     this.addInProgressinArray();
     this.addAwaitFeedbackinArray();
     this.deadlineArray.sort();
-    this.deadline.set(this.deadlineArray[0]);
-    // console.log('Deadline:', this.deadline());
-    let today = new Date().toJSON().slice(0, 10);
+  }
 
-    if (this.deadline() < today) this.nextText.set('Passed');
-    else this.nextText.set('Upcoming');
+  checkNextDeadline() {
+    this.addSignalDateToArray();
+    this.deadline = this.deadlineArray[0];
+    return this.deadline;
+  }
+
+  setNextText() {
+    let today = new Date().toJSON().slice(0, 10);
+    if (this.deadline < today && this.deadline != '') this.nextText = 'Passed';
+    else this.nextText = 'Upcoming';
+    return this.nextText;
+  }
+
+  checkNextCounts() {
+    this.nextCounts[0] = 0;
+    this.nextCounts[1] = 0;
+    this.nextCounts[2] = 0;
+    console.log(this.deadline);
+
+    this.countDeadlineUrgent();
+    this.countDeadlineMedium();
+    this.countDeadlineLow();
+    console.log('Urgent', this.nextCounts[0]);
+    console.log('Medium', this.nextCounts[1]);
+    console.log('Low', this.nextCounts[2]);
+  }
+
+  checkCount(data: Task[], prio: string, countIndex: number) {
+    for (let index = 0; index < data.length; index++) {
+      if (data[index].date == this.deadline && data[index].prio == prio)
+        this.nextCounts[countIndex]++;
+    }
+  }
+
+  countDeadlineUrgent() {
+    this.checkCount(this.dbService.toDoTasks(), 'Urgent', 0);
+    this.checkCount(this.dbService.inProgressTasks(), 'Urgent', 0);
+    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Urgent', 0);
+  }
+
+  countDeadlineMedium() {
+    this.checkCount(this.dbService.toDoTasks(), 'Medium', 1);
+    this.checkCount(this.dbService.inProgressTasks(), 'Medium', 1);
+    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Medium', 1);
+  }
+
+  countDeadlineLow() {
+    this.checkCount(this.dbService.toDoTasks(), 'Low', 2);
+    this.checkCount(this.dbService.inProgressTasks(), 'Low', 2);
+    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Low', 2);
   }
 
   addToDoinArray() {
