@@ -3,7 +3,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublicHeader } from '../public-header/public-header';
 import { PublicFooter } from '../public-footer/public-footer';
 import { RouterLink } from '@angular/router';
-import { PrivacyPolicy } from '../../layout/privacy-policy/privacy-policy';
 
 @Component({
   imports: [ReactiveFormsModule, PublicHeader, PublicFooter, RouterLink],
@@ -12,7 +11,6 @@ import { PrivacyPolicy } from '../../layout/privacy-policy/privacy-policy';
   templateUrl: './signup-form.html',
 })
 export class SignupForm {
-
   private fb = inject(FormBuilder);
 
   signupForm = this.fb.nonNullable.group({
@@ -20,7 +18,7 @@ export class SignupForm {
     email: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
     password: ['', Validators.required],
     confirmPassword: [''],
-    PrivacyPolicy: [false],
+    privacyPolicy: [false],
   });
 
   onSubmit() {
