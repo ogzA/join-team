@@ -1,9 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../shared/services/supabase';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   selector: 'app-summary',
   styleUrl: './summary.scss',
   templateUrl: './summary.html',
@@ -12,20 +13,25 @@ export class Summary {
   dbService = inject(Supabase);
   deadline = signal('');
   deadlineArray: string[] = [];
+  nextText = signal('Upcoming');
 
   ngOnInit() {
-    this.checkNextDeadline();
+    setTimeout(() => {
+      this.checkNextDeadline();
+    }, 250);
   }
 
   checkNextDeadline() {
-    setTimeout(() => {
-      this.addToDoinArray();
-      this.addInProgressinArray();
-      this.addAwaitFeedbackinArray();
-      this.deadlineArray.sort();
-      this.deadline.set(this.deadlineArray[0]);
-      console.log('Deadline:', this.deadline());
-    }, 150);
+    this.addToDoinArray();
+    this.addInProgressinArray();
+    this.addAwaitFeedbackinArray();
+    this.deadlineArray.sort();
+    this.deadline.set(this.deadlineArray[0]);
+    // console.log('Deadline:', this.deadline());
+    let today = new Date().toJSON().slice(0, 10);
+
+    if (this.deadline() < today) this.nextText.set('Passed');
+    else this.nextText.set('Upcoming');
   }
 
   addToDoinArray() {

@@ -38,9 +38,9 @@
 
         <img class="line" src="assets/icons/trennstrich2.png" alt="" />
 
-        <div class="content-right" (load)="checkNextDeadline()">
-          <h3>{{ deadline() }}</h3>
-          <p>Upcoming Deadline</p>
+        <div class="content-right">
+          <h3>{{ deadline() | date }}</h3>
+          <p>{{ nextText() }} Deadline</p>
         </div>
       </div>
 
