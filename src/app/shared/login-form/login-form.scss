@@ -44,6 +44,12 @@
 
         &_input {
             position: relative; 
+
+            .password_icon {
+                cursor: pointer;
+                pointer-events: auto;
+            }
+
         }
 
         &_icon {
@@ -53,9 +59,23 @@
             transform: translateY(-50%);
             pointer-events: none; 
         }
+        .error-container {
+        min-height: 22px;
+        display: flex;
+        align-items: flex-start;
+        padding-top: 4px;
+        box-sizing: border-box;
+    }
+
+    .error {
+        color: $error-color;
+        font-size: 0.8rem;
+        line-height: 18px;
+    }
     }
 
     input[type='email'],
+    input[type='text'],
     input[type='password'] {
         display: block;
         width: 100%;
@@ -88,6 +108,11 @@
             font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
             font-weight: 700;
             cursor: pointer;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
         .logIn {

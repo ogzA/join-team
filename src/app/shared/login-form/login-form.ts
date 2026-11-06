@@ -13,12 +13,17 @@ import { contactValidators } from '../../layout/dashboard/contacts/contact-forms
 })
 export class LoginForm {
   private fb = inject(FormBuilder);
-  inMobileMode: boolean = false;
+  showPassword: boolean = false;
+
 
   loginForm = this.fb.nonNullable.group({
-    email: ['', Validators.required, contactValidators.email],
-    password: ['', Validators.required],
+    email: ['', contactValidators.email],
+    password: ['',contactValidators.password],
   });
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   onSubmit() {
     if (this.loginForm.invalid) {

@@ -8,32 +8,48 @@
         <div class="field">
             <div class="field_input">
                 <input type="email" id="email" formControlName="email" placeholder="Email" />
-                <img class="field_icon" src="assets/icons/mail.svg" alt="email_icon" />
+                <img class="field_icon" src="assets/icons/loginform_mail.svg" alt="email_icon" />
             </div>
-            @if (loginForm.controls['email'].touched) {
-                @if (loginForm.controls['email'].errors?.['required']) {
-                <span class="error">This field is required</span>
-                } @else if (loginForm.controls['email'].errors?.['pattern']) {
-                <span class="error">Please enter first and last name (letters only)</span>
-                }
-            }
+            <div class="error-container">
+                    @if (loginForm.controls['email'].touched) {
+                        @if (loginForm.controls['email'].errors?.['required']) {
+                            <span class="error">This field is required</span>
+                        } @else if (loginForm.controls['email'].errors?.['pattern']) {
+                            <span class="error">Please enter a valid email address</span>
+                        }
+                    }
+                </div>
         </div>
 
         <div class="field">
             <div class="field_input">
-                <input type="password" id="password" formControlName="password" placeholder="Password" />
-                <img class="field_icon" src="assets/icons/visibility_off.svg" alt="visibility_icon" />
+                <input  [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Password" />
+                <img
+                    class="field_icon password_icon"
+                    [src]="showPassword
+                        ? 'assets/icons/visibility.svg'
+                        : 'assets/icons/visibility_off.svg'"
+                    (click)="togglePasswordVisibility()"
+                    alt="Toggle_password_visibility"
+                />
             </div>
-            @if (loginForm.controls['password'].touched) {
-                @if (loginForm.controls['password'].errors?.['required']) {
-                <span class="error">Check your email and password. Please try again.</span>
+            <div class="error-container">
+                @if (loginForm.controls['password'].touched) {
+                    @if (loginForm.controls['password'].errors?.['required']) {
+                        <span class="error">This field is required</span>
+                    } @else if (loginForm.controls['password'].errors?.['pattern']) {
+                        <span class="error">
+                            Password must contain at least 8 characters, one uppercase,
+                            one lowercase, one number and one special character.
+                        </span>
+                    }
                 }
-            }
+            </div>
         </div>
 
         <div class="form-button">
-            <button class="logIn" type="submit">Log in</button>
-            <button class="asGuestLogIn" type="button">Guest Log in</button>
+            <button class="logIn" type="submit" [disabled]="loginForm.invalid">Log in</button>
+            <button class="asGuestLogIn" type="button" [disabled]="loginForm.invalid">Guest Log in</button>
         </div>
     </form>
     <!-- visible only in mobile view -->
