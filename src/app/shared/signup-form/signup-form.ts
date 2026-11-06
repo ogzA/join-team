@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PublicHeader } from '../public-header/public-header';
+import { PublicFooter } from '../public-footer/public-footer';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PublicHeader, PublicFooter],
   selector: 'app-signup-form',
   styleUrl: './signup-form.scss',
   templateUrl: './signup-form.html',

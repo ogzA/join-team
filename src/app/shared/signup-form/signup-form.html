@@ -1,7 +1,11 @@
+<section class="mainContainer">
+<app-public-header></app-public-header>
 <section class="container">
     <form class="form-container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <h1>Sign up</h1>
-        <img src="assets/icons/arrow-left-line.svg" alt="go_to_previous_page">
+        <div class="backArrow">
+            <img src="assets/icons/arrow-left-line.svg" alt="go_to_previous_page">
+            <h1>Sign up</h1>
+        </div>        
         <span class="form-container_textBorder"></span>
 
         <div class="field">
@@ -41,4 +45,6 @@
             <button class="logIn" type="submit">Sign up</button>
         </div>
     </form>
+</section>
+<app-public-footer></app-public-footer>
 </section>
