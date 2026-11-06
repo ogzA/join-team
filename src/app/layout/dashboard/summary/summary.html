@@ -8,14 +8,14 @@
   <section class="summary-content">
     <section class="grid">
       <article class="top-cards">
-        <div class="to-do card">
+        <div class="to-do card" routerLink="/board">
           <img class="circle" src="assets/icons/todo-icon.png" alt="" />
           <div class="content">
             <h3 class="count">1</h3>
             <p>To-do</p>
           </div>
         </div>
-        <div class="done card">
+        <div class="done card" routerLink="/board">
           <img class="circle" src="assets/icons/done-icon.png" alt="" />
           <div class="content">
             <h3 class="count">2</h3>
@@ -24,7 +24,7 @@
         </div>
       </article>
 
-      <div class="upcoming card">
+      <div class="upcoming card" routerLink="/board">
         <div class="content-left">
           <div class="prio-circle">
             <img src="assets/icons/urgent-light.svg" alt="" />
@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <img src="assets/icons/trennstrich2.png" alt="" />
+        <img class="line" src="assets/icons/trennstrich2.png" alt="" />
 
         <div class="content-right">
           <h3>November 16,2026</h3>
@@ -45,19 +45,19 @@
       </div>
 
       <article class="bottom-cards">
-        <div class="tasks card">
+        <div class="tasks card" routerLink="/board">
           <div class="content">
             <h3 class="count">5</h3>
             <p>Tasks in Board</p>
           </div>
         </div>
-        <div class="progress card">
+        <div class="progress card" routerLink="/board">
           <div class="content">
             <h3 class="count">4</h3>
             <p>Tasks in Progress</p>
           </div>
         </div>
-        <div class="feedback card">
+        <div class="feedback card" routerLink="/board">
           <div class="content">
             <h3 class="count">6</h3>
             <p>Awaiting Feedback</p>
