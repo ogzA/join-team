@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../shared/services/supabase';
 
@@ -10,47 +10,51 @@ import { Supabase } from '../../../shared/services/supabase';
 })
 export class Summary {
   dbService = inject(Supabase);
-  deadline: string = '';
+  deadline = signal('');
+  deadlineArray: string[] = [];
+
+  ngOnInit() {
+    this.checkNextDeadline();
+  }
 
   checkNextDeadline() {
-    for (let index = this.dbService.toDoTasks().length - 1; index > 0; index--) {
-      // console.log(
-      //   index,
-      //   '-',
-      //   index - 1,
-      //   '-',
-      //   this.dbService.toDoTasks()[index].date,
-      //   '-',
-      //   this.dbService.toDoTasks()[index - 1].date,
-      // );
-      if (this.dbService.toDoTasks()[index].date < this.dbService.toDoTasks()[index - 1].date)
-        this.deadline = this.dbService.toDoTasks()[index].date;
-    }
-    console.log('Deadline nach to do:', this.deadline);
+    setTimeout(() => {
+      this.addToDoinArray();
+      this.addInProgressinArray();
+      this.addAwaitFeedbackinArray();
+      this.deadlineArray.sort();
+      this.deadline.set(this.deadlineArray[0]);
+      console.log('Deadline:', this.deadline());
+    }, 150);
+  }
 
-    for (let index = this.dbService.inProgressTasks().length - 1; index > 0; index++) {
-      console.log('test', this.dbService.inProgressTasks()[index].date);
-      if (
-        this.dbService.inProgressTasks()[index].date <
-          this.dbService.inProgressTasks()[index + 1].date ||
-        this.dbService.inProgressTasks()[index].date < this.deadline
-      )
-        this.deadline = this.dbService.inProgressTasks()[index].date;
+  addToDoinArray() {
+    let start = this.deadlineArray.length;
+    if (this.dbService.toDoTasks().length > 0) {
+      for (let index = 0; index < this.dbService.toDoTasks().length; index++) {
+        this.deadlineArray[start] = this.dbService.toDoTasks()[index].date;
+        if (index < this.dbService.toDoTasks().length) start++;
+      }
     }
-    console.log('Deadline nach in Progress:', this.deadline);
+  }
 
-    for (let index = 0; index < this.dbService.awaitFeedbackTasks().length; index++) {
-      // console.log(this.dbService.awaitFeedbackTasks()[index].date);
-      if (
-        index > 0 &&
-        (this.dbService.awaitFeedbackTasks()[index].date <
-          this.dbService.awaitFeedbackTasks()[index - 1].date ||
-          this.dbService.awaitFeedbackTasks()[index].date < this.deadline)
-      )
-        this.deadline = this.dbService.awaitFeedbackTasks()[index].date;
+  addInProgressinArray() {
+    let start = this.deadlineArray.length;
+    if (this.dbService.inProgressTasks().length > 0) {
+      for (let index = 0; index < this.dbService.inProgressTasks().length; index++) {
+        this.deadlineArray[start] = this.dbService.inProgressTasks()[index].date;
+        if (index < this.dbService.inProgressTasks().length) start++;
+      }
     }
+  }
 
-    console.log('');
-    console.log('Deadline:', this.deadline);
+  addAwaitFeedbackinArray() {
+    let start = this.deadlineArray.length;
+    if (this.dbService.awaitFeedbackTasks().length > 0) {
+      for (let index = 0; index < this.dbService.awaitFeedbackTasks().length; index++) {
+        this.deadlineArray[start] = this.dbService.awaitFeedbackTasks()[index].date;
+        if (index < this.dbService.awaitFeedbackTasks().length) start++;
+      }
+    }
   }
 }
