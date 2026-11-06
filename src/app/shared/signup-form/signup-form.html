@@ -1,5 +1,5 @@
 <section class="mainContainer">
-  <app-public-header></app-public-header>
+  <app-public-header [showSignup]="false"></app-public-header>
   <section class="container">
     <form class="form-container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="signup-header">
