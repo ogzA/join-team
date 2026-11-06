@@ -162,7 +162,7 @@
   .taskForm {
     &-columns {
       display: flex;
-      gap: 32px;
+      gap: 48px;
       align-items: stretch;
       min-width: 0;
 
@@ -179,7 +179,7 @@
         box-sizing: border-box;
 
         .field {
-          margin-bottom: 25px;
+          margin-bottom: 16px;
           min-width: 0;
         }
       }
