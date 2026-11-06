@@ -323,6 +323,7 @@ $color-move-option-hover: #091931;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-wrap: anywhere;
 }
 
 // Standardmäßig versteckt, nur im Mobile sichtbar
