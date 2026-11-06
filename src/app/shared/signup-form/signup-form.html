@@ -2,11 +2,14 @@
 <app-public-header></app-public-header>
 <section class="container">
     <form class="form-container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div class="backArrow">
-            <img src="assets/icons/arrow-left-line.svg" alt="go_to_previous_page">
-            <h1>Sign up</h1>
-        </div>        
-        <span class="form-container_textBorder"></span>
+        <div class="signup-header">
+            <img class="backArrow" routerLink="/login" src="assets/icons/arrow-left-line.svg" alt="go_to_previous_page" />
+    
+            <div class="signup-title">
+                <h1>Sign up</h1>
+                <span class="form-container_textBorder"></span>
+            </div>
+        </div>
 
         <div class="field">
             <div class="field_input">
@@ -36,7 +39,7 @@
             </div>
         </div>
 
-        <div class="field">
+        <div class="field checkPosition">
             <input type="checkbox" id="privacyPolicy" formControlName="privacyPolicy"/>
             I accept the <span>Privacy policy</span>
         </div>
