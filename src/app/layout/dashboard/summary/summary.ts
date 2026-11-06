@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Supabase } from '../../../shared/services/supabase';
 
 @Component({
   imports: [RouterLink],
@@ -7,4 +8,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './summary.scss',
   templateUrl: './summary.html',
 })
-export class Summary {}
+export class Summary {
+  dbService = inject(Supabase);
+}

@@ -11,14 +11,14 @@
         <div class="to-do card" routerLink="/board">
           <img class="circle" src="assets/icons/todo-icon.png" alt="" />
           <div class="content">
-            <h3 class="count">1</h3>
+            <h3 class="count">{{ dbService.toDoTasks().length }}</h3>
             <p>To-do</p>
           </div>
         </div>
         <div class="done card" routerLink="/board">
           <img class="circle" src="assets/icons/done-icon.png" alt="" />
           <div class="content">
-            <h3 class="count">2</h3>
+            <h3 class="count">{{ dbService.doneTasks().length }}</h3>
             <p>Done</p>
           </div>
         </div>
@@ -47,19 +47,26 @@
       <article class="bottom-cards">
         <div class="tasks card" routerLink="/board">
           <div class="content">
-            <h3 class="count">5</h3>
+            <h3 class="count">
+              {{
+                dbService.toDoTasks().length +
+                  dbService.inProgressTasks().length +
+                  dbService.awaitFeedbackTasks().length +
+                  dbService.doneTasks().length
+              }}
+            </h3>
             <p>Tasks in Board</p>
           </div>
         </div>
         <div class="progress card" routerLink="/board">
           <div class="content">
-            <h3 class="count">4</h3>
+            <h3 class="count">{{ dbService.inProgressTasks().length }}</h3>
             <p>Tasks in Progress</p>
           </div>
         </div>
         <div class="feedback card" routerLink="/board">
           <div class="content">
-            <h3 class="count">6</h3>
+            <h3 class="count">{{ dbService.awaitFeedbackTasks().length }}</h3>
             <p>Awaiting Feedback</p>
           </div>
         </div>
