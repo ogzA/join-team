@@ -383,6 +383,27 @@
   }
 }
 
+// Zwischengrößen mit Sidebar: Spalten untereinander, weniger Seitenabstand
+@media (min-width: #{$breakpoint-mobile + 1}) and (max-width: $breakpoint-tablet) {
+  .addTask:not(.inDialog) {
+    padding: 64px 48px 48px;
+
+    .taskForm-columns {
+      flex-direction: column;
+      gap: 0;
+
+      .divider {
+        display: none;
+      }
+
+      &-column1,
+      &-column2 {
+        padding: 0;
+      }
+    }
+  }
+}
+
 @media (max-width: $breakpoint-mobile) {
   .addTask {
     padding: 48px 16px;
