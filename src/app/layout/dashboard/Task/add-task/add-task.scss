@@ -404,6 +404,28 @@
   }
 }
 
+// Desktop und Tablet: Prio-Buttons füllen die Spalte wie in Figma
+@media (min-width: #{$breakpoint-mobile + 1}) {
+  .addTask:not(.inDialog) .taskForm-columns {
+    .priority {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .priority-btn {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 0;
+      padding: 16px;
+      white-space: nowrap;
+    }
+  }
+}
+
 @media (max-width: $breakpoint-mobile) {
   .addTask {
     padding: 48px 16px;
