@@ -137,6 +137,7 @@ $color-category-technical: #1fd7c1;
       gap: 16px;
       flex: 1;
       min-height: 0;
+      overflow-wrap: anywhere;
 
       // Titel, Beschreibung, Assigned- und Subtask-Liste:
       // schrumpfen nur, wenn der Platz nicht reicht, und scrollen dann in sich
@@ -213,10 +214,10 @@ $color-category-technical: #1fd7c1;
       border-radius: 50%;
       font-size: 16px;
       color: $color-white;
+      white-space: nowrap;
 
       &:first-child {
         margin-left: 0;
-        padding: 20px;
       }
     }
   }
