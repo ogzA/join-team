@@ -3,12 +3,9 @@
   <section class="container">
     <form class="form-container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="signup-header">
-        <img
-          class="backArrow"
-          routerLink="/login"
-          src="assets/icons/arrow-left-line.svg"
-          alt="go_to_previous_page"
-        />
+        <button class="backArrow" type="button" routerLink="/login" aria-label="Back to login">
+          <img src="assets/icons/arrow-left-line.svg" alt="" />
+        </button>
 
         <div class="signup-title">
           <h1>Sign up</h1>
@@ -19,21 +16,21 @@
       <div class="field">
         <div class="field_input">
           <input type="text" id="name" formControlName="name" placeholder="Name" />
-          <img class="field_icon" src="assets/icons/person-signup.svg" alt="person_logo" />
+          <img class="field_icon" src="assets/icons/person-signup.svg" alt="" />
         </div>
       </div>
 
       <div class="field">
         <div class="field_input">
           <input type="email" id="email" formControlName="email" placeholder="Email" />
-          <img class="field_icon" src="assets/icons/mail-signup.svg" alt="mail_logo" />
+          <img class="field_icon" src="assets/icons/mail-signup.svg" alt="" />
         </div>
       </div>
 
       <div class="field">
         <div class="field_input">
           <input type="password" id="password" formControlName="password" placeholder="Password" />
-          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="visibility_logo" />
+          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="" />
         </div>
       </div>
 
@@ -41,11 +38,11 @@
         <div class="field_input">
           <input
             type="password"
-            id="ConfirmPassword"
-            formControlName="ConfirmPassword"
+            id="confirmPassword"
+            formControlName="confirmPassword"
             placeholder="Confirm Password"
           />
-          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="visibility_logo" />
+          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="" />
         </div>
       </div>
 
@@ -58,7 +55,7 @@
       </div>
 
       <div class="form-button">
-        <button class="logIn" type="submit">Sign up</button>
+        <button class="signUp" type="submit">Sign up</button>
       </div>
     </form>
   </section>
