@@ -32,6 +32,16 @@ const GENERIC_TLDS = [
   'pro',
 ];
 
+//Minimum 10 characters.
+//At least one uppercase letter.
+//At least one lowercase letter.
+//At least one number.
+//At least one special character (@$!%*?&).
+//No spaces anywhere, including at the beginning or end.
+const PASSWORD_PATTERN = new RegExp(
+  String.raw`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$`,
+);
+
 // E-Mail-Format: text@domain.endung
 // - Keine Leerzeichen, genau ein @
 // - Domain darf Subdomains (mail.web.de) und Umlaute (müller.de) enthalten
@@ -52,6 +62,7 @@ export const contactValidators = {
   name: [Validators.required, Validators.pattern(NAME_PATTERN)],
   email: [Validators.required, Validators.pattern(EMAIL_PATTERN)],
   phone: [Validators.required, Validators.pattern(PHONE_PATTERN)],
+  password: [Validators.required, Validators.pattern(PASSWORD_PATTERN)],
 };
 
 // Bereinigt Eingaben vor dem Speichern:
@@ -71,3 +82,5 @@ export function cleanContact(contact: { name: string; email: string; phone: stri
     phone: contact.phone.trim(),
   };
 }
+
+

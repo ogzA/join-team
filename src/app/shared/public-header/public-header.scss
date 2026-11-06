@@ -4,7 +4,10 @@
     background: $dashboard-background;
     @include flex-center;
     justify-content: space-between;
-    padding: 67px 70px;
+    padding: 67px 77px;
+    @media(max-width: $breakpoint-mobile) {
+        padding: 37px 38px;
+    }
     &__sub{
             @include flex-center;
             justify-content: space-between;
@@ -18,6 +21,12 @@
         border-radius: 8px;
         background-color: $sidebar-background;
     }
+    }
+    @media (max-width: $breakpoint-tablet) {
+    img{
+            width: 100px;
+            height: 100px;
+        } 
     }
     @media (max-width: $breakpoint-mobile) {
         img{

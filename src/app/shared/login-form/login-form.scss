@@ -1,12 +1,18 @@
 @use '../../../../public/assets/scss/all-styles' as *;
 
-.container {
+
+.mainContainer{
     min-height: 100dvh;
+    background-color: $dashboard-background;
+    .container {
     display: grid;
     place-items: center;
     padding: clamp(16px, 4vw, 32px);
-    background-color: $dashboard-background;
-}
+
+    @media screen and (max-width:$breakpoint-mobile) {
+        margin-top: 100px;
+    }
+    }
 
 .form-container {
     display: flex;
@@ -38,6 +44,12 @@
 
         &_input {
             position: relative; 
+
+            .password_icon {
+                cursor: pointer;
+                pointer-events: auto;
+            }
+
         }
 
         &_icon {
@@ -47,9 +59,23 @@
             transform: translateY(-50%);
             pointer-events: none; 
         }
+        .error-container {
+        min-height: 22px;
+        display: flex;
+        align-items: flex-start;
+        padding-top: 4px;
+        box-sizing: border-box;
+    }
+
+    .error {
+        color: $error-color;
+        font-size: 0.8rem;
+        line-height: 18px;
+    }
     }
 
     input[type='email'],
+    input[type='text'],
     input[type='password'] {
         display: block;
         width: 100%;
@@ -83,6 +109,11 @@
             font-weight: 700;
             cursor: pointer;
         }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
         .logIn {
             background-color: $color-avatar-more;
@@ -107,4 +138,27 @@
 
         }
     }
+}
+.container__sub{
+    display: none;
+}
+@media screen and (max-width:$breakpoint-mobile) {
+    .container__sub{
+            @include flex-center;
+            justify-content: space-between;
+            gap: 30px;
+            font-size: 1.2rem;
+            margin-top: 77px;
+
+            button{
+                padding: 15px;
+                font-weight: 700;
+                font-size: 1rem;
+                color: $button-text;
+                border-radius: 8px;
+                background-color: $sidebar-background;
+            }
+    }
+    }
+
 }
