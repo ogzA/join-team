@@ -1,12 +1,18 @@
 @use '../../../../public/assets/scss/all-styles' as *;
 
-.container {
+
+.mainContainer{
     min-height: 100dvh;
+    background-color: $dashboard-background;
+    .container {
     display: grid;
     place-items: center;
     padding: clamp(16px, 4vw, 32px);
-    background-color: $dashboard-background;
-}
+
+    @media screen and (max-width:$breakpoint-mobile) {
+        margin-top: 100px;
+    }
+    }
 
 .form-container {
     display: flex;
@@ -107,4 +113,27 @@
 
         }
     }
+}
+.container__sub{
+    display: none;
+}
+@media screen and (max-width:$breakpoint-mobile) {
+    .container__sub{
+            @include flex-center;
+            justify-content: space-between;
+            gap: 30px;
+            font-size: 1.2rem;
+            margin-top: 77px;
+
+            button{
+                padding: 15px;
+                font-weight: 700;
+                font-size: 1rem;
+                color: $button-text;
+                border-radius: 8px;
+                background-color: $sidebar-background;
+            }
+    }
+    }
+
 }

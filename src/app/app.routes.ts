@@ -40,14 +40,6 @@ export const routes: Routes = [
     component: Board,
   },
   {
-    path: 'public-header',
-    component: PublicHeader,
-  },
-  {
-    path: 'public-footer',
-    component: PublicFooter
-  },
-  {
     path: 'contacts',
     component: Contacts,
   },

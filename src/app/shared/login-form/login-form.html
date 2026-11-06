@@ -1,3 +1,5 @@
+<section class="mainContainer">
+<app-public-header></app-public-header>
 <section class="container">
     <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h1>Log in</h1>
@@ -5,16 +7,28 @@
 
         <div class="field">
             <div class="field_input">
-            <input type="email" id="email" formControlName="email" placeholder="Email" />
-            <img class="field_icon" src="assets/icons/mail.svg" alt="" />
+                <input type="email" id="email" formControlName="email" placeholder="Email" />
+                <img class="field_icon" src="assets/icons/mail.svg" alt="email_icon" />
             </div>
+            @if (loginForm.controls['email'].touched) {
+                @if (loginForm.controls['email'].errors?.['required']) {
+                <span class="error">This field is required</span>
+                } @else if (loginForm.controls['email'].errors?.['pattern']) {
+                <span class="error">Please enter first and last name (letters only)</span>
+                }
+            }
         </div>
 
         <div class="field">
             <div class="field_input">
-            <input type="password" id="password" formControlName="password" placeholder="Password" />
-            <img class="field_icon" src="assets/icons/lock.svg" alt="" />
+                <input type="password" id="password" formControlName="password" placeholder="Password" />
+                <img class="field_icon" src="assets/icons/visibility_off.svg" alt="visibility_icon" />
             </div>
+            @if (loginForm.controls['password'].touched) {
+                @if (loginForm.controls['password'].errors?.['required']) {
+                <span class="error">Check your email and password. Please try again.</span>
+                }
+            }
         </div>
 
         <div class="form-button">
@@ -22,4 +36,11 @@
             <button class="asGuestLogIn" type="button">Guest Log in</button>
         </div>
     </form>
+    <!-- visible only in mobile view -->
+        <div class="container__sub">
+            <p>Not a Join user?</p>
+            <button type="button">Sign up</button>
+        </div>
+</section>
+<app-public-footer></app-public-footer>
 </section>
