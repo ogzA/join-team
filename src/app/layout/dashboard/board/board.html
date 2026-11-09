@@ -90,7 +90,7 @@
                     class="task-card__move-button"
                     type="button"
                     aria-label="Move task"
-                    (click)="openMoveMenu(column.rowId, $index); $event.stopPropagation()"
+                    (click)="openMoveMenu(column.rowId, $index, $event); $event.stopPropagation()"
                     (keydown.enter)="$event.stopPropagation()"
                     (keydown.space)="$event.stopPropagation()"
                   >
