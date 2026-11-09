@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-public-header',
   styleUrl: './public-header.scss',
   templateUrl: './public-header.html',
 })
-export class PublicHeader {}
+export class PublicHeader {
+  showSignup = input(true);
+}

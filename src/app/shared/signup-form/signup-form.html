@@ -1,0 +1,63 @@
+<section class="mainContainer">
+  <app-public-header [showSignup]="false"></app-public-header>
+  <section class="container">
+    <form class="form-container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="signup-header">
+        <button class="backArrow" type="button" routerLink="/login" aria-label="Back to login">
+          <img src="assets/icons/arrow-left-line.svg" alt="" />
+        </button>
+
+        <div class="signup-title">
+          <h1>Sign up</h1>
+          <span class="form-container_textBorder"></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field_input">
+          <input type="text" id="name" formControlName="name" placeholder="Name" />
+          <img class="field_icon" src="assets/icons/person-signup.svg" alt="" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field_input">
+          <input type="email" id="email" formControlName="email" placeholder="Email" />
+          <img class="field_icon" src="assets/icons/mail-signup.svg" alt="" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field_input">
+          <input type="password" id="password" formControlName="password" placeholder="Password" />
+          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field_input">
+          <input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+          />
+          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="" />
+        </div>
+      </div>
+
+      <div class="field checkPosition">
+        <label class="privacy" for="privacyPolicy">
+          <input type="checkbox" id="privacyPolicy" formControlName="privacyPolicy" />
+          <span class="privacy__box" aria-hidden="true"></span>
+          I accept the <a routerLink="/privacy-policy">Privacy policy</a>
+        </label>
+      </div>
+
+      <div class="form-button">
+        <button class="signUp" type="submit">Sign up</button>
+      </div>
+    </form>
+  </section>
+  <app-public-footer></app-public-footer>
+</section>

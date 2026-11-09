@@ -12,6 +12,7 @@ import { PublicHeader } from './shared/public-header/public-header';
 import { LoginForm } from './shared/login-form/login-form';
 import { Summary } from './layout/dashboard/summary/summary';
 import { PublicFooter } from './shared/public-footer/public-footer';
+import { SignupForm } from './shared/signup-form/signup-form';
 
 export const routes: Routes = [
   {
@@ -58,5 +59,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginForm,
+  },
+  {
+    path: 'signup',
+    component: SignupForm,
   },
 ];

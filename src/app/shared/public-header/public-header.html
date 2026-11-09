@@ -1,7 +1,9 @@
 <header class="container">
-    <img src="assets/icons/public-header-logo.svg" alt="join_logo">
+  <img src="assets/icons/public-header-logo.svg" alt="join_logo" />
+  @if (showSignup()) {
     <div class="container__sub">
-        <p>Not a Join user?</p>
-        <button type="button">Sign up</button>
+      <p>Not a Join user?</p>
+      <button type="button" routerLink="/signup">Sign up</button>
     </div>
+  }
 </header>
