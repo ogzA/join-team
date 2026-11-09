@@ -76,6 +76,10 @@ export class AddTask {
     }
   }
 
+handleSelectClick() {
+  this.taskForm.controls['category'].markAsTouched();
+}
+
   deleteSubTask(index: number) {
     this.subtasks.splice(index, 1);
   }

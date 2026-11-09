@@ -77,7 +77,7 @@
 
         <div class="field">
           <label for="category">Category<span class="required">*</span></label>
-          <select id="category" formControlName="category">
+          <select id="category" formControlName="category" (click)="handleSelectClick()">
             <option selected hidden class="options" value="">Select Task Category</option>
             <option class="options" value="Technical Task">Technical Task</option>
             <option class="options" value="User Story">User Story</option>
