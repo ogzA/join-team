@@ -1,6 +1,7 @@
-import { computed, Service, signal } from '@angular/core';
+import { computed, inject, Service, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 import { Task, TaskStatus } from '../models/task';
+import { Router } from '@angular/router';
 
 interface Contact {
   name: string;
@@ -35,6 +36,7 @@ export class Supabase {
   inProgressTasks = signal<Task[]>([]);
   awaitFeedbackTasks = signal<Task[]>([]);
   doneTasks = signal<Task[]>([]);
+  private router = inject(Router);
 
   channels: RealtimeChannel | undefined;
 
@@ -334,4 +336,38 @@ export class Supabase {
   selectContact(id: number) {
     this.selectedContactId.set(id);
   }
+
+    async isLoggedIn() {
+
+        const { data } = await this.supabase.auth.getUser();
+        console.log('Login status:', data.user)
+        return data.user !== null;
+    }
+
+    async signInWithEmail(email: string, password: string) {
+        const { data, error } = await this.supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        })
+      console.error('Login data:', data);
+        if (error) {
+            console.error('Login error:', error.message);
+        } else {
+            console.log('Login success:', data);
+            this.router.navigate(['/dashboard']);
+        }
+
+        return { data, error };
+    }
+
+    async signOut() {
+        const { error } = await this.supabase.auth.signOut();
+
+        if (error) {
+            console.error('Signout error:', error.message);
+        } else {
+            console.log('Signout success');
+            this.router.navigate(['']);
+        }
+    }
 }

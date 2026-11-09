@@ -13,37 +13,39 @@ import { LoginForm } from './shared/login-form/login-form';
 import { Summary } from './layout/dashboard/summary/summary';
 import { PublicFooter } from './shared/public-footer/public-footer';
 import { SignupForm } from './shared/signup-form/signup-form';
+import { authGuard } from './shared/services/auth_guard';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: Dashboard,
+    canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'summary', pathMatch: 'full' },
+      // { path: '', redirectTo: 'summary', pathMatch: 'full'},
       { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
       { path: 'contacts', component: Contacts },
       { path: 'assigned-to-dropdown', component: AssignedToDropdown },
       { path: 'show-task-detail', component: ShowTaskDetails },
-    ],
+    ]
   },
-  {
-    path: 'summary',
-    component: Summary,
-  },
-  {
-    path: 'add-task',
-    component: AddTask,
-  },
-  {
-    path: 'board',
-    component: Board,
-  },
-  {
-    path: 'contacts',
-    component: Contacts,
-  },
+  // {
+  //   path: 'summary',
+  //   component: Summary,
+  // },
+  // {
+  //   path: 'add-task',
+  //   component: AddTask,
+  // },
+  // {
+  //   path: 'board',
+  //   component: Board,
+  // },
+  // {
+  //   path: 'contacts',
+  //   component: Contacts,
+  // },
   {
     path: 'help-page',
     component: HelpPage,
@@ -57,7 +59,7 @@ export const routes: Routes = [
     component: LegalNotice,
   },
   {
-    path: 'login',
+    path: '',
     component: LoginForm,
   },
   {
