@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'sass:math';
 
 // Mobile: Dialog-Bereich über der NavBar, 16px Abstand oben und unten
 @mixin dialog-area-mobile {
@@ -33,4 +34,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+// Wert wächst mit der Fensterhöhe: $min bis $from, $max bei $to
+@function fluid-height($min, $max, $from: 600px, $to: 1024px) {
+  $slope: math.div($max - $min, $to - $from);
+  @return clamp(#{$min}, calc(#{$min} + #{$slope} + (100dvh - #{$from})), #{$max});
 }
