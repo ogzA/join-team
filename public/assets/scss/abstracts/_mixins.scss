@@ -39,5 +39,5 @@
 // Wert wächst mit der Fensterhöhe: $min bis $from, $max bei $to
 @function fluid-height($min, $max, $from: 600px, $to: 1024px) {
   $slope: math.div($max - $min, $to - $from);
-  @return clamp(#{$min}, calc(#{$min} + #{$slope} + (100dvh - #{$from})), #{$max});
+  @return clamp(#{$min}, calc(#{$min} + #{$slope} * (100dvh - #{$from})), #{$max});
 }
