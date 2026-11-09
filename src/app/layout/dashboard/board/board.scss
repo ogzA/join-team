@@ -341,6 +341,7 @@ $color-move-option-hover: #091931;
 // Karte mit offenem Menü liegt über dem Backdrop
 .task-card--menu-open {
   z-index: 11;
+  touch-action: none; // kein Wischen auf der Karte, solange das Menü offen ist
 }
 
 .task-card__move-menu {

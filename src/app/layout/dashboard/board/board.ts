@@ -250,8 +250,10 @@ export class Board implements OnInit {
     this.selectedTask.set(null);
   }
 
-  /** Opens the mobile move menu for the task at the given index. */
-  protected openMoveMenu(rowId: number, index: number): void {
+  /** Opens the mobile move menu and scrolls its card fully into view first. */
+  protected openMoveMenu(rowId: number, index: number, event: Event): void {
+    const card = (event.currentTarget as HTMLElement).closest('.task-card');
+    card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     this.moveMenu.set({ rowId, index });
   }
 
