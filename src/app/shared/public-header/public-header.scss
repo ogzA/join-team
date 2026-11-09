@@ -1,40 +1,45 @@
 @use '../../../../public/assets/scss/all-styles' as *;
 
-.container{
-    background: $dashboard-background;
+.container {
+  background: $dashboard-background;
+  @include flex-center;
+  justify-content: space-between;
+  padding: fluid-height(16px, 67px) 77px;
+  @media (max-width: $breakpoint-mobile) {
+    padding: fluid-height(12px, 37px, 667px, 926px) 38px;
+  }
+
+  img {
+    width: auto;
+    height: fluid-height(56px, 122px);
+  }
+  &__sub {
     @include flex-center;
     justify-content: space-between;
-    padding: 67px 77px;
-    @media(max-width: $breakpoint-mobile) {
-        padding: 37px 38px;
+    gap: 30px;
+    font-size: 1.2rem;
+    button {
+      padding: 15px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: $button-text;
+      border-radius: 8px;
+      background-color: $sidebar-background;
     }
-    &__sub{
-            @include flex-center;
-            justify-content: space-between;
-            gap: 30px;
-            font-size: 1.2rem;
-    button{
-        padding: 15px;
-        font-weight: 700;
-        font-size: 1rem;
-        color: $button-text;
-        border-radius: 8px;
-        background-color: $sidebar-background;
+  }
+  @media (max-width: $breakpoint-tablet) {
+    img {
+      width: auto;
+      height: fluid-height(56px, 100px);
     }
+  }
+  @media (max-width: $breakpoint-mobile) {
+    img {
+      width: auto;
+      height: fuid-height(48px, 78px, 568px, 926px);
     }
-    @media (max-width: $breakpoint-tablet) {
-    img{
-            width: 100px;
-            height: 100px;
-        } 
+    &__sub {
+      display: none;
     }
-    @media (max-width: $breakpoint-mobile) {
-        img{
-            width: 64px;
-            height: 78px;
-        }
-        &__sub{
-            display: none;
-        }
-    }
+  }
 }

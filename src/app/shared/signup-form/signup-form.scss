@@ -3,24 +3,26 @@
 .mainContainer {
   min-height: 100dvh;
   background-color: $dashboard-background;
+  display: flex;
+  flex-direction: column;
 
   .container {
+    flex: 1;
     display: grid;
     place-items: center;
-    padding: clamp(16px, 4vw, 32px);
+    padding: fluid-height(8px, 32px) clamp(16px, 4vw, 32px);
 
     .form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(20px, 3vw, 32px);
+      gap: fluid-height(8px, 32px);
       width: min(598px, 100%);
-      padding: clamp(28px, 4vw, 48px) clamp(20px, 5vw, 48px);
+      padding: fluid-height(16px, 48px) clamp(20px, 5vw, 48px);
       box-sizing: border-box;
       background-color: $color-white;
       border-radius: 30px;
       box-shadow: 0px 0px 14px 3px #00000024;
-      margin-bottom: 100px;
 
       .signup-header {
         position: relative;
@@ -53,7 +55,7 @@
           gap: 8px;
 
           h1 {
-            font-size: clamp(40px, calc(34px + 1.875vw), 61px);
+            font-size: min(calc(34px + 1.875vw), fluid-height(32px, 61px));
             margin: 0;
             line-height: 1.2;
           }
@@ -150,7 +152,7 @@
       input[type='password'] {
         display: block;
         width: 100%;
-        padding: 10px 42px 10px 12px;
+        padding: fluid-height(6px, 10px) 42px fluid-height(6px, 10px) 12px;
         border: 1px solid $color-input-border;
         border-radius: 8px;
         font-size: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
