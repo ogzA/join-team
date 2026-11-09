@@ -1,5 +1,11 @@
 import { Component, inject, input, output, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
@@ -30,13 +36,13 @@ export class AddTask {
   private dbService = inject(Supabase);
   private toast = inject(ToastService);
 
- // Gives an error when the date is before today.
+  // Gives an error when the date is before today.
   private noPastDate = (control: AbstractControl): ValidationErrors | null => {
     const value: string = control.value;
     if (!value || value >= this.todaysDate) return null;
     return { pastDate: true };
   };
-  
+
   taskForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
@@ -75,10 +81,6 @@ export class AddTask {
       this.isSaving.set(false);
     }
   }
-
-handleSelectClick() {
-  this.taskForm.controls['category'].markAsTouched();
-}
 
   deleteSubTask(index: number) {
     this.subtasks.splice(index, 1);

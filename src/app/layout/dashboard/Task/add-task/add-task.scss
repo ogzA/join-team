@@ -319,6 +319,11 @@
           opacity: 0.5;
           cursor: not-allowed;
         }
+
+        // Formular unvollständig grau wie disabled, aber klickbar, damit die Hinweise erscheinen
+        &--inactive {
+          opacity: 0.5;
+        }
       }
 
       .clearBtn:hover {
@@ -327,12 +332,12 @@
         box-shadow: $shadow-button;
       }
 
-      .createBtn:hover:not(:disabled) {
+      .createBtn:hover:not(:disabled):not(.createBtn--inactive) {
         background-color: $hover-button-Form;
         box-shadow: $shadow-button;
       }
 
-      .createBtn:active:not(:disabled) {
+      .createBtn:active:not(:disabled):not(.createBtn--inactive) {
         background-color: $sidebar-menu-hover;
         box-shadow: $shadow-button;
       }

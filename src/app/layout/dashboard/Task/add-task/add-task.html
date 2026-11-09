@@ -17,7 +17,6 @@
               }
             }
           </div>
-          
         </div>
 
         <div class="field">
@@ -38,11 +37,10 @@
               @if (taskForm.controls['date'].errors?.['required']) {
                 <p class="error">This field is required</p>
               } @else if (taskForm.controls.date.errors?.['pastDate']) {
-                  <p class="error">Please select today or a future date</p>
+                <p class="error">Please select today or a future date</p>
               }
             }
           </div>
-          
         </div>
       </section>
       <span class="divider"></span>
@@ -77,7 +75,7 @@
 
         <div class="field">
           <label for="category">Category<span class="required">*</span></label>
-          <select id="category" formControlName="category" (click)="handleSelectClick()">
+          <select id="category" formControlName="category">
             <option selected hidden class="options" value="">Select Task Category</option>
             <option class="options" value="Technical Task">Technical Task</option>
             <option class="options" value="User Story">User Story</option>
@@ -89,7 +87,6 @@
               }
             }
           </div>
-          
         </div>
 
         <div class="field subtaskPosition">
@@ -203,7 +200,7 @@
         <button type="button" class="btn clearBtn" (click)="resetForm()">
           Clear <img src="assets/icons/close-dialog.svg" alt="close_logo" />
         </button>
-        <button type="submit" [disabled]="taskForm.invalid || isSaving()" class="btn createBtn">
+        <button type="submit" [disabled]="isSaving()" [class.createBtn--inactive]="taskForm.invalid" class="btn createBtn">
           Create Task <img src="assets/icons/check.svg" alt="check_logo" />
         </button>
       </div>
