@@ -26,20 +26,83 @@
 
       <div class="upcoming card" routerLink="/board">
         <div class="content-left">
-          <div class="prio-circle">
-            <img src="assets/icons/urgent-light.svg" alt="" />
-          </div>
+          @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() < 2) {
+            @if (countDeadlineMedium() + countDeadlineLow() < 1) {
+              <article class="urgent prio">
+                <div class="prio-circle red">
+                  <img src="assets/icons/urgent-light.svg" alt="" />
+                </div>
+                <div class="content">
+                  <h3 class="count">{{ countDeadlineUrgent() }}</h3>
+                  <p>Urgent</p>
+                </div>
+              </article>
+            }
+            @if (countDeadlineMedium() > 0) {
+              <article class="medium prio">
+                <div class="prio-circle orange">
+                  <img src="assets/icons/medium-light.svg" alt="" />
+                </div>
+                <div class="content">
+                  <h3 class="count">{{ countDeadlineMedium() }}</h3>
+                  <p>Medium</p>
+                </div>
+              </article>
+            }
+            @if (countDeadlineLow() > 0) {
+              <article class="low prio">
+                <div class="prio-circle green">
+                  <img src="assets/icons/low-light.svg" alt="" />
+                </div>
+                <div class="content">
+                  <h3 class="count">{{ countDeadlineLow() }}</h3>
+                  <p>Low</p>
+                </div>
+              </article>
+            }
+          }
 
-          <div class="content">
-            <h3 class="count">3</h3>
-            <p>Urgent</p>
-          </div>
+          @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() > 1) {
+            @if (countDeadlineUrgent()) {
+              <article class="urgent prio">
+                <div class="content">
+                  <h3 class="count">{{ countDeadlineUrgent() }}</h3>
+                  <div class="prio-circle red small">
+                    <img class="small" src="assets/icons/urgent-light.svg" alt="" />
+                  </div>
+                </div>
+              </article>
+            }
+
+            @if (countDeadlineMedium()) {
+              <article class="medium prio">
+                <div class="content">
+                  <h3 class="count">{{ countDeadlineMedium() }}</h3>
+                  <div class="prio-circle orange small">
+                    <img class="small" src="assets/icons/medium-light.svg" alt="" />
+                  </div>
+                </div>
+              </article>
+            }
+
+            @if (countDeadlineLow()) {
+              <article class="low prio">
+                <div class="content">
+                  <h3 class="count">{{ countDeadlineLow() }}</h3>
+                  <div class="prio-circle green small">
+                    <img src="assets/icons/low-light.svg" alt="" />
+                  </div>
+                </div>
+              </article>
+            }
+          }
         </div>
 
         <img class="line" src="assets/icons/trennstrich2.png" alt="" />
 
         <div class="content-right">
-          <h3>{{ checkNextDeadline() | date }}</h3>
+          <!-- <h3>{{ checkNextDeadline() | date }}</h3> -->
+          <h3>{{ nextDeadline() | date }}</h3>
           <p>{{ setNextText() }} Deadline</p>
         </div>
       </div>

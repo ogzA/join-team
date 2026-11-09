@@ -12,15 +12,27 @@ import { Task } from '../../../shared/models/task';
 })
 export class Summary {
   dbService = inject(Supabase);
-  deadline: string = '';
+  // deadline: string = '';
+  nextDeadline = signal('');
   deadlineArray: string[] = [];
   nextText: string = 'Upcoming';
-  nextCounts: number[] = [];
+  nextCounts = signal<number[]>([]);
 
   ngOnInit() {
-    setTimeout(() => {
-      this.checkNextCounts();
-    }, 1000);
+    if (
+      this.dbService.toDoTasks().length < 1 &&
+      this.dbService.inProgressTasks().length < 1 &&
+      this.dbService.awaitFeedbackTasks().length < 1
+    ) {
+      setTimeout(() => {
+        this.deadlineSet();
+      }, 300);
+    } else this.deadlineSet();
+  }
+
+  deadlineSet() {
+    this.addSignalDateToArray();
+    this.nextDeadline.set(this.deadlineArray[0]);
   }
 
   clearArray() {
@@ -37,56 +49,50 @@ export class Summary {
     this.deadlineArray.sort();
   }
 
-  checkNextDeadline() {
-    this.addSignalDateToArray();
-    this.deadline = this.deadlineArray[0];
-    return this.deadline;
-  }
-
   setNextText() {
     let today = new Date().toJSON().slice(0, 10);
-    if (this.deadline < today && this.deadline != '') this.nextText = 'Passed';
+    if (this.nextDeadline() < today && this.nextDeadline() != '') this.nextText = 'Passed';
     else this.nextText = 'Upcoming';
     return this.nextText;
   }
 
-  checkNextCounts() {
-    this.nextCounts[0] = 0;
-    this.nextCounts[1] = 0;
-    this.nextCounts[2] = 0;
-    console.log(this.deadline);
-
-    this.countDeadlineUrgent();
-    this.countDeadlineMedium();
-    this.countDeadlineLow();
-    console.log('Urgent', this.nextCounts[0]);
-    console.log('Medium', this.nextCounts[1]);
-    console.log('Low', this.nextCounts[2]);
-  }
-
-  checkCount(data: Task[], prio: string, countIndex: number) {
+  checkCount(data: Task[], prio: string, countIndex: number, deadline: string) {
     for (let index = 0; index < data.length; index++) {
-      if (data[index].date == this.deadline && data[index].prio == prio)
-        this.nextCounts[countIndex]++;
+      if (data[index].date == deadline && data[index].prio == prio) this.nextCounts()[countIndex]++;
     }
   }
 
   countDeadlineUrgent() {
-    this.checkCount(this.dbService.toDoTasks(), 'Urgent', 0);
-    this.checkCount(this.dbService.inProgressTasks(), 'Urgent', 0);
-    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Urgent', 0);
+    this.nextCounts()[0] = 0;
+    let deadline: string = this.nextDeadline();
+    this.checkCount(this.dbService.toDoTasks(), 'Urgent', 0, deadline);
+    this.checkCount(this.dbService.inProgressTasks(), 'Urgent', 0, deadline);
+    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Urgent', 0, deadline);
+
+    // if (this.nextCounts()[0] > 0) this.nextCounts()[0] = 0;
+    return this.nextCounts()[0];
   }
 
   countDeadlineMedium() {
-    this.checkCount(this.dbService.toDoTasks(), 'Medium', 1);
-    this.checkCount(this.dbService.inProgressTasks(), 'Medium', 1);
-    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Medium', 1);
+    this.nextCounts()[1] = 0;
+    let deadline: string = this.nextDeadline();
+    this.checkCount(this.dbService.toDoTasks(), 'Medium', 1, deadline);
+    this.checkCount(this.dbService.inProgressTasks(), 'Medium', 1, deadline);
+    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Medium', 1, deadline);
+
+    // if (this.nextCounts()[1] == 0) this.nextCounts()[1] = 1;
+    return this.nextCounts()[1];
   }
 
   countDeadlineLow() {
-    this.checkCount(this.dbService.toDoTasks(), 'Low', 2);
-    this.checkCount(this.dbService.inProgressTasks(), 'Low', 2);
-    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Low', 2);
+    this.nextCounts()[2] = 0;
+    let deadline: string = this.nextDeadline();
+    this.checkCount(this.dbService.toDoTasks(), 'Low', 2, deadline);
+    this.checkCount(this.dbService.inProgressTasks(), 'Low', 2, deadline);
+    this.checkCount(this.dbService.awaitFeedbackTasks(), 'Low', 2, deadline);
+
+    // if (this.nextCounts()[2] == 0) this.nextCounts()[2] = 1;
+    return this.nextCounts()[2];
   }
 
   addToDoinArray() {
