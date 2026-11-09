@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { PublicHeader } from '../public-header/public-header';
 import { PublicFooter } from '../public-footer/public-footer';
 import { contactValidators } from '../../layout/dashboard/contacts/contact-forms/contact-validators';
-import { Supabase } from '../services/supabase';
+import { SupabaseAuth } from '../services/supabase-auth';
 
 @Component({
   imports: [ReactiveFormsModule,RouterLink,PublicHeader,PublicFooter],
@@ -14,7 +14,7 @@ import { Supabase } from '../services/supabase';
 })
 export class LoginForm {
   private fb = inject(FormBuilder);
-  supabase = inject(Supabase)
+  supabase_auth = inject(SupabaseAuth)
 
   showPassword: boolean = false;
 
@@ -34,10 +34,11 @@ export class LoginForm {
       return;
     }
     console.log(this.loginForm);
-    await this.supabase.signInWithEmail(
+    await this.supabase_auth.signInWithEmail(
       this.loginForm.value.email ?? '',
       this.loginForm.value.password ?? ''
     );
+    
     console.log(this.loginForm.getRawValue());
   }
 }

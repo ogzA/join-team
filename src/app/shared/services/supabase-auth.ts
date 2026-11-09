@@ -32,4 +32,39 @@ export class SupabaseAuth {
 
     return { data, error };
   }
+
+  // Authentication: Login and logout functions
+    async isLoggedIn() {
+
+        const { data } = await this.supabase.auth.getUser();
+        console.log('Login status:', data.user)
+        return data.user !== null;
+    }
+
+    async signInWithEmail(email: string, password: string) {
+        const { data, error } = await this.supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        })
+        console.error('Login data:', data);
+        if (error) {
+            console.error('Login error:', error.message);
+        } else {
+            console.log('Login success:', data);
+            //this.router.navigate(['/dashboard']);
+        }
+
+        return { data, error };
+    }
+
+    async signOut() {
+        const { error } = await this.supabase.auth.signOut();
+
+        if (error) {
+            console.error('Signout error:', error.message);
+        } else {
+            console.log('Signout success');
+            //this.router.navigate(['']);
+        }
+    }
 }
