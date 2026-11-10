@@ -59,10 +59,6 @@
       color: $color-avatar-more;
     }
 
-    // @media screen and (max-width: $breakpoint-mobile) {
-    //   animation: fade-out 10ms forwards;
-    //   animation: fade-in 20s forwards 5s;
-    // }
     // Umbrechen der Headline Elemente
     @media screen and (max-width: $breakpoint-summary) {
       flex-direction: column;
@@ -220,10 +216,11 @@
           @include all-center;
           width: 43%;
           text-align: center;
-          // gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
-          // @media screen and (max-width: $breakpoint-mobile) {
-          //   gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
-          // }
+          // gap: 8px;
+          gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
+          @media screen and (max-width: $breakpoint-mobile) {
+            gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
+          }
 
           h3 {
             text-align: center;
@@ -264,11 +261,11 @@
             }
 
             &.small {
-              width: clamp(1.63rem, calc(1.339rem + 1.429vw), 2.63rem);
-              height: clamp(1.63rem, calc(1.339rem + 1.429vw), 2.63rem);
+              width: clamp(1.625rem, calc(1.196rem + 2.143vw), 3.125rem);
+              height: clamp(1.625rem, calc(1.196rem + 2.143vw), 3.125rem);
               @media screen and (max-width: $breakpoint-mobile) {
-                width: clamp(1.63rem, calc(0.911rem + 3.571vw), 2.63rem);
-                height: clamp(1.63rem, calc(0.911rem + 3.571vw), 2.63rem);
+                width: clamp(1.625rem, calc(1rem + 3.125vw), 2.5rem);
+                height: clamp(1.625rem, calc(1rem + 3.125vw), 2.5rem);
               }
               padding: 8px;
 
