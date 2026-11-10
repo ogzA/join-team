@@ -6,7 +6,7 @@ import { PublicFooter } from '../public-footer/public-footer';
 import { contactValidators } from '../../layout/dashboard/contacts/contact-forms/contact-validators';
 
 @Component({
-  imports: [ReactiveFormsModule,RouterLink,PublicHeader,PublicFooter],
+  imports: [ReactiveFormsModule, RouterLink, PublicHeader, PublicFooter],
   selector: 'app-login-form',
   styleUrl: './login-form.scss',
   templateUrl: './login-form.html',
@@ -15,10 +15,9 @@ export class LoginForm {
   private fb = inject(FormBuilder);
   showPassword: boolean = false;
 
-
   loginForm = this.fb.nonNullable.group({
     email: ['', contactValidators.email],
-    password: ['',contactValidators.password],
+    password: ['', contactValidators.password],
   });
 
   togglePasswordVisibility() {
