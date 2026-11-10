@@ -7,21 +7,20 @@ import { contactValidators } from '../../layout/dashboard/contacts/contact-forms
 import { SupabaseAuth } from '../services/supabase-auth';
 
 @Component({
-  imports: [ReactiveFormsModule,RouterLink,PublicHeader,PublicFooter],
+  imports: [ReactiveFormsModule, RouterLink, PublicHeader, PublicFooter],
   selector: 'app-login-form',
   styleUrl: './login-form.scss',
   templateUrl: './login-form.html',
 })
 export class LoginForm {
   private fb = inject(FormBuilder);
-  supabase_auth = inject(SupabaseAuth)
+  supabase_auth = inject(SupabaseAuth);
 
   showPassword: boolean = false;
 
-
   loginForm = this.fb.nonNullable.group({
     email: ['', contactValidators.email],
-    password: ['',contactValidators.password],
+    password: ['', Validators.required],
   });
 
   togglePasswordVisibility() {
@@ -36,9 +35,9 @@ export class LoginForm {
     console.log(this.loginForm);
     await this.supabase_auth.signInWithEmail(
       this.loginForm.value.email ?? '',
-      this.loginForm.value.password ?? ''
+      this.loginForm.value.password ?? '',
     );
-    
+
     console.log(this.loginForm.getRawValue());
   }
 }
