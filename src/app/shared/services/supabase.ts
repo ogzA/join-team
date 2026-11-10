@@ -43,37 +43,18 @@ export class Supabase {
     this.getContacts();
     this.getUser();
 
-    // this.channels = this.supabase
-    //   .channel('changes')
-    //   .on(
-    //     'postgres_changes',
-    //     {
-    //       event: '*',
-    //       schema: 'public',
-    //       table: 'contacts',
-    //     },
-    //     (payload) => {
-    //       console.log(payload);
-    //       let tmpContact = payload.new as Contact;
-    //       console.log(tmpContact);
-    //       // this.setContact(tmpContact); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
-    //     },
-    //   )
-    //   .on(
-    //     'postgres_changes',
-    //     {
-    //       event: '*',
-    //       schema: 'public',
-    //       table: 'user',
-    //     },
-    //     (payload) => {
-    //       console.log(payload);
-    //       let tmpUser = payload.new as User;
-    //       console.log(tmpUser);
-    //       // this.setUser(tmpUser); //Noch fehlerhaft, da id und zeitstempel noch mit dabei
-    //     },
-    //   )
-    //   .subscribe();
+    this.channels = this.supabase
+      .channel('changes')
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'tasks' }, () =>
+        this.getTasks(),
+      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'contacts' }, () =>
+        this.getContacts(),
+      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'user' }, () =>
+        this.getUser(),
+      )
+      .subscribe();
   }
 
   //Ab Hier Task Tests
