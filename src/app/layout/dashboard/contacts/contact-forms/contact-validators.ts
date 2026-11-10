@@ -39,7 +39,7 @@ const GENERIC_TLDS = [
 //At least one special character (@$!%*?&).
 //No spaces anywhere, including at the beginning or end.
 const PASSWORD_PATTERN = new RegExp(
-  String.raw`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$`,
+  String.raw`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$`,
 );
 
 // E-Mail-Format: text@domain.endung
