@@ -1,0 +1,96 @@
+@use '../../../../public/assets/scss/all-styles' as *;
+
+// Ablauf: 300ms Logo in der Mitte, 700ms Flug in den Header, danach blendet die Fläche aus
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: $dashboard-background;
+  animation: intro-fade 300ms ease-out 900ms forwards;
+}
+
+// Endposition = Header-Logo (Werte wie in public-header.scss)
+.intro__logo {
+  position: absolute;
+  top: fluid-height(16px, 67px);
+  left: 77px;
+  width: auto;
+  height: fluid-height(56px, 122px);
+  animation: intro-move 700ms ease-in-out 300ms both;
+}
+
+// Desktop: nur dunkles Logo auf hellem Grund
+.intro__logo--light {
+  display: none;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .intro__logo {
+    height: fluid-height(56px, 100px);
+  }
+}
+
+// Mobile: dunkler Grund, weißes Logo wird beim Flug zum dunklen
+@media (max-width: $breakpoint-mobile) {
+  .intro {
+    --intro-start-height: 122px;
+    background-color: $color-primary;
+    animation: intro-fade 700ms ease-in-out 300ms forwards;
+  }
+
+  .intro__logo {
+    top: fluid-height(12px, 37px, 667px, 926px);
+    left: 38px;
+    height: fluid-height(48px, 78px, 568px, 926px);
+  }
+
+  .intro__logo--light {
+    display: block;
+    animation:
+      intro-move 700ms ease-in-out 300ms both,
+      intro-hide 700ms ease-in-out 300ms both;
+  }
+
+  .intro__logo--dark {
+    animation:
+      intro-move 700ms ease-in-out 300ms both,
+      intro-show 700ms ease-in-out 300ms both;
+  }
+}
+
+// Start: mittig und groß, Ende: die Werte aus den Regeln oben
+@keyframes intro-move {
+  from {
+    top: 50%;
+    left: 50%;
+    height: var(--intro-start-height, 334px);
+    translate: -50% -50%;
+  }
+}
+
+@keyframes intro-fade {
+  to {
+    background-color: transparent;
+  }
+}
+
+@keyframes intro-show {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-hide {
+  to {
+    opacity: 0;
+  }
+}
+
+// Ohne Bewegung: sofort fertig (1ms, damit animationend trotzdem auslöst)
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .intro__logo {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}

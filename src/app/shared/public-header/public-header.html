@@ -7,3 +7,7 @@
     </div>
   }
 </header>
+
+@if (!intro.played()) {
+  <app-intro-overlay (finished)="intro.markPlayed()" />
+}
