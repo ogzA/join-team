@@ -1,5 +1,28 @@
 @use '../../../../../public/assets/scss/all-styles' as *;
 
+.mobil-welcome {
+  display: none;
+  @media screen and (max-width: $breakpoint-mobile) {
+    display: flex;
+    width: 100%;
+    padding-top: 40px;
+
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 120%;
+    font-style: normal;
+    color: $color-avatar-more;
+    text-align: center;
+
+    animation: fade-out 1s forwards 2s;
+  }
+}
+
 .summary {
   display: flex;
   flex-direction: column;
@@ -13,6 +36,9 @@
   @media screen and (max-width: $breakpoint-mobile) {
     padding-left: 1rem;
     padding-right: 1rem;
+    height: calc(100svh - 160px);
+    opacity: 0;
+    animation: fade-in 1.15s forwards;
   }
 
   .headline {
@@ -33,6 +59,10 @@
       color: $color-avatar-more;
     }
 
+    // @media screen and (max-width: $breakpoint-mobile) {
+    //   animation: fade-out 10ms forwards;
+    //   animation: fade-in 20s forwards 5s;
+    // }
     // Umbrechen der Headline Elemente
     @media screen and (max-width: $breakpoint-summary) {
       flex-direction: column;
@@ -86,6 +116,8 @@
         grid-template-columns: calc(100vw - 2rem);
         grid-template-rows: repeat(3, 15svh);
         margin-top: 1rem;
+
+        // animation: fade-grid-in 5s forwards 5s;
       }
 
       .card {
@@ -301,5 +333,28 @@
     @media screen and (max-width: $breakpoint-mobile) {
       @include flex-col-center;
     }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+
+  100% {
+    display: flex;
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    display: flex;
+  }
+  to {
+    display: none;
+    opacity: 0;
   }
 }

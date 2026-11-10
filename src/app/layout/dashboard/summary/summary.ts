@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../shared/services/supabase';
 import { DatePipe } from '@angular/common';
@@ -12,13 +12,26 @@ import { Task } from '../../../shared/models/task';
 })
 export class Summary {
   dbService = inject(Supabase);
-  // deadline: string = '';
   nextDeadline = signal('');
   deadlineArray: string[] = [];
   nextText: string = 'Upcoming';
   nextCounts = signal<number[]>([]);
+  isShownSummary = signal(true);
+  inMobile = false;
+  currentTime: Date = new Date();
+
+  @HostListener('window:resize')
+  oneResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.inMobile = window.innerWidth < 769;
+  }
 
   ngOnInit() {
+    this.checkScreenSize();
+    console.log(this.currentTime);
     if (
       this.dbService.toDoTasks().length < 1 &&
       this.dbService.inProgressTasks().length < 1 &&
@@ -28,6 +41,15 @@ export class Summary {
         this.deadlineSet();
       }, 300);
     } else this.deadlineSet();
+
+    if (this.inMobile && this.dbService.firstMobilWelcome() == false) {
+      this.isShownSummary.set(false);
+      setTimeout(() => {
+        this.isShownSummary.set(true);
+        this.dbService.firstMobilWelcome.set(true);
+        // console.log(this.dbService.firstMobilWelcome());
+      }, 2000);
+    }
   }
 
   deadlineSet() {

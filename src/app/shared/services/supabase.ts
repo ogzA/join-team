@@ -35,6 +35,7 @@ export class Supabase {
   inProgressTasks = signal<Task[]>([]);
   awaitFeedbackTasks = signal<Task[]>([]);
   doneTasks = signal<Task[]>([]);
+  firstMobilWelcome = signal(false);
 
   channels: RealtimeChannel | undefined;
 

@@ -1,144 +1,150 @@
+@if (isShownSummary() == false) {
+  <p class="mobil-welcome">Good Morning!</p>
+}
+
 <section class="summary">
-  <div class="headline">
-    <h2>Join 360</h2>
-    <img src="assets/images/trennstrich.png" alt="" />
-    <p>Key Matrics at a Glance</p>
-  </div>
+  @if (isShownSummary()) {
+    <div class="headline">
+      <h2>Join 360</h2>
+      <img src="assets/images/trennstrich.png" alt="" />
+      <p>Key Matrics at a Glance</p>
+    </div>
 
-  <section class="summary-content">
-    <section class="grid">
-      <article class="top-cards">
-        <div class="to-do card" routerLink="/board">
-          <img class="circle" src="assets/icons/todo-icon.png" alt="" />
-          <div class="content">
-            <h3 class="count">{{ dbService.toDoTasks().length }}</h3>
-            <p>To-do</p>
+    <section class="summary-content">
+      <section class="grid">
+        <article class="top-cards">
+          <div class="to-do card" routerLink="/board">
+            <img class="circle" src="assets/icons/todo-icon.png" alt="" />
+            <div class="content">
+              <h3 class="count">{{ dbService.toDoTasks().length }}</h3>
+              <p>To-do</p>
+            </div>
           </div>
-        </div>
-        <div class="done card" routerLink="/board">
-          <img class="circle" src="assets/icons/done-icon.png" alt="" />
-          <div class="content">
-            <h3 class="count">{{ dbService.doneTasks().length }}</h3>
-            <p>Done</p>
+          <div class="done card" routerLink="/board">
+            <img class="circle" src="assets/icons/done-icon.png" alt="" />
+            <div class="content">
+              <h3 class="count">{{ dbService.doneTasks().length }}</h3>
+              <p>Done</p>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <div class="upcoming card" routerLink="/board">
-        <div class="content-left">
-          @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() < 2) {
-            @if (countDeadlineMedium() + countDeadlineLow() < 1) {
-              <article class="urgent prio">
-                <div class="prio-circle red">
-                  <img src="assets/icons/urgent-light.svg" alt="" />
-                </div>
-                <div class="content">
-                  <h3 class="count">{{ countDeadlineUrgent() }}</h3>
-                  <p>Urgent</p>
-                </div>
-              </article>
-            }
-            @if (countDeadlineMedium() > 0) {
-              <article class="medium prio">
-                <div class="prio-circle orange">
-                  <img src="assets/icons/medium-light.svg" alt="" />
-                </div>
-                <div class="content">
-                  <h3 class="count">{{ countDeadlineMedium() }}</h3>
-                  <p>Medium</p>
-                </div>
-              </article>
-            }
-            @if (countDeadlineLow() > 0) {
-              <article class="low prio">
-                <div class="prio-circle green">
-                  <img src="assets/icons/low-light.svg" alt="" />
-                </div>
-                <div class="content">
-                  <h3 class="count">{{ countDeadlineLow() }}</h3>
-                  <p>Low</p>
-                </div>
-              </article>
-            }
-          }
-
-          @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() > 1) {
-            @if (countDeadlineUrgent()) {
-              <article class="urgent prio">
-                <div class="content">
-                  <h3 class="count">{{ countDeadlineUrgent() }}</h3>
-                  <div class="prio-circle red small">
-                    <img class="small" src="assets/icons/urgent-light.svg" alt="" />
+        <div class="upcoming card" routerLink="/board">
+          <div class="content-left">
+            @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() < 2) {
+              @if (countDeadlineMedium() + countDeadlineLow() < 1) {
+                <article class="urgent prio">
+                  <div class="prio-circle red">
+                    <img src="assets/icons/urgent-light.svg" alt="" />
                   </div>
-                </div>
-              </article>
-            }
-
-            @if (countDeadlineMedium()) {
-              <article class="medium prio">
-                <div class="content">
-                  <h3 class="count">{{ countDeadlineMedium() }}</h3>
-                  <div class="prio-circle orange small">
-                    <img class="small" src="assets/icons/medium-light.svg" alt="" />
+                  <div class="content">
+                    <h3 class="count">{{ countDeadlineUrgent() }}</h3>
+                    <p>Urgent</p>
                   </div>
-                </div>
-              </article>
-            }
-
-            @if (countDeadlineLow()) {
-              <article class="low prio">
-                <div class="content">
-                  <h3 class="count">{{ countDeadlineLow() }}</h3>
-                  <div class="prio-circle green small">
+                </article>
+              }
+              @if (countDeadlineMedium() > 0) {
+                <article class="medium prio">
+                  <div class="prio-circle orange">
+                    <img src="assets/icons/medium-light.svg" alt="" />
+                  </div>
+                  <div class="content">
+                    <h3 class="count">{{ countDeadlineMedium() }}</h3>
+                    <p>Medium</p>
+                  </div>
+                </article>
+              }
+              @if (countDeadlineLow() > 0) {
+                <article class="low prio">
+                  <div class="prio-circle green">
                     <img src="assets/icons/low-light.svg" alt="" />
                   </div>
-                </div>
-              </article>
+                  <div class="content">
+                    <h3 class="count">{{ countDeadlineLow() }}</h3>
+                    <p>Low</p>
+                  </div>
+                </article>
+              }
             }
-          }
-        </div>
 
-        <img class="line" src="assets/icons/trennstrich2.png" alt="" />
+            @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() > 1) {
+              @if (countDeadlineUrgent()) {
+                <article class="urgent prio">
+                  <div class="content">
+                    <h3 class="count">{{ countDeadlineUrgent() }}</h3>
+                    <div class="prio-circle red small">
+                      <img class="small" src="assets/icons/urgent-light.svg" alt="" />
+                    </div>
+                  </div>
+                </article>
+              }
 
-        <div class="content-right">
-          <!-- <h3>{{ checkNextDeadline() | date }}</h3> -->
-          <h3>{{ nextDeadline() | date }}</h3>
-          <p>{{ setNextText() }} Deadline</p>
-        </div>
-      </div>
+              @if (countDeadlineMedium()) {
+                <article class="medium prio">
+                  <div class="content">
+                    <h3 class="count">{{ countDeadlineMedium() }}</h3>
+                    <div class="prio-circle orange small">
+                      <img class="small" src="assets/icons/medium-light.svg" alt="" />
+                    </div>
+                  </div>
+                </article>
+              }
 
-      <article class="bottom-cards">
-        <div class="tasks card" routerLink="/board">
-          <div class="content">
-            <h3 class="count">
-              {{
-                dbService.toDoTasks().length +
-                  dbService.inProgressTasks().length +
-                  dbService.awaitFeedbackTasks().length +
-                  dbService.doneTasks().length
-              }}
-            </h3>
-            <p>Tasks in Board</p>
+              @if (countDeadlineLow()) {
+                <article class="low prio">
+                  <div class="content">
+                    <h3 class="count">{{ countDeadlineLow() }}</h3>
+                    <div class="prio-circle green small">
+                      <img src="assets/icons/low-light.svg" alt="" />
+                    </div>
+                  </div>
+                </article>
+              }
+            }
+          </div>
+
+          <img class="line" src="assets/icons/trennstrich2.png" alt="" />
+
+          <div class="content-right">
+            <!-- <h3>{{ checkNextDeadline() | date }}</h3> -->
+            <h3>{{ nextDeadline() | date }}</h3>
+            <p>{{ setNextText() }} Deadline</p>
           </div>
         </div>
-        <div class="progress card" routerLink="/board">
-          <div class="content">
-            <h3 class="count">{{ dbService.inProgressTasks().length }}</h3>
-            <p>Tasks in Progress</p>
+
+        <article class="bottom-cards">
+          <div class="tasks card" routerLink="/board">
+            <div class="content">
+              <h3 class="count">
+                {{
+                  dbService.toDoTasks().length +
+                    dbService.inProgressTasks().length +
+                    dbService.awaitFeedbackTasks().length +
+                    dbService.doneTasks().length
+                }}
+              </h3>
+              <p>Tasks in Board</p>
+            </div>
           </div>
-        </div>
-        <div class="feedback card" routerLink="/board">
-          <div class="content">
-            <h3 class="count">{{ dbService.awaitFeedbackTasks().length }}</h3>
-            <p>Awaiting Feedback</p>
+          <div class="progress card" routerLink="/board">
+            <div class="content">
+              <h3 class="count">{{ dbService.inProgressTasks().length }}</h3>
+              <p>Tasks in Progress</p>
+            </div>
           </div>
-        </div>
-      </article>
+          <div class="feedback card" routerLink="/board">
+            <div class="content">
+              <h3 class="count">{{ dbService.awaitFeedbackTasks().length }}</h3>
+              <p>Awaiting Feedback</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="side-text">
+        <h3>Good morning!</h3>
+        <!-- <button (click)="checkNextDeadline()">Check Next Deadline</button> -->
+      </section>
     </section>
-
-    <section class="side-text">
-      <h3>Good morning!</h3>
-      <!-- <button (click)="checkNextDeadline()">Check Next Deadline</button> -->
-    </section>
-  </section>
+  }
 </section>
