@@ -1,5 +1,6 @@
 import { inject, Service } from '@angular/core';
 import { Supabase } from './supabase';
+import { Router } from '@angular/router';
 
 export interface Profile {
   id: number;
@@ -14,6 +15,7 @@ export interface Profile {
 export class SupabaseAuth {
   private dbService = inject(Supabase);
   private supabase = this.dbService.supabase;
+  private router = inject(Router);
 
   async signUpNewUser(name: string, email: string, password: string) {
     const { data, error } = await this.supabase.auth.signUp({
@@ -50,7 +52,7 @@ export class SupabaseAuth {
       console.error('Login error:', error.message);
     } else {
       console.log('Login success:', data);
-      //this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard']);
     }
 
     return { data, error };
