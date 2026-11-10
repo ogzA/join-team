@@ -19,6 +19,8 @@ export class Summary {
   isShownSummary = signal(true);
   inMobile = false;
   currentTime: Date = new Date();
+  timeString = '';
+  welcomeText = signal('');
 
   @HostListener('window:resize')
   oneResize() {
@@ -31,7 +33,14 @@ export class Summary {
 
   ngOnInit() {
     this.checkScreenSize();
-    console.log(this.currentTime);
+    this.timeString = this.currentTime.toLocaleTimeString('de-DE');
+
+    if (this.timeString < '12' && this.timeString >= '06') this.welcomeText.set('Good Morning!');
+    if ((this.timeString >= '12' && this.timeString < '18') || this.timeString == '')
+      this.welcomeText.set('Good Day!');
+    if (this.timeString >= '18' && this.timeString < '23') this.welcomeText.set('Good Evening!');
+    if (this.timeString >= '22' || this.timeString < '06') this.welcomeText.set('Good Night!');
+
     if (
       this.dbService.toDoTasks().length < 1 &&
       this.dbService.inProgressTasks().length < 1 &&

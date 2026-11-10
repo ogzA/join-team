@@ -1,5 +1,5 @@
 @if (isShownSummary() == false) {
-  <p class="mobil-welcome">Good Morning!</p>
+  <p class="mobil-welcome">{{ welcomeText() }}</p>
 }
 
 <section class="summary">
@@ -142,7 +142,7 @@
       </section>
 
       <section class="side-text">
-        <h3>Good morning!</h3>
+        <h3>{{ welcomeText() }}</h3>
         <!-- <button (click)="checkNextDeadline()">Check Next Deadline</button> -->
       </section>
     </section>
