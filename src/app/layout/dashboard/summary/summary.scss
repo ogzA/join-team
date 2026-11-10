@@ -1,5 +1,28 @@
 @use '../../../../../public/assets/scss/all-styles' as *;
 
+.mobil-welcome {
+  display: none;
+  @media screen and (max-width: $breakpoint-mobile) {
+    display: flex;
+    width: 100%;
+    padding-top: 40px;
+
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 120%;
+    font-style: normal;
+    color: $color-avatar-more;
+    text-align: center;
+
+    animation: fade-out 1s forwards 2s;
+  }
+}
+
 .summary {
   display: flex;
   flex-direction: column;
@@ -13,6 +36,9 @@
   @media screen and (max-width: $breakpoint-mobile) {
     padding-left: 1rem;
     padding-right: 1rem;
+    height: calc(100svh - 160px);
+    opacity: 0;
+    animation: fade-in 1.15s forwards;
   }
 
   .headline {
@@ -86,6 +112,8 @@
         grid-template-columns: calc(100vw - 2rem);
         grid-template-rows: repeat(3, 15svh);
         margin-top: 1rem;
+
+        // animation: fade-grid-in 5s forwards 5s;
       }
 
       .card {
@@ -125,14 +153,14 @@
 
         .content {
           @include all-col-center;
-          padding: 0.5rem;
+          padding: 0.25rem;
 
           h3 {
-            font-size: clamp(2.5rem, calc(2.071rem + 2.143vw), 4rem);
+            font-size: clamp(2rem, calc(1.429rem + 2.857vw), 4rem);
             font-weight: 600;
             line-height: 120%;
             @media screen and (max-width: $breakpoint-mobile) {
-              font-size: clamp(2.5rem, calc(1.429rem + 5.357vw), 4rem);
+              font-size: clamp(2rem, calc(0.571rem + 7.143vw), 4rem);
             }
           }
 
@@ -170,12 +198,14 @@
       .upcoming {
         grid-column: 1 / 2;
         grid-row: 2 / 2;
-        gap: clamp(0.5rem, calc(-0.107125rem + 3.036vw), 2.625rem);
-        padding: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem)
-          clamp(0.5rem, calc(-0.0714375rem + 2.857vw), 2.5rem);
-        @media screen and (max-width: $breakpoint-mobile) {
-          gap: clamp(0.5rem, calc(-1.018rem + 7.589vw), 2.625rem);
-        }
+        display: flex;
+        justify-content: left;
+        // gap: clamp(0.5rem, calc(-0.107125rem + 3.036vw), 2.625rem);
+        // padding: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem)
+        //   clamp(0.5rem, calc(-0.0714375rem + 2.857vw), 2.5rem);
+        // @media screen and (max-width: $breakpoint-mobile) {
+        //   gap: clamp(0.5rem, calc(-1.018rem + 7.589vw), 2.625rem);
+        // }
 
         .line {
           height: 100%;
@@ -183,10 +213,23 @@
         }
 
         .content-left {
-          @include flex-center;
+          @include all-center;
+          width: 43%;
+          text-align: center;
+          // gap: 8px;
           gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
           @media screen and (max-width: $breakpoint-mobile) {
             gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
+          }
+
+          h3 {
+            text-align: center;
+            margin-left: -4px;
+          }
+
+          .prio {
+            @include flex-center;
+            justify-content: space-evenly;
           }
 
           .prio-circle {
@@ -197,14 +240,38 @@
               height: clamp(2.5rem, calc(1.607rem + 4.464vw), 3.75rem);
             }
             @include all-center;
-            // Aktuell nur für Urgent als roter kreis
-            background-color: $prio-background-urgent;
             padding: clamp(0.5rem, calc(0.357125rem + 0.714vw), 1rem);
             border-radius: 50%;
+
+            &.red {
+              background-color: $prio-background-urgent;
+            }
+
+            &.orange {
+              background-color: $prio-background-medium;
+            }
+
+            &.green {
+              background-color: $prio-background-low;
+            }
 
             img {
               width: 100%;
               object-fit: contain;
+            }
+
+            &.small {
+              width: clamp(1.625rem, calc(1.196rem + 2.143vw), 3.125rem);
+              height: clamp(1.625rem, calc(1.196rem + 2.143vw), 3.125rem);
+              @media screen and (max-width: $breakpoint-mobile) {
+                width: clamp(1.625rem, calc(1rem + 3.125vw), 2.5rem);
+                height: clamp(1.625rem, calc(1rem + 3.125vw), 2.5rem);
+              }
+              padding: 8px;
+
+              img {
+                object-fit: contain;
+              }
             }
           }
         }
@@ -212,11 +279,16 @@
         .content-right {
           display: flex;
           flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          // background-color: red;
 
           h3 {
             font-size: clamp(0.8rem, calc(0.589rem + 0.804vw), 1.31rem);
             font-weight: 700;
             line-height: 120%;
+            text-align: left;
             @media screen and (max-width: $breakpoint-mobile) {
               font-size: clamp(1rem, calc(0.777rem + 1.116vw), 1.31rem);
             }
@@ -225,6 +297,7 @@
             font-size: clamp(0.88rem, calc(0.839rem + 0.179vw), 1rem);
             font-weight: 400;
             line-height: 120%;
+            text-align: left;
             @media screen and (max-width: $breakpoint-mobile) {
               font-size: clamp(0.88rem, calc(0.786rem + 0.446vw), 1rem);
             }
@@ -257,5 +330,28 @@
     @media screen and (max-width: $breakpoint-mobile) {
       @include flex-col-center;
     }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+
+  100% {
+    display: flex;
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    display: flex;
+  }
+  to {
+    display: none;
+    opacity: 0;
   }
 }
