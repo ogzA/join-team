@@ -25,6 +25,9 @@
           <input type="email" id="email" formControlName="email" placeholder="Email" />
           <img class="field_icon" src="assets/icons/mail-signup.svg" alt="" />
         </div>
+        @if (signupForm.controls['email'].errors?.['emailTaken']) {
+          <p class="error">This email is already registered</p>
+        }
       </div>
 
       <div class="field">
