@@ -20,9 +20,9 @@ export class SignupForm {
   signupForm = this.fb.nonNullable.group({
     name: [''],
     email: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
-    password: ['',contactValidators.password],
-    confirmPassword: ['',contactValidators.password],
-    privacyPolicy: [false],
+    password: ['',Validators.required],
+    confirmPassword: ['',Validators.required],
+    privacyPolicy: ['',Validators.required],
   });
 
   togglePasswordVisibility() {
