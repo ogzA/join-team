@@ -47,7 +47,7 @@
 
       <div class="form-button">
         <button class="logIn" type="submit" [disabled]="loginForm.invalid">Log in</button>
-        <button class="asGuestLogIn" type="button" [disabled]="loginForm.invalid">
+        <button class="asGuestLogIn" type="button" (click)="guestLogin()">
           Guest Log in
         </button>
       </div>
