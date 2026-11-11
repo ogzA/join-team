@@ -198,7 +198,11 @@
 }
 
 @if (isAddTaskOpen()) {
-  <div class="dialog-backdrop" animate.leave="dialog-closing" (click)="closeAddTask()">
+  <div
+    class="dialog-backdrop"
+    animate.leave="dialog-closing"
+    (pointerdown)="$event.target === $event.currentTarget ? closeAddTask() : null"
+  >
     <div class="dialog" (click)="$event.stopPropagation()">
       <div class="dialog-header">
         <button type="button" class="dialog-close-btn" aria-label="Close" (click)="closeAddTask()">

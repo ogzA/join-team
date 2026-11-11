@@ -1,4 +1,8 @@
-<div class="modal" [class.modal--closing]="isClosing()" (click)="closeDialog()">
+<div
+  class="modal"
+  [class.modal--closing]="isClosing()"
+  (pointerdown)="$event.target === $event.currentTarget ? closeDialog() : null"
+>
   <div class="modal_content" (click)="$event.stopPropagation()">
     <div class="header_modal">
       @if (!this.isEdit()) {
