@@ -1,15 +1,14 @@
 import { Component, inject, input, output, signal } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
 import { TaskCategory, TaskPrio, TaskStatus } from '../../../../shared/models/task';
+import { getTodayDate, noPastDate } from '../task-validators';
 
 interface SUBTASK {
   task: string;
@@ -23,7 +22,7 @@ interface SUBTASK {
   templateUrl: './add-task.html',
 })
 export class AddTask {
-  todaysDate: string = this.getTodayDate();
+  todaysDate: string = getTodayDate();
   placeholder: string = 'dd/mm/yyyy';
   subtaskInfo: boolean = false;
   subtasks: SUBTASK[] = [];
@@ -36,17 +35,10 @@ export class AddTask {
   private dbService = inject(Supabase);
   private toast = inject(ToastService);
 
-  // Gives an error when the date is before today.
-  private noPastDate = (control: AbstractControl): ValidationErrors | null => {
-    const value: string = control.value;
-    if (!value || value >= this.todaysDate) return null;
-    return { pastDate: true };
-  };
-
   taskForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
-    date: ['', [Validators.required, this.noPastDate]],
+    date: ['', [Validators.required, noPastDate()]],
     prio: ['Medium'],
     assigned: [''],
     category: ['', Validators.required],
@@ -89,14 +81,6 @@ export class AddTask {
   subtaskEdit(index: number) {
     this.editingIndex = index;
     this.editedTask = this.subtasks[index].task;
-  }
-
-  getTodayDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   deleteEditTask() {
