@@ -50,11 +50,6 @@ export const routes: Routes = [
     path: 'legal-notice',
     component: LegalNotice,
   },
-  //Wildcard route: Catches all invalid routes and sends user to login
-  { 
-    path: '**', 
-    redirectTo: '' 
-  },
   {
     path: 'signup',
     component: SignupForm,
