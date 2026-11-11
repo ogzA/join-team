@@ -1,6 +1,7 @@
-import { computed, Service, signal } from '@angular/core';
+import { computed, inject, Service, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 import { Task, TaskStatus } from '../models/task';
+import { Router } from '@angular/router';
 
 interface Contact {
   name: string;
@@ -35,6 +36,7 @@ export class Supabase {
   inProgressTasks = signal<Task[]>([]);
   awaitFeedbackTasks = signal<Task[]>([]);
   doneTasks = signal<Task[]>([]);
+  private router = inject(Router);
   firstMobilWelcome = signal(false);
 
   channels: RealtimeChannel | undefined;
@@ -316,4 +318,7 @@ export class Supabase {
   selectContact(id: number) {
     this.selectedContactId.set(id);
   }
+
+
+
 }

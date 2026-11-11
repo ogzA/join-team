@@ -1,5 +1,13 @@
-import { Component, HostListener, signal, ElementRef, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  signal,
+  ElementRef,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SupabaseAuth } from '../services/supabase-auth';
 
 @Component({
   imports: [RouterLink],
@@ -8,6 +16,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './dashboard-header.html',
 })
 export class DashboardHeader {
+  private supabase_auth = inject(SupabaseAuth);
   mobile_menu = signal<boolean>(false);
 
   constructor(private elementRef: ElementRef) {}
@@ -28,5 +37,10 @@ export class DashboardHeader {
 
   closeMenu() {
     this.mobile_menu.set(false);
+  }
+
+  async logout() {
+    this.closeMenu();
+    await this.supabase_auth.signOut();
   }
 }
