@@ -65,7 +65,7 @@ export class SupabaseAuth {
       console.error('Signout error:', error.message);
     } else {
       console.log('Signout success');
-      //this.router.navigate(['']);
+      this.router.navigate(['/']);
     }
   }
 }
