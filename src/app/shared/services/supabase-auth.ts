@@ -47,7 +47,7 @@ export class SupabaseAuth {
       email: email,
       password: password,
     });
-    console.error('Login data:', data);
+    console.log('Login data:', data);
     if (error) {
       console.error('Login error:', error.message);
     } else {
