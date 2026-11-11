@@ -56,7 +56,9 @@
                 @if (signupForm.controls['password'].touched) {
                     @if (signupForm.controls['password'].errors?.['required']) {
                         <span class="error">This field is required</span>
-                    } 
+                    } @else if(signupForm.controls['password'].errors?.['passwordTaken']) {
+                <p class="error">Password should be at least 6 characters.</p>
+                }
                 }
           </div>
       </div>

@@ -56,6 +56,11 @@ export class SignupForm {
         emailControl.setErrors({ emailTaken: true });
         emailControl.markAllAsTouched();
       }
+      if (error.code === 'weak_password') {
+        const passwordControl = this.signupForm.controls.password;
+        passwordControl.setErrors({ passwordTaken: true });
+        passwordControl.markAllAsTouched();
+      }
       return;
     }
     this.signupForm.reset();
