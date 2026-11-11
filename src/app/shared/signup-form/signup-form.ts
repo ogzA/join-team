@@ -23,15 +23,15 @@ export class SignupForm {
   signupForm = this.fb.nonNullable.group({
     name: [''],
     email: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
-    password: ['',Validators.required],
-    confirmPassword: ['',Validators.required],
-    privacyPolicy: ['',Validators.required],
+    password: ['', Validators.required],
+    confirmPassword: ['', Validators.required],
+    privacyPolicy: ['', Validators.required],
   });
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
-  toggleConfirmPasswordVisibility(){
+  toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
   get passwordsDoNotMatch(): boolean {
@@ -40,7 +40,7 @@ export class SignupForm {
 
     return password !== confirmPassword;
   }
-  onSubmit() {
+  async onSubmit() {
     if (this.signupForm.invalid || this.passwordsDoNotMatch) {
       this.signupForm.markAllAsTouched();
       return;
