@@ -36,6 +36,8 @@
             @if (taskForm.controls['date'].touched) {
               @if (taskForm.controls['date'].errors?.['required']) {
                 <p class="error">This field is required</p>
+              } @else if (taskForm.controls['date'].errors?.['pattern']) {
+                <p class="error">Please enter a valid date</p>
               } @else if (taskForm.controls.date.errors?.['pastDate']) {
                 <p class="error">Please select today or a future date</p>
               }
@@ -200,7 +202,12 @@
         <button type="button" class="btn clearBtn" (click)="resetForm()">
           Clear <img src="assets/icons/close-dialog.svg" alt="close_logo" />
         </button>
-        <button type="submit" [disabled]="isSaving()" [class.createBtn--inactive]="taskForm.invalid" class="btn createBtn">
+        <button
+          type="submit"
+          [disabled]="isSaving()"
+          [class.createBtn--inactive]="taskForm.invalid"
+          class="btn createBtn"
+        >
           Create Task <img src="assets/icons/check.svg" alt="check_logo" />
         </button>
       </div>
