@@ -1,10 +1,8 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { Supabase } from '../../../../shared/services/supabase';
 import {
-  AbstractControl,
   FormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
@@ -12,6 +10,7 @@ import { SelectedTask, Subtask, Task, TaskPrio } from '../../../../shared/models
 import { ToastService } from '../../../../shared/services/toast.service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { NameLogo } from '../../../../shared/services/name-logo';
+import { getTodayDate, noPastDate } from '../task-validators';
 
 @Component({
   imports: [ReactiveFormsModule, AssignedToDropdown, TitleCasePipe, DatePipe],
@@ -23,7 +22,7 @@ import { NameLogo } from '../../../../shared/services/name-logo';
   },
 })
 export class ShowTaskDetails {
-  todaysDate: string = this.getTodayDate();
+  todaysDate: string = getTodayDate();
   isEdit = signal(false);
   subtaskInfo: boolean = false;
   editingIndex: number | null = null;
@@ -56,17 +55,17 @@ export class ShowTaskDetails {
   protected nlService = inject(NameLogo);
   private toast = inject(ToastService);
 
- /** Gives an error when the date is before today. The original date of the task stays valid. */
-  private noPastDate = (control: AbstractControl): ValidationErrors | null => {
-    const value: string = control.value;
-    if (!value || value >= this.todaysDate || value === this.originalDate) return null;
-    return { pastDate: true };
-  };
-
   taskDetailForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
-    date: ['',[Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/), this.noPastDate]],
+    date: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^\d{4}-\d{2}-\d{2}$/),
+        noPastDate(() => this.originalDate),
+      ],
+    ],
     prio: [''],
     subtasks: [''],
   });
@@ -118,14 +117,6 @@ export class ShowTaskDetails {
       this.dbService.doneTasks,
     ];
     return rows[rowId - 1]();
-  }
-
-  getTodayDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   toInputDate(date: string): string {
