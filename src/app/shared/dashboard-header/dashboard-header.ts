@@ -18,8 +18,11 @@ import { SupabaseAuth } from '../services/supabase-auth';
 export class DashboardHeader {
   private supabase_auth = inject(SupabaseAuth);
   mobile_menu = signal<boolean>(false);
+  isGuest = signal(false);
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) {
+    this.supabase_auth.isGuest().then((guest) => this.isGuest.set(guest));
+  }
 
   // Automatically listen to all document clicks
   @HostListener('document:click', ['$event'])

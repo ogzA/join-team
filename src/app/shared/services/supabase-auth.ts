@@ -42,6 +42,11 @@ export class SupabaseAuth {
     return data.user !== null;
   }
 
+  async isGuest() {
+    const { data } = await this.supabase.auth.getUser();
+    return data.user?.is_anonymous === true;
+  }
+
   async signInWithEmail(email: string, password: string) {
     const { data, error } = await this.supabase.auth.signInWithPassword({
       email: email,
@@ -69,7 +74,7 @@ export class SupabaseAuth {
 
     return { error };
   }
-  
+
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
 
