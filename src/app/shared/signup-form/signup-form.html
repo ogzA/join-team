@@ -32,21 +32,40 @@
 
       <div class="field">
         <div class="field_input">
-          <input type="password" id="password" formControlName="password" placeholder="Password" />
-          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="" />
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+            placeholder="Password" />
+          <img class="field_icon password_icon" [src]="showPassword
+                        ? 'assets/icons/visibility.svg'
+                        : 'assets/icons/visibility_off.svg'" (click)="togglePasswordVisibility()"
+            alt="Toggle_password_visibility" alt="" />
         </div>
+        <div class="error-container">
+                @if (signupForm.controls['password'].touched) {
+                    @if (signupForm.controls['password'].errors?.['required']) {
+                        <span class="error">This field is required</span>
+                    } 
+                }
+          </div>
       </div>
 
       <div class="field">
         <div class="field_input">
-          <input
-            type="password"
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            placeholder="Confirm Password"
-          />
-          <img class="field_icon" src="assets/icons/visibility_off.svg" alt="" />
+          <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password" />
+          <img class="field_icon password_icon" [src]="showConfirmPassword
+                        ? 'assets/icons/visibility.svg'
+                        : 'assets/icons/visibility_off.svg'" (click)="toggleConfirmPasswordVisibility()" alt="" />
         </div>
+        <div class="error-container">
+                @if (signupForm.controls['confirmPassword'].touched) {
+                    @if (signupForm.controls['confirmPassword'].errors?.['required']) {
+                        <span class="error">This field is required</span>
+                    } @else if (passwordsDoNotMatch) {
+                      <span class="error">
+                        Password and Confirm Password do not match.
+                      </span>
+                    }
+                }
+            </div>
       </div>
 
       <div class="field checkPosition">
@@ -55,10 +74,17 @@
           <span class="privacy__box" aria-hidden="true"></span>
           I accept the <a routerLink="/privacy-policy">Privacy policy</a>
         </label>
+        <div class="error-container">
+                @if (signupForm.controls['privacyPolicy'].touched) {
+                    @if (signupForm.controls['privacyPolicy'].errors?.['required']) {
+                        <span class="error">This field is required</span>
+                    }
+                }
+            </div>
       </div>
 
       <div class="form-button">
-        <button class="signUp" type="submit">Sign up</button>
+        <button [disabled]="signupForm.invalid" class="signUp" type="submit">Sign up</button>
       </div>
     </form>
   </section>

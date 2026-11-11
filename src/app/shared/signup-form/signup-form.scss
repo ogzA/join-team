@@ -116,13 +116,12 @@
         width: min(100%, 420px);
 
         &_input {
-          position: relative;
-
-          .password_icon {
+          position: relative;         
+        }
+        .password_icon {
             cursor: pointer;
             pointer-events: auto;
           }
-        }
 
         &_icon {
           position: absolute;
