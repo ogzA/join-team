@@ -18,6 +18,13 @@
           <input type="text" id="name" formControlName="name" placeholder="Name" />
           <img class="field_icon" src="assets/icons/person-signup.svg" alt="" />
         </div>
+        <div class="error-container">
+                @if (signupForm.controls['name'].touched) {
+                    @if (signupForm.controls['name'].errors?.['required']) {
+                        <span class="error">This field is required</span>
+                    } 
+                }
+          </div>
       </div>
 
       <div class="field">
@@ -25,9 +32,15 @@
           <input type="email" id="email" formControlName="email" placeholder="Email" />
           <img class="field_icon" src="assets/icons/mail-signup.svg" alt="" />
         </div>
-        @if (signupForm.controls['email'].errors?.['emailTaken']) {
-          <p class="error">This email is already registered</p>
-        }
+        <div class="error-container">
+            @if (signupForm.controls['email'].touched) {
+            @if (signupForm.controls['email'].errors?.['required']) {
+            <span class="error">This field is required</span>
+            } @else if(signupForm.controls['email'].errors?.['emailTaken']) {
+            <p class="error">This email is already registered</p>
+            }
+          }
+        </div>
       </div>
 
       <div class="field">

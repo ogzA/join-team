@@ -21,7 +21,7 @@ export class SignupForm {
   supabase_auth = inject(SupabaseAuth);
 
   signupForm = this.fb.nonNullable.group({
-    name: [''],
+    name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],

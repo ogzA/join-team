@@ -16,7 +16,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: fluid-height(8px, 32px);
+      gap: fluid-height(8px, 20px);
       width: min(598px, 100%);
       padding: fluid-height(16px, 48px) clamp(20px, 5vw, 48px);
       box-sizing: border-box;
@@ -93,11 +93,11 @@
           background: url('/assets/icons/checkbox-unchecked.svg') center / contain no-repeat;
         }
 
-        input:checked + .privacy__box {
+        input:checked+.privacy__box {
           background-image: url('/assets/icons/checkbox-checked.svg');
         }
 
-        input:focus-visible + .privacy__box {
+        input:focus-visible+.privacy__box {
           outline: 2px solid $color-input-focus;
           outline-offset: 2px;
         }
@@ -116,12 +116,13 @@
         width: min(100%, 420px);
 
         &_input {
-          position: relative;         
+          position: relative;
         }
+
         .password_icon {
-            cursor: pointer;
-            pointer-events: auto;
-          }
+          cursor: pointer;
+          pointer-events: auto;
+        }
 
         &_icon {
           position: absolute;
