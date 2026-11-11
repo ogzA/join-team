@@ -58,6 +58,18 @@ export class SupabaseAuth {
     return { data, error };
   }
 
+  async signInAsGuest() {
+    const { error } = await this.supabase.auth.signInAnonymously();
+
+    if (error) {
+      console.error('Guest login error:', error.message);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+
+    return { error };
+  }
+  
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
 
