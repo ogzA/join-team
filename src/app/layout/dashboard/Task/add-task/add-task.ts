@@ -1,19 +1,10 @@
 import { Component, inject, input, output, signal } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Supabase } from '../../../../shared/services/supabase';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { AssignedToDropdown } from '../../../../shared/assigned-to-dropdown/assigned-to-dropdown';
-import { TaskCategory, TaskPrio, TaskStatus } from '../../../../shared/models/task';
+import { Subtask, Task, TaskCategory, TaskPrio, TaskStatus } from '../../../../shared/models/task';
 import { getTodayDate, noPastDate } from '../task-validators';
-
-interface SUBTASK {
-  task: string;
-  done: boolean;
-}
 
 @Component({
   imports: [ReactiveFormsModule, AssignedToDropdown],
@@ -25,7 +16,7 @@ export class AddTask {
   todaysDate: string = getTodayDate();
   placeholder: string = 'dd/mm/yyyy';
   subtaskInfo: boolean = false;
-  subtasks: SUBTASK[] = [];
+  subtasks: Subtask[] = [];
   isSaving = signal(false);
   editingIndex: number | null = null;
   editedTask: string = '';
@@ -53,7 +44,7 @@ export class AddTask {
     this.isSaving.set(true);
     try {
       const formValue = this.taskForm.getRawValue();
-      const taskData = {
+      const taskData: Task = {
         title: formValue.title,
         description: formValue.description,
         date: formValue.date,
