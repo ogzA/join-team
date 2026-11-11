@@ -4,20 +4,34 @@
   display: none;
   @media screen and (max-width: $breakpoint-mobile) {
     display: flex;
+    flex-direction: column;
     width: 100%;
     padding-top: 40px;
 
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 50%;
+    top: calc(50svh - 36px);
+    left: 8svh;
 
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 120%;
-    font-style: normal;
-    color: $color-avatar-more;
-    text-align: center;
+    p {
+      width: 300px;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 120%;
+      font-style: normal;
+      color: $color-avatar-more;
+      text-align: left;
+    }
+
+    h3 {
+      font-size: 47px;
+      font-weight: 700;
+      line-height: 120%;
+      color: $color-avatar-more;
+      text-align: left;
+      width: 300px;
+    }
 
     animation: fade-out 1s forwards 2s;
   }
@@ -29,7 +43,6 @@
   width: 100%;
   max-width: 90rem;
   height: 100%;
-  // calc(100svh - 96px)
   padding: clamp(1rem, calc(0.2856875rem + 3.571vw), 3.5rem) 2.5rem 0 6rem;
   color: $color-input-text;
 
@@ -83,15 +96,24 @@
     margin-top: 2.5rem;
 
     .side-text {
-      @include flex-center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       flex: 1;
       padding-left: clamp(1rem, calc(-8.0909375rem + 14.545vw), 5rem);
 
-      h3 {
-        font-size: clamp(1.06rem, calc(-2.915rem + 6.364vw), 2.81rem);
+      p {
+        font-size: clamp(1.13rem, calc(-2.335rem + 5.859vw), 2.94rem);
         font-weight: 500;
         line-height: 120%;
         font-style: normal;
+        color: $color-avatar-more;
+      }
+
+      h3 {
+        font-size: clamp(1.5rem, calc(-3.034rem + 7.677vw), 3.88rem);
+        font-weight: 700;
+        line-height: 120%;
         color: $color-avatar-more;
       }
 
@@ -106,14 +128,11 @@
       grid-template-columns: clamp(18rem, calc(13.142875rem + 24.286vw), 35rem);
       grid-template-rows: repeat(3, clamp(7.25rem, calc(5.8393125rem + 5.179vw), 10.5rem));
       gap: clamp(1.75rem, calc(1.7143125rem + 0.179vw), 1.875rem);
-      // background-color: yellow;
 
       @media screen and (max-width: $breakpoint-mobile) {
         grid-template-columns: calc(100vw - 2rem);
         grid-template-rows: repeat(3, 15svh);
         margin-top: 1rem;
-
-        // animation: fade-grid-in 5s forwards 5s;
       }
 
       .card {

@@ -1,5 +1,10 @@
 @if (isShownSummary() == false) {
-  <p class="mobil-welcome">{{ welcomeText() }}</p>
+  <div class="mobil-welcome">
+    <p>{{ welcomeText() }}</p>
+    @if (auth.loggedInStatus()) {
+      <h3>{{ this.loggedUserName() }}</h3>
+    }
+  </div>
 }
 
 <section class="summary">
@@ -142,8 +147,10 @@
       </section>
 
       <section class="side-text">
-        <h3>{{ welcomeText() }}</h3>
-        <!-- <button (click)="checkNextDeadline()">Check Next Deadline</button> -->
+        <p>{{ welcomeText() }}</p>
+        @if (auth.loggedInStatus()) {
+          <h3>{{ this.loggedUserName() }}</h3>
+        }
       </section>
     </section>
   }

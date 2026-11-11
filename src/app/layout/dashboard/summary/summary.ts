@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../shared/services/supabase';
 import { DatePipe } from '@angular/common';
 import { Task } from '../../../shared/models/task';
+import { SupabaseAuth } from '../../../shared/services/supabase-auth';
 
 @Component({
   imports: [RouterLink, DatePipe],
@@ -12,6 +13,7 @@ import { Task } from '../../../shared/models/task';
 })
 export class Summary {
   dbService = inject(Supabase);
+  private auth = inject(SupabaseAuth);
   nextDeadline = signal('');
   deadlineArray: string[] = [];
   nextText: string = 'Upcoming';
@@ -21,44 +23,15 @@ export class Summary {
   currentTime: Date = new Date();
   timeString = '';
   welcomeText = signal('');
+  loggedUserName = signal('');
 
-  @HostListener('window:resize')
-  oneResize() {
+  async ngOnInit() {
+    const name = await this.auth.getUserName();
+    this.loggedUserName.set(name);
     this.checkScreenSize();
-  }
-
-  private checkScreenSize() {
-    this.inMobile = window.innerWidth < 769;
-  }
-
-  ngOnInit() {
-    this.checkScreenSize();
-    this.timeString = this.currentTime.toLocaleTimeString('de-DE');
-
-    if (this.timeString < '12' && this.timeString >= '06') this.welcomeText.set('Good Morning!');
-    if ((this.timeString >= '12' && this.timeString < '18') || this.timeString == '')
-      this.welcomeText.set('Good Day!');
-    if (this.timeString >= '18' && this.timeString < '23') this.welcomeText.set('Good Evening!');
-    if (this.timeString >= '22' || this.timeString < '06') this.welcomeText.set('Good Night!');
-
-    if (
-      this.dbService.toDoTasks().length < 1 &&
-      this.dbService.inProgressTasks().length < 1 &&
-      this.dbService.awaitFeedbackTasks().length < 1
-    ) {
-      setTimeout(() => {
-        this.deadlineSet();
-      }, 300);
-    } else this.deadlineSet();
-
-    if (this.inMobile && this.dbService.firstMobilWelcome() == false) {
-      this.isShownSummary.set(false);
-      setTimeout(() => {
-        this.isShownSummary.set(true);
-        this.dbService.firstMobilWelcome.set(true);
-        // console.log(this.dbService.firstMobilWelcome());
-      }, 2000);
-    }
+    this.setWelcomeText();
+    this.checkDeadline();
+    this.mobileAnimation();
   }
 
   deadlineSet() {
@@ -99,7 +72,6 @@ export class Summary {
     this.checkCount(this.dbService.toDoTasks(), 'Urgent', 0, deadline);
     this.checkCount(this.dbService.inProgressTasks(), 'Urgent', 0, deadline);
     this.checkCount(this.dbService.awaitFeedbackTasks(), 'Urgent', 0, deadline);
-
     // if (this.nextCounts()[0] > 0) this.nextCounts()[0] = 0;
     return this.nextCounts()[0];
   }
@@ -110,7 +82,6 @@ export class Summary {
     this.checkCount(this.dbService.toDoTasks(), 'Medium', 1, deadline);
     this.checkCount(this.dbService.inProgressTasks(), 'Medium', 1, deadline);
     this.checkCount(this.dbService.awaitFeedbackTasks(), 'Medium', 1, deadline);
-
     // if (this.nextCounts()[1] == 0) this.nextCounts()[1] = 1;
     return this.nextCounts()[1];
   }
@@ -121,7 +92,6 @@ export class Summary {
     this.checkCount(this.dbService.toDoTasks(), 'Low', 2, deadline);
     this.checkCount(this.dbService.inProgressTasks(), 'Low', 2, deadline);
     this.checkCount(this.dbService.awaitFeedbackTasks(), 'Low', 2, deadline);
-
     // if (this.nextCounts()[2] == 0) this.nextCounts()[2] = 1;
     return this.nextCounts()[2];
   }
@@ -154,5 +124,52 @@ export class Summary {
         if (index < this.dbService.awaitFeedbackTasks().length) start++;
       }
     }
+  }
+
+  setWelcomeText() {
+    let goodText = 'Good ';
+    let dayText = '';
+    let commaText = '!';
+    this.timeString = this.currentTime.toLocaleTimeString('de-DE');
+    if (this.loggedUserName() != '' && this.loggedUserName() != 'Guest') commaText = ',';
+
+    if (this.timeString < '12' && this.timeString >= '06') dayText = 'Morning';
+    if (this.timeString >= '18' && this.timeString < '23') dayText = 'Evening';
+    if (this.timeString >= '22' || this.timeString < '06') dayText = 'Night';
+    if ((this.timeString >= '12' && this.timeString < '18') || this.timeString == '')
+      dayText = 'Day';
+
+    this.welcomeText.set(goodText + dayText + commaText);
+  }
+
+  checkDeadline() {
+    if (
+      this.dbService.toDoTasks().length < 1 &&
+      this.dbService.inProgressTasks().length < 1 &&
+      this.dbService.awaitFeedbackTasks().length < 1
+    ) {
+      setTimeout(() => {
+        this.deadlineSet();
+      }, 300);
+    } else this.deadlineSet();
+  }
+
+  mobileAnimation() {
+    if (this.inMobile && this.auth.firstMobilWelcome() == false) {
+      this.isShownSummary.set(false);
+      setTimeout(() => {
+        this.isShownSummary.set(true);
+        if (this.auth.loggedInStatus()) this.auth.firstMobilWelcome.set(true);
+      }, 2000);
+    }
+  }
+
+  @HostListener('window:resize')
+  oneResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.inMobile = window.innerWidth < 769;
   }
 }

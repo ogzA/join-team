@@ -14,6 +14,7 @@ interface User {
   email: string;
   password: string;
   role: string;
+  name: string;
 }
 
 @Service()
@@ -28,7 +29,14 @@ export class Supabase {
   >([]);
 
   user = signal<
-    { id: number; created_at: string; email: string; password: string; role: string }[]
+    {
+      id: number;
+      created_at: string;
+      email: string;
+      password: string;
+      role: string;
+      name: string;
+    }[]
   >([]);
 
   // Task Signal Arrays with Objects
@@ -37,7 +45,6 @@ export class Supabase {
   awaitFeedbackTasks = signal<Task[]>([]);
   doneTasks = signal<Task[]>([]);
   private router = inject(Router);
-  firstMobilWelcome = signal(false);
 
   channels: RealtimeChannel | undefined;
 
@@ -53,52 +60,8 @@ export class Supabase {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'contacts' }, () =>
         this.getContacts(),
       )
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'user' }, () =>
-        this.getUser(),
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'user' }, () => this.getUser())
       .subscribe();
-  }
-
-  //Ab Hier Task Tests
-  setDataTest() {
-    setTimeout(() => {
-      // Obj Beispiel wie ein Task Objekt aussehen muss um es in ein Signal Array speichern zu können
-      let obj: Task = {
-        category: 'User Story',
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation.',
-        date: '10/05/2023',
-        prio: 'Medium',
-        assigned: ['Emannuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
-        subtasks: [
-          { task: 'Implement Recipe Recommedation', done: true },
-          { task: 'Start Page Layout', done: false },
-        ],
-      };
-
-      // console.log('To Do: ', this.toDoTasks());
-      // console.log('In Progress: ', this.inProgressTasks());
-      // console.log('Await Feedback: ', this.awaitFeedbackTasks());
-      // console.log('Done: ', this.doneTasks());
-
-      // Parameter - 1 Signal von den 4 Tasks , Row Id von supabase
-      // this.setTasks(this.toDoTasks(), 3);
-
-      // Task Objekt welches in ein Signal gepeichert werden soll
-      // this.addTaskToDo(obj);
-      // this.addTaskInProgress(obj);
-      // this.addTaskAwaitFeedback(obj);
-      // this.addTaskDoneTasks(obj);
-
-      // Signal Array, Table Row ID zum Speichern, Neue Daten als Objekt, Array Index für Datenedit
-      // this.editTask(this.doneTasks(), 4, obj, 1);
-
-      // Index vom Signal Array
-      // this.deleteTaskToDo(0);
-      // this.deleteTaskInProgress(0);
-      // this.deleteTaskAwaitFeedback(0);
-      // this.deleteTaskDoneTasks(0);
-    }, 2000);
   }
 
   async getTasks() {
@@ -246,8 +209,6 @@ export class Supabase {
     }
   }
 
-  // Task Tests Ende
-
   ngOnDestroy() {
     if (this.channels) this.supabase.removeChannel(this.channels);
   }
@@ -280,7 +241,7 @@ export class Supabase {
     return data;
   }
 
-  async setUser(user: { email: string; password: string; role: string }) {
+  async setUser(user: { email: string; password: string; role: string; name: string }) {
     const { data, error } = await this.supabase.from('user').insert([user]).select();
   }
 
@@ -318,7 +279,4 @@ export class Supabase {
   selectContact(id: number) {
     this.selectedContactId.set(id);
   }
-
-
-
 }
