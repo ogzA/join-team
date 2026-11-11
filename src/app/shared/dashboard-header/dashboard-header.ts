@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SupabaseAuth } from '../services/supabase-auth';
+import { NameLogo } from '../services/name-logo';
 
 @Component({
   imports: [RouterLink],
@@ -17,9 +18,17 @@ import { SupabaseAuth } from '../services/supabase-auth';
 })
 export class DashboardHeader {
   private supabase_auth = inject(SupabaseAuth);
+  nlService = inject(NameLogo);
   mobile_menu = signal<boolean>(false);
+  loggedUserName = signal('');
 
   constructor(private elementRef: ElementRef) {}
+
+  async ngOnInit() {
+    const name = await this.supabase_auth.getUserName();
+    this.loggedUserName.set(name);
+    if (this.loggedUserName() == '') this.loggedUserName.set('G');
+  }
 
   // Automatically listen to all document clicks
   @HostListener('document:click', ['$event'])

@@ -1,7 +1,7 @@
-@use '../../../../public/assets/scss/all-styles';
+@use '../../../../public/assets/scss/all-styles' as *;
 
 .dashboard-header {
-  @include all-styles.flex-center;
+  @include flex-center;
   position: relative;
   z-index: 1;
   justify-content: space-between;
@@ -10,6 +10,21 @@
   box-shadow: 0px 4px 4px 0px #0000001a;
   height: 100%;
   width: 100%;
+
+  .user-avatar {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-input-focus;
+    background-color: $dashboard-header;
+    border: 3px solid $color-avatar-more;
+    border-radius: 50%;
+    padding: 16px;
+    font-size: 26px;
+    font-weight: 700;
+  }
 
   &-mobile-menu {
     padding: 10px;
@@ -20,10 +35,10 @@
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    background-color: all-styles.$sidebar-background;
+    background-color: $sidebar-background;
     font-size: 1rem;
     font-weight: 400;
-    color: all-styles.$sidebar-text;
+    color: $sidebar-text;
     li {
       list-style: none;
       padding: 8px 16px;
@@ -45,7 +60,7 @@
   }
 
   &-icons {
-    @include all-styles.flex-center;
+    @include flex-center;
     justify-content: space-between;
     gap: 16px;
     cursor: pointer;
@@ -58,7 +73,7 @@
   }
 }
 
-@media (max-width: all-styles.$breakpoint-mobile) {
+@media (max-width: $breakpoint-mobile) {
   .dashboard-header {
     padding: 20px 16px;
     .mobile-view-logo {
@@ -74,13 +89,13 @@
       border-top-left-radius: 20px;
       border-bottom-right-radius: 20px;
       border-bottom-left-radius: 20px;
-      background-color: all-styles.$sidebar-background;
+      background-color: $sidebar-background;
       font-size: 1rem;
       font-weight: 400;
-      color: all-styles.$sidebar-text;
+      color: $sidebar-text;
 
       a {
-        color: all-styles.$sidebar-text;
+        color: $sidebar-text;
         text-decoration: none;
       }
       li {
