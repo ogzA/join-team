@@ -38,7 +38,7 @@ export class AddTask {
   taskForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.pattern(/\S/)]],
     description: [''],
-    date: ['', [Validators.required, noPastDate()]],
+    date: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/), noPastDate()]],
     prio: ['Medium'],
     assigned: [''],
     category: ['', Validators.required],
