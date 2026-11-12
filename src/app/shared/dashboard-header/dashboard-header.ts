@@ -18,6 +18,7 @@ import { SupabaseAuth } from '../services/supabase-auth';
 export class DashboardHeader {
   private supabase_auth = inject(SupabaseAuth);
   mobile_menu = signal<boolean>(false);
+  isLoggedIn = signal<boolean | null>(null);
 
   constructor(private elementRef: ElementRef) {}
 
@@ -37,6 +38,10 @@ export class DashboardHeader {
 
   closeMenu() {
     this.mobile_menu.set(false);
+  }
+
+  async ngOnInit() {
+    this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
   }
 
   async logout() {

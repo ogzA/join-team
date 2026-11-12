@@ -24,7 +24,11 @@
         <li (click)="closeMenu()" routerLink="/help-page">Help</li>
         <li (click)="closeMenu()" routerLink="/legal-notice">Legal Notice</li>
         <li (click)="closeMenu()" routerLink="/privacy-policy">Privacy Policy</li>
-        <li (click)="logout()">Log out</li>
+        @if (isLoggedIn()) {
+          <li (click)="logout()">Log out</li>
+        } @else {
+          <li routerLink="/">Login</li>
+        }
       </ul>
     </div>
   }
