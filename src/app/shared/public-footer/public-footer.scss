@@ -14,6 +14,10 @@
   p {
     cursor: pointer;
   }
+  p:hover{
+    color:$color-input-focus;
+    font-weight: 700;
+  }
   @media (max-width: $breakpoint-small-devices) {
     gap: 16px;
   }
