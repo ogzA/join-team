@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SupabaseAuth } from '../services/supabase-auth';
+import { Intro } from '../services/intro';
 import { NameLogo } from '../services/name-logo';
 
 @Component({
@@ -18,6 +19,7 @@ import { NameLogo } from '../services/name-logo';
 })
 export class DashboardHeader {
   private supabase_auth = inject(SupabaseAuth);
+  private intro = inject(Intro);
   nlService = inject(NameLogo);
   mobile_menu = signal<boolean>(false);
   loggedUserName = signal('');
@@ -55,6 +57,7 @@ export class DashboardHeader {
 
   async logout() {
     this.closeMenu();
+    this.intro.reset();
     await this.supabase_auth.signOut();
   }
 }
