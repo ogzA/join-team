@@ -21,10 +21,15 @@
     button {
       padding: 15px;
       font-weight: 700;
+      font-family: Inter;
       font-size: 1rem;
       color: $button-text;
       border-radius: 8px;
       background-color: $sidebar-background;
+    }
+    button:hover{
+      background-color: $color-input-focus;
+      box-shadow: 0px 4px 4px 0px #00000040;
     }
   }
   @media (max-width: $breakpoint-tablet) {
