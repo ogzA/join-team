@@ -1,4 +1,4 @@
-@if (isShownSummary() == false) {
+@if (!isShownSummary()) {
   <div class="mobil-welcome">
     <p>{{ welcomeText() }}</p>
     @if (auth.loggedInStatus()) {

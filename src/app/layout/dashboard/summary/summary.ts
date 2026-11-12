@@ -26,12 +26,12 @@ export class Summary {
   loggedUserName = signal('');
 
   async ngOnInit() {
+    this.checkScreenSize();
+    this.mobileAnimation();
     const name = await this.auth.getUserName();
     this.loggedUserName.set(name);
-    this.checkScreenSize();
     this.setWelcomeText();
     this.checkDeadline();
-    this.mobileAnimation();
   }
 
   deadlineSet() {
@@ -155,7 +155,7 @@ export class Summary {
   }
 
   mobileAnimation() {
-    if (this.inMobile && this.auth.firstMobilWelcome() == false) {
+    if (this.inMobile && !this.auth.firstMobilWelcome()) {
       this.isShownSummary.set(false);
       setTimeout(() => {
         this.isShownSummary.set(true);
