@@ -18,14 +18,14 @@
     <section class="summary-content">
       <section class="grid">
         <article class="top-cards">
-          <div class="to-do card" routerLink="/board">
+          <div class="to-do card" routerLink="/dashboard/board">
             <img class="circle" src="assets/icons/todo-icon.png" alt="" />
             <div class="content">
               <h3 class="count">{{ dbService.toDoTasks().length }}</h3>
               <p>To-do</p>
             </div>
           </div>
-          <div class="done card" routerLink="/board">
+          <div class="done card" routerLink="/dashboard/board">
             <img class="circle" src="assets/icons/done-icon.png" alt="" />
             <div class="content">
               <h3 class="count">{{ dbService.doneTasks().length }}</h3>
@@ -34,7 +34,7 @@
           </div>
         </article>
 
-        <div class="upcoming card" routerLink="/board">
+        <div class="upcoming card" routerLink="/dashboard/board">
           <div class="content-left">
             @if (countDeadlineUrgent() + countDeadlineMedium() + countDeadlineLow() < 2) {
               @if (countDeadlineMedium() + countDeadlineLow() < 1) {
@@ -118,7 +118,7 @@
         </div>
 
         <article class="bottom-cards">
-          <div class="tasks card" routerLink="/board">
+          <div class="tasks card" routerLink="/dashboard/board">
             <div class="content">
               <h3 class="count">
                 {{
@@ -131,13 +131,13 @@
               <p>Tasks in Board</p>
             </div>
           </div>
-          <div class="progress card" routerLink="/board">
+          <div class="progress card" routerLink="/dashboard/board">
             <div class="content">
               <h3 class="count">{{ dbService.inProgressTasks().length }}</h3>
               <p>Tasks in Progress</p>
             </div>
           </div>
-          <div class="feedback card" routerLink="/board">
+          <div class="feedback card" routerLink="/dashboard/board">
             <div class="content">
               <h3 class="count">{{ dbService.awaitFeedbackTasks().length }}</h3>
               <p>Awaiting Feedback</p>
