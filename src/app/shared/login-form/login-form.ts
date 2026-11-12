@@ -27,6 +27,10 @@ export class LoginForm {
     this.showPassword = !this.showPassword;
   }
 
+  async guestLogin() {
+    await this.supabase_auth.signInAsGuest();
+  }
+
   async onSubmit() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();

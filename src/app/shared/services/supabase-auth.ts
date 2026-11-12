@@ -48,6 +48,11 @@ export class SupabaseAuth {
     return data.user !== null;
   }
 
+  async isGuest() {
+    const { data } = await this.supabase.auth.getUser();
+    return data.user?.is_anonymous === true;
+  }
+
   // User Name nach Login
   async getUserName(): Promise<string> {
     const { data: authData } = await this.supabase.auth.getUser();
@@ -76,6 +81,18 @@ export class SupabaseAuth {
     }
 
     return { data, error };
+  }
+
+  async signInAsGuest() {
+    const { error } = await this.supabase.auth.signInAnonymously();
+
+    if (error) {
+      console.error('Guest login error:', error.message);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+
+    return { error };
   }
 
   async signOut() {

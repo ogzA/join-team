@@ -22,16 +22,19 @@ export class DashboardHeader {
   private intro = inject(Intro);
   nlService = inject(NameLogo);
   mobile_menu = signal<boolean>(false);
+
   loggedUserName = signal('');
   isLoggedIn = signal<boolean | null>(null);
 
   constructor(private elementRef: ElementRef) {}
 
   async ngOnInit() {
-    const name = await this.supabase_auth.getUserName();
-    this.loggedUserName.set(name);
-    if (this.loggedUserName() == '') this.loggedUserName.set('G');
     this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
+    if (await this.supabase_auth.isGuest()) {
+      this.loggedUserName.set('G');
+    } else {
+      this.loggedUserName.set(await this.supabase_auth.getUserName());
+    }
   }
 
   // Automatically listen to all document clicks
