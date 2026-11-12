@@ -9,10 +9,5 @@ import { SupabaseAuth } from '../services/supabase-auth';
   templateUrl: './sidebar.html',
 })
 export class Sidebar {
-  supabase_auth = inject(SupabaseAuth);
-  isLoggedIn = signal<boolean | null>(null);
-
-  async ngOnInit() {
-    this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
-  }
+  private auth = inject(SupabaseAuth);
 }

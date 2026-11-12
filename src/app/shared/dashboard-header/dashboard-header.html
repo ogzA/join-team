@@ -6,13 +6,15 @@
   />
   <p>Kanban Project Management Tool</p>
   <div class="dashboard-header-icons">
-    <a class="dashboard-header-icons-help-logo" routerLink="/help-page" role="link" id="helpLogo">
-      <img src="assets/icons/help_dashboard.svg" alt="help_logo" />
-    </a>
-    <button (click)="openMobileMenu($event)">
-      @let avatar = nlService.setNameLogo(loggedUserName());
-      <span class="user-avatar">{{ avatar.name }}</span>
-    </button>
+    @if (auth.loggedInStatus()) {
+      <a class="dashboard-header-icons-help-logo" routerLink="/help-page" role="link" id="helpLogo">
+        <img src="assets/icons/help_dashboard.svg" alt="help_logo" />
+      </a>
+      <button (click)="openMobileMenu($event)">
+        @let avatar = nlService.setNameLogo(auth.loggedUserName());
+        <span class="user-avatar">{{ avatar.name }}</span>
+      </button>
+    }
   </div>
 
   @if (mobile_menu()) {
@@ -21,7 +23,7 @@
         <li (click)="closeMenu()" routerLink="/help-page">Help</li>
         <li (click)="closeMenu()" routerLink="/legal-notice">Legal Notice</li>
         <li (click)="closeMenu()" routerLink="/privacy-policy">Privacy Policy</li>
-        @if (isLoggedIn()) {
+        @if (auth.loggedInStatus()) {
           <li (click)="logout()">Log out</li>
         } @else {
           <li routerLink="/">Login</li>

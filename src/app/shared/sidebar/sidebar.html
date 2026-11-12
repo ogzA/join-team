@@ -4,7 +4,7 @@
   </section>
 
   <section class="sidebar-menus">
-    @if (isLoggedIn()) {
+    @if (auth.loggedInStatus()) {
       <div
         class="sidebar-menus-align"
         routerLink="/dashboard/summary"
