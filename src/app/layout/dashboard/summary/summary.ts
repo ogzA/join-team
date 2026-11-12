@@ -133,11 +133,11 @@ export class Summary {
     this.timeString = this.currentTime.toLocaleTimeString('de-DE');
     if (this.loggedUserName() != '' && this.loggedUserName() != 'Guest') commaText = ',';
 
-    if (this.timeString < '12' && this.timeString >= '06') dayText = 'Morning';
-    if (this.timeString >= '18' && this.timeString < '23') dayText = 'Evening';
-    if (this.timeString >= '22' || this.timeString < '06') dayText = 'Night';
+    if (this.timeString < '12' && this.timeString >= '06') dayText = 'morning';
+    if (this.timeString >= '18' && this.timeString < '23') dayText = 'evening';
+    if (this.timeString >= '22' || this.timeString < '06') dayText = 'night';
     if ((this.timeString >= '12' && this.timeString < '18') || this.timeString == '')
-      dayText = 'Day';
+      dayText = 'day';
 
     this.welcomeText.set(goodText + dayText + commaText);
   }
