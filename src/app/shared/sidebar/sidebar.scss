@@ -46,10 +46,12 @@
       padding: 15px 40px;
       cursor: pointer;
       transition: background-color 100ms ease;
+       
     }
     .privacy:hover,
     .legal:hover {
-      color: all-styles.$color-input-focus;
+      background: all-styles.$sidebar-menu-hover;
+     
     }
   }
 }
