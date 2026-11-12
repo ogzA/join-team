@@ -38,8 +38,22 @@ export class SupabaseAuth {
   // Authentication: Login and logout functions
   async isLoggedIn() {
     const { data } = await this.supabase.auth.getUser();
-    console.log('Login status:', data.user);
+    // console.log('Login status:', data.user);
     return data.user !== null;
+  }
+
+  // User Name nach Login
+  async getUserName(): Promise<string> {
+    const { data: authData } = await this.supabase.auth.getUser();
+    if (!authData.user) return '';
+
+    const { data } = await this.supabase
+      .from('user')
+      .select('name')
+      .eq('auth_id', authData.user.id)
+      .maybeSingle();
+
+    return data?.name ?? '';
   }
 
   async signInWithEmail(email: string, password: string) {
