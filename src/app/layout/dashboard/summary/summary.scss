@@ -12,25 +12,23 @@
     align-items: center;
     position: absolute;
     top: calc(50svh - 36px);
-    left: 8svh;
+    left: 0;
 
     p {
-      width: 300px;
       font-size: 36px;
       font-weight: 400;
       line-height: 120%;
       font-style: normal;
       color: $color-avatar-more;
-      text-align: left;
+      text-align: center;
     }
 
     h3 {
       font-size: 47px;
       font-weight: 700;
       line-height: 120%;
-      color: $color-avatar-more;
-      text-align: left;
-      width: 300px;
+      color: $color-input-focus;
+      text-align: center;
     }
 
     animation: fade-out 1s forwards 2s;
@@ -114,7 +112,7 @@
         font-size: clamp(1.5rem, calc(-3.034rem + 7.677vw), 3.88rem);
         font-weight: 700;
         line-height: 120%;
-        color: $color-avatar-more;
+        color: $color-input-focus;
       }
 
       // Ausblenden vom Good Morning Text
