@@ -31,6 +31,7 @@ export class DashboardHeader {
     const name = await this.supabase_auth.getUserName();
     this.loggedUserName.set(name);
     if (this.loggedUserName() == '') this.loggedUserName.set('G');
+    this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
   }
 
   // Automatically listen to all document clicks
@@ -49,10 +50,6 @@ export class DashboardHeader {
 
   closeMenu() {
     this.mobile_menu.set(false);
-  }
-
-  async ngOnInit() {
-    this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
   }
 
   async logout() {
