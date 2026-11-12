@@ -21,7 +21,7 @@ export class SignupForm {
   supabase_auth = inject(SupabaseAuth);
 
   signupForm = this.fb.nonNullable.group({
-    name: [''],
+    name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
@@ -55,6 +55,11 @@ export class SignupForm {
         const emailControl = this.signupForm.controls.email;
         emailControl.setErrors({ emailTaken: true });
         emailControl.markAllAsTouched();
+      }
+      if (error.code === 'weak_password') {
+        const passwordControl = this.signupForm.controls.password;
+        passwordControl.setErrors({ passwordTaken: true });
+        passwordControl.markAllAsTouched();
       }
       return;
     }

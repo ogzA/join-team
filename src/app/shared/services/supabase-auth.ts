@@ -1,4 +1,4 @@
-import { inject, Service } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Supabase } from './supabase';
 import { Router } from '@angular/router';
 
@@ -16,6 +16,8 @@ export class SupabaseAuth {
   private dbService = inject(Supabase);
   private supabase = this.dbService.supabase;
   private router = inject(Router);
+  loggedInStatus = signal(false);
+  firstMobilWelcome = signal(false);
 
   async signUpNewUser(name: string, email: string, password: string) {
     const { data, error } = await this.supabase.auth.signUp({
@@ -38,13 +40,31 @@ export class SupabaseAuth {
   // Authentication: Login and logout functions
   async isLoggedIn() {
     const { data } = await this.supabase.auth.getUser();
-    console.log('Login status:', data.user);
+
+    if (data.user != null) {
+      this.loggedInStatus.set(true);
+    } else this.loggedInStatus.set(false);
+
     return data.user !== null;
   }
 
   async isGuest() {
     const { data } = await this.supabase.auth.getUser();
     return data.user?.is_anonymous === true;
+  }
+
+  // User Name nach Login
+  async getUserName(): Promise<string> {
+    const { data: authData } = await this.supabase.auth.getUser();
+    if (!authData.user) return '';
+
+    const { data } = await this.supabase
+      .from('user')
+      .select('name')
+      .eq('auth_id', authData.user.id)
+      .maybeSingle();
+
+    return data?.name ?? '';
   }
 
   async signInWithEmail(email: string, password: string) {

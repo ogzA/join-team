@@ -10,15 +10,8 @@
       <img src="assets/icons/help_dashboard.svg" alt="help_logo" />
     </a>
     <button (click)="openMobileMenu($event)">
-      @if (isGuest()) {
-        <span class="profile profile--guest">G</span>
-      } @else {
-        <img
-          class="profile"
-          src="assets/icons/User profile initials.svg"
-          alt="user_profile_initials"
-        />
-      }
+      @let avatar = nlService.setNameLogo(loggedUserName());
+      <span class="user-avatar">{{ avatar.name }}</span>
     </button>
   </div>
 
@@ -28,7 +21,11 @@
         <li (click)="closeMenu()" routerLink="/help-page">Help</li>
         <li (click)="closeMenu()" routerLink="/legal-notice">Legal Notice</li>
         <li (click)="closeMenu()" routerLink="/privacy-policy">Privacy Policy</li>
-        <li (click)="logout()">Log out</li>
+        @if (isLoggedIn()) {
+          <li (click)="logout()">Log out</li>
+        } @else {
+          <li routerLink="/">Login</li>
+        }
       </ul>
     </div>
   }

@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SupabaseAuth } from '../services/supabase-auth';
+import { Intro } from '../services/intro';
+import { NameLogo } from '../services/name-logo';
 
 @Component({
   imports: [RouterLink],
@@ -17,11 +19,22 @@ import { SupabaseAuth } from '../services/supabase-auth';
 })
 export class DashboardHeader {
   private supabase_auth = inject(SupabaseAuth);
+  private intro = inject(Intro);
+  nlService = inject(NameLogo);
   mobile_menu = signal<boolean>(false);
-  isGuest = signal(false);
 
-  constructor(private elementRef: ElementRef) {
-    this.supabase_auth.isGuest().then((guest) => this.isGuest.set(guest));
+  loggedUserName = signal('');
+  isLoggedIn = signal<boolean | null>(null);
+
+  constructor(private elementRef: ElementRef) {}
+
+  async ngOnInit() {
+    this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
+    if (await this.supabase_auth.isGuest()) {
+      this.loggedUserName.set('G');
+    } else {
+      this.loggedUserName.set(await this.supabase_auth.getUserName());
+    }
   }
 
   // Automatically listen to all document clicks
@@ -44,6 +57,7 @@ export class DashboardHeader {
 
   async logout() {
     this.closeMenu();
+    this.intro.reset();
     await this.supabase_auth.signOut();
   }
 }
