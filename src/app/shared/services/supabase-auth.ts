@@ -31,7 +31,7 @@ export class SupabaseAuth {
     if (error) {
       console.error('Signup error:', error.message);
     } else {
-      console.log('Signup success:', data);
+      this.router.navigate(['/dashboard']);
     }
 
     return { data, error };
