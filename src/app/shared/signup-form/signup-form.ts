@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { contactValidators } from '../../layout/dashboard/contacts/contact-forms/contact-validators';
 
 import { SupabaseAuth } from '../services/supabase-auth';
+import { SignupDraft } from '../services/signup-draft';
 
 @Component({
   imports: [ReactiveFormsModule, PublicHeader, PublicFooter, RouterLink],
@@ -19,6 +20,7 @@ export class SignupForm {
   showConfirmPassword: boolean = false;
 
   supabase_auth = inject(SupabaseAuth);
+  private draft = inject(SignupDraft);
 
   signupForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -27,6 +29,15 @@ export class SignupForm {
     confirmPassword: ['', Validators.required],
     privacyPolicy: ['', Validators.required],
   });
+
+  constructor() {
+    this.signupForm.patchValue(this.draft.draft());
+  }
+
+  ngOnDestroy() {
+    const { name, email, privacyPolicy } = this.signupForm.getRawValue();
+    this.draft.save({ name, email, privacyPolicy });
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -64,5 +75,6 @@ export class SignupForm {
       return;
     }
     this.signupForm.reset();
+    this.draft.clear();
   }
 }
