@@ -13,6 +13,10 @@ import { Summary } from './layout/dashboard/summary/summary';
 import { SignupForm } from './shared/signup-form/signup-form';
 import { authGuard, loggedOutGuard } from './shared/services/auth_guard';
 
+/**
+ * App routes: login and signup are only for logged-out users, the dashboard and its child pages
+ * only for logged-in users. Help, privacy policy and legal notice are public.
+ */
 export const routes: Routes = [
   {
     path: '',

@@ -1,4 +1,4 @@
-// forwards hier rein
+// Entry point for shared styles: forward every partial here, components only @use this file
 @forward './base/reset';
 @forward './base/fonts';
 @forward './abstracts/mixins';
