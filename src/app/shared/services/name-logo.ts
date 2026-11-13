@@ -1,37 +1,50 @@
 import { Service } from '@angular/core';
 
+/** Creates the round name avatars (initials, background color and text color) for contacts. */
 @Service()
 export class NameLogo {
-  // Avatar-Palette nach Join-Design (15 Farben).
-  // Schriftfarbe wählt getTextColor() automatisch.
+  /**
+   * Avatar palette from the Join design (15 colors).
+   * The matching text color is chosen by {@link getTextColor}.
+   */
   colors = [
-    '#FF7A00', // Orange
-    '#FF5EB3', // Pink
-    '#6E52FF', // Blauviolett
-    '#9327FF', // Lila
-    '#00BEE8', // Cyan
-    '#1FD7C1', // Türkis
-    '#FF745E', // Lachs
-    '#FFA35E', // Apricot
-    '#FC71FF', // Magenta
-    '#FFC701', // Goldgelb
-    '#0038FF', // Blau
-    '#C3FF2B', // Limette
-    '#FFE62B', // Gelb
-    '#FF4646', // Rot
-    '#FFBB2B', // Bernstein
+    '#FF7A00',
+    '#FF5EB3',
+    '#6E52FF',
+    '#9327FF',
+    '#00BEE8',
+    '#1FD7C1',
+    '#FF745E',
+    '#FFA35E',
+    '#FC71FF',
+    '#FFC701',
+    '#0038FF',
+    '#C3FF2B',
+    '#FFE62B',
+    '#FF4646',
+    '#FFBB2B',
   ];
 
-  // Entfernt Titel wie "Dr." oder "Prof." am Anfang des Namens
-  // Für Initialen und alphabetische Sortierung
-  // Achtung: Gleiche Titel-Regel wie NAME_PATTERN in contact-validators.ts, bei Änderungen beides anpassen
+  /**
+   * Removes titles like "Dr." or "Prof." from the start of a name.
+   * Used for the initials and for alphabetical sorting.
+   *
+   * @param username - The full name, possibly with titles.
+   * @returns The trimmed name without leading titles.
+   * @see NAME_PATTERN in contact-validators.ts uses the same title rule; keep both in sync.
+   */
   stripTitle(username: string): string {
     return username.trim().replace(/^(?:(?:Prof|Dr)\.\s+)*/i, '');
   }
 
-  // Schreibt den ersten Buchstaben jedes Namensteils groß, der Rest bleibt unverändert
-  // Trennzeichen: Anfang, Leerzeichen, Bindestrich, Apostroph
-  // Anders als die titlecase-Pipe macht sie aus "Hans-Maria" nicht "Hans-maria"
+  /**
+   * Capitalizes the first letter of every name part and leaves the rest unchanged.
+   * Name parts start at the beginning, after a space, a hyphen or an apostrophe.
+   * Unlike the `titlecase` pipe, "Hans-Maria" stays "Hans-Maria" instead of "Hans-maria".
+   *
+   * @param name - The name to format.
+   * @returns The formatted name.
+   */
   formatName(name: string): string {
     return name.replace(
       /(^|[\s\-'])(\p{L})/gu,
@@ -39,8 +52,16 @@ export class NameLogo {
     );
   }
 
+  /**
+   * Builds the avatar data for a name: titles and double spaces are removed first.
+   * Names with at least two parts get two initials and a palette color based on the name,
+   * single names get one initial and a gray background.
+   *
+   * @param username - The full name of the contact.
+   * @returns The uppercase initials (`name`), the background `color` and the `textColor`.
+   */
   setNameLogo(username: string) {
-    username = this.stripTitle(username).replace(/\s+/g, ' '); // Titel und doppelte Leerzeichen entfernen
+    username = this.stripTitle(username).replace(/\s+/g, ' ');
 
     let obj = {
       name: '',
@@ -52,25 +73,30 @@ export class NameLogo {
     if (username.includes(' ')) {
       shortname = username.charAt(0) + username.split(' ')[1].charAt(0);
     } else shortname = username.charAt(0);
-    shortname = shortname.toUpperCase(); // NEU: Initialen immer groß
+    shortname = shortname.toUpperCase();
     obj.name = shortname;
 
     if (username.includes(' ')) {
       obj.color = this.colors[this.numberFromText(username.toLowerCase()) % this.colors.length];
     } else obj.color = '#939393';
-    obj.textColor = this.getTextColor(obj.color); // Schrift passend zur Hintergrundfarbe
+    obj.textColor = this.getTextColor(obj.color);
     return obj;
   }
 
-  // djb2-Hash mit Finalizer: erzeugt aus dem Namen eine feste Zahl für die Farbwahl
-  // Der Finalizer ist nötig, weil djb2 mit Faktor 33 arbeitet: Teilt die Palettenlänge
-  // einen Faktor mit 33 (z. B. 11 oder 15), hinge die Farbe sonst stark vom letzten Buchstaben ab.
+  /**
+   * Turns a text into a fixed number, used to pick the avatar color.
+   * Uses the djb2 hash plus the MurmurHash3 fmix32 finalizer (Austin Appleby, public domain).
+   * The finalizer is needed because djb2 multiplies by 33: if the palette length shares a factor
+   * with 33 (e.g. 11 or 15), the color would otherwise depend mostly on the last letter.
+   *
+   * @param text - The text to hash.
+   * @returns An unsigned 32-bit integer.
+   */
   numberFromText(text: string) {
     let hash = 5381;
     for (const char of text) {
       hash = ((hash << 5) + hash + char.charCodeAt(0)) >>> 0;
     }
-    // Finalizer: MurmurHash3 fmix32 (Austin Appleby, public domain)
     hash ^= hash >>> 16;
     hash = Math.imul(hash, 0x85ebca6b);
     hash ^= hash >>> 13;
@@ -79,7 +105,12 @@ export class NameLogo {
     return hash >>> 0;
   }
 
-  // Wählt dunkle oder weiße Schrift je nach Helligkeit des Hintergrunds (YIQ-Formel)
+  /**
+   * Chooses dark or white text depending on the brightness of the background (YIQ formula).
+   *
+   * @param hex - Background color as `#RRGGBB`.
+   * @returns `#2a3647` for light backgrounds, `#ffffff` for dark ones.
+   */
   getTextColor(hex: string) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -88,10 +119,22 @@ export class NameLogo {
     return yiq >= 128 ? '#2a3647' : '#ffffff';
   }
 
+  /**
+   * Returns the avatar background color for a name.
+   *
+   * @param username - The full name of the contact.
+   * @returns The background color as `#RRGGBB`.
+   */
   getLogoColor(username: string) {
     return this.setNameLogo(username).color;
   }
 
+  /**
+   * Returns the avatar initials for a name.
+   *
+   * @param username - The full name of the contact.
+   * @returns The uppercase initials.
+   */
   getLogoName(username: string) {
     return this.setNameLogo(username).name;
   }
