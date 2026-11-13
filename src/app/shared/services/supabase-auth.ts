@@ -78,11 +78,11 @@ export class SupabaseAuth {
       email: email,
       password: password,
     });
-    console.log('Login data:', data);
+    // console.log('Login data:', data);
     if (error) {
       console.error('Login error:', error.message);
     } else {
-      console.log('Login success:', data);
+      // console.log('Login success:', data);
       this.router.navigate(['/dashboard']);
     }
 
@@ -107,7 +107,7 @@ export class SupabaseAuth {
     if (error) {
       console.error('Signout error:', error.message);
     } else {
-      console.log('Signout success');
+      // console.log('Signout success');
       this.router.navigate(['/']);
       this.loggedInStatus.set(false);
     }

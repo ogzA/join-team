@@ -36,12 +36,12 @@ export class LoginForm {
       this.loginForm.markAllAsTouched();
       return;
     }
-    console.log(this.loginForm);
+    // console.log(this.loginForm);
     await this.supabase_auth.signInWithEmail(
       this.loginForm.value.email ?? '',
       this.loginForm.value.password ?? '',
     );
 
-    console.log(this.loginForm.getRawValue());
+    // console.log(this.loginForm.getRawValue());
   }
 }
