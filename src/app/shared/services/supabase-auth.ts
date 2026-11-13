@@ -2,6 +2,8 @@ import { inject, Service, signal } from '@angular/core';
 import { Supabase } from './supabase';
 import { Router } from '@angular/router';
 
+const DUMMY_PHONE = '+49 000 0000000';
+
 export interface Profile {
   id: number;
   created_at: string;
@@ -32,9 +34,23 @@ export class SupabaseAuth {
       console.error('Signup error:', error.message);
     } else {
       console.log('Signup success:', data);
+      await this.addUserAsContact(name, email);
     }
 
     return { data, error };
+  }
+
+  private async addUserAsContact(name: string, email: string) {
+    try {
+      await this.dbService.setContact({
+        name: name,
+        email: email,
+        phone: DUMMY_PHONE,
+        role: 'user',
+      });
+    } catch (contactError) {
+      console.error('Contact for new user not created:', contactError);
+    }
   }
 
   // Authentication: Login and logout functions
