@@ -19,6 +19,7 @@ export class SupabaseAuth {
   loggedInStatus = signal(false);
   firstMobilWelcome = signal(false);
   loggedUserName = signal('');
+  loggedUserEmail = signal('');
 
   async signUpNewUser(name: string, email: string, password: string) {
     const { data, error } = await this.supabase.auth.signUp({
@@ -44,6 +45,7 @@ export class SupabaseAuth {
 
     if (data.user != null) {
       this.loggedInStatus.set(true);
+      this.loggedUserEmail.set(data.user.email ?? '');
       if (await this.isGuest()) {
         this.loggedUserName.set('G');
       } else {
@@ -57,6 +59,12 @@ export class SupabaseAuth {
   async isGuest() {
     const { data } = await this.supabase.auth.getUser();
     return data.user?.is_anonymous === true;
+  }
+
+  /**  Dummy contacts can be edited and deleted by everyone, user contacts only by the user themselves. */
+  canChangeContact(contact: { role: string; email: string }): boolean {
+    if (contact.role === 'dummy') return true;
+    return this.loggedUserEmail() !== '' && contact.email === this.loggedUserEmail();
   }
 
   // User Name nach Login
@@ -110,6 +118,7 @@ export class SupabaseAuth {
       // console.log('Signout success');
       this.router.navigate(['/']);
       this.loggedInStatus.set(false);
+      this.loggedUserEmail.set('');
     }
   }
 }
