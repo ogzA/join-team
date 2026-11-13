@@ -10,11 +10,6 @@ import { SupabaseAuth } from '../services/supabase-auth';
 })
 export class Sidebar {
   auth = inject(SupabaseAuth);
-  isLoggedIn = signal<boolean | null>(null);
   /** True if the user came from the signup page (set by the privacy link there). */
   fromSignup = history.state?.from === 'signup';
-
-  async ngOnInit() {
-    this.isLoggedIn.set(await this.auth.isLoggedIn());
-  }
 }
