@@ -18,24 +18,12 @@ import { NameLogo } from '../services/name-logo';
   templateUrl: './dashboard-header.html',
 })
 export class DashboardHeader {
-  private supabase_auth = inject(SupabaseAuth);
+  private auth = inject(SupabaseAuth);
   private intro = inject(Intro);
   nlService = inject(NameLogo);
   mobile_menu = signal<boolean>(false);
 
-  loggedUserName = signal('');
-  isLoggedIn = signal<boolean | null>(null);
-
   constructor(private elementRef: ElementRef) {}
-
-  async ngOnInit() {
-    this.isLoggedIn.set(await this.supabase_auth.isLoggedIn());
-    if (await this.supabase_auth.isGuest()) {
-      this.loggedUserName.set('G');
-    } else {
-      this.loggedUserName.set(await this.supabase_auth.getUserName());
-    }
-  }
 
   // Automatically listen to all document clicks
   @HostListener('document:click', ['$event'])
@@ -58,6 +46,6 @@ export class DashboardHeader {
   async logout() {
     this.closeMenu();
     this.intro.reset();
-    await this.supabase_auth.signOut();
+    await this.auth.signOut();
   }
 }

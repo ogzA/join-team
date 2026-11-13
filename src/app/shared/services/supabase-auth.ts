@@ -18,6 +18,7 @@ export class SupabaseAuth {
   private router = inject(Router);
   loggedInStatus = signal(false);
   firstMobilWelcome = signal(false);
+  loggedUserName = signal('');
 
   async signUpNewUser(name: string, email: string, password: string) {
     const { data, error } = await this.supabase.auth.signUp({
@@ -43,6 +44,11 @@ export class SupabaseAuth {
 
     if (data.user != null) {
       this.loggedInStatus.set(true);
+      if (await this.isGuest()) {
+        this.loggedUserName.set('G');
+      } else {
+        this.loggedUserName.set(await this.getUserName());
+      }
     } else this.loggedInStatus.set(false);
 
     return data.user !== null;
@@ -103,6 +109,7 @@ export class SupabaseAuth {
     } else {
       console.log('Signout success');
       this.router.navigate(['/']);
+      this.loggedInStatus.set(false);
     }
   }
 }
