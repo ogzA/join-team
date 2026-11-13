@@ -8,9 +8,11 @@
   <section class="legal-notice">
     <section class="legal-headline">
       <h2>Legal Notice</h2>
-      <a routerLink="">
-        <img src="assets/icons/arrow-left.png" alt="Arrow Left" />
-      </a>
+      @if (isLoggedIn()) {
+        <a routerLink="">
+          <img src="assets/icons/arrow-left.png" alt="" />
+        </a>
+      }
     </section>
 
     <h3>Imprint</h3>
@@ -76,8 +78,9 @@
       Akademie, and our affiliates, partners, officers, directors, agents, and employees, from and
       against any claim, demand, loss, damage, cost, or liability (including reasonable legal fees)
       arising out of or relating to your use of Join and/or your breach of this Legal Notice. For
-      any questions or notices, please contact us on any below email: andrestrauch@gmx.de, deore.bhagyashri28@gmail.com, akankan.oguz@gmail.com,
-      svenapel@web.de. Date: {{today | date}}
+      any questions or notices, please contact us on any below email: andrestrauch@gmx.de,
+      deore.bhagyashri28@gmail.com, akankan.oguz@gmail.com, svenapel@web.de. Date:
+      {{ today | date }}
     </p>
   </section>
 </main>

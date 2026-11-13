@@ -10,9 +10,11 @@
   <section class="privacy-policy">
     <div class="headline">
       <h2>Privacy Policy</h2>
-      <a routerLink="">
-        <img src="assets/icons/arrow-left.png" alt="Arrow Left" />
-      </a>
+      @if (isLoggedIn()) {
+        <a routerLink="">
+          <img src="assets/icons/arrow-left.png" alt="" />
+        </a>
+      }
     </div>
     <h3>Responsible Persons</h3>
 
