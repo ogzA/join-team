@@ -4,8 +4,9 @@ import { Supabase } from '../../../../../shared/services/supabase';
 import { cleanContact, contactValidators } from '../contact-validators';
 import { NameLogo } from '../../../../../shared/services/name-logo';
 import { ToastService } from '../../../../../shared/services/toast.service';
+import { SupabaseAuth } from '../../../../../shared/services/supabase-auth';
 
-type EditableContact = { id: number; name: string; email: string; phone: string };
+type EditableContact = { id: number; name: string; email: string; phone: string; role: string };
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -18,6 +19,7 @@ export class EditContact implements OnInit {
   private nlService = inject(NameLogo);
   private db = inject(Supabase);
   private toast = inject(ToastService);
+  auth = inject(SupabaseAuth);
 
   contact = input.required<EditableContact>(); // Kontakt, der bearbeitet wird (kommt aus contact-detail)
   closed = output<void>(); // Meldet contact-detail, dass der Dialog geschlossen werden soll
