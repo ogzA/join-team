@@ -38,10 +38,17 @@
         <p>Contacts</p>
       </a>
     } @else {
-      <a class="sidebar-menus-align" routerLink="/">
-        <img src="assets/icons/login.svg" alt="" />
-        <p>Log In</p>
-      </a>
+      @if (fromSignup) {
+        <a class="sidebar-menus-align" routerLink="/signup">
+          <img src="assets/icons/arrow-left-line-grey.svg" alt="" />
+          <p>Sign up</p>
+        </a>
+      } @else {
+        <a class="sidebar-menus-align" routerLink="/">
+          <img src="assets/icons/login.svg" alt="" />
+          <p>Log In</p>
+        </a>
+      }
     }
   </section>
   <section class="sidebar-info">
