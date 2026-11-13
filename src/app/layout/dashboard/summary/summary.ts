@@ -23,15 +23,12 @@ export class Summary {
   currentTime: Date = new Date();
   timeString = '';
   welcomeText = signal('');
-  loggedUserName = signal('');
 
-  async ngOnInit() {
+  ngOnInit() {
     this.checkScreenSize();
     this.mobileAnimation();
-    const name = await this.auth.getUserName();
-    this.loggedUserName.set(name);
-    this.setWelcomeText();
     this.checkDeadline();
+    this.setWelcomeText();
   }
 
   deadlineSet() {
@@ -131,8 +128,9 @@ export class Summary {
     let dayText = '';
     let commaText = '!';
     this.timeString = this.currentTime.toLocaleTimeString('de-DE');
-    if (this.loggedUserName() != '' && this.loggedUserName() != 'Guest') commaText = ',';
 
+    console.log(this.auth.loggedUserName());
+    if (this.auth.loggedUserName() != '' && this.auth.loggedUserName() != 'G') commaText = ',';
     if (this.timeString < '12' && this.timeString >= '06') dayText = 'morning';
     if (this.timeString >= '18' && this.timeString < '23') dayText = 'evening';
     if (this.timeString >= '22' || this.timeString < '06') dayText = 'night';

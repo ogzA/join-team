@@ -1,8 +1,8 @@
 @if (!isShownSummary()) {
   <div class="mobil-welcome">
     <p>{{ welcomeText() }}</p>
-    @if (auth.loggedInStatus()) {
-      <h3>{{ this.loggedUserName() }}</h3>
+    @if (auth.loggedInStatus() && this.auth.loggedUserName() != 'G') {
+      <h3>{{ this.auth.loggedUserName() }}</h3>
     }
   </div>
 }
@@ -148,8 +148,8 @@
 
       <section class="side-text">
         <p>{{ welcomeText() }}</p>
-        @if (auth.loggedInStatus()) {
-          <h3>{{ this.loggedUserName() }}</h3>
+        @if (auth.loggedInStatus() && this.auth.loggedUserName() != 'G') {
+          <h3>{{ this.auth.loggedUserName() }}</h3>
         }
       </section>
     </section>
