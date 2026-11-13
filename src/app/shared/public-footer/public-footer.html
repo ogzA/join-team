@@ -1,4 +1,4 @@
 <section class="container">
-  <p routerLink="/privacy-policy">Privacy Policy</p>
-  <p routerLink="/legal-notice">Legal notice</p>
+  <p routerLink="/privacy-policy" [state]="{ from: from() }">Privacy Policy</p>
+  <p routerLink="/legal-notice" [state]="{ from: from() }">Legal notice</p>
 </section>

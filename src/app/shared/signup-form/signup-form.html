@@ -104,7 +104,8 @@
         <label class="privacy" for="privacyPolicy">
           <input type="checkbox" id="privacyPolicy" formControlName="privacyPolicy" />
           <span class="privacy__box" aria-hidden="true"></span>
-          I accept the <a routerLink="/privacy-policy">Privacy policy</a>
+          I accept the
+          <a routerLink="/privacy-policy" [state]="{ from: 'signup' }">Privacy policy</a>
         </label>
         <div class="error-container">
           @if (signupForm.controls['privacyPolicy'].touched) {
@@ -120,5 +121,5 @@
       </div>
     </form>
   </section>
-  <app-public-footer></app-public-footer>
+  <app-public-footer from="signup"></app-public-footer>
 </section>
