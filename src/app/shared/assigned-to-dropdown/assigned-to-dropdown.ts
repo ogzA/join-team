@@ -16,6 +16,10 @@ import {
 import { Supabase } from '../services/supabase';
 import { NameLogo } from '../services/name-logo';
 
+/**
+ * Multi-select dropdown for assigning contacts to a task, with the avatars of the selected
+ * contacts below it. Built on the combobox and listbox of Angular Aria.
+ */
 @Component({
   selector: 'app-assigned-to-dropdown',
   templateUrl: './assigned-to-dropdown.html',
@@ -37,7 +41,7 @@ export class AssignedToDropdown {
   /** The names of the selected contacts. */
   readonly assigned = model<string[]>([]);
 
-  // Dropdown height
+  /** Maximum height of the popup as a CSS length. */
   readonly popupMaxHeight = input('250px');
 
   /** The string that is displayed in the combobox. */
@@ -57,8 +61,11 @@ export class AssignedToDropdown {
   /** Maximum number of avatars shown below the dropdown, the rest is shown as "+N". */
   readonly maxAvatars = 3;
 
+  /**
+   * Scrolls to the active option whenever it changes and closes the popup when something
+   * outside of it is scrolled.
+   */
   constructor() {
-    // Scrolls to the active item when the active option changes.
     afterRenderEffect(() => {
       this.listbox()?.scrollActiveItemIntoView();
     });
@@ -79,6 +86,7 @@ export class AssignedToDropdown {
     inject(DestroyRef).onDestroy(() => document.removeEventListener('scroll', onScroll, true));
   }
 
+  /** Reloads the contacts from Supabase. */
   async ngOnInit(): Promise<void> {
     await this.dbService.getContacts();
   }
