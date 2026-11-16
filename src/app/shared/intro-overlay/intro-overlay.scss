@@ -1,6 +1,6 @@
 @use '../../../../public/assets/scss/all-styles' as *;
 
-// Ablauf: 300ms Logo in der Mitte, 700ms Flug in den Header, danach blendet die Fläche aus
+// Sequence: 300ms logo in the center, 700ms flight into the header, then the overlay fades out
 .intro {
   position: fixed;
   inset: 0;
@@ -9,7 +9,7 @@
   animation: intro-fade 300ms ease-out 900ms forwards;
 }
 
-// Endposition = Header-Logo (Werte wie in public-header.scss)
+// End position = header logo (same values as in public-header.scss)
 .intro__logo {
   position: absolute;
   top: fluid-height(16px, 67px);
@@ -19,7 +19,7 @@
   animation: intro-move 700ms ease-in-out 300ms both;
 }
 
-// Desktop: nur dunkles Logo auf hellem Grund
+// Desktop: only the dark logo on a light background
 .intro__logo--light {
   display: none;
 }
@@ -30,7 +30,7 @@
   }
 }
 
-// Mobile: dunkler Grund, weißes Logo wird beim Flug zum dunklen
+// Mobile: dark background, the white logo turns into the dark one during the flight
 @media (max-width: $breakpoint-mobile) {
   .intro {
     --intro-start-height: 122px;
@@ -58,7 +58,7 @@
   }
 }
 
-// Start: mittig und groß, Ende: die Werte aus den Regeln oben
+// Start: centered and large; end: the values from the rules above
 @keyframes intro-move {
   from {
     top: 50%;
@@ -86,7 +86,7 @@
   }
 }
 
-// Ohne Bewegung: sofort fertig (1ms, damit animationend trotzdem auslöst)
+// Reduced motion: done at once (1ms, so that animationend still fires)
 @media (prefers-reduced-motion: reduce) {
   .intro,
   .intro__logo {

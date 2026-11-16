@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SupabaseAuth } from '../services/supabase-auth';
 
+/** Sidebar with the main navigation, or with login and legal links when nobody is logged in. */
 @Component({
   imports: [RouterLink, RouterLinkActive],
   selector: 'app-sidebar',
