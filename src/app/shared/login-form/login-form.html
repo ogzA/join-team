@@ -42,12 +42,17 @@
               <span class="error">This field is required</span>
             }
           }
+          @if (loginForm.errors?.['invalidLogin']) {
+            <span class="error">Wrong password. Please try again.</span>
+          }
         </div>
       </div>
 
       <div class="form-button">
-        <button class="logIn" type="submit" [disabled]="loginForm.invalid">Log in</button>
-        <button class="asGuestLogIn" type="button" (click)="guestLogin()">
+        <button class="logIn" type="submit" [disabled]="loginForm.invalid || isSaving()">
+          Log in
+        </button>
+        <button class="asGuestLogIn" type="button" (click)="guestLogin()" [disabled]="isSaving()">
           Guest Log in
         </button>
       </div>

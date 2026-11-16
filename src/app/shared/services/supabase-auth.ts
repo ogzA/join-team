@@ -102,13 +102,8 @@ export class SupabaseAuth {
       email: email,
       password: password,
     });
-    // console.log('Login data:', data);
-    if (error) {
-      console.error('Login error:', error.message);
-    } else {
-      // console.log('Login success:', data);
-      this.router.navigate(['/dashboard']);
-    }
+
+    if (!error) this.router.navigate(['/dashboard']);
 
     return { data, error };
   }

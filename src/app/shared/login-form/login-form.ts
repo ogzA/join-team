@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PublicHeader } from '../public-header/public-header';
@@ -17,6 +17,7 @@ export class LoginForm {
   supabase_auth = inject(SupabaseAuth);
 
   showPassword: boolean = false;
+  isSaving = signal(false);
 
   loginForm = this.fb.nonNullable.group({
     email: ['', contactValidators.email],
@@ -28,7 +29,9 @@ export class LoginForm {
   }
 
   async guestLogin() {
+    this.isSaving.set(true);
     await this.supabase_auth.signInAsGuest();
+    this.isSaving.set(false);
   }
 
   async onSubmit() {
@@ -36,12 +39,10 @@ export class LoginForm {
       this.loginForm.markAllAsTouched();
       return;
     }
-    // console.log(this.loginForm);
-    await this.supabase_auth.signInWithEmail(
-      this.loginForm.value.email ?? '',
-      this.loginForm.value.password ?? '',
-    );
-
-    // console.log(this.loginForm.getRawValue());
+    this.isSaving.set(true);
+    const { email, password } = this.loginForm.getRawValue();
+    const { error } = await this.supabase_auth.signInWithEmail(email, password);
+    this.isSaving.set(false);
+    if (error) this.loginForm.setErrors({ invalidLogin: true });
   }
 }
