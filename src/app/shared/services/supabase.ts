@@ -44,6 +44,7 @@ export class Supabase {
   inProgressTasks = signal<Task[]>([]);
   awaitFeedbackTasks = signal<Task[]>([]);
   doneTasks = signal<Task[]>([]);
+  currentRoute = signal('');
   private router = inject(Router);
 
   channels: RealtimeChannel | undefined;

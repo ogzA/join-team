@@ -129,7 +129,7 @@ export class Summary {
     let commaText = '!';
     this.timeString = this.currentTime.toLocaleTimeString('de-DE');
 
-    console.log(this.auth.loggedUserName());
+    // console.log(this.auth.loggedUserName());
     if (this.auth.loggedUserName() != '' && this.auth.loggedUserName() != 'G') commaText = ',';
     if (this.timeString < '12' && this.timeString >= '06') dayText = 'morning';
     if (this.timeString >= '18' && this.timeString < '23') dayText = 'evening';

@@ -6,10 +6,11 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SupabaseAuth } from '../services/supabase-auth';
 import { Intro } from '../services/intro';
 import { NameLogo } from '../services/name-logo';
+import { Supabase } from '../services/supabase';
 
 @Component({
   imports: [RouterLink],
@@ -18,10 +19,12 @@ import { NameLogo } from '../services/name-logo';
   templateUrl: './dashboard-header.html',
 })
 export class DashboardHeader {
+  dbService = inject(Supabase);
   private auth = inject(SupabaseAuth);
   private intro = inject(Intro);
   nlService = inject(NameLogo);
   mobile_menu = signal<boolean>(false);
+  private router = inject(Router);
 
   constructor(private elementRef: ElementRef) {}
 
@@ -47,5 +50,10 @@ export class DashboardHeader {
     this.closeMenu();
     this.intro.reset();
     await this.auth.signOut();
+  }
+
+  setRoute() {
+    this.dbService.currentRoute.set(this.router.url);
+    // console.log('Aktive Route:', this.dbService.currentUrl());
   }
 }

@@ -7,7 +7,13 @@
   <p>Kanban Project Management Tool</p>
   <div class="dashboard-header-icons">
     @if (auth.loggedInStatus()) {
-      <a class="dashboard-header-icons-help-logo" routerLink="/help-page" role="link" id="helpLogo">
+      <a
+        class="dashboard-header-icons-help-logo"
+        routerLink="/help-page"
+        role="link"
+        id="helpLogo"
+        (click)="setRoute()"
+      >
         <img src="assets/icons/help_dashboard.svg" alt="help_logo" />
       </a>
       <button (click)="openMobileMenu($event)">
