@@ -34,7 +34,7 @@ export class AddContact {
     try {
       const newContact = await this.dbService.setContact({
         ...cleanContact(this.contactForm.getRawValue()),
-        role: 'User',
+        role: 'dummy',
       });
       this.dbService.selectContact(newContact.id); // neuen Kontakt auswählen und hervorheben
       this.toast.success('Contact successfully created');

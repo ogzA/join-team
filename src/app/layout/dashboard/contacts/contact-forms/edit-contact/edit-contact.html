@@ -89,14 +89,16 @@
         }
 
         <div class="edit-contact__actions">
-          <button
-            class="edit-contact__btn edit-contact__btn--secondary"
-            type="button"
-            [disabled]="isSaving()"
-            (click)="onDelete()"
-          >
-            Delete
-          </button>
+          @if (auth.canChangeContact(contact())) {
+            <button
+              class="edit-contact__btn edit-contact__btn--secondary"
+              type="button"
+              [disabled]="isSaving()"
+              (click)="onDelete()"
+            >
+              Delete
+            </button>
+          }
           <button
             class="edit-contact__btn edit-contact__btn--primary"
             type="submit"

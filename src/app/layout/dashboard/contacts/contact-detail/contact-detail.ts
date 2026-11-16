@@ -3,6 +3,7 @@ import { NameLogo } from '../../../../shared/services/name-logo';
 import { Supabase } from '../../../../shared/services/supabase';
 import { EditContact } from '../contact-forms/edit-contact/edit-contact';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { SupabaseAuth } from '../../../../shared/services/supabase-auth';
 
 @Component({
   imports: [EditContact],
@@ -14,6 +15,7 @@ export class ContactDetail {
   dbService = inject(Supabase);
   nlService = inject(NameLogo);
   toast = inject(ToastService);
+  auth = inject(SupabaseAuth);
 
   isEditOpen = signal(false);
   isMenuOpen = signal(false);
