@@ -33,6 +33,8 @@ export class SupabaseAuth {
   firstMobilWelcome = signal(false);
   /** Name of the logged-in user for the header avatar, "G" for guests. */
   loggedUserName = signal('');
+  /** Email of the logged-in user, empty if logged out or guest. */
+  loggedUserEmail = signal('');
 
   /**
    * Creates a new account, stores the name in the user metadata and opens the dashboard on
@@ -74,20 +76,6 @@ export class SupabaseAuth {
       console.error('Contact for new user not created:', contactError);
     }
   }
-
-  private async addUserAsContact(name: string, email: string) {
-    try {
-      await this.dbService.setContact({
-        name: name,
-        email: email,
-        phone: DUMMY_PHONE,
-        role: 'user',
-      });
-    } catch (contactError) {
-      console.error('Contact for new user not created:', contactError);
-    }
-  }
-
   /**
    * Checks whether a user is logged in and updates {@link loggedInStatus} and
    * {@link loggedUserName}.
@@ -118,12 +106,6 @@ export class SupabaseAuth {
   async isGuest() {
     const { data } = await this.supabase.auth.getUser();
     return data.user?.is_anonymous === true;
-  }
-
-  /**  Dummy contacts can be edited and deleted by everyone, user contacts only by the user themselves. */
-  canChangeContact(contact: { role: string; email: string }): boolean {
-    if (contact.role === 'dummy') return true;
-    return this.loggedUserEmail() !== '' && contact.email === this.loggedUserEmail();
   }
 
   /**  Dummy contacts can be edited and deleted by everyone, user contacts only by the user themselves. */
