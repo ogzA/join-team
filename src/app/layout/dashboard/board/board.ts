@@ -16,29 +16,42 @@ import { Supabase } from '../../../shared/services/supabase';
 import { SelectedTask, Task, TaskStatus } from '../../../shared/models/task';
 import { ShowTaskDetails } from '../Task/show-task-details/show-task-details';
 
-// Muss zu $breakpoint-tablet in _variables.scss passen (max-width wie im SCSS)
+/**
+ * Media query of the tablet layout, in which the cards of a column are shown side by side.
+ *
+ * @see $breakpoint-tablet in _variables.scss uses the same max-width; keep both in sync.
+ */
 const TABLET_QUERY = '(max-width: 1100px)';
 import { AddTask } from '../Task/add-task/add-task';
 
-// ====== DUMMY START ======
-
+/** A row of the Supabase `tasks` table; only used by {@link DUMMY_ROWS}. */
 interface BoardRow {
+  /** Row id (1 = to do, 2 = in progress, 3 = await feedback, 4 = done). */
   id: number;
+  /** Status of the column. */
   status: string;
+  /** Tasks of the column wrapped in an outer array, or an empty string if there are none. */
   taskjson: Task[][] | '';
 }
 
-// Eine Spalte im Board: Status, Anzeigename und ihre Tasks
-// Das Array bleibt bestehen, damit Drag & Drop Tasks darin verschieben kann
+/** A column of the board with its status, display name and the tasks shown in it. */
 interface BoardColumn {
+  /** Status of the tasks in this column. */
   status: TaskStatus;
+  /** Display name of the column. */
   label: string;
-  // Supabase-Zeile dieser Spalte (1 = to do ... 4 = done)
+  /** Supabase row of the column (1 = to do, 2 = in progress, 3 = await feedback, 4 = done). */
   rowId: number;
+  /** Visible tasks; drag & drop moves them directly inside this array before saving. */
   tasks: Task[];
+  /** Position of each visible task in the unfiltered column, so search results open correctly. */
   positions: number[];
 }
 
+/**
+ * Sample rows with test tasks (urgent priority, long title and description, many assignees,
+ * an empty column). Not used by the board, which loads its tasks from Supabase.
+ */
 const DUMMY_ROWS: BoardRow[] = [
   {
     id: 1,
@@ -77,7 +90,6 @@ const DUMMY_ROWS: BoardRow[] = [
     status: 'in progress',
     taskjson: [
       [
-        // Testfall: Prio "Urgent", ein Avatar, Fortschritt 2/3
         {
           date: '15/11/2026',
           prio: 'Urgent',
@@ -138,8 +150,10 @@ const DUMMY_ROWS: BoardRow[] = [
   },
 ];
 
-// ====== DUMMY ENDE ======
-
+/**
+ * Kanban board with the four task columns: search, drag & drop between columns
+ * (move menu on mobile), the task details dialog and the add task dialog.
+ */
 @Component({
   imports: [CdkDropListGroup, CdkDropList, CdkDrag, ShowTaskDetails, AddTask],
   selector: 'app-board',
@@ -154,19 +168,21 @@ export class Board implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   private dbService = inject(Supabase);
 
-  // true, solange das Tablet-Layout aktiv ist (Karten einer Spalte nebeneinander)
-  // Startwert direkt abfragen, damit beim ersten Rendern schon die richtige Richtung gilt
+  /**
+   * True while the tablet layout is active (cards of a column side by side).
+   * Starts with the current match, so the first render already uses the right orientation.
+   */
   protected isTablet = toSignal(
     this.breakpointObserver.observe(TABLET_QUERY).pipe(map((state) => state.matches)),
     { initialValue: this.breakpointObserver.isMatched(TABLET_QUERY) },
   );
 
-  // Drag-Richtung fürs CDK: nebeneinander auf Tablet/mobile, untereinander auf Desktop
+  /** Drag direction of the CDK drop lists: horizontal on tablet and mobile, vertical on desktop. */
   protected dropOrientation = computed<DropListOrientation>(() =>
     this.isTablet() ? 'horizontal' : 'vertical',
   );
 
-  // Spaltennamen Anzeige
+  /** Display names of the columns by status. */
   protected columnLabels: Record<string, string> = {
     'to do': 'To do',
     'in progress': 'In progress',
@@ -174,9 +190,11 @@ export class Board implements OnInit {
     done: 'Done',
   };
 
-  // Spalten fürs Board aus den vier Service-Signals
-  // Wird automatisch neu gebaut, sobald getTasks() neue Daten liefert
-  // Volle Service-Listen, gefiltert wird in buildColumn()
+  /**
+   * The four board columns, built from the column signals of the service.
+   * Rebuilt automatically when new tasks are loaded or the search term changes;
+   * the filtering happens in {@link buildColumn}.
+   */
   protected columns = computed<BoardColumn[]>(() => [
     this.buildColumn('to do', 1, this.dbService.toDoTasks()),
     this.buildColumn('in progress', 2, this.dbService.inProgressTasks()),
@@ -184,23 +202,30 @@ export class Board implements OnInit {
     this.buildColumn('done', 4, this.dbService.doneTasks()),
   ]);
 
-  // Maximale Anzahl sichtbarer Avatare auf der Karte, Rest wird als "+Number" angezeigt
+  /** Maximum number of avatars shown on a card; the rest is shown as "+N". */
   protected maxAvatars = 3;
-  // Angeklickter Task samt Spalte und Position, null = kein Dialog offen
+  /** Clicked task with its column and position; `null` while the details dialog is closed. */
   protected selectedTask = signal<SelectedTask | null>(null);
-  // Offenes Verschieben-Menü (mobile): Spalte und Index der Karte, null = zu
+  /** Column and card index of the open move menu (mobile); `null` while it is closed. */
   protected moveMenu = signal<{ rowId: number; index: number } | null>(null);
 
-  // Lädt beim Öffnen des Boards die Tasks aller Spalten aus Supabase
+  /** Loads the tasks of all columns from Supabase and focuses the search input. */
   ngOnInit(): void {
     this.dbService.getTasks();
 
-    // Auto Fokus beim Seitenladen aufs Input Feld
     const elemRef = document.getElementById(`seachInput`);
     elemRef?.focus();
   }
 
-  // Baut eine Spalte und merkt sich vor dem Filtern die Original-Position jedes Tasks
+  /**
+   * Builds one column and remembers the original position of each task before filtering,
+   * so the details dialog still edits the right task while searching.
+   *
+   * @param status - Status of the column.
+   * @param rowId - Supabase row of the column.
+   * @param allTasks - All tasks of the column from the service.
+   * @returns The column with the tasks that match the search.
+   */
   private buildColumn(status: TaskStatus, rowId: number, allTasks: Task[]): BoardColumn {
     const visible = allTasks
       .map((task, position) => ({ task, position }))
@@ -214,7 +239,12 @@ export class Board implements OnInit {
     };
   }
 
-  // true, wenn Titel oder Beschreibung den Suchbegriff enthalten
+  /**
+   * Checks whether the title or the description contains the current search term.
+   *
+   * @param task - The task to check.
+   * @returns True if the task matches; every task matches an empty search term.
+   */
   private matchesSearch(task: Task): boolean {
     const term = this.lowerCaseSearchTerm();
     return (
@@ -223,21 +253,43 @@ export class Board implements OnInit {
     );
   }
 
-  // Fehlende assigned/subtasks (ältere Daten) mit [] auffüllen
+  /**
+   * Fills missing `assigned` and `subtasks` (older data) with empty arrays.
+   *
+   * @param task - The task as loaded from Supabase.
+   * @returns A copy of the task with both arrays set.
+   */
   private normalizeTask(task: Task): Task {
     return { ...task, assigned: task.assigned ?? [], subtasks: task.subtasks ?? [] };
   }
 
-  // Subtasks erledigt zählen
+  /**
+   * Counts the completed subtasks of a task.
+   *
+   * @param task - The task to count.
+   * @returns The number of done subtasks.
+   */
   protected doneCount(task: Task): number {
     return task.subtasks.filter((subtask) => subtask.done).length;
   }
-  // Fortschrittsanzeige in Prozent
+  /**
+   * Calculates the subtask progress for the progress bar.
+   * Only called for tasks with subtasks, otherwise it would divide by zero.
+   *
+   * @param task - The task to calculate.
+   * @returns The share of done subtasks in percent (0 to 100).
+   */
   protected progress(task: Task): number {
     return (this.doneCount(task) / task.subtasks.length) * 100;
   }
 
-  /** Opens the task details. If the move menu is open, the tap only closes the menu. */
+  /**
+   * Opens the task details. If the move menu is open, the tap only closes the menu.
+   *
+   * @param task - The clicked task.
+   * @param rowId - Supabase row of the task's column.
+   * @param index - Position in the unfiltered column, see {@link BoardColumn.positions}.
+   */
   protected openTask(task: Task, rowId: number, index: number): void {
     if (this.moveMenu()) {
       this.closeMoveMenu();
@@ -246,11 +298,18 @@ export class Board implements OnInit {
     this.selectedTask.set({ task, rowId, index });
   }
 
+  /** Closes the task details dialog. */
   protected closeTaskDetails(): void {
     this.selectedTask.set(null);
   }
 
-  /** Opens the mobile move menu and scrolls its card fully into view first. */
+  /**
+   * Opens the mobile move menu and scrolls its card fully into view first.
+   *
+   * @param rowId - Supabase row of the card's column.
+   * @param index - Index of the card in the column.
+   * @param event - Click event of the move button, used to find the card.
+   */
   protected openMoveMenu(rowId: number, index: number, event: Event): void {
     const card = (event.currentTarget as HTMLElement).closest('.task-card');
     card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
@@ -262,20 +321,37 @@ export class Board implements OnInit {
     this.moveMenu.set(null);
   }
 
-  /** Returns true if the open move menu belongs to this task. */
+  /**
+   * Checks whether the open move menu belongs to this card.
+   *
+   * @param rowId - Supabase row of the card's column.
+   * @param index - Index of the card in the column.
+   * @returns True if the move menu of this card is open.
+   */
   protected isMoveMenuOpen(rowId: number, index: number): boolean {
     const menu = this.moveMenu();
     return menu?.rowId === rowId && menu.index === index;
   }
 
-  /** Moves a task to the end of another column, same as dropping it there. */
+  /**
+   * Moves a task to the end of another column, same as dropping it there.
+   *
+   * @param from - Column the task comes from.
+   * @param index - Index of the task in the source column.
+   * @param to - Target column.
+   */
   protected moveTaskTo(from: BoardColumn, index: number, to: BoardColumn): void {
     transferArrayItem(from.tasks, to.tasks, index, to.tasks.length);
     this.closeMoveMenu();
     this.dbService.moveTask(from.tasks, from.rowId, to.tasks, to.rowId);
   }
 
-  // Verschiebt einen Task nach dem Loslassen
+  /**
+   * Moves a task after it was dropped. Inside the same column only the new order is saved,
+   * otherwise both columns are saved.
+   *
+   * @param event - Drop event with the source and target column as container data.
+   */
   protected dropTask(event: CdkDragDrop<BoardColumn>): void {
     const from = event.previousContainer.data;
     const to = event.container.data;
@@ -288,34 +364,50 @@ export class Board implements OnInit {
     }
   }
 
-  // Suche: Eingabe im Header, Filterung in buildColumn() über matchesSearch()
+  /** Current text of the search input; cleared after each search. */
   searchTerm = signal('');
+  /** Lowercase term of the last search; the columns are filtered by it. */
   lowerCaseSearchTerm = signal('');
+  /**
+   * True while a search filter is active. Drag & drop and the move menu are disabled then,
+   * because the columns only contain the matching tasks.
+   */
   protected isSearching = computed(() => this.lowerCaseSearchTerm().length > 0);
+  /** Placeholder of the search input; shows "Nothing found..." after a search without results. */
   searchPlaceHolder = signal('Find Task');
 
+  /**
+   * Applies the entered search term and clears the input; an empty search shows all tasks again.
+   * If no task matches, the placeholder shows "Nothing found..." in red, otherwise it is reset.
+   */
   searchFilter() {
     this.lowerCaseSearchTerm.set(this.searchTerm().toLowerCase());
     this.searchTerm.set('');
     const elemRef = document.getElementById(`seachInput`);
 
     if (this.columns().every((column) => column.tasks.length === 0)) {
-      this.searchPlaceHolder.set('Nothing found...'); // Platzhalter Text wenn nix gefunden
-      elemRef?.classList.add('red-placeholder'); // Zusätzliche Klasse für die rote Farbe
+      this.searchPlaceHolder.set('Nothing found...');
+      elemRef?.classList.add('red-placeholder');
     } else {
-      this.searchPlaceHolder.set('Find Task'); // Platzhalter zurücksetzen
-      elemRef?.classList.remove('red-placeholder'); // Klasse wieder entfernen
+      this.searchPlaceHolder.set('Find Task');
+      elemRef?.classList.remove('red-placeholder');
     }
   }
 
-  // Add Task Dialog
+  /** True while the add task dialog is open. */
   isAddTaskOpen = signal(false);
 
+  /**
+   * Opens the add task dialog.
+   *
+   * @param status - Column the new task is added to.
+   */
   protected openAddTask(status: TaskStatus = 'to do') {
     this.addTaskStatus.set(status);
     this.isAddTaskOpen.set(true);
   }
 
+  /** Closes the add task dialog. */
   closeAddTask() {
     this.isAddTaskOpen.set(false);
   }
@@ -326,6 +418,6 @@ export class Board implements OnInit {
     this.closeAddTask();
   }
 
-  // Task Status
+  /** Column in which the add task dialog creates the new task. */
   protected addTaskStatus = signal<TaskStatus>('to do');
 }

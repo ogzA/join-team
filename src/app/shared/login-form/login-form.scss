@@ -73,7 +73,7 @@
       }
     }
 
-    // Abstand E-Mail und Passwort immer 32px wie Figma
+    // Always 32px between email and password as in Figma (22px error line + 10px)
     .field + .field {
       margin-top: 10px;
     }

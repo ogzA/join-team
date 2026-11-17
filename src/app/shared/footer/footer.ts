@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+/** Placeholder footer; its template only shows a test text so far. */
 @Component({
   imports: [],
   selector: 'app-footer',

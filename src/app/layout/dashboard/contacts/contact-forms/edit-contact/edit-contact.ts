@@ -6,8 +6,10 @@ import { NameLogo } from '../../../../../shared/services/name-logo';
 import { ToastService } from '../../../../../shared/services/toast.service';
 import { SupabaseAuth } from '../../../../../shared/services/supabase-auth';
 
+/** Contact fields the edit dialog needs. */
 type EditableContact = { id: number; name: string; email: string; phone: string; role: string };
 
+/** Dialog for editing or deleting a contact. */
 @Component({
   imports: [ReactiveFormsModule],
   selector: 'app-edit-contact',
@@ -21,28 +23,36 @@ export class EditContact implements OnInit {
   private toast = inject(ToastService);
   auth = inject(SupabaseAuth);
 
-  contact = input.required<EditableContact>(); // Kontakt, der bearbeitet wird (kommt aus contact-detail)
-  closed = output<void>(); // Meldet contact-detail, dass der Dialog geschlossen werden soll
+  /** The contact being edited, passed in by the contact details. */
+  contact = input.required<EditableContact>();
+  /** Tells the contact details that the dialog should close. */
+  closed = output<void>();
 
+  /** True while saving or deleting; disables the buttons. */
   isSaving = signal(false);
+  /** Error shown in the dialog if saving or deleting fails; empty if there is none. */
   errorMessage = signal('');
 
-  // Kürzel und Farbe für den Avatar, wie in der Detailansicht
+  /** Initials and colors of the avatar, same as in the details view. */
   avatar = computed(() => this.nlService.setNameLogo(this.contact().name));
 
+  /** Form with name, email and phone, validated by {@link contactValidators}. */
   contactForm = this.fb.nonNullable.group({
     name: ['', contactValidators.name],
     email: ['', contactValidators.email],
     phone: ['', contactValidators.phone],
   });
 
-  // Befüllt das Formular mit den Daten des ausgewählten Kontakts
+  /**
+   * Fills the form with the cleaned data of the contact and marks all fields as touched,
+   * so errors in the existing data show up right away.
+   */
   ngOnInit() {
-    this.contactForm.setValue(cleanContact(this.contact())); // bestehende Daten bereinigt anzeigen
-    this.contactForm.markAllAsTouched(); // Fehler in bestehenden Daten sofort anzeigen
+    this.contactForm.setValue(cleanContact(this.contact()));
+    this.contactForm.markAllAsTouched();
   }
 
-  // Validiert das Formular und speichert die Änderungen
+  /** Saves the changes; an invalid form only shows its error messages. */
   async onSave() {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
@@ -54,7 +64,7 @@ export class EditContact implements OnInit {
     );
   }
 
-  // Löscht den Kontakt und hebt die Auswahl auf
+  /** Deletes the contact and clears the selection. */
   async onDelete() {
     await this.runAction(async () => {
       await this.db.deleteContact(this.contact().id);
@@ -62,7 +72,13 @@ export class EditContact implements OnInit {
     }, 'Contact successfully deleted');
   }
 
-  // Führt eine Supabase-Aktion mit Ladezustand und Fehlerbehandlung aus
+  /**
+   * Runs a Supabase action with loading state and error handling: on success the dialog closes
+   * and a toast is shown, on failure {@link errorMessage} is shown in the dialog.
+   *
+   * @param action - The Supabase action to run.
+   * @param successMessage - Text of the success toast.
+   */
   private async runAction(action: () => Promise<void>, successMessage: string) {
     this.isSaving.set(true);
     this.errorMessage.set('');

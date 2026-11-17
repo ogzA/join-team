@@ -117,7 +117,7 @@ $color-category-technical: #1fd7c1;
       overflow: hidden;
       scrollbar-width: thin;
 
-      // Edit-Modus: Formular passt auf kleinen Geräten nicht, hier scrollt der Formularbereich
+      // Edit mode: the form does not fit on small devices, so the form area scrolls
       &--edit {
         overflow-y: auto;
         padding-right: 8px;
@@ -139,8 +139,8 @@ $color-category-technical: #1fd7c1;
       min-height: 0;
       overflow-wrap: anywhere;
 
-      // Titel, Beschreibung, Assigned- und Subtask-Liste:
-      // schrumpfen nur, wenn der Platz nicht reicht, und scrollen dann in sich
+      // Title, description, assigned and subtask list:
+      // they only shrink without enough space and then scroll on their own
       .section-scroll {
         width: 100%;
         flex: 0 1 auto;
@@ -149,7 +149,7 @@ $color-category-technical: #1fd7c1;
         scrollbar-width: thin;
       }
 
-      // Bereich mit fester Überschrift und scrollbarer Liste darunter
+      // Section with a fixed heading and a scrollable list below it
       .modal_content_section {
         display: flex;
         flex-direction: column;
@@ -204,12 +204,12 @@ $color-category-technical: #1fd7c1;
 
     &__avatar {
       display: flex;
-      flex-shrink: 0; // Avatare bleiben rund, werden nicht verformt
+      flex-shrink: 0; // Avatars stay round instead of being squeezed
       align-items: center;
       justify-content: center;
       width: 32px;
       height: 32px;
-      margin-left: -8px; // Avatar überlappen sich
+      margin-left: -8px; // Avatars overlap
       border: 1px solid $color-white;
       border-radius: 50%;
       font-size: 16px;
@@ -539,15 +539,12 @@ $color-category-technical: #1fd7c1;
 
 @keyframes modal-slide-in {
   from {
-    transform: translateX(100vw);
+    transform: translateX(100vw); // Fully off-screen on the right
   }
 
-  // fully off-screen on the right
   to {
-    transform: translateX(0);
+    transform: translateX(0); // Its normal centered spot
   }
-
-  // its normal centered spot
 }
 
 .modal {
@@ -571,7 +568,8 @@ $color-category-technical: #1fd7c1;
 }
 
 .modal--closing {
-  animation: modal-fade-out 0.3s ease-in forwards; // forwards keeps the end state until Angular removes it
+  // "forwards" keeps the end state until Angular removes the element
+  animation: modal-fade-out 0.3s ease-in forwards;
 
   .modal_content {
     animation: modal-slide-out 0.3s ease-in forwards;

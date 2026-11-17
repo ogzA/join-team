@@ -78,7 +78,7 @@
             </div>
           </div>
         }
-        <!-- Edit form start here -->
+        <!-- Edit form -->
         @else if (this.isEdit()) {
           <form
             id="taskDetailForm"
@@ -86,7 +86,6 @@
             [formGroup]="taskDetailForm"
             (ngSubmit)="onSubmit()"
           >
-            <!-- <div class="taskForm__scroll"> -->
             <div class="field">
               <label for="title">Title</label>
               <input type="text" id="title" formControlName="title" />

@@ -70,7 +70,7 @@
       color: $color-avatar-more;
     }
 
-    // Umbrechen der Headline Elemente
+    // Stack the headline elements on small screens
     @media screen and (max-width: $breakpoint-summary) {
       flex-direction: column;
       align-items: flex-start;
@@ -115,7 +115,7 @@
         color: $color-input-focus;
       }
 
-      // Ausblenden vom Good Morning Text
+      // Hide the greeting on small screens
       @media screen and (max-width: $breakpoint-summary) {
         display: none;
       }
@@ -217,12 +217,6 @@
         grid-row: 2 / 2;
         display: flex;
         justify-content: left;
-        // gap: clamp(0.5rem, calc(-0.107125rem + 3.036vw), 2.625rem);
-        // padding: clamp(0.5rem, calc(0.142875rem + 1.786vw), 1.75rem)
-        //   clamp(0.5rem, calc(-0.0714375rem + 2.857vw), 2.5rem);
-        // @media screen and (max-width: $breakpoint-mobile) {
-        //   gap: clamp(0.5rem, calc(-1.018rem + 7.589vw), 2.625rem);
-        // }
 
         .line {
           height: 100%;
@@ -233,7 +227,6 @@
           @include all-center;
           width: 43%;
           text-align: center;
-          // gap: 8px;
           gap: clamp(0.5rem, calc(0.3035625rem + 0.982vw), 1.1875rem);
           @media screen and (max-width: $breakpoint-mobile) {
             gap: clamp(0rem, calc(-1.161rem + 5.804vw), 1.625rem);
@@ -299,7 +292,6 @@
           justify-content: center;
           align-items: center;
           flex: 1;
-          // background-color: red;
 
           h3 {
             font-size: clamp(0.8rem, calc(0.589rem + 0.804vw), 1.31rem);
@@ -343,7 +335,7 @@
       }
     }
 
-    // Mobil Zentrierung
+    // Center on mobile
     @media screen and (max-width: $breakpoint-mobile) {
       @include flex-col-center;
     }

@@ -1,6 +1,10 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-/** Returns today's date as yyyy-mm-dd in local time. */
+/**
+ * Returns today's date in local time.
+ *
+ * @returns Today's date as `YYYY-MM-DD`.
+ */
 export function getTodayDate(): string {
   const today = new Date();
   const year = today.getFullYear();
@@ -10,9 +14,11 @@ export function getTodayDate(): string {
 }
 
 /**
- * Gives an error when the date is before today.
- * @param allowedDate Optional function that returns a date that stays valid,
- * e.g. the original date of an edited task.
+ * Creates a validator that reports an error when the date is before today.
+ *
+ * @param allowedDate - Optional function returning a date that stays valid even if it is in the
+ * past, e.g. the original date of an edited task.
+ * @returns A validator that returns `{ pastDate: true }` for past dates, otherwise `null`.
  */
 export function noPastDate(allowedDate?: () => string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

@@ -1,6 +1,6 @@
 @use '../../../../public/assets/scss/all-styles';
 
-// Dashboard-Layout: Sidebar links (volle Höhe), Header oben rechts, Main-Content darunter
+// Dashboard layout: sidebar on the left (full height), header top right, main content below
 :host {
   display: grid;
   grid-template-columns: 232px 1fr;
@@ -9,12 +9,12 @@
 }
 
 .dashboard-aside {
-  grid-row: 1 / 3; // Grid-Start bei Zeile 1, Grid-Ende bei Zeile 3
+  grid-row: 1 / 3; // Spans the header and the main row
 }
 
 .dashboard-main {
-  overflow-y: auto; // nur Main scrollt, wenn der Platz benötigt wird, Sidbar + Header bleiben stehen
-  background-color: all-styles.$dashboard-background; // Platzhalter - vor Abgabe löschen
+  overflow-y: auto; // Only main scrolls when needed; sidebar and header stay in place
+  background-color: all-styles.$dashboard-background;
   scrollbar-width: none;
 }
 

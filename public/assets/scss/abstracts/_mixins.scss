@@ -1,7 +1,7 @@
 @use 'variables' as *;
 @use 'sass:math';
 
-// Mobile: Dialog-Bereich über der NavBar, 16px Abstand oben und unten
+// Mobile: dialog area above the nav bar with 16px spacing
 @mixin dialog-area-mobile {
     @media (max-width: $breakpoint-mobile) {
         bottom: $mobile-navbar-height;
@@ -9,7 +9,7 @@
     }
 }
 
-// Mobile: Dialog füllt den Bereich aus, damit alle Dialoge gleich groß sind
+// Mobile: dialog fills the area so all dialogs have the same size
 @mixin dialog-box-mobile {
     @media (max-width: $breakpoint-mobile) {
         height: 100%;
@@ -36,7 +36,7 @@
   justify-content: center;
 }
 
-// Wert wächst mit der Fensterhöhe: $min bis $from, $max bei $to
+// Value grows with the viewport height: $min up to $from, $max from $to
 @function fluid-height($min, $max, $from: 600px, $to: 1024px) {
   $slope: math.div($max - $min, $to - $from);
   @return clamp(#{$min}, calc(#{$min} + #{$slope} * (100dvh - #{$from})), #{$max});

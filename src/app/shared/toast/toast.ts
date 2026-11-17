@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { ToastService } from '../services/toast.service';
 
+/** Shows the current toast of the {@link ToastService} with a close button. */
 @Component({
   imports: [AsyncPipe],
   selector: 'app-toast',
@@ -10,8 +11,10 @@ import { ToastService } from '../services/toast.service';
 })
 export class ToastClass {
   toastService = inject(ToastService);
+  /** True while the leave animation runs. */
   isLeaving = signal(false);
 
+  /** Plays the leave animation for 300 ms, then removes the toast. */
   close(): void {
     this.isLeaving.set(true);
 

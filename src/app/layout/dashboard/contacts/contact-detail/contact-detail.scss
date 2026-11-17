@@ -8,7 +8,6 @@
   flex-direction: column;
   padding-top: 32px;
   background-color: all-styles.$dashboard-background;
-  // background-color: rgb(214, 214, 169);
 
   .contact {
     display: flex;
@@ -30,7 +29,7 @@
         font-size: 47px;
         font-weight: 500;
         line-height: 120%;
-        color: inherit; // Übernahme der Schriftfarbe vom Avatar (weiß oder dunkel je nach Hintergrundfarbe)
+        color: inherit; // Text color of the avatar (white or dark, depending on the background)
       }
     }
 

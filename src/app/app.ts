@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { Supabase } from './shared/services/supabase';
 import { ToastClass } from './shared/toast/toast';
 
+/** Root component: shows the routed page and the global toast and loads the app data on start. */
 @Component({
   imports: [RouterOutlet, ToastClass],
   selector: 'app-root',
@@ -10,22 +11,14 @@ import { ToastClass } from './shared/toast/toast';
   templateUrl: './app.html',
 })
 export class App {
+  /** Name of the app. */
   protected readonly title = signal('join-team');
 
-  //Service Inject, später auch in anderen Komponenten nutzbar
   dbService = inject(Supabase);
 
+  /** Loads contacts, users and tasks from Supabase and starts the realtime sync. */
   ngOnInit() {
-    //Daten laden vom Supabase Server beim Seitenladen
-    // this.dbService.getContacts();
-    // this.dbService.getUser();
-    this.dbService.loadData(); // Hier laden von Contacts & User zusammen
+    this.dbService.loadData();
     this.dbService.getTasks();
-
-    // console.log(this.dbService.contacts());
-    // Methoden Aufruf vom supabase Service für das Hinzufügen von Kontakten/Usern
-    // Wichtig für spätere Komponenten, dort nur Daten mit Input, nicht im Code, hier nur als test
-    // this.dbService.setContacts({name:"TestUser",email:"test@mail.com",phone:0,role:"dummy"});
-    // this.dbService.setUser({email:"test@mail.com",password:"1234",role:"dummy"});
   }
 }

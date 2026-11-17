@@ -16,7 +16,6 @@
   text-overflow: ellipsis;
   font-size: 1.25rem;
 
-  /* Modernized additions for div-trigger Select: */
   height: 48px;
   padding: 0 2.5rem;
   cursor: pointer;
@@ -45,14 +44,14 @@
 .combobox-label {
   gap: 1rem;
   left: 12px;
-  right: 2.5rem; // Platz für den Pfeil, wie das Padding von .select
+  right: 2.5rem; // Room for the arrow, same as the padding of .select
   display: flex;
   position: absolute;
   align-items: center;
   pointer-events: none;
 }
 
-// Platzhalter bzw. Auswahl einzeilig, zu langer Text endet mit "..."
+// Placeholder or selection in one line; text that is too long ends with "..."
 .selected-label-text {
   min-width: 0;
   overflow: hidden;
@@ -120,7 +119,7 @@
   outline: none;
 }
 
-// Option-Zeile: Avatar, Name und Checkbox nebeneinander
+// Option row: avatar, name and checkbox side by side
 [ngOption] {
   display: flex;
   cursor: pointer;
@@ -143,7 +142,7 @@
   outline: 2px solid color-mix(in srgb, var(--hot-pink) 50%, transparent);
 }
 
-// Ausgewählte Option: dunkler Hintergrund und Häkchen in der Checkbox
+// Selected option: dark background and a check mark in the checkbox
 [ngOption][aria-selected='true'] {
   background-color: $color-primary;
   color: $color-white;
@@ -181,20 +180,20 @@
   overflow: hidden;
 }
 
-// Leere Checkbox, immer sichtbar
+// Empty checkbox, always visible
 .assigned-checkbox {
   position: relative;
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  margin-left: auto; // ganz nach rechts
+  margin-left: auto; // Pushed to the far right
   border: 2px solid currentColor;
   border-radius: 3px;
 }
 
 .assigned-avatar {
   display: flex;
-  flex-shrink: 0; // Avatare bleiben rund, werden nicht verformt
+  flex-shrink: 0; // Avatars stay round instead of being squeezed
   align-items: center;
   justify-content: center;
   width: 42px;
@@ -206,7 +205,7 @@
   text-transform: uppercase;
 }
 
-// Ausgewählte Kontakte unter dem Dropdown
+// Selected contacts below the dropdown
 .assigned-avatars {
   display: flex;
   margin-top: 8px;
@@ -214,5 +213,5 @@
 }
 
 .assigned-avatar-more {
-  background-color: $color-avatar-more; // "+Number"-Zähler
+  background-color: $color-avatar-more; // "+N" counter
 }

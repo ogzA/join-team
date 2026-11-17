@@ -1,6 +1,6 @@
 @use '../../../../../../../public/assets/scss/all-styles';
 
-// Avatar auf Mobile: wächst mit der Breite von 80px bis 120px
+// Avatar on mobile: grows with the width from 80px to 120px
 $avatar-size-mobile: clamp(80px, 25vw, 120px);
 
 .edit-contact {
@@ -299,7 +299,7 @@ $avatar-size-mobile: clamp(80px, 25vw, 120px);
       width: $avatar-size-mobile;
       height: $avatar-size-mobile;
       font-size: clamp(32px, 10vw, 47px);
-      margin-top: calc($avatar-size-mobile / -2); // halb über dem dunklen Kopfbereich
+      margin-top: calc($avatar-size-mobile / -2); // Half over the dark header area
     }
 
     &__form {
