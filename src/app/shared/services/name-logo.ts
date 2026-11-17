@@ -7,6 +7,7 @@ export class NameLogo {
    * Avatar palette from the Join design (15 colors).
    * The matching text color is chosen by {@link getTextColor}.
    */
+
   colors = [
     '#FF7A00',
     '#FF5EB3',
@@ -97,6 +98,7 @@ export class NameLogo {
     for (const char of text) {
       hash = ((hash << 5) + hash + char.charCodeAt(0)) >>> 0;
     }
+
     hash ^= hash >>> 16;
     hash = Math.imul(hash, 0x85ebca6b);
     hash ^= hash >>> 13;

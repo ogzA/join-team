@@ -12,19 +12,16 @@
     transform: translate(-50%, -50%);
   }
 
+  width: max-content;
+  max-width: calc(100vw - 32px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-
-  width: max-content;
-  max-width: calc(100vw - 32px);
   padding: 16px 24px;
-
   border-radius: 12px;
   color: #fff;
   box-shadow: 0 4px 12px #00000026;
-
   transform: translate(150%, -50%);
   animation: toast-enter 0.3s ease forwards;
 }

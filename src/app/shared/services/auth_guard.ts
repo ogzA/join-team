@@ -29,6 +29,5 @@ export const loggedOutGuard: CanActivateFn = async () => {
   if (await supabase_auth.isLoggedIn()) {
     return router.createUrlTree(['/dashboard']);
   }
-
   return true;
 };

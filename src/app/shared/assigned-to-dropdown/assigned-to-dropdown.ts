@@ -29,21 +29,16 @@ import { NameLogo } from '../services/name-logo';
 export class AssignedToDropdown {
   dbService = inject(Supabase);
   readonly nlService = inject(NameLogo);
-
   /** The combobox listbox popup. */
   readonly listbox = viewChild(Listbox);
-
   /** The overlay that positions the popup next to the combobox. */
   private readonly overlay = viewChild(CdkConnectedOverlay);
-
   /** The contacts available in the listbox. */
   readonly contacts = this.dbService.contacts;
   /** The names of the selected contacts. */
   readonly assigned = model<string[]>([]);
-
   /** Maximum height of the popup as a CSS length. */
   readonly popupMaxHeight = input('250px');
-
   /** The string that is displayed in the combobox. */
   readonly displayValue = computed(() => {
     const names = this.assigned();
@@ -51,11 +46,14 @@ export class AssignedToDropdown {
     if (names.length === 0) {
       return 'Select contacts to assign';
     }
+
     if (names.length === 1) {
       return names[0];
     }
+
     return `${names[0]} + ${names.length - 1} more`;
   });
+
   /** Whether the popup is expanded. */
   readonly popupExpanded = signal(false);
   /** Maximum number of avatars shown below the dropdown, the rest is shown as "+N". */
@@ -71,14 +69,11 @@ export class AssignedToDropdown {
     });
 
     const document = inject(DOCUMENT);
-
     const onScroll = (event: Event) => {
       if (!this.popupExpanded()) return;
-
       const target = event.target;
 
       if (target instanceof Element && target.closest('.example-popup-container')) return;
-
       this.popupExpanded.set(false);
     };
 

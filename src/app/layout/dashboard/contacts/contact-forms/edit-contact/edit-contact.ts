@@ -27,12 +27,10 @@ export class EditContact implements OnInit {
   contact = input.required<EditableContact>();
   /** Tells the contact details that the dialog should close. */
   closed = output<void>();
-
   /** True while saving or deleting; disables the buttons. */
   isSaving = signal(false);
   /** Error shown in the dialog if saving or deleting fails; empty if there is none. */
   errorMessage = signal('');
-
   /** Initials and colors of the avatar, same as in the details view. */
   avatar = computed(() => this.nlService.setNameLogo(this.contact().name));
 
@@ -58,6 +56,7 @@ export class EditContact implements OnInit {
       this.contactForm.markAllAsTouched();
       return;
     }
+
     await this.runAction(
       () => this.db.updateContact(this.contact().id, cleanContact(this.contactForm.getRawValue())),
       'Contact successfully updated',

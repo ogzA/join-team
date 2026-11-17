@@ -5,6 +5,7 @@
   background-color: $dashboard-background;
   display: flex;
   flex-direction: column;
+
   .container {
     flex: 1;
     display: grid;
@@ -58,6 +59,7 @@
         transform: translateY(-50%);
         pointer-events: none;
       }
+
       .error-container {
         min-height: 22px;
         display: flex;
@@ -113,6 +115,7 @@
         font-weight: 700;
         cursor: pointer;
       }
+
       button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
@@ -142,9 +145,11 @@
       }
     }
   }
+
   .container__sub {
     display: none;
   }
+
   @media screen and (max-width: $breakpoint-mobile) {
     .container__sub {
       @include flex-center;

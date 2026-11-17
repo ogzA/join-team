@@ -8,10 +8,8 @@ export interface Subtask {
 
 /** Categories a task can belong to. */
 export type TaskCategory = 'User Story' | 'Technical Task';
-
 /** Priorities a task can have. */
 export type TaskPrio = 'Urgent' | 'Medium' | 'Low';
-
 /** Board columns a task can be in. */
 export type TaskStatus = 'to do' | 'in progress' | 'await feedback' | 'done';
 

@@ -13,11 +13,13 @@
     width: auto;
     height: fluid-height(56px, 122px);
   }
+
   &__sub {
     @include flex-center;
     justify-content: space-between;
     gap: 30px;
     font-size: 1.2rem;
+
     button {
       padding: 15px;
       font-weight: 700;
@@ -27,22 +29,26 @@
       border-radius: 8px;
       background-color: $sidebar-background;
     }
-    button:hover{
+
+    button:hover {
       background-color: $color-input-focus;
       box-shadow: 0px 4px 4px 0px #00000040;
     }
   }
+
   @media (max-width: $breakpoint-tablet) {
     img {
       width: auto;
       height: fluid-height(56px, 100px);
     }
   }
+
   @media (max-width: $breakpoint-mobile) {
     img {
       width: auto;
       height: fuid-height(48px, 78px, 568px, 926px);
     }
+
     &__sub {
       display: none;
     }

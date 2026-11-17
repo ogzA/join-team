@@ -14,7 +14,6 @@ import { ToastService } from '../../../../../shared/services/toast.service';
 export class AddContact {
   private dbService = inject(Supabase);
   private toast = inject(ToastService);
-
   private fb = inject(FormBuilder);
   /** True while the dialog is shown. */
   isOpen = input(false);

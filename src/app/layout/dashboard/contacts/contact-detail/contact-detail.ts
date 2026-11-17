@@ -20,12 +20,10 @@ export class ContactDetail {
   nlService = inject(NameLogo);
   toast = inject(ToastService);
   auth = inject(SupabaseAuth);
-
   /** True while the edit dialog is open. */
   isEditOpen = signal(false);
   /** True while the options menu (mobile) is open. */
   isMenuOpen = signal(false);
-
   /** Initials and colors of the avatar of the selected contact. */
   nameLogo = computed(() => {
     const contact = this.dbService.selectedContact();

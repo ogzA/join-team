@@ -13,6 +13,7 @@
   transition:
     opacity 0.25s ease,
     visibility 0s linear 0.25s;
+
   .error {
     color: all-styles.$color-error;
     margin: 4px 0 0;
@@ -52,24 +53,29 @@
       .close-logo-mobile {
         display: none;
       }
+
       .blue_border {
         border: 3px solid all-styles.$join-blue;
         width: 95px;
         border-radius: 3px;
       }
+
       .logo_size {
         width: 55px;
         height: 66px;
       }
+
       .font_add_contact {
         font-size: clamp(47px, calc(41px + 1.667vw), 61px);
         font-weight: 700;
       }
+
       .font-subheading {
         font-size: clamp(20px, calc(17px + 0.833vw), 27px);
         font-weight: 400;
       }
     }
+
     .modal_part2 {
       @include all-styles.flex-center;
       flex: 1 1 0;
@@ -78,6 +84,7 @@
       justify-content: center;
       gap: clamp(12px, 2vw, 32px);
     }
+
     &-close-button {
       position: absolute;
       top: 48px;
@@ -114,13 +121,16 @@
         width: 100%;
         min-width: 0;
       }
+
       .field {
         position: relative;
         width: 100%;
         min-width: 0;
+
         .field_input {
           position: relative;
         }
+
         input {
           display: block;
           padding: 13px 42px 13px 21px;
@@ -139,6 +149,7 @@
             border-color: all-styles.$color-input-focus;
           }
         }
+
         .error {
           position: absolute;
           top: 100%;
@@ -148,6 +159,7 @@
           font-size: 12px;
         }
       }
+
       .field_icon {
         position: absolute;
         top: 50%;
@@ -155,6 +167,7 @@
         transform: translateY(-50%);
         pointer-events: none;
       }
+
       .cancel_btn,
       .submit_btn {
         @include all-styles.flex-center;
@@ -170,15 +183,18 @@
           color 100ms ease,
           box-shadow 100ms ease;
       }
+
       .cancel_btn {
         gap: 4px;
         background-color: all-styles.$button-text;
         color: all-styles.$sidebar-background;
         font-weight: 400;
       }
+
       .cancel_icon--hover {
         display: none;
       }
+
       .cancel_btn:hover {
         border-color: all-styles.$hover-button-Form;
         color: all-styles.$hover-button-Form;
@@ -187,18 +203,22 @@
         .cancel_icon {
           display: none;
         }
+
         .cancel_icon--hover {
           display: block;
         }
       }
+
       .submit_btn:hover:not(:disabled) {
         background-color: all-styles.$hover-button-Form;
         box-shadow: all-styles.$shadow-button;
       }
+
       .submit_btn:active:not(:disabled) {
         background-color: all-styles.$sidebar-menu-hover;
         box-shadow: all-styles.$shadow-button;
       }
+
       .submit_btn {
         flex: 0 1 auto;
         min-width: 0;
@@ -209,10 +229,12 @@
         white-space: nowrap;
         background: all-styles.$sidebar-background;
         color: all-styles.$button-text;
+
         img {
           flex-shrink: 0;
           width: 20px;
         }
+
         &:disabled {
           opacity: 0.5;
           cursor: not-allowed;
@@ -221,9 +243,11 @@
     }
   }
 }
+
 .show-modal .modal-content {
   transform: translate(-50%, -50%);
 }
+
 .show-modal {
   opacity: 1;
   visibility: visible;
@@ -256,6 +280,7 @@
       height: auto;
       padding: 66px 24px;
       border-radius: 30px 30px 0 0;
+
       .logo_size {
         display: none;
       }

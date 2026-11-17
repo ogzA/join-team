@@ -60,7 +60,6 @@ export class SupabaseAuth {
       this.router.navigate(['/dashboard']);
       await this.addUserAsContact(name, email);
     }
-
     return { data, error };
   }
 
@@ -76,6 +75,7 @@ export class SupabaseAuth {
       console.error('Contact for new user not created:', contactError);
     }
   }
+
   /**
    * Checks whether a user is logged in and updates {@link loggedInStatus} and
    * {@link loggedUserName}.
@@ -94,7 +94,6 @@ export class SupabaseAuth {
         this.loggedUserName.set(await this.getUserName());
       }
     } else this.loggedInStatus.set(false);
-
     return data.user !== null;
   }
 
@@ -147,7 +146,6 @@ export class SupabaseAuth {
     });
 
     if (!error) this.router.navigate(['/dashboard']);
-
     return { data, error };
   }
 

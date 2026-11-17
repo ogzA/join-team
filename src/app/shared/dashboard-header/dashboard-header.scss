@@ -39,6 +39,7 @@
     font-size: 1rem;
     font-weight: 400;
     color: $sidebar-text;
+
     li {
       list-style: none;
       padding: 8px 16px;
@@ -49,10 +50,12 @@
   .mobile-view-logo {
     display: none;
   }
+
   p {
     font-size: 1.25rem;
     font-weight: 400;
   }
+
   button {
     border: none;
     background: none;
@@ -64,9 +67,11 @@
     justify-content: space-between;
     gap: 16px;
     cursor: pointer;
+
     &-help-logo {
       transition: transform 100ms;
     }
+
     &-help-logo:hover {
       transform: scale(1.2);
     }
@@ -98,6 +103,7 @@
         color: $sidebar-text;
         text-decoration: none;
       }
+
       li {
         list-style: none;
         padding: 8px 16px;
@@ -108,9 +114,11 @@
     &-icons-help-logo {
       display: none;
     }
+
     p {
       display: none;
     }
+
     &-icons {
       .profile {
         width: 40px;

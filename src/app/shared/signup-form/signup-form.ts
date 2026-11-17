@@ -4,7 +4,6 @@ import { PublicHeader } from '../public-header/public-header';
 import { PublicFooter } from '../public-footer/public-footer';
 import { RouterLink } from '@angular/router';
 import { contactValidators } from '../../layout/dashboard/contacts/contact-forms/contact-validators';
-
 import { SupabaseAuth } from '../services/supabase-auth';
 import { SignupDraft } from '../services/signup-draft';
 
@@ -21,7 +20,6 @@ export class SignupForm {
   showPassword: boolean = false;
   /** True while the password confirmation is shown as plain text. */
   showConfirmPassword: boolean = false;
-
   supabase_auth = inject(SupabaseAuth);
   private draft = inject(SignupDraft);
 
@@ -52,17 +50,19 @@ export class SignupForm {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+
   /** Shows or hides the password confirmation. */
   toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
+
   /** True if the password and its confirmation are different. */
   get passwordsDoNotMatch(): boolean {
     const password = this.signupForm.controls.password.value;
     const confirmPassword = this.signupForm.controls.confirmPassword.value;
-
     return password !== confirmPassword;
   }
+
   /**
    * Signs up the new user. An invalid form or different passwords only show the error
    * messages. If the email is already taken or the password is too weak, that field gets an
@@ -76,7 +76,6 @@ export class SignupForm {
     }
 
     const { name, email, password } = this.signupForm.getRawValue();
-
     const { error } = await this.supabase_auth.signUpNewUser(name, email, password);
 
     if (error) {
@@ -85,6 +84,7 @@ export class SignupForm {
         emailControl.setErrors({ emailTaken: true });
         emailControl.markAllAsTouched();
       }
+
       if (error.code === 'weak_password') {
         const passwordControl = this.signupForm.controls.password;
         passwordControl.setErrors({ passwordTaken: true });
@@ -92,6 +92,7 @@ export class SignupForm {
       }
       return;
     }
+
     this.signupForm.reset();
     this.draft.clear();
   }

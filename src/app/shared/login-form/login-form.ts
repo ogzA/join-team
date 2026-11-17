@@ -45,6 +45,7 @@ export class LoginForm {
       this.loginForm.markAllAsTouched();
       return;
     }
+
     this.isSaving.set(true);
     const { email, password } = this.loginForm.getRawValue();
     const { error } = await this.supabase_auth.signInWithEmail(email, password);

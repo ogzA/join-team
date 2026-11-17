@@ -13,7 +13,6 @@ import { ToastClass } from './shared/toast/toast';
 export class App {
   /** Name of the app. */
   protected readonly title = signal('join-team');
-
   dbService = inject(Supabase);
 
   /** Loads contacts, users and tasks from Supabase and starts the realtime sync. */

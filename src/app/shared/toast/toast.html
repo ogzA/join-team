@@ -1,5 +1,5 @@
 @if (toastService.toast$ | async; as toast) {
-    <div
+  <div
     class="toast"
     [class.toast-success]="toast.type === 'success'"
     [class.toast-error]="toast.type === 'error'"
@@ -7,16 +7,11 @@
     [class.toast-info]="toast.type === 'info'"
     [class.toast-leaving]="isLeaving()"
     role="status"
-    >
-        <span class="toast-message">{{ toast.message }}</span>
+  >
+    <span class="toast-message">{{ toast.message }}</span>
 
-        <button
-        type="button"
-        class="toast-close"
-        aria-label="Close notification"
-        (click)="close()"
-        >
-        &times;
-        </button>
-    </div>
+    <button type="button" class="toast-close" aria-label="Close notification" (click)="close()">
+      &times;
+    </button>
+  </div>
 }

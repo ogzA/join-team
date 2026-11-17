@@ -102,5 +102,3 @@ export function cleanContact(contact: { name: string; email: string; phone: stri
     phone: contact.phone.trim(),
   };
 }
-
-

@@ -20,9 +20,9 @@ export class Contacts {
   dbService = inject(Supabase);
   /** Id of the contact whose details were shown last; starts with `0` (no contact). */
   shownID: number | null = 0;
-
   /** True while the details are rendered; toggled to replay their enter animation. */
   isShown = signal(false);
+
   /**
    * Replays the enter animation of the details after a click in the list selected another
    * contact: hides the details if they are shown and shows them again after 125 ms.
@@ -32,6 +32,7 @@ export class Contacts {
       if (this.isShown()) {
         this.isShown.update((isShown) => !isShown);
       }
+
       this.shownID = this.dbService.selectedContactId();
       setTimeout(() => {
         this.isShown.update((isShown) => !isShown);
