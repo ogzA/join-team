@@ -22,6 +22,10 @@
             </button>
           }
         </div>
+
+        @if (!auth.canChangeContact(contact)) {
+          <h4 class="not-allowed-text">Other User Data cant be changed!</h4>
+        }
       </div>
     </section>
 

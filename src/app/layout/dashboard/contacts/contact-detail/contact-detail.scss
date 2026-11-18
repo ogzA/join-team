@@ -1,4 +1,4 @@
-@use '../../../../../../public/assets/scss/all-styles';
+@use '../../../../../../public/assets/scss/all-styles' as *;
 
 .contact-details {
   width: 100%;
@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   padding-top: 32px;
-  background-color: all-styles.$dashboard-background;
+  background-color: $dashboard-background;
 
   .contact {
     display: flex;
@@ -59,7 +59,7 @@
           display: flex;
           align-items: center;
           gap: 8px;
-          background-color: all-styles.$dashboard-background;
+          background-color: $dashboard-background;
 
           &:hover {
             cursor: pointer;
@@ -80,6 +80,16 @@
             line-height: 120%;
           }
         }
+      }
+
+      .not-allowed-text {
+        color: $color-error;
+        padding-top: 0.5rem;
+        padding-left: 1px;
+        font-size: clamp(0.63rem, calc(0.518rem + 0.536vw), 1rem);
+        font-weight: 600;
+        line-height: 100%;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
       }
     }
   }
@@ -162,7 +172,7 @@
   }
 }
 
-@media (max-width: all-styles.$breakpoint-tablet) {
+@media (max-width: $breakpoint-tablet) {
   .contact-details {
     padding: 48px 0 0 0;
 
@@ -175,7 +185,7 @@
         width: 80px;
         height: 80px;
         padding: 0;
-        box-shadow: all-styles.$shadow-avatar;
+        box-shadow: $shadow-avatar;
 
         p {
           font-size: 27px;
@@ -207,13 +217,13 @@
     padding: 12px;
     border: none;
     border-radius: 50%;
-    background-color: all-styles.$color-primary;
-    box-shadow: all-styles.$shadow-button;
+    background-color: $color-primary;
+    box-shadow: $shadow-button;
     cursor: pointer;
     transition: background-color 100ms ease;
 
     &:hover {
-      background-color: all-styles.$color-secondary;
+      background-color: $color-secondary;
     }
 
     img {
@@ -238,8 +248,8 @@
     flex-direction: column;
     padding: 10px;
     border-radius: 20px 20px 0 20px;
-    background-color: all-styles.$color-white;
-    box-shadow: all-styles.$shadow-button;
+    background-color: $color-white;
+    box-shadow: $shadow-button;
 
     button {
       display: flex;
@@ -252,12 +262,12 @@
       background: none;
       font-size: 16px;
       line-height: 120%;
-      color: all-styles.$color-primary;
+      color: $color-primary;
       cursor: pointer;
       transition: background-color 100ms ease;
 
       &:hover {
-        background-color: all-styles.$color-hover-light;
+        background-color: $color-hover-light;
       }
     }
 
@@ -268,7 +278,7 @@
   }
 }
 
-@media (max-width: all-styles.$breakpoint-mobile) {
+@media (max-width: $breakpoint-mobile) {
   .options-btn,
   .options-menu {
     bottom: 112px;
