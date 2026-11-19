@@ -83,11 +83,11 @@
       }
 
       .not-allowed-text {
-        color: $color-error;
+        color: $join-blue;
         padding-top: 0.5rem;
         padding-left: 1px;
-        font-size: clamp(0.63rem, calc(0.518rem + 0.536vw), 1rem);
-        font-weight: 600;
+        font-size: clamp(1rem, calc(0.964rem + 0.179vw), 1.13rem);
+        font-weight: 500;
         line-height: 100%;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
       }
