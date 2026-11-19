@@ -23,6 +23,10 @@ export class Contacts {
   /** True while the details are rendered; toggled to replay their enter animation. */
   isShown = signal(false);
 
+  ngOnInit() {
+    this.dbService.selectedContactId.set(0);
+  }
+
   /**
    * Replays the enter animation of the details after a click in the list selected another
    * contact: hides the details if they are shown and shows them again after 125 ms.
