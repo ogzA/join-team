@@ -21,12 +21,12 @@ export const routes: Routes = [
   {
     path: '',
     component: LoginForm,
-    canActivate: [loggedOutGuard]
+    canActivate: [loggedOutGuard],
   },
   {
     path: 'signup',
     component: SignupForm,
-    canActivate: [loggedOutGuard]
+    canActivate: [loggedOutGuard],
   },
   {
     path: 'dashboard',
@@ -57,5 +57,9 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: SignupForm,
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
