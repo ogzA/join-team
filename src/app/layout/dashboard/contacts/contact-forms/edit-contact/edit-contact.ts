@@ -57,19 +57,22 @@ export class EditContact implements OnInit {
       return;
     }
     const changes = cleanContact(this.contactForm.getRawValue());
+    const own = this.auth.isOwnContact(this.contact());
+    if (own) changes.email = changes.email.toLowerCase();
     await this.runAction(async () => {
+      if (own) await this.changeOwnEmailIfNeeded(changes.email);
       await this.db.updateContact(this.contact().id, changes);
-      this.updateOwnName(changes.name);
+      if (own) this.auth.loggedUserName.set(changes.name);
     }, 'Contact successfully updated');
   }
 
   /**
-   * Updates the name shown in header and summary if the logged-in user edited their own contact.
+   * Changes the login email if the user changed the email of their own contact.
    *
-   * @param name - The new name of the contact.
+   * @param email - The email from the form.
    */
-  private updateOwnName(name: string) {
-    if (this.auth.isOwnContact(this.contact())) this.auth.loggedUserName.set(name);
+  private async changeOwnEmailIfNeeded(email: string) {
+    if (email !== this.contact().email.toLowerCase()) await this.auth.changeOwnEmail(email);
   }
 
   /** Deletes the contact; the own contact deletes the whole account and logs out. */

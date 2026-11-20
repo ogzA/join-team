@@ -158,6 +158,21 @@ export class SupabaseAuth {
   }
 
   /**
+   * Changes the login email of the logged-in user without a confirmation mail (edge function
+   * `change-email`). A database trigger copies the new email to the user and contacts tables.
+   *
+   * @param email - The new login email.
+   */
+  async changeOwnEmail(email: string) {
+    const { data, error } = await this.supabase.functions.invoke('change-email', {
+      body: { email },
+    });
+    if (error || data?.error) throw new Error(data?.error ?? 'Email could not be changed');
+    await this.supabase.auth.refreshSession();
+    this.loggedUserEmail.set(email);
+  }
+
+  /**
    * Loads the name of the logged-in user from the `user` table.
    *
    * @returns The name, or an empty string if nobody is logged in or no name is stored.
