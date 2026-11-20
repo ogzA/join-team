@@ -69,17 +69,20 @@ export class EditContact implements OnInit {
    * @param name - The new name of the contact.
    */
   private updateOwnName(name: string) {
-    const isOwnContact =
-      this.contact().role === 'user' && this.contact().email === this.auth.loggedUserEmail();
-    if (isOwnContact) this.auth.loggedUserName.set(name);
+    if (this.auth.isOwnContact(this.contact())) this.auth.loggedUserName.set(name);
   }
 
-  /** Deletes the contact and clears the selection. */
+  /** Deletes the contact; the own contact deletes the whole account and logs out. */
   async onDelete() {
-    await this.runAction(async () => {
-      await this.db.deleteContact(this.contact().id);
-      this.db.selectedContactId.set(null);
-    }, 'Contact successfully deleted');
+    const own = this.auth.isOwnContact(this.contact());
+    await this.runAction(
+      async () => {
+        if (own) await this.auth.deleteOwnAccount();
+        else await this.db.deleteContact(this.contact().id);
+        this.db.selectedContactId.set(null);
+      },
+      own ? 'Your account has been deleted' : 'Contact successfully deleted',
+    );
   }
 
   /**

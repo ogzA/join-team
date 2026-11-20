@@ -114,6 +114,50 @@ export class SupabaseAuth {
   }
 
   /**
+   * Checks whether the contact belongs to the logged-in user.
+   *
+   * @param contact - Contact with role and email.
+   * @returns True for the user's own contact.
+   */
+  isOwnContact(contact: { role: string; email: string }): boolean {
+    return (
+      contact.role === 'user' &&
+      this.loggedUserEmail() !== '' &&
+      contact.email === this.loggedUserEmail()
+    );
+  }
+
+  /**
+   * Deletes the own contact, user entry and login. Logs out first, because a logout after the
+   * login was deleted fails with 403; the access token stays valid for the deletion.
+   */
+  async deleteOwnAccount() {
+    const { data } = await this.supabase.auth.getSession();
+    const token = data.session?.access_token;
+    if (!token) throw new Error('No session');
+    await this.signOut();
+    await this.deleteAccountWithToken(token);
+  }
+
+  /**
+   * Calls the database function `delete_own_account` with the given access token.
+   *
+   * @param token - Access token of the user to delete.
+   */
+  private async deleteAccountWithToken(token: string) {
+    const response = await fetch(`${this.dbService.supabseUrl}/rest/v1/rpc/delete_own_account`, {
+      method: 'POST',
+      headers: {
+        apikey: this.dbService.supabaseKey,
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: '{}',
+    });
+    if (!response.ok) throw new Error('Account could not be deleted');
+  }
+
+  /**
    * Loads the name of the logged-in user from the `user` table.
    *
    * @returns The name, or an empty string if nobody is logged in or no name is stored.

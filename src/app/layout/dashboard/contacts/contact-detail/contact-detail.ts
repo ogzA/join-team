@@ -46,16 +46,19 @@ export class ContactDetail {
   }
 
   /**
-   * Deletes the contact, clears the selection and shows the result as a toast.
+   * Deletes the contact and shows the result as a toast. The own contact deletes the whole
+   * account and logs out.
    *
-   * @param id - Id of the contact.
+   * @param contact - The contact to delete.
    */
-  async deleteContact(id: number) {
+  async deleteContact(contact: { id: number; role: string; email: string }) {
     this.isMenuOpen.set(false);
     try {
-      await this.dbService.deleteContact(id);
+      const own = this.auth.isOwnContact(contact);
+      if (own) await this.auth.deleteOwnAccount();
+      else await this.dbService.deleteContact(contact.id);
       this.dbService.selectedContactId.set(null);
-      this.toast.success('Contact successfully deleted');
+      this.toast.success(own ? 'Your account has been deleted' : 'Contact successfully deleted');
     } catch {
       this.toast.error('Contact could not be deleted');
     }
